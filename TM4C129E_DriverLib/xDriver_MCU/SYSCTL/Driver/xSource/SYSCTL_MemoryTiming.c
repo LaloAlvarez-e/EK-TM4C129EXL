@@ -103,7 +103,7 @@ SYSCTL_nERROR SYSCTL__enGetMemoryHighTime(SYSCTL_nMODULE enModuleArg, SYSCTL_nME
         stRegister.uxShift = MEMORY_TIM0_R_FLASH_BCHT_BIT;
         stRegister.uxMask = MEMORY_TIM0_FLASH_BCHT_MASK;
         stRegister.uptrAddress = MEMORY_TIM0_OFFSET;
-        enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);
+        enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
     }
 
     UBase_t uxFlashValue;
@@ -115,7 +115,7 @@ SYSCTL_nERROR SYSCTL__enGetMemoryHighTime(SYSCTL_nMODULE enModuleArg, SYSCTL_nME
         stRegister.uxShift = MEMORY_TIM0_R_EEPROM_BCHT_BIT;
         stRegister.uxMask = MEMORY_TIM0_EEPROM_BCHT_MASK;
         stRegister.uptrAddress = MEMORY_TIM0_OFFSET;
-        enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);
+        enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
     }
     if(SYSCTL_enERROR_OK == enErrorReg)
     {
@@ -165,7 +165,7 @@ SYSCTL_nERROR SYSCTL__enGetMemoryWaitState(SYSCTL_nMODULE enModuleArg, SYSCTL_nM
         stRegister.uxShift = MEMORY_TIM0_R_FLASH_WS_BIT;
         stRegister.uxMask = MEMORY_TIM0_FLASH_WS_MASK;
         stRegister.uptrAddress = MEMORY_TIM0_OFFSET;
-        enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);
+        enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
     }
 
     UBase_t uxFlashValue;
@@ -177,7 +177,7 @@ SYSCTL_nERROR SYSCTL__enGetMemoryWaitState(SYSCTL_nMODULE enModuleArg, SYSCTL_nM
         stRegister.uxShift = MEMORY_TIM0_R_EEPROM_WS_BIT;
         stRegister.uxMask = MEMORY_TIM0_EEPROM_WS_MASK;
         stRegister.uptrAddress = MEMORY_TIM0_OFFSET;
-        enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);
+        enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
     }
     if(SYSCTL_enERROR_OK == enErrorReg)
     {
@@ -228,7 +228,7 @@ SYSCTL_nERROR SYSCTL__enGetMemoryClockEdge(SYSCTL_nMODULE enModuleArg, SYSCTL_nM
         stRegister.uxShift = MEMORY_TIM0_R_FLASH_BCE_BIT;
         stRegister.uxMask = MEMORY_TIM0_FLASH_BCE_MASK;
         stRegister.uptrAddress = MEMORY_TIM0_OFFSET;
-        enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);
+        enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
     }
 
     UBase_t uxFlashValue;
@@ -240,7 +240,7 @@ SYSCTL_nERROR SYSCTL__enGetMemoryClockEdge(SYSCTL_nMODULE enModuleArg, SYSCTL_nM
         stRegister.uxShift = MEMORY_TIM0_R_EEPROM_BCE_BIT;
         stRegister.uxMask = MEMORY_TIM0_EEPROM_BCE_MASK;
         stRegister.uptrAddress = MEMORY_TIM0_OFFSET;
-        enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);
+        enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
     }
     if(SYSCTL_enERROR_OK == enErrorReg)
     {

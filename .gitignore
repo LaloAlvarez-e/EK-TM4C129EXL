@@ -72,4 +72,5 @@ RemoteSystemsTempFiles/
 .jxbrowser-data/**
 **/.jxbrowser-data
 **/.jxbrowser-data/**
+/.tmp/
 .gitignore~

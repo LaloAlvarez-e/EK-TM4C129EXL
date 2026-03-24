@@ -373,7 +373,7 @@ SYSCTL_nERROR SYSCTL__enGetOutputClockFrequency(SYSCTL_nMODULE enModuleArg, UBas
             enErrorReg = SYSCTL__enGetMOSCFrequency(&uxFrequencyReg);
             break;
         case SYSCTL_enOUTCLK_SRC_SYSCLK:
-            /** TODO **/
+            enErrorReg = SYSCTL__enGetSystemClockFrequency(enModuleArg, &uxFrequencyReg);
             break;
         default:
             uxFrequencyReg = 0UL;

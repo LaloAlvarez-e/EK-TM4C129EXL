@@ -29,7 +29,7 @@ SYSCTL_nERROR SYSCTL__enUpdatePLLValues(SYSCTL_nMODULE enModuleArg)
     stRegister.uxShift = RSCLK_CFG_R_NEW_PLLFREQ_BIT;
     stRegister.uxMask = RSCLK_CFG_NEW_PLLFREQ_MASK;
     stRegister.uptrAddress = RSCLK_CFG_OFFSET;
-    stRegister.uxValue = RSCLK_CFG_MEMTIMU_UPDATE;
+    stRegister.uxValue = RSCLK_CFG_NEW_PLLFREQ_UPDATE;
 
     SYSCTL_nERROR enErrorReg;
     enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);

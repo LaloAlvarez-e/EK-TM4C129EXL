@@ -106,7 +106,7 @@ SYSCTL_nERROR SYSCTL__enDeInitClockGates(SYSCTL_nMODULE enModuleArg)
     enErrorReg = SYSCTL_enERROR_OK;
     for(uxIterReg = 0UL; uxIterReg < 70UL; uxIterReg++)
     {
-        enErrorReg = SYSCTL__enClearReadyOnRunMode(enModuleArg, enPeripheralReg[0UL]);
+        enErrorReg = SYSCTL__enClearReadyOnRunMode(enModuleArg, enPeripheralReg[uxIterReg]);
         if(SYSCTL_enERROR_OK != enErrorReg)
         {
             break;
