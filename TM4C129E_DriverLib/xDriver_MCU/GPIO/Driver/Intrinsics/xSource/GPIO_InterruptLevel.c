@@ -125,7 +125,7 @@ GPIO_nERROR GPIO__enGetInterruptLevelByNumber(GPIO_nPORT enPortArg, GPIO_nPIN en
 
     if(GPIO_enERROR_OK == enErrorReg)
     {
-        if(GPIO_enSENSE_LEVEL != enSenseReg)
+        if(GPIO_enSENSE_LEVEL == enSenseReg)
         {
             GPIO_Register_t stRegister;
             stRegister.uxShift = (UBase_t) enPinArg;

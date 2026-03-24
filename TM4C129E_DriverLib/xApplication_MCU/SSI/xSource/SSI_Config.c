@@ -179,7 +179,7 @@ SSI_nERROR SSI__enSetConfig(SSI_nMODULE enModuleArg,
             }
             else
             {
-                enGpioConfigFss = GPIO_enCONFIG_INPUT_12MA_OPENDRAIN_PULLUP;
+                enGpioConfigFss = GPIO_enCONFIG_INPUT_12MA_PUSHPULL_PULLUP;
             }
             enErrorReg = (SSI_nERROR) GPIO__enSetDigitalConfig(SSI_enGpioInput[(UBase_t) pstLineConfigArg->enFss][(UBase_t) enModuleArg][FSS_LINE],
                                                                enGpioConfigFss);
@@ -196,7 +196,7 @@ SSI_nERROR SSI__enSetConfig(SSI_nMODULE enModuleArg,
             }
             else
             {
-                enGpioConfigClk = GPIO_enCONFIG_INPUT_12MA_OPENDRAIN_PULLUP;
+                enGpioConfigClk = GPIO_enCONFIG_INPUT_12MA_PUSHPULL_PULLUP;
             }
             enErrorReg = (SSI_nERROR) GPIO__enSetDigitalConfig(SSI_enGpioInput[(UBase_t) pstLineConfigArg->enClk][(UBase_t) enModuleArg][CLK_LINE],
                                                                enGpioConfigClk);
@@ -222,16 +222,16 @@ SSI_nERROR SSI__enSetConfig(SSI_nMODULE enModuleArg,
             }
             if(SSI_enDIRECTION_RX == enDirectionReg)
             {
-                enGpioConfigRx = GPIO_enCONFIG_INPUT_12MA_OPENDRAIN_PULLUP;
-                enGpioConfigDat2 = GPIO_enCONFIG_INPUT_12MA_OPENDRAIN_PULLUP;
-                enGpioConfigDat3 = GPIO_enCONFIG_INPUT_12MA_OPENDRAIN_PULLUP;
+                enGpioConfigRx = GPIO_enCONFIG_INPUT_12MA_PUSHPULL_PULLUP;
+                enGpioConfigDat2 = GPIO_enCONFIG_INPUT_12MA_PUSHPULL_PULLUP;
+                enGpioConfigDat3 = GPIO_enCONFIG_INPUT_12MA_PUSHPULL_PULLUP;
                 if(SSI_enMODE_ADVANCED == pstControlConfigArg->enSSIMode)
                 {
                     enGpioConfigTx = GPIO_enCONFIG_OUTPUT_12MA_PUSHPULL_PULLUP;
                 }
                 else
                 {
-                    enGpioConfigTx = GPIO_enCONFIG_INPUT_12MA_OPENDRAIN_PULLUP;
+                    enGpioConfigTx = GPIO_enCONFIG_INPUT_12MA_PUSHPULL_PULLUP;
                 }
             }
         }
@@ -243,7 +243,7 @@ SSI_nERROR SSI__enSetConfig(SSI_nMODULE enModuleArg,
                 enFssHoldReg = SSI_enSTATE_DIS;
             }
             enGpioConfigTx = GPIO_enCONFIG_OUTPUT_12MA_PUSHPULL_PULLUP;
-            enGpioConfigRx = GPIO_enCONFIG_INPUT_12MA_OPENDRAIN_PULLUP;
+            enGpioConfigRx = GPIO_enCONFIG_INPUT_12MA_PUSHPULL_PULLUP;
         }
     }
     if(SSI_enERROR_OK == enErrorReg)

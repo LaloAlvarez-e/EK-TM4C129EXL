@@ -82,7 +82,7 @@ QEI_nERROR QEI__enSetConfig(QEI_nMODULE enModuleArg,
             enErrorReg = (QEI_nERROR) GPIO__enSetDigitalConfig(QEI_enGpioInput[(UBase_t) pstInputConfigArg->enIDX]
                                                                               [(UBase_t) enModuleArg]
                                                                               [IDX_SIGNAL],
-                                                               GPIO_enCONFIG_INPUT_2MA_OPENDRAIN);
+                                                               GPIO_enCONFIG_INPUT_2MA_PUSHPULL);
         }
     }
     if(QEI_enERROR_OK == enErrorReg)
@@ -90,14 +90,14 @@ QEI_nERROR QEI__enSetConfig(QEI_nMODULE enModuleArg,
         enErrorReg = (QEI_nERROR) GPIO__enSetDigitalConfig(QEI_enGpioInput[(UBase_t) pstInputConfigArg->enPhA]
                                                 [(UBase_t) enModuleArg]
                                                 [PHA_SIGNAL],
-                                GPIO_enCONFIG_INPUT_2MA_OPENDRAIN);
+                                GPIO_enCONFIG_INPUT_2MA_PUSHPULL);
     }
     if(QEI_enERROR_OK == enErrorReg)
     {
         enErrorReg = (QEI_nERROR) GPIO__enSetDigitalConfig(QEI_enGpioInput[(UBase_t) pstInputConfigArg->enPhB]
                                                 [(UBase_t) enModuleArg]
                                                 [PHB_SIGNAL],
-                                GPIO_enCONFIG_INPUT_2MA_OPENDRAIN);
+                                GPIO_enCONFIG_INPUT_2MA_PUSHPULL);
     }
     if(QEI_enERROR_OK == enErrorReg)
     {

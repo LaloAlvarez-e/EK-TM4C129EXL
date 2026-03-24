@@ -228,7 +228,7 @@ UART_nERROR UART__enSetConfig(UART_nMODULE enModuleArg,
                 if(UART_enERROR_OK == enErrorReg)
                 {
                     enErrorReg = (UART_nERROR) GPIO__enSetDigitalConfig(UART_enGpioInput[(UBase_t) pstLineConfigArg->enCTS] [(UBase_t) enModuleArg] [CTS_LINE],
-                                                                        GPIO_enCONFIG_INPUT_2MA_OPENDRAIN);
+                                                                        GPIO_enCONFIG_INPUT_2MA_PUSHPULL);
                 }
             }
             else
@@ -279,7 +279,7 @@ UART_nERROR UART__enSetConfig(UART_nMODULE enModuleArg,
                 if(UART_enERROR_OK == enErrorReg)
                 {
                     enErrorReg = (UART_nERROR) GPIO__enSetDigitalConfig(UART_enGpioInput[(UBase_t) pstLineConfigArg->enDCD][(UBase_t) enModuleArg][DCD_LINE],
-                                                                        GPIO_enCONFIG_INPUT_2MA_OPENDRAIN);
+                                                                        GPIO_enCONFIG_INPUT_2MA_PUSHPULL);
                 }
             }
             else
@@ -298,7 +298,7 @@ UART_nERROR UART__enSetConfig(UART_nMODULE enModuleArg,
                 if(UART_enERROR_OK == enErrorReg)
                 {
                     enErrorReg = (UART_nERROR) GPIO__enSetDigitalConfig(UART_enGpioInput[(UBase_t) pstLineConfigArg->enDSR][(UBase_t) enModuleArg][DSR_LINE],
-                                                                        GPIO_enCONFIG_INPUT_2MA_OPENDRAIN);
+                                                                        GPIO_enCONFIG_INPUT_2MA_PUSHPULL);
                 }
             }
             else
@@ -340,7 +340,7 @@ UART_nERROR UART__enSetConfig(UART_nMODULE enModuleArg,
                 if(UART_enERROR_OK == enErrorReg)
                 {
                     enErrorReg = (UART_nERROR) GPIO__enSetDigitalConfig(UART_enGpioInput[(UBase_t) pstLineConfigArg->enRI][(UBase_t) enModuleArg][RI_LINE],
-                                                                        GPIO_enCONFIG_INPUT_2MA_OPENDRAIN);
+                                                                        GPIO_enCONFIG_INPUT_2MA_PUSHPULL);
                 }
             }
             else

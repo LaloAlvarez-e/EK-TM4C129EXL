@@ -52,7 +52,7 @@ GPIO_nERROR GPIO__enSetAnalogFunction(GPIO_nANALOG_FUNCTION enFunctionArg)
     }
     if(GPIO_enERROR_OK == enErrorReg)
     {
-        enErrorReg = GPIO__enSetConfigByNumber((GPIO_nPORT) uxPortReg, (GPIO_nPIN) uxPinReg, GPIO_enCONFIG_INPUT_2MA_OPENDRAIN);
+        enErrorReg = GPIO__enSetConfigByNumber((GPIO_nPORT) uxPortReg, (GPIO_nPIN) uxPinReg, GPIO_enCONFIG_INPUT_2MA_PUSHPULL);
     }
     if(GPIO_enERROR_OK == enErrorReg)
     {
