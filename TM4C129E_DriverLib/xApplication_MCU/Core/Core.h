@@ -25,6 +25,7 @@
 #ifndef XAPPLICATION_MCU_CORE_CORE_H_
 #define XAPPLICATION_MCU_CORE_CORE_H_
 
+#include <xApplication_MCU/Core/MPU/MPU.h>
 #include <xApplication_MCU/Core/SYSTICK/SYSTICK.h>
 #include <xApplication_MCU/Core/SCB/SCB.h>
 

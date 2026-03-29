@@ -1,0 +1,7 @@
+[2026-03-29 00:33:16] Split SYSEXC vector processing into report and callback stages so GNU and TI assembly invoke the new report functionality explicitly.
+- Added SYSEXC__vIRQVectorHandlerReport(uintptr_t, void*) declaration to the SYSEXC vector header.
+- Refactored SYSEXC_InterruptRoutine_Vector.c so SYSEXC__vIRQVectorHandlerReport builds SYSEXC_REPORT_t and calls SYSEXC__vInvokeReportHandler() for SW, DENORMAL, DIV0, INVALID, UNDERFLOW, OVERFLOW, and INEXACT cases.
+- Simplified SYSEXC__vIRQVectorHandlerCustom to handle only interrupt-clear operations and registered source callbacks.
+- Updated GNU SYSEXC vector assembly to call SYSEXC__vIRQVectorHandlerReport first and SYSEXC__vIRQVectorHandlerCustom second.
+- Updated TI SYSEXC vector assembly the same way to keep both toolchains aligned.
+- Verified no remaining SYSEXC__vSendValues references and validated edited C/header/assembly files with clean diagnostics.

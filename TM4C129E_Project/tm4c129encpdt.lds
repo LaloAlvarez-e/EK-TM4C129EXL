@@ -26,15 +26,19 @@ SECTIONS {
     PROVIDE (_intvecs_base_address = 0x00010000);
 
     .intvecs (_intvecs_base_address) : AT (_intvecs_base_address) {
+        __intvec_start__ = .;
         KEEP (*(.intvecs))
+        __intvec_end__ = .;
     } > FLASH_VTABLE
 
     PROVIDE (_vtable_base_address = 0x20003000);
 
     .vtable (_vtable_base_address) : AT (_vtable_base_address) {
+        __vtable_start__ = .;
         . = ALIGN(4);
         KEEP (*(.vtable))
         . = ALIGN(4);
+        __vtable_end__ = .;
     } > SRAM_VTABLE
 
     .text : {
@@ -67,6 +71,8 @@ SECTIONS {
         *(.ARM.extab* .gnu.linkonce.armextab.*)
     } > FLASH_BANK01
 
+    __flash_exec_end__ = .;
+
 
     .ramcode : {
         . = ALIGN(4);
@@ -93,6 +99,8 @@ SECTIONS {
         . = ALIGN (4);
         __data_end__ = .;
     } > SRAM AT> FLASH_BANK23
+
+    __data_load_end__ = LOADADDR (.data) + SIZEOF(.data);
 
     .dma : {
         . = ALIGN(4);

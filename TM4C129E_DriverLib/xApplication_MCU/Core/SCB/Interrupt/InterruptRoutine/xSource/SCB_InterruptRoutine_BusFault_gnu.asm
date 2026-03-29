@@ -60,10 +60,12 @@ ProcessStackBus:
 ProcessBus:
     pop {R4-R7}
     push {R0,R1,R2,LR}
-    .global BusFault__vSendValues
+    .global BusFault__vIRQVectorHandlerReport
     .global BusFault__vIRQVectorHandlerCustom
-    .global BusFault__vSendValues
-    ldr R2, = BusFault__vSendValues
+    movw R0, #0xE000
+    movt R0, #0xE000
+    ldr R1, = SCB_BusFault_puxContext
+    ldr R2, = BusFault__vIRQVectorHandlerReport
     blx R2
     movw R0, #0xE000
     movt R0, #0xE000

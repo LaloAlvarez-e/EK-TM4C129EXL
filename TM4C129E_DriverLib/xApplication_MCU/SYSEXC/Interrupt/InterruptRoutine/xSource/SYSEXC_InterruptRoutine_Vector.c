@@ -47,12 +47,11 @@ static void SYSEXC__vCreateReport(SYSEXC_REPORT_t* pstReportArg, SYSEXC_nINT enS
     }
 }
 
-void SYSEXC__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument)
+void SYSEXC__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgument)
 {
     SYSEXC_t* pstSystemExceptionReg;
     UBase_t uxSystemException;
     UBase_t uxSysExcAddressFault;
-    SYSEXC_pvfIRQSourceHandler_t pvfCallback;
     SYSEXC_REPORT_t stReport;
 
     UBase_t* puxContext;
@@ -83,6 +82,56 @@ void SYSEXC__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument)
     {
         SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_SW, uxSystemException, uxSysExcAddressFault, puxContext);
         SYSEXC__vInvokeReportHandler(&stReport);
+    }
+    else
+    {
+        if(0UL != ((UBase_t) SYSEXC_enINTMASK_DENORMAL & uxSystemException))
+        {
+            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_DENORMAL, uxSystemException, uxSysExcAddressFault, puxContext);
+            SYSEXC__vInvokeReportHandler(&stReport);
+        }
+        if(0UL != ((UBase_t) SYSEXC_enINTMASK_DIV0 & uxSystemException))
+        {
+            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_DIV0, uxSystemException, uxSysExcAddressFault, puxContext);
+            SYSEXC__vInvokeReportHandler(&stReport);
+        }
+        if(0UL != ((UBase_t) SYSEXC_enINTMASK_INVALID & uxSystemException))
+        {
+            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_INVALID, uxSystemException, uxSysExcAddressFault, puxContext);
+            SYSEXC__vInvokeReportHandler(&stReport);
+        }
+        if(0UL != ((UBase_t) SYSEXC_enINTMASK_UNDERFLOW & uxSystemException))
+        {
+            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_UNDERFLOW, uxSystemException, uxSysExcAddressFault, puxContext);
+            SYSEXC__vInvokeReportHandler(&stReport);
+        }
+        if(0UL != ((UBase_t) SYSEXC_enINTMASK_OVERFLOW & uxSystemException))
+        {
+            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_OVERFLOW, uxSystemException, uxSysExcAddressFault, puxContext);
+            SYSEXC__vInvokeReportHandler(&stReport);
+        }
+        if(0UL != ((UBase_t) SYSEXC_enINTMASK_INEXACT & uxSystemException))
+        {
+            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_INEXACT, uxSystemException, uxSysExcAddressFault, puxContext);
+            SYSEXC__vInvokeReportHandler(&stReport);
+        }
+    }
+
+}
+
+void SYSEXC__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument)
+{
+    SYSEXC_t* pstSystemExceptionReg;
+    UBase_t uxSystemException;
+    SYSEXC_pvfIRQSourceHandler_t pvfCallback;
+
+    (void) pvArgument;
+
+    pstSystemExceptionReg = (SYSEXC_t*) uptrModuleArg;
+    uxSystemException = pstSystemExceptionReg->MIS;
+
+    if(0UL == ((UBase_t) SYSEXC_enINTMASK_ALL & uxSystemException))
+    {
         pvfCallback = SYSEXC__pvfGetIRQSourceHandler(SYSEXC_enMODULE_0, SYSEXC_enINT_SW);
         pvfCallback(SYSEXC_BASE, (void*) SYSEXC_enINT_SW);
     }
@@ -91,48 +140,36 @@ void SYSEXC__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument)
         if(0UL != ((UBase_t) SYSEXC_enINTMASK_DENORMAL & uxSystemException))
         {
             pstSystemExceptionReg->IC = (UBase_t) SYSEXC_enINTMASK_DENORMAL;
-            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_DENORMAL, uxSystemException, uxSysExcAddressFault, puxContext);
-            SYSEXC__vInvokeReportHandler(&stReport);
             pvfCallback = SYSEXC__pvfGetIRQSourceHandler(SYSEXC_enMODULE_0, SYSEXC_enINT_DENORMAL);
             pvfCallback(SYSEXC_BASE, (void*) SYSEXC_enINT_DENORMAL);
         }
         if(0UL != ((UBase_t) SYSEXC_enINTMASK_DIV0 & uxSystemException))
         {
-            pstSystemExceptionReg->IC = (UBase_t) SYSEXC_enINTMASK_DIV0 ;
-            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_DIV0, uxSystemException, uxSysExcAddressFault, puxContext);
-            SYSEXC__vInvokeReportHandler(&stReport);
+            pstSystemExceptionReg->IC = (UBase_t) SYSEXC_enINTMASK_DIV0;
             pvfCallback = SYSEXC__pvfGetIRQSourceHandler(SYSEXC_enMODULE_0, SYSEXC_enINT_DIV0);
             pvfCallback(SYSEXC_BASE, (void*) SYSEXC_enINT_DIV0);
         }
         if(0UL != ((UBase_t) SYSEXC_enINTMASK_INVALID & uxSystemException))
         {
             pstSystemExceptionReg->IC = (UBase_t) SYSEXC_enINTMASK_INVALID;
-            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_INVALID, uxSystemException, uxSysExcAddressFault, puxContext);
-            SYSEXC__vInvokeReportHandler(&stReport);
             pvfCallback = SYSEXC__pvfGetIRQSourceHandler(SYSEXC_enMODULE_0, SYSEXC_enINT_INVALID);
             pvfCallback(SYSEXC_BASE, (void*) SYSEXC_enINT_INVALID);
         }
         if(0UL != ((UBase_t) SYSEXC_enINTMASK_UNDERFLOW & uxSystemException))
         {
             pstSystemExceptionReg->IC = (UBase_t) SYSEXC_enINTMASK_UNDERFLOW;
-            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_UNDERFLOW, uxSystemException, uxSysExcAddressFault, puxContext);
-            SYSEXC__vInvokeReportHandler(&stReport);
             pvfCallback = SYSEXC__pvfGetIRQSourceHandler(SYSEXC_enMODULE_0, SYSEXC_enINT_UNDERFLOW);
             pvfCallback(SYSEXC_BASE, (void*) SYSEXC_enINT_UNDERFLOW);
         }
         if(0UL != ((UBase_t) SYSEXC_enINTMASK_OVERFLOW & uxSystemException))
         {
             pstSystemExceptionReg->IC = (UBase_t) SYSEXC_enINTMASK_OVERFLOW;
-            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_OVERFLOW, uxSystemException, uxSysExcAddressFault, puxContext);
-            SYSEXC__vInvokeReportHandler(&stReport);
             pvfCallback = SYSEXC__pvfGetIRQSourceHandler(SYSEXC_enMODULE_0, SYSEXC_enINT_OVERFLOW);
             pvfCallback(SYSEXC_BASE, (void*) SYSEXC_enINT_OVERFLOW);
         }
         if(0UL != ((UBase_t) SYSEXC_enINTMASK_INEXACT & uxSystemException))
         {
             pstSystemExceptionReg->IC = (UBase_t) SYSEXC_enINTMASK_INEXACT;
-            SYSEXC__vCreateReport(&stReport, SYSEXC_enINT_INEXACT, uxSystemException, uxSysExcAddressFault, puxContext);
-            SYSEXC__vInvokeReportHandler(&stReport);
             pvfCallback = SYSEXC__pvfGetIRQSourceHandler(SYSEXC_enMODULE_0, SYSEXC_enINT_INEXACT);
             pvfCallback(SYSEXC_BASE, (void*) SYSEXC_enINT_INEXACT);
         }

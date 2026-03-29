@@ -1,0 +1,19 @@
+[2026-03-29 01:18:41] Triaged SYSEXC fault context and narrowed startup SYSEXC mask.
+Request: analyze reported SYSEXC stacked context values and determine likely source.
+Investigation:
+- Confirmed SYSEXC stacked context layout is R0, R1, R2, R3, R12, LR, PC, xPSR from xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector_ti.asm and SYSEXC_InterruptRoutine_Vector.c.
+- Decoded reported frame: LR=0x3729, PC=0x5451, xPSR=0x01000000, R3=R12=0x200232F0.
+- Resolved symbols against TM4C129E_Project/Release__TI/TM4C129E_Project.map:
+  - PC 0x5451 lands inside UART2__vIRQVectorHandler.
+  - LR 0x3729 lands inside MemoryFault__vIRQVectorHandlerCustom.
+- Resolved exact UART2 instruction from TM4C129E_DriverLib/Release__TI/xApplication_MCU/UART/Interrupt/InterruptRoutine/xSource/UART_InterruptRoutine_Vector_Module2.lst:
+  - PC offset is UART2__vIRQVectorHandler + 0xF0, which is the receive-timeout callback setup path (`MOVS A2, #6`) immediately before the indirect callback call.
+- Verified TM4C129E_Project registers SYSEXC with SYSEXC_enINTMASK_ALL in tm4c129encpdt_startup_ccs.c.
+- Verified UART2 has no project-specific IRQ source registrations; default source handlers remain MCU_vIRQSourceHandler_Dummy.
+Conclusion:
+- The reported PC is not itself a floating-point instruction. The most likely root cause is a deferred floating-point status exception surfacing while execution later passed through the UART2 receive-timeout ISR path.
+- Enabling SYSEXC_enINTMASK_ALL is too aggressive for normal firmware operation because it traps on DENORMAL, UNDERFLOW, and INEXACT in addition to DIV0/INVALID/OVERFLOW.
+Implementation:
+- Updated TM4C129E_Project/tm4c129encpdt_startup_ccs.c to initialize SYSEXC with DIV0 | INVALID | OVERFLOW instead of SYSEXC_enINTMASK_ALL.
+Validation:
+- get_errors on tm4c129encpdt_startup_ccs.c still reports pre-existing parser issues near the trailing main body (`expected ';'` and `expected '}'` around lines 357/364); no new diagnostics attributable to this edit were introduced.

@@ -61,10 +61,14 @@ ProcessStackMemory:
 ProcessMemory:
     pop {R4-R7}
     push {R0,R1,R2,LR}
-    .global MemoryFault__vSendValues
+    .global MemoryFault__vIRQVectorHandlerReport
     .global MemoryFault__vIRQVectorHandlerCustom
-    movw R2, MemoryFault__vSendValues
-    movt R2, MemoryFault__vSendValues
+    movw R0, #0xE000
+    movt R0, #0xE000
+    movw R1, SCB_MemoryFault_puxContext
+    movt R1, SCB_MemoryFault_puxContext
+    movw R2, MemoryFault__vIRQVectorHandlerReport
+    movt R2, MemoryFault__vIRQVectorHandlerReport
     blx R2
     movw R0, #0xE000
     movt R0, #0xE000

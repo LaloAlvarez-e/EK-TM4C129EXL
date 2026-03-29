@@ -61,9 +61,12 @@ ProcessStackMemory:
 ProcessMemory:
     pop {R4-R7}
     push {R0,R1,R2,LR}
-    .global SYSEXC__vSendValues
+    .global SYSEXC__vIRQVectorHandlerReport
     .global SYSEXC__vIRQVectorHandlerCustom
-    ldr R2, = SYSEXC__vSendValues
+    movw R0, #0x9000
+    movt R0, #0x400F
+    ldr R1, = SYSEXC_puxContext
+    ldr R2, = SYSEXC__vIRQVectorHandlerReport
     blx R2
     movw R0, #0x9000
     movt R0, #0x400F

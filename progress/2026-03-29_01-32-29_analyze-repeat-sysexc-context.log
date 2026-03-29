@@ -1,0 +1,4 @@
+[2026-03-29 01:32:29] Analyzing repeated SYSEXC exception report after restoring full mask.
+- New stacked context reported by user: R0=0x000000C8, R1=0x1DFFA437, R2=0x00000000, R3=0x00000001, R12=0x00000000, LR=0x00003729, PC=0x00005451, xPSR=0x01000000.
+- Previous investigation mapped LR=0x3729 and PC=0x5451 into the TI release image and identified the same UART2 receive-timeout ISR path.
+- Next step: re-check the current startup/FPU/SYSEXC changes against the repeated frame and inspect whether the raw SYSEXC source or FPSCR state still needs to be captured explicitly.

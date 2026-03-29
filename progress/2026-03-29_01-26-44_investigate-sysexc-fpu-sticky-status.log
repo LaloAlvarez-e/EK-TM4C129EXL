@@ -1,0 +1,6 @@
+[2026-03-29 01:26:44] Investigated SYSEXC root cause before restoring full mask.
+- Reviewed FPU init and FPSCR helpers in TM4C129E_DriverLib.
+- Verified FPU__enInit enables/configures the FPU but does not clear pending FPSCR exception flags.
+- Verified SYSEXC__enInit disables/enables sources but does not clear pending SYSEXC interrupt status before enabling the vector.
+- Verified UART baud-rate configuration in startup uses float32 operations before SYSEXC is armed, which can leave sticky INEXACT/DENORMAL-related status.
+- Conclusion: stale floating-point exception state is the most likely source of the deferred SYSEXC interrupt observed later at UART2 ISR context.

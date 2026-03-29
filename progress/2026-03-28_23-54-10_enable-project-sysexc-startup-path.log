@@ -1,0 +1,6 @@
+[2026-03-28 23:54:10] Enabled project SYSEXC startup path
+- Request: Continue closing Chapter 6 after the SYSEXC UART report-path fix.
+- Investigation: Verified that TM4C129E_Project/tm4c129encpdt_startup_ccs.c initialized FPU and registered the UART SYSEXC report callback, but did not call SYSEXC__enInit(...), leaving the FPU/SYSEXC vector on IntDefaultHandler at runtime.
+- Implementation: Added the explicit declaration include for UART__enSysExcReportCallback and enabled the SYSEXC module in startup with SYSEXC__enInit(SYSEXC_enMODULE_0, SYSEXC_enINTMASK_ALL, SYSEXC_enDEFAULT) immediately after report-handler registration.
+- Validation: The startup-file callback declaration diagnostic was cleared. Remaining startup diagnostics are pre-existing parser complaints around the ResetISR inline assembly tail and are not tied to the SYSEXC changes.
+- Current status: Chapter 6 SYSEXC is now both implemented in DriverLib/app layers and wired into TM4C129E_Project startup for runtime use.

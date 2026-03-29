@@ -1,0 +1,5 @@
+[2026-03-29 01:47:08] Validated SYSEXC INEXACT mask change
+Validation target: TM4C129E_Project/tm4c129encpdt_startup_ccs.c.
+Result: diagnostics still report the same pre-existing parser issues near the IntDefaultHandler tail of the file (expected ';' around line 363 and expected '}' around line 370). The edited SYSEXC initialization block is outside that region and introduced no new reported problems.
+Files reviewed: TM4C129E_Project/tm4c129encpdt_startup_ccs.c.
+Status: validation complete with pre-existing unrelated diagnostics remaining.

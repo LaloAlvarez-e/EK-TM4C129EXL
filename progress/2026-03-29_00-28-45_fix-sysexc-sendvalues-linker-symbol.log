@@ -1,0 +1,8 @@
+[2026-03-29 00:28:45] Fixed GNU SYSEXC vector link failure caused by missing SYSEXC__vSendValues symbol.
+- Investigated SYSEXC_InterruptRoutine_Vector_gnu.asm and confirmed the assembly stub calls SYSEXC__vSendValues before SYSEXC__vIRQVectorHandlerCustom.
+- Cross-checked SCB fault handlers and found the expected pattern: each assembly vector has a matching C helper named <Fault>__vSendValues().
+- Found SYSEXC lacked the C implementation and header declaration entirely.
+- Added SYSEXC__vSendValues(void) to xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c.
+- Added the declaration to xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xHeader/SYSEXC_InterruptRoutine_Vector.h.
+- Implemented the helper using the same UART0 diagnostic initialization and register-dump pattern used by the SCB fault handlers.
+- Validated the edited SYSEXC C and header files: no diagnostics reported.

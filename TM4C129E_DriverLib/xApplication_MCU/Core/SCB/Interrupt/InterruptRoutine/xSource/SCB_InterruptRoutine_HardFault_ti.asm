@@ -61,10 +61,14 @@ ProcessStackHard:
 ProcessHard:
     pop {R4-R7}
     push {R0,R1,R2,LR}
-    .global HardFault__vSendValues
+    .global HardFault__vIRQVectorHandlerReport
     .global HardFault__vIRQVectorHandlerCustom
-    movw R2, HardFault__vSendValues
-    movt R2, HardFault__vSendValues
+    movw R0, #0xE000
+    movt R0, #0xE000
+    movw R1, SCB_HardFault_puxContext
+    movt R1, SCB_HardFault_puxContext
+    movw R2, HardFault__vIRQVectorHandlerReport
+    movt R2, HardFault__vIRQVectorHandlerReport
     blx R2
     movw R0, #0xE000
     movt R0, #0xE000

@@ -27,6 +27,7 @@
 
 #include <xApplication_MCU/Core/SCB/Interrupt/SCB_Interrupt.h>
 #include <xApplication_MCU/Core/SCB/xHeader/SCB_RegisterIRQVector.h>
+#include <xApplication_MCU/Core/SCB/xHeader/SCB_Report.h>
 #include <xApplication_MCU/Core/SCB/xHeader/SCB_VectorTable.h>
 #include <xApplication_MCU/Core/SCB/xHeader/SCB_Init.h>
 

@@ -1,0 +1,7 @@
+[2026-03-29 00:30:53] Removed obsolete SYSEXC__vSendValues assembly call and aligned SYSEXC vector flow with the current report-based handler.
+- Re-checked current SYSEXC vector C/header after the user reverted the prior helper-based fix.
+- Confirmed SYSEXC_InterruptRoutine_Vector.c already implements the new report flow with SYSEXC__vCreateReport(...) and SYSEXC__vInvokeReportHandler(...).
+- Updated GNU SYSEXC vector assembly to remove the obsolete SYSEXC__vSendValues symbol reference and call directly into SYSEXC__vIRQVectorHandlerCustom.
+- Updated TI SYSEXC vector assembly the same way to keep GNU/TI paths consistent.
+- Verified no remaining SYSEXC__vSendValues references in TM4C129E_DriverLib.
+- Validated edited GNU/TI assembly files and the SYSEXC vector C file: no diagnostics reported.

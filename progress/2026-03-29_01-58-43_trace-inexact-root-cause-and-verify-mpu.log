@@ -1,0 +1,17 @@
+[2026-03-29 01:58:43] Traced the active INEXACT SYSEXC source and verified MPU involvement.
+- Reviewed the active scheduler path in TM4C129E_Project/xOS/Adapt/xSource/OS_Adapt_Scheduler.c.
+- Confirmed OS_Adapt_vSetupTimerInterrupt() calls SYSTICK__enInitUsVector() before the first task starts.
+- Reviewed TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c and found float-based tick scaling:
+  - f32PicoSeconds /= (float32_t) uxSystemFrequencyMHz;
+  - f32PicoSecondsTemp = f32PicoSeconds + 0.5f;
+  - f32PicoSeconds *= (float32_t) uxTickArg;
+  - f32PicoSeconds += 0.5f;
+- Reviewed TM4C129E_DriverLib/Release__TI/SYSTICK_Init.asm and matched the source with VFP instructions at the same lines:
+  - VCVT.F32.U32
+  - VDIV.F32
+  - VADD.F32
+  - VCVT.U32.F32
+- Conclusion: the live INEXACT condition is produced by SysTick initialization math, not by UART2 itself.
+- Re-checked MPU__vInit() references across the workspace and found only the declaration, definition, and compiled object; no active caller was found.
+- Conclusion: the new MPU configuration is not currently active in the linked project image, so it is not the cause of the reported SYSEXC behavior or UART0 DMA path at this stage.
+- No code changes were applied in this step; this was a root-cause verification pass.

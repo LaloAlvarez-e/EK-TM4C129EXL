@@ -30,7 +30,7 @@
 extern UBase_t SCB_HardFault_puxContext[8UL];
 
 void HardFault__vIRQVectorHandler(void);
-void HardFault__vSendValues(void);
+void HardFault__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgument);
 void HardFault__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument);
 
 #endif /* XAPPLICATION_MCU_CORE_SCB_INTERRUPT_INTERRUPTROUTINE_XHEADER_SCB_INTERRUPTROUTINE_HARDFAULT_H_ */

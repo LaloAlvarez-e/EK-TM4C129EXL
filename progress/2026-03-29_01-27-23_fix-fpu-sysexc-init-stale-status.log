@@ -1,0 +1,4 @@
+[2026-03-29 01:27:23] Implemented FPU/SYSEXC initialization fix for stale floating-point exception state.
+- Updated TM4C129E_DriverLib/xDriver_MCU/Core/FPU/App/xSource/FPU_Init.c to clear all FPSCR exception status bits after FPU mode/rounding configuration.
+- Updated TM4C129E_DriverLib/xApplication_MCU/SYSEXC/xSource/SYSEXC_Init.c to clear all pending SYSEXC sources after disabling them and before reenabling the requested mask.
+- Restored TM4C129E_Project/tm4c129encpdt_startup_ccs.c to initialize SYSEXC with SYSEXC_enINTMASK_ALL.

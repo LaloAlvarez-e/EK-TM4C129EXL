@@ -35,7 +35,12 @@ MEMORY
 --heap_size=0x0001CE00
 SECTIONS
 {
-    .intvecs:   > 0x00000000
+    .intvecs :
+    {
+        __intvec_start__ = .;
+        *(.intvecs)
+        __intvec_end__ = .;
+    } > 0x00000000
     .text   :   > FLASH_BANK01
     .switch :   > FLASH_BANK01
     .const  :   > FLASH_BANK23
@@ -44,9 +49,18 @@ SECTIONS
     .pinit  :   > FLASH_BANK01
     .init_array : > FLASH_BANK01
     .ARM.exidx : > FLASH_BANK01
-    .ARM.extab : > FLASH_BANK01
+    .ARM.extab :
+    {
+        *(.ARM.extab*)
+        __flash_exec_end__ = .;
+    } > FLASH_BANK01
 
-    .vtable :   > SRAM_VTABLE
+    .vtable :
+    {
+        __vtable_start__ = .;
+        *(.vtable)
+        __vtable_end__ = .;
+    } > SRAM_VTABLE
 
     .ramcode: LOAD = FLASH_BANK23,
                 RUN = SRAM_CODE,
@@ -57,6 +71,7 @@ SECTIONS
     .data  : LOAD = FLASH_BANK23,
                 RUN = SRAM,
                 LOAD_START(__data_load__),
+                LOAD_END(__data_load_end__),
                 RUN_START(__data_start__),
                 RUN_END(__data_end__)
     .bss    :  RUN = SRAM,

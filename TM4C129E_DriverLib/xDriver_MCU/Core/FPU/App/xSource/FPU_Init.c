@@ -23,6 +23,7 @@
  */
 #include <xDriver_MCU/Core/FPU/App/xHeader/FPU_Init.h>
 
+#include <xDriver_MCU/Common/xHeader/MCU_FloatingPoint.h>
 #include <xDriver_MCU/Core/FPU/Driver/FPU_Driver.h>
 
 FPU_nERROR FPU__enInit(FPU_nMODULE enModuleArg)
@@ -43,6 +44,12 @@ FPU_nERROR FPU__enInit(FPU_nMODULE enModuleArg)
         FPU__vSetHalfPrecision(enModuleArg, FPU_enHALF_PRECISION_IEEE);
         FPU__vSetNAN(enModuleArg, FPU_enNAN_PROPAGATE);
         FPU__vSetRoundingMode(enModuleArg, FPU_enROUNDING_NEAREST);
+        MCU__vClearFPUStatusControlMask((UBase_t) FPU_enEXCEPTION_INVALID |
+                                        (UBase_t) FPU_enEXCEPTION_DIV0 |
+                                        (UBase_t) FPU_enEXCEPTION_OVERFLOW |
+                                        (UBase_t) FPU_enEXCEPTION_UNDERFLOW |
+                                        (UBase_t) FPU_enEXCEPTION_INEXACT |
+                                        (UBase_t) FPU_enEXCEPTION_DENORMAL);
     }
     return (enErrorReg);
 }

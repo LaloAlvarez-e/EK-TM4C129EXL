@@ -1,0 +1,6 @@
+[2026-03-29 01:45:49] Logged new SYSEXC INEXACT fault report
+Request: analyze repeated SYSEXC context after prior reset-loop and diagnostics changes.
+Evidence: user provided SYSEXC context with enSource=SYSEXC_enINT_INEXACT, enStatusMask=SYSEXC_enINTMASK_INEXACT, uxFaultAddress=0x5451, context PC=0x5451, LR=0x3729, R0=0x000000C8.
+Files reviewed: TM4C129E_DriverLib/xApplication_MCU/UART/xSource/UART_SYSEXC.c, TM4C129E_DriverLib/xDriver_MCU/Core/FPU/App/xSource/FPU_Init.c, TM4C129E_DriverLib/Release__TI/xApplication_MCU/UART/Interrupt/InterruptRoutine/xSource/UART_InterruptRoutine_Vector_Module2.lst.
+Initial conclusion: SYSEXC is now confirmed to be trapping on INEXACT, so enabling SYSEXC_enINTMASK_ALL is not a valid production configuration for normal floating-point runtime. Separate UART callback-pointer corruption symptom remains under investigation.
+Validation: read-only investigation completed.

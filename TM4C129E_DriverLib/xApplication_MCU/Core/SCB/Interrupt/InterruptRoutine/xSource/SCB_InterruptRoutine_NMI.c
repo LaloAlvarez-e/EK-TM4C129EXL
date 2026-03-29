@@ -25,11 +25,104 @@
 
 #include <xApplication_MCU/Core/SCB/Interrupt/InterruptRoutine/xHeader/SCB_InterruptRoutine_Source.h>
 #include <xApplication_MCU/Core/SCB/Intrinsics/xHeader/SCB_Dependencies.h>
+#include <xApplication_MCU/Core/SCB/xHeader/SCB_Report.h>
+
+static void NMI__vCreateReport(SCB_REPORT_t* pstReportArg, SCB_nNMI_BIT enSourceArg, UBase_t uxStatusMaskArg);
+
+static void NMI__vCreateReport(SCB_REPORT_t* pstReportArg, SCB_nNMI_BIT enSourceArg, UBase_t uxStatusMaskArg)
+{
+    pstReportArg->enModule = SCB_enMODULE_0;
+    pstReportArg->enFault = SCB_enFAULT_NMI;
+    pstReportArg->uxSource = (UBase_t) enSourceArg;
+    pstReportArg->uxStatusMask = uxStatusMaskArg;
+    pstReportArg->uxFaultAddress = 0UL;
+    pstReportArg->uxContext[0UL] = 0UL;
+    pstReportArg->uxContext[1UL] = 0UL;
+    pstReportArg->uxContext[2UL] = 0UL;
+    pstReportArg->uxContext[3UL] = 0UL;
+    pstReportArg->uxContext[4UL] = 0UL;
+    pstReportArg->uxContext[5UL] = 0UL;
+    pstReportArg->uxContext[6UL] = 0UL;
+    pstReportArg->uxContext[7UL] = 0UL;
+}
 
 void NMI__vIRQVectorHandler(void)
 {
+    NMI__vIRQVectorHandlerReport(SCB_BASE, (void*) 0UL);
+    NMI__vIRQVectorHandlerCustom(SCB_BASE, (void*) 0UL);
+}
+
+void NMI__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgument)
+{
+    volatile UBase_t uxRegNMI;
+    SCB_REPORT_t stReport;
+
+    (void) uptrModuleArg;
+    (void) pvArgument;
+
+    uxRegNMI = SYSCTL_NMIC_R;
+
+    stReport.enModule = SCB_enMODULE_0;
+    stReport.enFault = SCB_enFAULT_NMI;
+    stReport.uxSource = 0UL;
+    stReport.uxStatusMask = 0UL;
+    stReport.uxFaultAddress = 0UL;
+    stReport.uxContext[0UL] = 0UL;
+    stReport.uxContext[1UL] = 0UL;
+    stReport.uxContext[2UL] = 0UL;
+    stReport.uxContext[3UL] = 0UL;
+    stReport.uxContext[4UL] = 0UL;
+    stReport.uxContext[5UL] = 0UL;
+    stReport.uxContext[6UL] = 0UL;
+    stReport.uxContext[7UL] = 0UL;
+
+    if(0UL == ((UBase_t) SCB_enNMI_ALL & uxRegNMI))
+    {
+        NMI__vCreateReport(&stReport, SCB_enNMI_BIT_SW, uxRegNMI);
+        SCB__vInvokeReportHandler(stReport.enFault, &stReport);
+    }
+    else
+    {
+        if(0UL != ((UBase_t) SCB_enNMI_MOSC_FAILURE & uxRegNMI))
+        {
+            NMI__vCreateReport(&stReport, SCB_enNMI_BIT_MOSC_FAILURE, uxRegNMI);
+            SCB__vInvokeReportHandler(stReport.enFault, &stReport);
+        }
+        if(0UL != ((UBase_t) SCB_enNMI_TAMPER & uxRegNMI))
+        {
+            NMI__vCreateReport(&stReport, SCB_enNMI_BIT_TAMPER, uxRegNMI);
+            SCB__vInvokeReportHandler(stReport.enFault, &stReport);
+        }
+        if(0UL != ((UBase_t) SCB_enNMI_WDT1 & uxRegNMI))
+        {
+            NMI__vCreateReport(&stReport, SCB_enNMI_BIT_WDT1, uxRegNMI);
+            SCB__vInvokeReportHandler(stReport.enFault, &stReport);
+        }
+        if(0UL != ((UBase_t) SCB_enNMI_WDT0 & uxRegNMI))
+        {
+            NMI__vCreateReport(&stReport, SCB_enNMI_BIT_WDT0, uxRegNMI);
+            SCB__vInvokeReportHandler(stReport.enFault, &stReport);
+        }
+        if(0UL != ((UBase_t) SCB_enNMI_POWER & uxRegNMI))
+        {
+            NMI__vCreateReport(&stReport, SCB_enNMI_BIT_POWER, uxRegNMI);
+            SCB__vInvokeReportHandler(stReport.enFault, &stReport);
+        }
+        if(0UL != ((UBase_t) SCB_enNMI_EXTERNAL & uxRegNMI))
+        {
+            NMI__vCreateReport(&stReport, SCB_enNMI_BIT_EXTERNAL, uxRegNMI);
+            SCB__vInvokeReportHandler(stReport.enFault, &stReport);
+        }
+    }
+}
+
+void NMI__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument)
+{
     volatile UBase_t uxRegNMI;
     SCB_pvfIRQSourceHandler_t pvfCallback;
+
+    (void) uptrModuleArg;
+    (void) pvArgument;
 
     uxRegNMI = SYSCTL_NMIC_R;
 
@@ -65,13 +158,14 @@ void NMI__vIRQVectorHandler(void)
         }
         if(0UL != ((UBase_t) SCB_enNMI_WDT1 & uxRegNMI))
         {
+            UBase_t uxRegWrite1;
+
             do
             {
                 SYSCTL_NMIC_R &= ~(UBase_t) SCB_enNMI_WDT1;
             }while(0UL != ((UBase_t) SCB_enNMI_WDT1 & SYSCTL_NMIC_R));
 
             WDT1_ICR_R = 0UL;
-            UBase_t uxRegWrite1;
             do
             {
                 uxRegWrite1 = WDT1_CTL_R;

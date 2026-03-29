@@ -1,0 +1,9 @@
+[2026-03-29 00:18:59] Refactored MPU initialization into xApplication_MCU and derived region layout from linker-exported section boundaries.
+- Added xApplication_MCU/Core/MPU module with MPU__vInit().
+- Removed the application-specific MPU init entrypoint from xDriver_MCU/Core/MPU/Driver.
+- Updated xApplication_MCU/Core/Core.h to include the new MPU module.
+- Added GNU/TI linker symbols: __intvec_start__/__intvec_end__, __vtable_start__/__vtable_end__, __flash_exec_end__, __data_load_end__.
+- New MPU layout uses linked image boundaries for flash executable span, flash read-only span, SRAM span, and SRAM code span.
+- Verified no remaining workspace references to the deleted raw-driver MPU_Init header/source.
+- VS Code diagnostics still report a parser error in xApplication_MCU/Core/MPU/xSource/MPU_Init.c despite the source text being structurally balanced; linker scripts and headers report clean diagnostics.
+- Manual evidence gathered earlier confirms TM4C1294 documents ITM, SWV, ETM, FPB, and TPIU as integrated configurable debug features, but the repo still lacks local CoreSight/CMSIS register definitions needed for safe implementation.

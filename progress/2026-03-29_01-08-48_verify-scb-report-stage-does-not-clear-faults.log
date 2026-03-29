@@ -1,0 +1,6 @@
+[2026-03-29 01:08:48] Verified SCB report-stage handlers do not clear fault status before callback dispatch.
+- Request: Verify that each SCB report path leaves the fault/status latched during report generation so the later callback/custom stage is not skipped because a flag was cleared too early.
+- Investigation: Re-read the SCB BusFault, MemoryFault, UsageFault, HardFault, and NMI interrupt routine sources and the UART SCB report callback source after the recent refactor.
+- Findings: All report-stage handlers only read status/address registers and create SCB_REPORT_t payloads. No report-stage function writes to CFSR, HFSR, SYSCTL_NMIC_R, WDTx_ICR_R, or other clear-on-write locations. The UART report callbacks only format and print the report and do not touch hardware status.
+- Clear points confirmed: BusFault__vIRQVectorHandlerCustom clears CFSR bus bits; MemoryFault__vIRQVectorHandlerCustom clears CFSR memory bits; UsageFault__vIRQVectorHandlerCustom clears CFSR usage bits; HardFault__vIRQVectorHandlerCustom clears HFSR forced/vector bits; NMI__vIRQVectorHandlerCustom clears SYSCTL_NMIC_R and WDT interrupt clear registers.
+- Conclusion: The fault remains persistent through the report stage, so report delivery cannot suppress the subsequent custom-stage callback due to an early clear in the current implementation.

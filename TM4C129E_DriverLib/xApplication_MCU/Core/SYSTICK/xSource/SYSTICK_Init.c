@@ -29,6 +29,7 @@
 
 #define SYSTICK_PIOSC4_MHZ (4UL)
 #define SYSTICK_MAXVALUE (0x1000000UL) /*24 bits*/
+#define SYSTICK_PICOSECONDS_PER_MICROSECOND (1000000ULL)
 
 static void SYSTICK_vClarAllCounter(void);
 void SYSTICK_Delay__vIRQVectorHandler(void);
@@ -54,8 +55,8 @@ SYSTICK_nERROR SYSTICK__enInitTickVector(SYSTICK_nMODULE enModuleArg, UBase_t ux
     if(SYSTICK_enERROR_OK == enErrorReg)
     {
         UBase_t uxSystemFrequencyMHz = 0U;
-        float32_t f32PicoSeconds = 1000000.0f;
-        float32_t f32PicoSecondsTemp = 1000000.0f;
+        uint64_t u64TickPicoSeconds = 0ULL;
+        uint64_t u64PeriodPicoSeconds = 0ULL;
         SYSTICK_vClarAllCounter();
         if(SYSTICK_enPIOSC4 != enClockSourceArg)
         {
@@ -69,13 +70,19 @@ SYSTICK_nERROR SYSTICK__enInitTickVector(SYSTICK_nMODULE enModuleArg, UBase_t ux
         {
             uxSystemFrequencyMHz = SYSTICK_PIOSC4_MHZ;
         }
-        f32PicoSeconds /= (float32_t) uxSystemFrequencyMHz;
-        f32PicoSecondsTemp = f32PicoSeconds + 0.5f;
-        SYSTICK__vSetTickPs((UBase_t) f32PicoSecondsTemp);
+        if(SYSTICK_enERROR_OK == enErrorReg)
+        {
+            u64TickPicoSeconds = SYSTICK_PICOSECONDS_PER_MICROSECOND;
+            u64TickPicoSeconds += ((uint64_t) uxSystemFrequencyMHz / 2ULL);
+            u64TickPicoSeconds /= (uint64_t) uxSystemFrequencyMHz;
 
-        f32PicoSeconds *=  (float32_t) uxTickArg;
-        f32PicoSeconds += 0.5f;
-        SYSTICK__vSetPsPeriod((uint64_t) f32PicoSeconds);
+            u64PeriodPicoSeconds = SYSTICK_PICOSECONDS_PER_MICROSECOND * (uint64_t) uxTickArg;
+            u64PeriodPicoSeconds += ((uint64_t) uxSystemFrequencyMHz / 2ULL);
+            u64PeriodPicoSeconds /= (uint64_t) uxSystemFrequencyMHz;
+
+            SYSTICK__vSetTickPs((UBase_t) u64TickPicoSeconds);
+            SYSTICK__vSetPsPeriod(u64PeriodPicoSeconds);
+        }
         SYSTICK__vSetTickPeriod(uxTickArg);
     }
     if(SYSTICK_enERROR_OK == enErrorReg)

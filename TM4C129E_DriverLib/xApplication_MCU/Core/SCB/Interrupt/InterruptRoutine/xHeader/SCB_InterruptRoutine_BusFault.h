@@ -30,7 +30,7 @@
 extern UBase_t SCB_BusFault_puxContext[8UL];
 
 void BusFault__vIRQVectorHandler(void);
+void BusFault__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgument);
 void BusFault__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument);
-void BusFault__vSendValues(void);
 
 #endif /* XAPPLICATION_MCU_CORE_SCB_INTERRUPT_INTERRUPTROUTINE_XHEADER_SCB_INTERRUPTROUTINE_BUSFAULT_H_ */

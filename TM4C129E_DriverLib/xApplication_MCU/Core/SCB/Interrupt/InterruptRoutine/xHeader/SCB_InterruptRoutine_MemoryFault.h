@@ -30,7 +30,7 @@
 extern UBase_t SCB_MemoryFault_puxContext[8UL];
 
 void MemoryFault__vIRQVectorHandler(void);
+void MemoryFault__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgument);
 void MemoryFault__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument);
-void MemoryFault__vSendValues(void);
 
 #endif /* XAPPLICATION_MCU_CORE_SCB_INTERRUPT_INTERRUPTROUTINE_XHEADER_SCB_INTERRUPTROUTINE_MEMORYFAULT_H_ */

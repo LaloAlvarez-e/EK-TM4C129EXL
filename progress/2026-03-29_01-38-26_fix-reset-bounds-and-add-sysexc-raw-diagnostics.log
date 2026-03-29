@@ -1,0 +1,6 @@
+[2026-03-29 01:38:26] Implemented repeat-SYSEXC investigation changes.
+- Updated TM4C129E_Project/tm4c129encpdt_startup_ccs.c to use end-exclusive reset loops for .ramcode, .data, and .bss initialization.
+- Reason: linker scripts define __ramcode_end__, __data_end__, and __bss_end__ as end addresses; the prior <= loops overran each region by one word.
+- Updated TM4C129E_DriverLib/xApplication_MCU/UART/xSource/UART_SYSEXC.c to capture and print raw SYSEXC source index, raw status mask, and current FPSCR.
+- Added debugger-visible globals UART_uxLastSysExcStatusMask, UART_uxLastSysExcFPSCR, and UART_uxLastSysExcSource to retain the most recent SYSEXC diagnostics.
+- Current investigation evidence indicates the repeated stacked frame still lands at UART2 receive-timeout callback dispatch, and the saved R0 value (0x000000C8) looks like a corrupted callback pointer rather than a valid function address.

@@ -1,0 +1,7 @@
+[2026-03-29 01:46:38] Adjusted runtime SYSEXC mask to exclude INEXACT
+Request: resolve repeated SYSEXC trap after report showed enSource=SYSEXC_enINT_INEXACT and enStatusMask=SYSEXC_enINTMASK_INEXACT.
+Decision: keep SYSEXC enabled for denormal, divide-by-zero, invalid operation, underflow, and overflow, but stop enabling INEXACT in startup because it is a normal floating-point rounding condition and will fault during ordinary runtime math.
+File changed: TM4C129E_Project/tm4c129encpdt_startup_ccs.c.
+Implementation: replaced SYSEXC_enINTMASK_ALL at startup with an explicit mask that excludes SYSEXC_enINTMASK_INEXACT.
+Expected outcome: ordinary floating-point rounding no longer raises SYSEXC, while meaningful arithmetic fault sources remain observable.
+Validation: pending diagnostics check for the touched startup file.

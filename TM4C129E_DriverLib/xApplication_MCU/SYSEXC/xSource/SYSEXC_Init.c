@@ -43,6 +43,10 @@ SYSEXC_nERROR SYSEXC__enInit(SYSEXC_nMODULE enModuleArg, SYSEXC_nINTMASK enInter
     }
     if(SYSEXC_enERROR_OK == enErrorReg)
     {
+        enErrorReg = SYSEXC__enClearInterruptSourceByMask(enModuleArg, SYSEXC_enINTMASK_ALL);
+    }
+    if(SYSEXC_enERROR_OK == enErrorReg)
+    {
         enErrorReg = SYSEXC__enEnableInterruptSourceByMask(enModuleArg, enInterruptMaskArg);
     }
     if(SYSEXC_enERROR_OK == enErrorReg)

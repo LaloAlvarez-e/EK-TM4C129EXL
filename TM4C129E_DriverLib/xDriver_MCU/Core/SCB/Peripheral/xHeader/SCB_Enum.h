@@ -89,8 +89,9 @@ typedef enum
     SCB_enFAULT_USAGE = 0UL,
     SCB_enFAULT_BUS = 1UL,
     SCB_enFAULT_MEMORY = 2UL,
-    SCB_enFAULT_NMI = 3UL,
-    SCB_enFAULT_MAX = 4UL,
+    SCB_enFAULT_HARD = 3UL,
+    SCB_enFAULT_NMI = 4UL,
+    SCB_enFAULT_MAX = 5UL,
     SCB_enFAULT_UNDEF = UNDEF_VALUE,
 }SCB_nFAULT;
 

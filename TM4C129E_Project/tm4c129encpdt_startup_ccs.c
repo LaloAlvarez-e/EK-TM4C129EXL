@@ -27,6 +27,8 @@
 #include <xApplication_MCU/SYSEXC/SYSEXC.h>
 #include <xApplication_MCU/SYSCTL/SYSCTL.h>
 #include <xApplication_MCU/UART/UART.h>
+#include <xApplication_MCU/UART/xHeader/UART_SCB.h>
+#include <xApplication_MCU/UART/xHeader/UART_SYSEXC.h>
 #include <xDriver_MCU/Core/FPU/FPU.h>
 #include <xDriver_MCU/Core/NVIC/NVIC.h>
 #include <xApplication_MCU/FLASH/FLASH.h>
@@ -286,7 +288,7 @@ ResetISR(void)
     /**/
     pui32SrcRamCode = &__ramcode_load__;
     pui32DestRamCode = &__ramcode_start__;
-    while(pui32DestRamCode <= &__ramcode_end__)
+    while(pui32DestRamCode < &__ramcode_end__)
     {
         *pui32DestRamCode = *pui32SrcRamCode;
         pui32SrcRamCode += 1UL;
@@ -298,7 +300,7 @@ ResetISR(void)
     /**/
     pui32SrcData = (UBase_t*) &__data_load__;
     pui32DestData = (UBase_t*) &__data_start__;
-    while(pui32DestData <= &__data_end__)
+    while(pui32DestData < &__data_end__)
     {
         *pui32DestData = *pui32SrcData;
         pui32SrcData += 1UL;
@@ -310,7 +312,7 @@ ResetISR(void)
     /* Copy the ramcode segment initializers from flash to SRAM.*/
     /**/
     pui32DestBss = (UBase_t*) &__bss_start__;
-    while(pui32DestBss <= &__bss_end__)
+    while(pui32DestBss < &__bss_end__)
     {
         *pui32DestBss = 0UL;
         pui32DestBss += 1UL;
@@ -332,7 +334,13 @@ ResetISR(void)
     UART__enInit(UART_enMODULE_7);
     UART__enSetConfig(UART_enMODULE_7, UART_enMODE_NORMAL, 115200UL, 0UL, 0UL,
                       &UART_stReportControl, &UART_stReportLineControl, &UART_stReportLine, 0UL);
-    SYSEXC__enRegisterReportHandler( (void*) (uintptr_t) UART_enMODULE_7, &UART__enSysExcReportCallback);
+    SCB__enRegisterReportHandler(SCB_enFAULT_USAGE, (void*) (uintptr_t) UART_enMODULE_7, (SCB_pvfReportHandler_t) &UART__enSCBUsageFaultReportCallback);
+    SCB__enRegisterReportHandler(SCB_enFAULT_BUS, (void*) (uintptr_t) UART_enMODULE_7, (SCB_pvfReportHandler_t) &UART__enSCBBusFaultReportCallback);
+    SCB__enRegisterReportHandler(SCB_enFAULT_MEMORY, (void*) (uintptr_t) UART_enMODULE_7, (SCB_pvfReportHandler_t) &UART__enSCBMemoryFaultReportCallback);
+    SCB__enRegisterReportHandler(SCB_enFAULT_HARD, (void*) (uintptr_t) UART_enMODULE_7, (SCB_pvfReportHandler_t) &UART__enSCBHardFaultReportCallback);
+    SCB__enRegisterReportHandler(SCB_enFAULT_NMI, (void*) (uintptr_t) UART_enMODULE_7, (SCB_pvfReportHandler_t) &UART__enSCBNMIReportCallback);
+    SYSEXC__enRegisterReportHandler( (void*) (uintptr_t) UART_enMODULE_7, (SYSEXC_pvfReportHandler_t)&UART__enSysExcReportCallback);
+    SYSEXC__enInit(SYSEXC_enMODULE_0, SYSEXC_enINTMASK_ALL, SYSEXC_enDEFAULT);
     /**/
     /* Call the application's entry point.*/
     /**/

@@ -1,0 +1,8 @@
+[2026-03-28 23:54:10] Fixed UART SYSEXC message output and reassessed Chapter 6
+- Request: Pause host-side test work, return to the main TM4C1294 chapter audit, update progress, and close Chapter 6 if possible.
+- Investigation: Re-read Chapter 6 SYSEXC audit logs, re-checked the manual extracts for the four-register SYSEXC block and six FPU exception sources, and traced the project startup/report path.
+- Findings: Driver/app-layer SYSEXC coverage matches the documented Chapter 6 register model and source set, but the UART report helper in xApplication_MCU/UART/xSource/UART_SYSEXC.c passed the selected message by value so the callback never received the formatted source string.
+- Implementation: Updated UART__enGetSysExcMessage to write through a const char** output pointer and changed UART__enSysExcReportCallback to pass &pcMessageReg.
+- Validation: VS Code diagnostics report no errors in TM4C129E_DriverLib/xApplication_MCU/UART/xSource/UART_SYSEXC.c after the fix.
+- Integration check: TM4C129E_Project/tm4c129encpdt_startup_ccs.c initializes FPU and registers the SYSEXC report handler, but no project-level call to SYSEXC__enInit(...) was found during the current pass.
+- Current status: Chapter 6 implementation is effectively complete at the DriverLib/app layer after the UART callback fix; remaining open question is whether explicit project-level SYSEXC interrupt enablement should be treated as required runtime integration before declaring the chapter fully closed.

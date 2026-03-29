@@ -61,9 +61,12 @@ ProcessStackUsage:
 ProcessUsage:
     pop {R4-R7}
     push {R0,R1,R2,LR}
-    .global UsageFault__vSendValues
+    .global UsageFault__vIRQVectorHandlerReport
     .global UsageFault__vIRQVectorHandlerCustom
-    ldr R2, = UsageFault__vSendValues
+    movw R0, #0xE000
+    movt R0, #0xE000
+    ldr R1, = SCB_UsageFault_puxContext
+    ldr R2, = UsageFault__vIRQVectorHandlerReport
     blx R2
     movw R0, #0xE000
     movt R0, #0xE000

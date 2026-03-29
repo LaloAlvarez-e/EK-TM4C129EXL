@@ -1,0 +1,8 @@
+[2026-03-29 01:58:44] Replaced the verified SysTick floating-point producer with integer arithmetic.
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c.
+- Removed float32_t-based rounding in SYSTICK__enInitTickVector() that computed tick and period picoseconds.
+- Added integer rounded calculations using uint64_t:
+  - tick_ps = (1000000 + freq_mhz / 2) / freq_mhz
+  - period_ps = (1000000 * ticks + freq_mhz / 2) / freq_mhz
+- This preserves the original rounding intent while avoiding VFP operations that set FPSCR.IXC.
+- Validation: VS Code diagnostics report no errors in TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c after the change.

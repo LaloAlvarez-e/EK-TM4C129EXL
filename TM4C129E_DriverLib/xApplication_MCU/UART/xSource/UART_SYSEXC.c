@@ -26,8 +26,13 @@
 
 #include <xApplication_MCU/UART/Printf/UART_Printf.h>
 #include <xApplication_MCU/UART/Intrinsics/xHeader/UART_Dependencies.h>
+#include <xDriver_MCU/Common/xHeader/MCU_FloatingPoint.h>
 
-static UART_nERROR UART__enGetSysExcMessage(SYSEXC_nINT enSourceArg, const char* pcMessageReg);
+static UART_nERROR UART__enGetSysExcMessage(SYSEXC_nINT enSourceArg, const char** ppcMessageArg);
+
+volatile UBase_t UART_uxLastSysExcStatusMask = 0UL;
+volatile UBase_t UART_uxLastSysExcFPSCR = 0UL;
+volatile UBase_t UART_uxLastSysExcSource = 0UL;
 
 const char* SysExtMessages[SYSEXC_enINT_MAX] =
 {
@@ -40,11 +45,11 @@ const char* SysExtMessages[SYSEXC_enINT_MAX] =
     "SYSEXC FAULT Exception triggered by Software",
 };
 
-static UART_nERROR UART__enGetSysExcMessage(SYSEXC_nINT enSourceArg, const char* pcMessageReg)
+static UART_nERROR UART__enGetSysExcMessage(SYSEXC_nINT enSourceArg, const char** ppcMessageArg)
 {
     UART_nERROR enErrorReg;
 
-    enErrorReg = ((const char*) 0UL == pcMessageReg) ? UART_enERROR_POINTER : UART_enERROR_OK;
+    enErrorReg = ((const char**) 0UL == ppcMessageArg) ? UART_enERROR_POINTER : UART_enERROR_OK;
 
     if(UART_enERROR_OK == enErrorReg)
     {
@@ -52,8 +57,8 @@ static UART_nERROR UART__enGetSysExcMessage(SYSEXC_nINT enSourceArg, const char*
     }
     if(UART_enERROR_OK == enErrorReg)
     {
-        pcMessageReg = (SYSEXC_enINT_MAX > (UBase_t) enSourceArg) ? 
-                            (const char*) SysExtMessages[enSourceArg] : 
+        *ppcMessageArg = (SYSEXC_enINT_MAX > (UBase_t) enSourceArg) ?
+                            (const char*) SysExtMessages[enSourceArg] :
                             (const char*) "SYSEXC FAULT exception Detected";
     }
 
@@ -65,19 +70,29 @@ UART_nERROR UART__enSysExcReportCallback(void* pvContextArg, const SYSEXC_REPORT
     UART_nMODULE enModuleReg;
     UART_nERROR enErrorReg;
     const char* pcMessageReg = (const char*) 0UL;
+    UBase_t uxFpscrReg;
+
+    uxFpscrReg = 0UL;
 
     enErrorReg = (0UL == (uintptr_t) pstReportArg) ? UART_enERROR_POINTER : UART_enERROR_OK;
     
     if(UART_enERROR_OK == enErrorReg)
     {
         enModuleReg = (UART_nMODULE) (uintptr_t) pvContextArg;
-        enErrorReg = UART__enGetSysExcMessage(pstReportArg->enSource, pcMessageReg);
+        enErrorReg = UART__enGetSysExcMessage(pstReportArg->enSource, &pcMessageReg);
+        uxFpscrReg = MCU__uxGetFPUStatusControl();
+        UART_uxLastSysExcStatusMask = (UBase_t) pstReportArg->enStatusMask;
+        UART_uxLastSysExcFPSCR = uxFpscrReg;
+        UART_uxLastSysExcSource = (UBase_t) pstReportArg->enSource;
     }
 
     if(UART_enERROR_OK == enErrorReg)
     {
 
         UART__uxPrintf(enModuleReg, "%s\n\r"
+                        "Source index: %X\n\r"
+                        "Status mask: %X\n\r"
+                        "FPSCR: %X\n\r"
                         "Context address: %X\n\r"
                         "Core Register dump:\n\r"
                         "R0: %X, R1: %X\n\r"
@@ -85,6 +100,9 @@ UART_nERROR UART__enSysExcReportCallback(void* pvContextArg, const SYSEXC_REPORT
                         "R12: %X xPSR: %X\n\r"
                         "LR: %X, PC: %X\n\r",
                         pcMessageReg,
+                        (UBase_t) pstReportArg->enSource,
+                        (UBase_t) pstReportArg->enStatusMask,
+                        uxFpscrReg,
                         pstReportArg->uxFaultAddress,
                         pstReportArg->uxContext[0UL],
                         pstReportArg->uxContext[1UL],

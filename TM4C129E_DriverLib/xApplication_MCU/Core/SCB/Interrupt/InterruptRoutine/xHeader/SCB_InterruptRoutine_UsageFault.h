@@ -30,7 +30,7 @@
 extern UBase_t SCB_UsageFault_puxContext[8UL];
 
 void UsageFault__vIRQVectorHandler(void);
+void UsageFault__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgument);
 void UsageFault__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument);
-void UsageFault__vSendValues(void);
 
 #endif /* XAPPLICATION_MCU_CORE_SCB_INTERRUPT_INTERRUPTROUTINE_XHEADER_SCB_INTERRUPTROUTINE_USAGEFAULT_H_ */

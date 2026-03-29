@@ -25,6 +25,6 @@
 #ifndef XDRIVER_MCU_DRIVER_HEADER_MPU_DRIVER_MPU_DRIVER_H_
 #define XDRIVER_MCU_DRIVER_HEADER_MPU_DRIVER_MPU_DRIVER_H_
 
-#include <xDriver_MCU/Core/MPU/Driver/xHeader/MPU_Init.h>
+#include <xDriver_MCU/Core/MPU/Peripheral/MPU_Peripheral.h>
 
 #endif /* XDRIVER_MCU_DRIVER_HEADER_MPU_DRIVER_MPU_DRIVER_H_ */
