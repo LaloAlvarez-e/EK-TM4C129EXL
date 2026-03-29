@@ -1,0 +1,5 @@
+[2026-03-28 18:51:18] Update TFT period display and clamp
+Request: Show both expected and current TFT period values and stop button period control from wrapping at the configured limits.
+Decision: Added local min/max period constants, changed button handling to saturate at the bounds, and updated the overlay text to report expected and current period values together.
+Affected files: TM4C129E_Project/xTask/xSource/xTask9_TFT.c
+Validation: Pending.

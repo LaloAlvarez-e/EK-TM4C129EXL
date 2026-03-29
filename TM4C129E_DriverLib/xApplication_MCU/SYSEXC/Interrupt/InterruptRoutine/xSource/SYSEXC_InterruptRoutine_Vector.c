@@ -25,6 +25,9 @@
 #include <xApplication_MCU/SYSEXC/Intrinsics/xHeader/SYSEXC_Dependencies.h>
 #include <xApplication_MCU/SYSEXC/xHeader/SYSEXC_Report.h>
 
+static void SYSEXC__vCreateReport(SYSEXC_REPORT_t* pstReportArg, SYSEXC_nINT enSourceArg,
+                                  UBase_t uxStatusMaskArg, UBase_t uxFaultAddressArg,
+                                  const UBase_t* puxContextArg);
 UBase_t SYSEXC_puxContext[8UL];
 
 static void SYSEXC__vCreateReport(SYSEXC_REPORT_t* pstReportArg, SYSEXC_nINT enSourceArg,
@@ -62,6 +65,19 @@ void SYSEXC__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument)
     puxContextOffset = puxContext;
     puxContextOffset += 6UL;
     uxSysExcAddressFault = *puxContextOffset;
+
+    stReport.enModule = 0;
+    stReport.enSource = 0;
+    stReport.enStatusMask = 0;
+    stReport.uxFaultAddress = 0;
+    stReport.uxContext[0UL] = 0;
+    stReport.uxContext[1UL] = 0;
+    stReport.uxContext[2UL] = 0;
+    stReport.uxContext[3UL] = 0;
+    stReport.uxContext[4UL] = 0;
+    stReport.uxContext[5UL] = 0;
+    stReport.uxContext[6UL] = 0;
+    stReport.uxContext[7UL] = 0;
 
     if(0UL == ((UBase_t) SYSEXC_enINTMASK_ALL & uxSystemException))
     {

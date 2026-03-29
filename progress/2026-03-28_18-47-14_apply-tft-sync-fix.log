@@ -1,0 +1,5 @@
+[2026-03-28 18:47:14] Apply TFT sync fix
+Request: Implement the synchronization fix for the TFT DMA display path using the existing project conventions.
+Decision: Reuse ST7735SemaphoreHandle in xTask9_TFT as the front-buffer ownership barrier before swapping buffers and clearing the previous front buffer.
+Affected files: TM4C129E_Project/xTask/xSource/xTask9_TFT.c
+Validation: Pending.

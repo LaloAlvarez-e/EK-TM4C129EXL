@@ -1,0 +1,4 @@
+[2026-03-28 19:00:58] Review request logged for TM4C129E_Project TFT task and DMA display/composition path.
+Request: Inspect xTask9_TFT.c and the ST7735 DMA ownership flow for flicker and left-shift/phased artifacts under button activity in Debug_GNU. No code edits requested.
+Scope: xTask9_TFT task loop, ST7735 semaphore ownership, DMA channel 30 composition/clear path, button-triggered period changes, and display transfer completion signaling.
+Status: Investigation started.

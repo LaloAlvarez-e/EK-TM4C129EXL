@@ -1,0 +1,7 @@
+[2026-03-28 19:06:01] Review findings recorded for TFT DMA/display path.
+Investigation: Reviewed TM4C129E_Project/xTask/xSource/xTask9_TFT.c, ST7735 DMA write path, semaphore ownership, button-triggered period updates, and related queue/task code.
+Findings:
+1. Probable remaining concurrency defect is DMA bandwidth/ordering overlap: xTask9 starts channel 30 memory-to-memory clear before launching the ST7735 panel DMA, and both channel 30 and channel 13 are configured high priority. Channel 30 clear uses 1024-beat arbitration, making it the most likely source of visible display instability under tighter redraw cadence.
+2. ST7735 transaction ownership is not atomic across SetAddrWindow plus DMA start. The task only waits for semaphore completion before swap, while ST7735__vSetAddrWindow itself performs many separately locked command/data writes before ST7735__enWriteBuffer16bDMA acquires the semaphore for the DMA phase. This is a structural ordering risk, though current call sites suggest it is not the primary cause of the present symptom.
+3. Several DMA task/ISR shared state variables are plain static globals rather than volatile or otherwise protected, in both xTask9_TFT.c and ST7735_Write.c. This is a concurrency correctness risk and can become optimization/timing sensitive.
+Validation: No code edits made. Findings prepared for user response with recommended fix strategy.

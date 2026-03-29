@@ -1,0 +1,5 @@
+[2026-03-28 19:08:15] Fix TFT DMA overlap ordering
+Request: Investigate and address the Debug_GNU TFT flicker and left-shift/phasing seen when pressing buttons.
+Decision: Reordered xTask9_TFT so channel 30 back-buffer clear and composition complete before starting the ST7735 channel 13 frame DMA. This removes the previous overlap between memory-to-memory DMA composition and the live SSI display transfer.
+Affected files: TM4C129E_Project/xTask/xSource/xTask9_TFT.c
+Validation: Pending.

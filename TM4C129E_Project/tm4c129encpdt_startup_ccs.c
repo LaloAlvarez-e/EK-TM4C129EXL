@@ -332,7 +332,7 @@ ResetISR(void)
     UART__enInit(UART_enMODULE_7);
     UART__enSetConfig(UART_enMODULE_7, UART_enMODE_NORMAL, 115200UL, 0UL, 0UL,
                       &UART_stReportControl, &UART_stReportLineControl, &UART_stReportLine, 0UL);
-    SYSEXC__enRegisterReportHandler(&UART__vSysExcReportCallback, (void*) (uintptr_t) UART_enMODULE_7);
+    SYSEXC__enRegisterReportHandler( (void*) (uintptr_t) UART_enMODULE_7, &UART__enSysExcReportCallback);
     /**/
     /* Call the application's entry point.*/
     /**/

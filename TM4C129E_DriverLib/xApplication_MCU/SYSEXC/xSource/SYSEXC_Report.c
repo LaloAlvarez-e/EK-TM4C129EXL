@@ -26,10 +26,10 @@
 
 #include <xDriver_MCU/Common/MCU_Common.h>
 
-static SYSEXC_pvfReportHandler_t SYSEXC_pvfReportHandler = 0UL;
-static void* SYSEXC_pvReportHandlerContext = 0UL;
+static SYSEXC_pvfReportHandler_t SYSEXC_pvfReportHandler = (SYSEXC_pvfReportHandler_t) 0UL;
+static void* SYSEXC_pvReportHandlerContext = (void*) 0UL;
 
-SYSEXC_nERROR SYSEXC__enRegisterReportHandler(SYSEXC_pvfReportHandler_t pvfReportHandlerArg, void* pvContextArg)
+SYSEXC_nERROR SYSEXC__enRegisterReportHandler(void* pvContextArg, SYSEXC_pvfReportHandler_t pvfReportHandlerArg)
 {
     SYSEXC_nERROR enErrorReg;
 
@@ -45,8 +45,8 @@ SYSEXC_nERROR SYSEXC__enRegisterReportHandler(SYSEXC_pvfReportHandler_t pvfRepor
 
 SYSEXC_nERROR SYSEXC__enUnregisterReportHandler(void)
 {
-    SYSEXC_pvfReportHandler = 0UL;
-    SYSEXC_pvReportHandlerContext = 0UL;
+    SYSEXC_pvfReportHandler = (SYSEXC_pvfReportHandler_t) 0UL;
+    SYSEXC_pvReportHandlerContext = (void*) 0UL;
     return (SYSEXC_enERROR_OK);
 }
 
@@ -54,6 +54,6 @@ void SYSEXC__vInvokeReportHandler(const SYSEXC_REPORT_t* pstReportArg)
 {
     if((0UL != (uintptr_t) pstReportArg) && (0UL != (uintptr_t) SYSEXC_pvfReportHandler))
     {
-        SYSEXC_pvfReportHandler(pstReportArg, SYSEXC_pvReportHandlerContext);
+        SYSEXC_pvfReportHandler(SYSEXC_pvReportHandlerContext, pstReportArg);
     }
 }

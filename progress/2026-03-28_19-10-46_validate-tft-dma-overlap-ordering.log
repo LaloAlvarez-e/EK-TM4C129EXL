@@ -1,0 +1,5 @@
+[2026-03-28 19:10:46] Validate TFT DMA overlap ordering fix
+Action: Validated the reordered TFT frame pipeline after removing channel 30/channel 13 overlap.
+Affected files: TM4C129E_Project/xTask/xSource/xTask9_TFT.c
+Validation: Debug__GNU rebuild succeeded; xTask9_TFT.c recompiled and TM4C129E_Project.out linked successfully.
+Notes: VS Code diagnostics still show the pre-existing parser complaint on the GCC __attribute__((aligned(4))) static buffer declarations, but the GNU compiler accepts the file and the build passes.

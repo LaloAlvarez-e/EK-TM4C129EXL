@@ -1,0 +1,5 @@
+[2026-03-28 18:56:57] Validate TFT period re-anchor
+Action: Attempted to validate the TFT period re-anchor fix after patching xTask9_TFT.
+Affected files: TM4C129E_Project/xTask/xSource/xTask9_TFT.c
+Validation: Full Debug__GNU rebuild was not run because the terminal validation command was skipped by user choice.
+Notes: VS Code diagnostics still show the pre-existing parser complaint on the GCC __attribute__((aligned(4))) static buffer declarations.

@@ -1,0 +1,4 @@
+[2026-03-28 22:18:47] Compare TI vs GNU ARM toolchains
+Request: Explain the likely differences between TI and GNU ARM compiler behavior in this project and whether the observed 2-frame GNU advantage is due to compiler efficiency or configuration.
+Investigation: Reviewed TM4C129E_Project .cproject settings for Debug__GNU, Release__GNU, Debug__TI, and Release__TI to compare optimization, FPU, ABI, runtime, and project symbol differences.
+Conclusion: The observed runtime delta is likely a combination of toolchain code generation differences and non-equivalent project configuration, especially Debug__GNU using -Og while Debug__TI uses high TI optimization settings, different runtime/link models, and a different PART define in Debug__TI.

@@ -36,9 +36,10 @@ typedef struct
     UBase_t uxContext[8UL];
 } SYSEXC_REPORT_t;
 
-typedef void (*SYSEXC_pvfReportHandler_t)(const SYSEXC_REPORT_t* pstReportArg, void* pvContextArg);
+typedef MCU_nERROR (*SYSEXC_pvfReportHandler_t)(void* pvContextArg, const SYSEXC_REPORT_t* pstReportArg);
 
-SYSEXC_nERROR SYSEXC__enRegisterReportHandler(SYSEXC_pvfReportHandler_t pvfReportHandlerArg, void* pvContextArg);
+
+SYSEXC_nERROR SYSEXC__enRegisterReportHandler(void* pvContextArg, SYSEXC_pvfReportHandler_t pvfReportHandlerArg);
 SYSEXC_nERROR SYSEXC__enUnregisterReportHandler(void);
 void SYSEXC__vInvokeReportHandler(const SYSEXC_REPORT_t* pstReportArg);
 

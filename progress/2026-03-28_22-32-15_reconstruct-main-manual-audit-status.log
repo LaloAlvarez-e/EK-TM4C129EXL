@@ -1,0 +1,7 @@
+[2026-03-28 22:32:15] Reconstruct main datasheet audit status and next steps
+- Request: summarize the latest state of the primary task, which is the chapter-by-chapter TM4C1294 datasheet/reference-manual implementation audit, and identify the next steps after several secondary fixes.
+- Investigated current workspace history using the progress/ folder because no requests/ folder exists in the workspace.
+- Confirmed the main manual-driven work had already progressed beyond Chapter 5 before startup/toolchain/TFT detours began.
+- Reconstructed status: Chapter 5 SYSCTL completeness pass was completed with multiple fixes; Chapter 6 SYSEXC had started, its raw FPIXC register definitions were fixed, and SYSEXC reporting was refactored to a callback-based design with UART reporter ownership moved to startup/UART-side code.
+- Noted later work on Mar 28 was secondary to the main objective: TI/GNU linker/runtime alignment, startup stack handling, TFT/DMA behavior, warning cleanup, and build-toolchain investigations.
+- Recommended next main-objective step: resume the manual chapter audit from Chapter 6 closure/validation and then continue with Chapter 7, using the already-correct TM4C1294 manual as the source of truth.

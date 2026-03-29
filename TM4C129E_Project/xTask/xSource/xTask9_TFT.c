@@ -55,6 +55,8 @@ error_t TFT__enWriteDMALayer16Bits(UBase_t uxBufferIn, UBase_t uxBufferOut, UBas
 void xTask9_TFT(void* pvParams)
 {
     /*Period Handling*/
+    const UBase_t uxPeriodTaskMin = 1UL;
+    const UBase_t uxPeriodTaskMax = 60UL;
     UBase_t uxLastWakeTime;
     UBase_t uxPeriodTicks;
     UBase_t uxPeriodTicksOld;
@@ -78,6 +80,7 @@ void xTask9_TFT(void* pvParams)
     char pcConvert4[50UL];
     const uint16_t* pu16Pointer = (const uint16_t*) Images__pu8BicyclePointer();
     OS_Boolean_t boResult;
+    OS_Boolean_t boPeriodUpdate;
     uint16_t* pu16TempBuffer;
 
     pcButtonOne = (char*) 0UL;
@@ -98,11 +101,9 @@ void xTask9_TFT(void* pvParams)
         uxPeriodTicks = OS_Task__uxGetTickCount();
         uxPeriodResult = uxPeriodTicks - uxPeriodTicksOld;
         uxPeriodTicksOld = uxPeriodTicks;
-        pu16TempBuffer = pu16WriteBuffer;
-        pu16WriteBuffer = pu16CurrentBuffer;
-        pu16CurrentBuffer = pu16TempBuffer;
+        OS_Semaphore__boTake(ST7735SemaphoreHandle, OS_ADAPT_MAX_DELAY);
+        OS_Semaphore__boGive(ST7735SemaphoreHandle);
         TFT__enWriteDMAConstant((UBase_t*)(pu16CurrentBuffer), 0UL, (128UL *128UL / 2UL));
-        ST7735__vDrawBuffer(0UL, 0UL, 128UL, 128UL, pu16WriteBuffer);
         if(0UL == uxCountImage)
         {
             if(uxImage)
@@ -122,6 +123,7 @@ void xTask9_TFT(void* pvParams)
         }
         OS_Queue__boPeek(AccelerometerQueueHandle, sxAccelValue, 0UL);
         boResult = OS_Queue__boPeek(ButtonQueueHandle, pcStateButton, 0UL);
+        boPeriodUpdate = FALSE;
         if(TRUE == boResult)
         {
             if(pcStateButton[0UL] != pcButtonOne)
@@ -129,13 +131,10 @@ void xTask9_TFT(void* pvParams)
                 pcButtonOne = pcStateButton[0UL];
                 if(*(pcButtonOne + 1UL) == 'N')
                 {
-                    if(1UL < uxPeriodTask)
+                    if(uxPeriodTaskMin < uxPeriodTask)
                     {
                         uxPeriodTask--;
-                    }
-                    else
-                    {
-                        uxPeriodTask = 30UL;
+                        boPeriodUpdate = TRUE;
                     }
                 }
             }
@@ -144,16 +143,18 @@ void xTask9_TFT(void* pvParams)
                 pcButtonTwo = pcStateButton[1UL];
                 if(*(pcButtonTwo + 1UL) == 'N')
                 {
-                    if(30UL > uxPeriodTask)
+                    if(uxPeriodTaskMax > uxPeriodTask)
                     {
                         uxPeriodTask++;
-                    }
-                    else
-                    {
-                        uxPeriodTask = 1UL;
+                        boPeriodUpdate = TRUE;
                     }
                 }
             }
+        }
+        if(FALSE != boPeriodUpdate)
+        {
+            uxLastWakeTime = OS_Task__uxGetTickCount();
+            uxPeriodTicksOld = uxLastWakeTime;
         }
         TFT__enWriteDMALayer16Bits((UBase_t) pu16Pointer, (UBase_t) pu16CurrentBuffer, 120UL, 76UL,
                                      0UL, 0UL, 120UL, 76UL,
@@ -172,13 +173,18 @@ void xTask9_TFT(void* pvParams)
                          pcStateButton[1UL],
                          pcStateButton[2UL]
                          );
-        sprintf__uxUser(pcConvert4, "PERIOD: %d", uxPeriodResult );
+        sprintf__uxUser(pcConvert4, "PERIOD\n\rEXP:%2d CUR:%2d", uxPeriodTask, uxPeriodResult);
         OS_Semaphore__boTake(DMASemaphoreHandle, OS_ADAPT_MAX_DELAY);
         ST7735__vBufferString(pu16CurrentBuffer, 0UL, 0UL, pcConvert3, 0xFFFFUL, &FONT_s5x7);
         ST7735__vBufferString(pu16CurrentBuffer, 0UL, 16UL, pcConvert1, 0xFFFFUL, &FONT_s5x7);
         ST7735__vBufferString(pu16CurrentBuffer, 0UL, 32UL, pcConvert2, 0xFFFFUL, &FONT_s5x7);
         ST7735__vBufferString(pu16CurrentBuffer, 0UL, 48UL, pcConvert4, 0xFFFFUL, &FONT_s5x7);
         OS_Semaphore__boGive(DMASemaphoreHandle);
+
+        pu16TempBuffer = pu16WriteBuffer;
+        pu16WriteBuffer = pu16CurrentBuffer;
+        pu16CurrentBuffer = pu16TempBuffer;
+        ST7735__vDrawBuffer(0UL, 0UL, 128UL, 128UL, pu16WriteBuffer);
 
         uxCountImage++;
         if(uxCountImage > 60UL)

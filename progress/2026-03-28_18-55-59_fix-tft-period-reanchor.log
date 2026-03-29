@@ -1,0 +1,5 @@
+[2026-03-28 18:55:59] Fix TFT period re-anchor after overrun
+Request: Make the TFT task honor a larger requested period again after the display path has saturated at the physical 15-16 tick service limit.
+Decision: Re-anchor uxLastWakeTime and the measured period baseline whenever button input changes the requested TFT period, so OS_Task__vDelayUntil no longer repays stale overrun debt from the previous shorter period.
+Affected files: TM4C129E_Project/xTask/xSource/xTask9_TFT.c
+Validation: Pending.
