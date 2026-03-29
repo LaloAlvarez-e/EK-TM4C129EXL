@@ -1,0 +1,6 @@
+[2026-03-24 20:52:47] Recheck startup vector issue after user edits
+- Re-read the current TM4C129E_Project/tm4c129encpdt_startup_ccs.c vector-table and stack declaration area after the user's latest edits.
+- Confirmed the previous major issue is improved: the file no longer interleaves half-open vector-table declarations across #if/#elif branches.
+- Current remaining diagnostics are centered on the GCC-side stack/vector declaration form, especially the standalone __attribute__((section(".stack"))); line followed by the common pui32MainStack declaration.
+- The first reported error is now at the initial stack-pointer vector entry, which suggests the parser is not accepting the surrounding declaration form cleanly; later ResetISR-end errors are likely cascade errors from that earlier parse failure.
+- Compared against another repo startup file and confirmed the intended GCC style keeps the section attribute attached directly to the pui32MainStack declaration.

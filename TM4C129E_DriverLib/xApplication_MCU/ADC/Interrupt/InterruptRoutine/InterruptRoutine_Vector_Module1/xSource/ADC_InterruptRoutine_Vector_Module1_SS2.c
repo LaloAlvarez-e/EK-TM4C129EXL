@@ -75,7 +75,7 @@ void ADC1_SS2__vIRQVectorHandler(void)
                 pvfCallback(ADC1_BASE, (void*) ADC_enSEQ_2);
 
                 uxRegCompInterrupt = ADC1_DCISC_R;
-                uxOffsetReg = ADC_DC_CTL_OFFSET;
+                uxOffsetReg = ADC1_DC0_CTL_R;
                 uxRegCompMux = ADC1_SS2_DC_R;
                 uxRegCompSelect = ADC1_SS2_OP_R;
                 uxShiftReg = 0x1UL;
@@ -89,7 +89,7 @@ void ADC1_SS2__vIRQVectorHandler(void)
                         uxRegCompMuxBit <<= uxTempReg;
                         if(uxRegCompInterrupt & uxRegCompMuxBit)
                         {
-                            uxRegCompEnable = *((UBase_t*) uxOffsetReg);
+                            uxRegCompEnable = *((volatile UBase_t*) uxOffsetReg);
 
                             if(uxRegCompEnable & ADC_DC_CTL_R_CIE_MASK)
                             {

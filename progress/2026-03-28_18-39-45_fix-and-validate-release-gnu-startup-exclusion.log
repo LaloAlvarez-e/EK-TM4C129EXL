@@ -1,0 +1,5 @@
+[2026-03-28 18:39:45] Fixed Release__GNU startup duplication and validated clean link
+Request: resolve Release__GNU linker errors caused by multiple definitions of ResetISR and g_pfnVectors.
+Changes: restored tm4c129encpdt_startup_ccs_gcc.c exclusion in TM4C129E_Project/.cproject Release__GNU sourceEntries and updated generated Release__GNU build files (makefile, subdir_vars.mk) to remove tm4c129encpdt_startup_ccs_gcc.o from the active object/source lists.
+Validation: built TM4C129E_Project/Release__GNU with C:\ti\ccs1281\ccs\utils\bin\gmake.exe; final link command includes only ./tm4c129encpdt_startup_ccs.o and finishes successfully with TM4C129E_Project.out.
+Result: duplicate ResetISR/g_pfnVectors definitions, .intvecs overflow, and .text/.intvecs overlap errors are resolved for the current Release__GNU build.

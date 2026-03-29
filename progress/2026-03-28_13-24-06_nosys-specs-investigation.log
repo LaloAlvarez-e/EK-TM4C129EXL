@@ -1,0 +1,6 @@
+[2026-03-28 13:24:06] Investigated newlib syscall link errors after enabling hard-float linker ABI.
+Request: Diagnose undefined references to _exit, _close, _lseek, _read, _sbrk, and _write in TM4C129E_Project GNU build.
+Actions: Searched workspace for syscall stubs and specs usage.
+Findings so far: No local syscall stub implementations were found. Multiple sibling TM4C129E projects configure GNU builds with nosys.specs. TM4C129E_Project has nosys.specs only in its GNU 9 configuration, not in the GNU 15 configuration now used by CCS 12.8.
+Implication: GNU 15 build is linking full newlib syscall wrappers without libnosys fallback, causing unresolved bare-metal syscall references.
+Status: Comparing .cproject configurations to prepare a focused fix.

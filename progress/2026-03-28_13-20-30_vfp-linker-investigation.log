@@ -1,0 +1,6 @@
+[2026-03-28 13:20:30] Investigated CCS 12.8 GNU linker error about VFP register arguments.
+Request: Diagnose linker message './main.o uses VFP register arguments, TM4C129E_Project.out does not' in TM4C129E_Project.
+Actions: Loaded TM4C129E skill guidance; searched TM4C129E_Project build metadata and generated GNU build files for float/VFP settings.
+Findings so far: Compile rules in Debug__GNU use -mfloat-abi=hard -mfpu=fpv4-sp-d16, while the generated link command in Debug__GNU/makefile shows -mfpu=fpv4-sp-d16 but no -mfloat-abi=hard.
+Affected files inspected: TM4C129E_Project/.cproject, TM4C129E_Project/Debug__GNU/makefile, TM4C129E_Project/Debug__GNU/subdir_rules.mk.
+Status: Investigation in progress; likely ABI mismatch between compile and link stages rather than explicit source-level floating-point usage.

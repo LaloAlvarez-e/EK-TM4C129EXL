@@ -1,0 +1,6 @@
+[2026-03-28 13:53:03] Verified GNU map after heap linker-script fix
+- Inspected TM4C129E_Project/Debug__GNU/TM4C129E_Project.map.
+- Confirmed .heap is now non-zero: start 0x20022000, size 0x1C800, end 0x2003E800.
+- Confirmed __HeapLimit (0x2003E800) is above __heap_start__ (0x20022000).
+- Reviewed TM4C129E_Project/syscalls.c and confirmed _sbrk now bounds-checks against __heap_start__ and __HeapLimit.
+- Next step: determine whether the remaining hard fault is still in allocator startup or a separate invalid return/control-flow issue.

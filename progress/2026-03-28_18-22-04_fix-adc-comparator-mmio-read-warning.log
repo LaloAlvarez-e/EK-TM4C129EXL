@@ -1,0 +1,6 @@
+[2026-03-28 18:22:04] Fixed ADC comparator MMIO read warning and underlying address bug in ADC interrupt vectors
+- Request: investigate GCC warning about array subscript 0 being outside array bounds at the line reading uxRegCompEnable from uxOffsetReg in ADC interrupt vector code.
+- Findings: the warning was triggered by casting a plain integer offset to a pointer and dereferencing it. More importantly, the code initialized uxOffsetReg with ADC_DC_CTL_OFFSET alone, so it treated the register offset as an absolute address instead of module-base plus offset.
+- Change: updated all matching ADC Module0/Module1 SS0-SS3 vector files so uxOffsetReg starts at ADC0_BASE + ADC_DC_CTL_OFFSET or ADC1_BASE + ADC_DC_CTL_OFFSET, and the register read uses *((volatile UBase_t*) uxOffsetReg).
+- Affected files: TM4C129E_DriverLib/xApplication_MCU/ADC/Interrupt/InterruptRoutine/InterruptRoutine_Vector_Module0/xSource/ADC_InterruptRoutine_Vector_Module0_SS0.c, SS1.c, SS2.c, SS3.c; TM4C129E_DriverLib/xApplication_MCU/ADC/Interrupt/InterruptRoutine/InterruptRoutine_Vector_Module1/xSource/ADC_InterruptRoutine_Vector_Module1_SS0.c, SS1.c, SS2.c, SS3.c.
+- Validation: file diagnostics report no errors on the edited ADC interrupt vector files.

@@ -1,0 +1,4 @@
+[2026-03-28 13:26:32] Triaged remaining warnings after GNU hard-float and nosys.specs fixes.
+Request: Diagnose current warnings in TM4C129E_Project build.
+Findings: Link now succeeds. Remaining warnings are: explicit __GNUC__ redefinition from project define symbols; nosys/libc warnings that _close/_lseek/_read/_write always fail on bare-metal; and two unused-symbol warnings in main.c and OS_Task_Runtime.c.
+Planned action: Remove explicit __GNUC__ define from active GNU project settings and inspect unused-symbol sites before deciding whether to leave them or clean them.

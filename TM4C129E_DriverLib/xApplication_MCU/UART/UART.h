@@ -35,5 +35,6 @@
 #include <xApplication_MCU/UART/xHeader/UART_Init.h>
 #include <xApplication_MCU/UART/xHeader/UART_Config.h>
 #include <xApplication_MCU/UART/xHeader/UART_IrDA.h>
+#include <xApplication_MCU/UART/xHeader/UART_SYSEXC.h>
 
 #endif /* XAPPLICATION_MCU_UART_UART_H_ */

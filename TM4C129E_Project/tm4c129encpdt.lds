@@ -136,8 +136,9 @@ SECTIONS {
     .stack : ALIGN(0x8) {
         _stack = .;
         __stack = .;
-        KEEP(*(.stack))
-        __stack_end__ = .;
     } > SRAM_MAIN_STACK
+
+    __stack_end__ = __stack + LENGTH(SRAM_MAIN_STACK);
+    __stack_size__ = LENGTH(SRAM_MAIN_STACK);
 
 }

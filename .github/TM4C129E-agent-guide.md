@@ -32,6 +32,14 @@ Documentation note:
 - The current workspace shell may still need a refresh or explicit path updates before those tools are discoverable by name.
 - The older `pdftotext` Python wrapper should be treated as optional and less reliable in this environment than the direct toolchain.
 
+## Progress Logging Rule
+
+- Every agent task in this workspace must record progress under `progress/`.
+- Use one file per event with the pattern `progress/YYYY-MM-DD_HH-mm-ss_action-summary.log`.
+- The first line of each progress file must start with `[YYYY-MM-DD HH:MM:SS]` followed by the action being logged.
+- Log requests, investigations, implementation steps, file edits, validation results, and blockers.
+- Read-only analysis is still progress and must be logged.
+
 ## Selection Rules
 
 1. If the task spans multiple layers, start with `TM4C129E Firmware Engineer`.

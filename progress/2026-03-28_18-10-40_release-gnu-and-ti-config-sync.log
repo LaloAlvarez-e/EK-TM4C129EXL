@@ -1,0 +1,8 @@
+[2026-03-28 18:10:40] Sync Release__GNU and TI configuration handling after GNU runtime fixes
+- Reviewed TM4C129E_Project/.cproject after the user's recent edits.
+- Verified BOOSTER_PACK1 is already defined in Debug__GNU, Release__GNU, Debug__TI, and Release__TI; no macro replication was needed.
+- Updated Release__GNU to mirror the GNU hard-float linker fix by adding -mfloat-abi=hard to the GNU linker miscellaneous flags.
+- Updated Release__GNU source exclusions to match Debug__GNU by excluding tm4c129encpdt_startup_ccs_gcc.c.
+- Excluded syscalls.c from Debug__TI and Release__TI because the file is GCC/newlib-specific, while TI builds use the TI RTS heap path via .sysmem and memalign/malloc.
+- Cross-check finding: TI paths in xOS allocate with memalign under __TI_ARM__, and tm4c129encpdt_WithoutBootloader.cmd already defines .sysmem in SRAM_DYNAMIC with --heap_size=0x0001CE00.
+- Validation: TM4C129E_Project/.cproject reports no file errors after the edit.

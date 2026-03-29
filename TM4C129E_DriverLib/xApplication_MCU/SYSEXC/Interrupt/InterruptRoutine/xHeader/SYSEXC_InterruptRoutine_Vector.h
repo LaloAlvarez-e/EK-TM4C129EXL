@@ -31,6 +31,5 @@ extern UBase_t SYSEXC_puxContext[8UL];
 
 void SYSEXC__vIRQVectorHandler(void);
 void SYSEXC__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument);
-void SYSEXC__vSendValues(void);
 
 #endif /* XAPPLICATION_MCU_SYSEXC_INTERRUPT_INTERRUPTROUTINE_XHEADER_SYSEXC_INTERRUPTROUTINE_VECTOR_H_ */

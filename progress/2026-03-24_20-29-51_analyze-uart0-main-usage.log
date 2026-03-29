@@ -1,0 +1,7 @@
+[2026-03-24 20:29:51] Analyze UART0 usage in main and startup
+- Reviewed TM4C129E_Project/main.c and TM4C129E_Project/tm4c129encpdt_startup_ccs.c to determine whether UART0 is already owned by the project runtime path.
+- Confirmed UART0 is the active project console path in main.c: interrupt vector enable, custom printf hook, 4 MHz runtime configuration, DMA IRQ registration, DMA destination address setup to UART0_BASE + UART_DR_OFFSET, and direct UART0 register manipulation in the DMA completion path.
+- Confirmed project tasks also print on UART_enMODULE_0, so UART0 is shared application infrastructure rather than a dedicated exception-only port.
+- Confirmed no UART_enMODULE_1 through UART_enMODULE_7 usage exists under TM4C129E_Project, so other UART modules are currently unused in project code.
+- Noted current startup file still initializes UART_enMODULE_0 for SYSEXC reporting but does not currently enable SYSCTL_enUART0 there, which is a bring-up defect if startup-owned UART0 reporting is kept.
+- Conclusion: using a separate UART module for SYSEXC reporting is cleaner than sharing UART0 with the DMA-backed debug channel, but selecting the replacement module still requires board pin and physical routing confirmation.

@@ -1,0 +1,7 @@
+[2026-03-25 11:22:23] Validate linker-driven stack change and editor limitation
+- Verified the user's GCC stack declaration change was not correct because the startup file contained `#els`, which prevented the non-TI stack declaration branch from existing.
+- Converted the startup file to use linker-defined stack symbols instead of a fixed local stack array.
+- Updated tm4c129encpdt.lds so GNU builds now export __stack_end__ and __stack_size__ consistently with tm4c129encpdt.cmd, which already had those symbols.
+- Revalidated tm4c129encpdt_startup_ccs.c repeatedly after the source changes; the remaining diagnostics are confined to the first vector-table entry when it references linker-defined stack symbols.
+- Checked for an installed embedded ARM compiler (arm-none-eabi-gcc, tiarmclang, armcl) in the current shell and none are available, so the linker-symbol-based initial stack pointer cannot be confirmed with a real compile in this environment.
+- Current assessment: the original GCC stack declaration issue is fixed at the source level, the stack is now linker-driven, and the remaining blocker is editor-side validation of absolute linker symbols in the vector-table initializer.

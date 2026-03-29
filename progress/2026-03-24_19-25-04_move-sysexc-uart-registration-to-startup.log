@@ -1,0 +1,6 @@
+[2026-03-24 19:25:04] Move SYSEXC UART registration to startup
+- Removed UART__enRegisterSysExcReport(...) so startup now uses SYSEXC__enRegisterReportHandler(...) directly.
+- Exposed UART__vSysExcReportCallback(...) from the UART application layer for direct registration.
+- Added early UART0 bring-up in TM4C129E_Project/tm4c129encpdt_startup_ccs.c with GPIOA/UART0 run-mode enable, UART__enInit(...), and a minimal 115200 configuration before registering the SYSEXC report handler.
+- Removed the duplicate UART__enInit(...) and SYSEXC report registration from TM4C129E_Project/main.c; main still owns the later runtime UART DMA/custom high-speed configuration.
+- Validation: no file-level errors in UART_SYSEXC.h, UART_SYSEXC.c, or tm4c129encpdt_startup_ccs.c; main.c still has unrelated pre-existing unresolved identifiers.

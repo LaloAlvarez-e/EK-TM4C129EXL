@@ -116,12 +116,13 @@ SECTIONS {
         __bss_end__ = .;
     } > SRAM
 
-    .heap : {
+    .heap (NOLOAD) : {
         __heap_start__ = .;
         end = __heap_start__;
         _end = end;
         __end = end;
         KEEP(*(.heap))
+        . = ORIGIN(SRAM_DYNAMIC) + LENGTH(SRAM_DYNAMIC);
         __heap_end__ = .;
         __HeapLimit = __heap_end__;
     } > SRAM_DYNAMIC
@@ -141,5 +142,8 @@ SECTIONS {
         KEEP(*(.stack))
         __stack_end__ = .;
     } > SRAM_MAIN_STACK
+
+    __stack_end__ = __stack + LENGTH(SRAM_MAIN_STACK);
+    __stack_size__ = LENGTH(SRAM_MAIN_STACK);
 
 }

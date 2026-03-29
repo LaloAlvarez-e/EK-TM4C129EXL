@@ -1,0 +1,7 @@
+[2026-03-24 20:43:20] Verify UART init run-mode chain and startup syntax issue
+- Verified UART__enInit(...) calls UART__enSetReadyOnRunMode(...) in TM4C129E_DriverLib/xApplication_MCU/UART/xSource/UART_Init.c.
+- Verified UART__enSetReadyOnRunMode(...) maps the UART module to a SYSCTL peripheral and calls SYSCTL__enSetReadyOnRunMode(...) in TM4C129E_DriverLib/xApplication_MCU/UART/Intrinsics/xSource/UART_Ready.c.
+- Verified SYSCTL__enSetReadyOnRunMode(...) calls SYSCTL__enEnableRunMode(...) when the target peripheral is not already ready, then applies peripheral reset in TM4C129E_DriverLib/xDriver_MCU/SYSCTL/App/xSource/SYSCTL_Ready.c.
+- Conclusion: an explicit SYSCTL__enEnableRunMode(..., SYSCTL_enUARTx) immediately before UART__enInit(UART_enMODULE_x) is redundant in this codebase.
+- Important distinction: UART__enInit(...) only readies the UART peripheral itself; it does not enable the GPIO port needed for the selected UART pins, so the explicit GPIO run-mode enable remains necessary in startup.
+- Reconfirmed the startup syntax issue is unrelated to the UART selection block: tm4c129encpdt_startup_ccs.c contains malformed conditional compilation around the vector table, where the initializer starts in the TI/MSP430 branch before an #elif and resumes after a shared #endif.

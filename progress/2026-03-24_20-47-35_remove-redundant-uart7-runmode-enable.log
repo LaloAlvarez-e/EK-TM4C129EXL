@@ -1,0 +1,6 @@
+[2026-03-24 20:47:35] Remove redundant UART7 run-mode enable from startup
+- Re-read TM4C129E_Project/tm4c129encpdt_startup_ccs.c after the user's latest startup edits.
+- Verified the startup file still explicitly enabled SYSCTL_enUART7 before UART__enInit(UART_enMODULE_7).
+- Reconfirmed from the driver stack that UART__enInit(...) -> UART__enSetReadyOnRunMode(...) -> SYSCTL__enSetReadyOnRunMode(...) -> SYSCTL__enEnableRunMode(...), so the explicit UART7 run-mode enable was redundant.
+- Removed only SYSCTL__enEnableRunMode(SYSCTL_enMODULE_0, SYSCTL_enUART7); from startup and kept SYSCTL_enGPIOC enable because UART__enInit does not configure the GPIO port clock.
+- Validation after the edit: tm4c129encpdt_startup_ccs.c still has parser errors around the vector table declaration/conditional compilation, so the file remains invalid for reasons unrelated to the removed UART7 line.

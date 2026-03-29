@@ -28,5 +28,6 @@
 #include <xApplication_MCU/SYSEXC/Interrupt/SYSEXC_Interrupt.h>
 #include <xApplication_MCU/SYSEXC/Intrinsics/SYSEXC_Intrinsics.h>
 #include <xApplication_MCU/SYSEXC/xHeader/SYSEXC_Init.h>
+#include <xApplication_MCU/SYSEXC/xHeader/SYSEXC_Report.h>
 
 #endif /* XAPPLICATION_MCU_SYSEXC_SYSEXC_H_ */

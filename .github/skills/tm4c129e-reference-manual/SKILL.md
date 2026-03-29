@@ -100,3 +100,10 @@ Prefer this structure:
 - copying broad generic MCU advice without confirming it applies to this device
 - confusing application-level repo behavior with hardware-defined behavior
 - claiming page-accurate or section-accurate evidence when it was not actually obtained
+
+## Progress Logging
+
+- Log every documentation lookup, extraction step, code cross-check, and resulting decision under `progress/`.
+- Use one file per event with the pattern `progress/YYYY-MM-DD_HH-mm-ss_action-summary.log`.
+- The first line of each progress file must begin with `[YYYY-MM-DD HH:MM:SS]` followed by the action being logged.
+- Record the request, the source checked, files reviewed or changed, and any validation limits or blockers.

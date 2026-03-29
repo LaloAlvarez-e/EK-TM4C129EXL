@@ -1,0 +1,5 @@
+[2026-03-28 13:36:20] Added project-local bare-metal syscall stubs for GNU/newlib.
+Request: Resolve remaining TM4C129E_Project linker Problem entries for libc_a-closer.o, libc_a-lseekr.o, libc_a-readr.o, and libc_a-writer.o.
+Action: Added TM4C129E_Project/syscalls.c implementing _close, _fstat, _getpid, _isatty, _kill, _lseek, _open, _read, _sbrk, _exit, and _write using linker-provided heap bounds.
+Validation: syscalls.c has no file diagnostics. Shell rebuild from Debug__GNU reported target up to date, and generated makefiles do not yet reference syscalls.c, so CCS managed-build metadata refresh is still required before the new source participates in the build.
+Next step: refresh/clean/rebuild TM4C129E_Project in CCS so Debug__GNU makefiles regenerate and include syscalls.c.

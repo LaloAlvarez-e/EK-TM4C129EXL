@@ -12,12 +12,12 @@
 
 SYSCTL_nERROR SYSCTL__enSetPowerControlState(SYSCTL_nMODULE enModuleArg, SYSCTL_nPERIPHERAL enPeripheralArg, SYSCTL_nSTATE enStateArg)
 {
-    SYSCTL_Register_t enRegister;
-    enRegister.uptrAddress = SYSCTL_PC_OFFSET;
-    enRegister.uxValue = (UBase_t) enStateArg;
+    SYSCTL_Register_t stRegister;
+    stRegister.uptrAddress = SYSCTL_PC_OFFSET;
+    stRegister.uxValue = (UBase_t) enStateArg;
 
     SYSCTL_nERROR enErrorReg;
-    enErrorReg =SYSCTL__enWritePeripheral(enModuleArg, enPeripheralArg, &enRegister);
+    enErrorReg =SYSCTL__enWritePeripheral(enModuleArg, enPeripheralArg, &stRegister);
     return (enErrorReg);
 }
 
@@ -42,12 +42,12 @@ SYSCTL_nERROR SYSCTL__enGetPowerControlState(SYSCTL_nMODULE enModuleArg, SYSCTL_
     enErrorReg = (0UL == (uintptr_t) penStateArg) ? SYSCTL_enERROR_POINTER : SYSCTL_enERROR_OK;
     if(SYSCTL_enERROR_OK ==  enErrorReg)
     {
-        SYSCTL_Register_t enRegister;
-        enRegister.uptrAddress = SYSCTL_PC_OFFSET;
-        enErrorReg =SYSCTL__enReadPeripheral(enModuleArg, enPeripheralArg, &enRegister);
+        SYSCTL_Register_t stRegister;
+        stRegister.uptrAddress = SYSCTL_PC_OFFSET;
+        enErrorReg =SYSCTL__enReadPeripheral(enModuleArg, enPeripheralArg, &stRegister);
         if(SYSCTL_enERROR_OK ==  enErrorReg)
         {
-            *penStateArg = (SYSCTL_nSTATE) enRegister.uxValue;
+            *penStateArg = (SYSCTL_nSTATE) stRegister.uxValue;
         }
     }
     return (enErrorReg);

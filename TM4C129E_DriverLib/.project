@@ -3,6 +3,7 @@
 	<name>TM4C129E_DriverLib</name>
 	<comment></comment>
 	<projects>
+		<project>TM4C129E_ApplicationLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

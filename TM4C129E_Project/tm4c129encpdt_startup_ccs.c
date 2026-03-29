@@ -24,9 +24,52 @@
 
 #include <xUtils/Standard/Standard.h>
 #include <xApplication_MCU/Core/SCB/SCB.h>
+#include <xApplication_MCU/SYSEXC/SYSEXC.h>
+#include <xApplication_MCU/SYSCTL/SYSCTL.h>
+#include <xApplication_MCU/UART/UART.h>
 #include <xDriver_MCU/Core/FPU/FPU.h>
 #include <xDriver_MCU/Core/NVIC/NVIC.h>
 #include <xApplication_MCU/FLASH/FLASH.h>
+
+static const UART_CONTROL_t UART_stReportControl =
+{
+    UART_enEOT_ALL,
+    UART_enSTATE_DIS,
+    UART_enSTATE_ENA,
+    UART_enSTATE_ENA,
+    UART_enSTATE_ENA,
+    UART_enLINE_MODE_SOFT,
+    UART_enLINE_MODE_SOFT,
+    UART_enSTATE_DIS,
+    UART_enSTATE_DIS,
+    UART_enSTATE_DIS,
+    UART_enSTATE_DIS,
+    UART_enLEVEL_LOW,
+    UART_enLEVEL_LOW,
+    UART_enLEVEL_LOW,
+};
+
+static const UART_LINE_CONTROL_t UART_stReportLineControl =
+{
+    UART_enSTATE_ENA,
+    UART_enSTOP_ONE,
+    UART_enPARITY_NONE,
+    UART_enLENGTH_8BITS,
+    UART_enFIFO_LEVEL_13_16,
+    UART_enFIFO_LEVEL_13_16,
+};
+
+static const UART_LINE_t UART_stReportLine =
+{
+    UART_enLINE_SELECT_PRIMARY,
+    UART_enLINE_SELECT_PRIMARY,
+    UART_enLINE_SELECT_PRIMARY,
+    UART_enLINE_SELECT_PRIMARY,
+    UART_enLINE_SELECT_PRIMARY,
+    UART_enLINE_SELECT_PRIMARY,
+    UART_enLINE_SELECT_PRIMARY,
+    UART_enLINE_SELECT_PRIMARY,
+};
 
 /*******************************************************************************/
 /**/
@@ -35,18 +78,28 @@
 /*******************************************************************************/
 void ResetISR(void);
 static void IntDefaultHandler(void);
-
 extern void SYSTICKHandler(void);
 
+/*******************************************************************************/
+/**/
+/* The entry point for the application.*/
+/**/
+/*******************************************************************************/
+extern int main(void);
+
 #if defined (__TI_ARM__ ) || defined (__MSP430__ )
-/*******************************************************************************/
-/**/
-/* External declaration for the reset handler that is to be called when the*/
-/* processor is started*/
-/**/
-/*******************************************************************************/
 extern void _c_int00(void);
-extern UBase_t main(void);
+#define STARTUP_VECTOR_SECTION
+#pragma DATA_SECTION(g_pfnVectors, ".intvecs")
+#elif defined (__GNUC__ )
+#define STARTUP_VECTOR_SECTION __attribute__ ((section(".intvecs")))
+#else
+#define STARTUP_VECTOR_SECTION
+#endif
+
+extern UBase_t __stack;
+extern UBase_t __stack_end__;
+extern UBase_t __stack_size__;
 
 /*******************************************************************************/
 /**/
@@ -54,62 +107,10 @@ extern UBase_t main(void);
 /**/
 /*******************************************************************************/
 
-#pragma  DATA_SECTION(pui32MainStack, ".stack")
-
-static uint8_t pui32MainStack[0x00000200UL - 8UL];
-/*******************************************************************************/
-/**/
-/* External declarations for the interrupt handlers used by the application.*/
-/**/
-/*******************************************************************************/
-/* To be added by user*/
-
-/*******************************************************************************/
-/**/
-/* The vector table.  Note that the proper constructs must be placed on this to*/
-/* ensure that it ends up at physical address 0x0000.0000 or at the start of*/
-/* the program if located at a start address other than 0.*/
-/**/
-/*******************************************************************************/
-#pragma DATA_SECTION(g_pfnVectors, ".intvecs")
+STARTUP_VECTOR_SECTION
 void (* const g_pfnVectors[130UL])(void) =
 {
- (void (*)(void))((UBase_t)((UBase_t)pui32MainStack + sizeof(pui32MainStack))),
-#elif defined (__GNUC__ )
-
-/*******************************************************************************/
-/**/
-/* The entry point for the application.*/
-/**/
-/*******************************************************************************/
-extern UBase_t main(void);
-
-/*******************************************************************************/
-/**/
-/* Reserve space for the system stack.*/
-/**/
-/*******************************************************************************/
-static uint8_t pui32MainStack[0x00000800UL] __attribute__((section(".stack")));
-/*******************************************************************************/
-/**/
-/* External declarations for the interrupt handlers used by the application.*/
-/**/
-/*******************************************************************************/
-/* To be added by user*/
-
-/*******************************************************************************/
-/**/
-/* The vector table.  Note that the proper constructs must be placed on this to*/
-/* ensure that it ends up at physical address 0x0000.0000 or at the start of*/
-/* the program if located at a start address other than 0.*/
-/**/
-/*******************************************************************************/
-__attribute__ ((section(".intvecs")))
-void (* const g_pfnVectors[130UL])(void) =
-{
-    (void (*)(void))((UBase_t)(pui32MainStack + sizeof(pui32MainStack))),
-#endif
-                                             /* The initial stack pointer*/
+    (void (*)(void))(&__stack_end__),        /* The initial stack pointer*/
     &ResetISR,                               /* The reset handler*/
     &IntDefaultHandler,                      /* The NMI handler*/
     &IntDefaultHandler,                      /* The hard fault handler*/
@@ -327,6 +328,11 @@ ResetISR(void)
     FLASH__enInit(FLASH_enMODULE_0);
     FLASH__enSetPrefetchMode(FLASH_enMODULE_0, FLASH_enPREFETCH_MODE_DUAL);
     FLASH__enEnablePrefetch(FLASH_enMODULE_0);
+    SYSCTL__enEnableRunMode(SYSCTL_enMODULE_0, SYSCTL_enGPIOC);
+    UART__enInit(UART_enMODULE_7);
+    UART__enSetConfig(UART_enMODULE_7, UART_enMODE_NORMAL, 115200UL, 0UL, 0UL,
+                      &UART_stReportControl, &UART_stReportLineControl, &UART_stReportLine, 0UL);
+    SYSEXC__enRegisterReportHandler(&UART__vSysExcReportCallback, (void*) (uintptr_t) UART_enMODULE_7);
     /**/
     /* Call the application's entry point.*/
     /**/

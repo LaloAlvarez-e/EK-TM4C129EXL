@@ -84,6 +84,8 @@ FLASH_BANK23 0x00080000 0x00080000 ; Name of load region (FLASH_VTABLE),
     ARM_LIB_HEAP 0x20022000 EMPTY 0x0001C800 ; Heap region growing up
     {
     }
+	__stack_end__ = __stack + SIZE(SRAM_MAIN_STACK);
+	__stack_size__ = SIZE(SRAM_MAIN_STACK);
 }
 
 

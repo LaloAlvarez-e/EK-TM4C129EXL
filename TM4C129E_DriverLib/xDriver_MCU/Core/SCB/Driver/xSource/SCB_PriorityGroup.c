@@ -41,7 +41,7 @@ SCB_nERROR SCB__enSetPriorityGroup(SCB_nMODULE enModuleArg, SCB_nPRIGROUP enGrou
         stRegister.uxShift = 0UL;
         stRegister.uxMask = SCB_AIRCR_R_VECTKEY_MASK | SCB_AIRCR_R_PRIGROUP_MASK;
         stRegister.uptrAddress = SCB_AIRCR_OFFSET;
-        stRegister.uxValue = 0U;
+        stRegister.uxValue = uxValueReg;
         MCU__vDataSyncBarrier();
         enErrorReg = SCB__enWriteRegister(enModuleArg, &stRegister);
         MCU__vDataSyncBarrier();

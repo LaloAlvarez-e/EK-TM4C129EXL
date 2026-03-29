@@ -1,0 +1,5 @@
+[2026-03-28 13:47:14] Investigated hard fault during GNU runtime allocation path.
+Request: Diagnose hard fault with SCB_HardFault_puxContext showing LR inside allocator path and PC = 0xFFFFFFFE.
+Findings: Debug__GNU map now includes syscalls.o. The saved LR resolves inside newlib _malloc_r, and the GNU linker map shows __heap_start__ == __HeapLimit == 0x20022000, meaning the configured heap region is currently zero bytes. This is a linker-script defect in tm4c129encpdt_WithoutBootloader.lds, not just a syscall-stub issue.
+Implication: Dynamic allocations used by queue/task/coroutine creation are running with no valid heap region, which can destabilize the allocator path during startup.
+Planned fix: reserve the SRAM_DYNAMIC region as .heap in the GNU linker script and harden _sbrk address arithmetic.

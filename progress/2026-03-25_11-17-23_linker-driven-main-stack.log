@@ -1,0 +1,7 @@
+[2026-03-25 11:17:23] Convert startup main stack to linker-driven symbols
+- Re-verified the user's GCC-side stack declaration change and confirmed it was not solved because the preprocessor branch contained `#els`, leaving pui32MainStack undefined in the non-TI path.
+- Replaced the fixed local main-stack array in TM4C129E_Project/tm4c129encpdt_startup_ccs.c with linker-provided symbols: __stack, __stack_end__, and __stack_size__.
+- Updated the initial vector-table stack pointer entry to use the linker-defined start plus size instead of sizeof(pui32MainStack).
+- Updated TM4C129E_Project/tm4c129encpdt.lds to export __stack_end__ and __stack_size__ in the same style already used by the CCS linker command file.
+- TM4C129E_Project/tm4c129encpdt.cmd already exposed __stack_end__ and __stack_size__, so no semantic linker-script change was required there.
+- Fixed the GCC .intvecs placement by attaching the section attribute directly to the g_pfnVectors declaration.

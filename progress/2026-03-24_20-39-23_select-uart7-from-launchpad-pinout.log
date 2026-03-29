@@ -1,0 +1,7 @@
+[2026-03-24 20:39:23] Select UART7 for SYSEXC reporting from LaunchPad pinout
+- Reviewed Documents/launchpad.pdf BoosterPack and breadboard mux tables to identify UART modules physically exposed on the EK-TM4C129EXL headers.
+- Verified candidate UART mappings from the board guide: UART7 on PC4/PC5 (BoosterPack 1 A1-3/A1-4 and X11 breadboard pins 23/21), UART6 on PP0/PP1 (BoosterPack 2 A2-3/A2-4), UART4 on PK0/PK1 and PA2/PA3, and UART2 on PA6/PA7.
+- Rejected UART5 because PC6 is already used in project code by the EDUMKII joystick selection path.
+- Chose UART7 because PC4/PC5 are exposed as the board-standard UART RX/TX pair and no project use of UART_enMODULE_7 or GPIOC4/GPIOC5 was found.
+- Updated TM4C129E_Project/tm4c129encpdt_startup_ccs.c so the startup-owned SYSEXC reporter now enables GPIOC and UART7, initializes UART_enMODULE_7, applies the minimal 115200 configuration, and registers the UART callback with UART_enMODULE_7 as context.
+- Validation blocker: tm4c129encpdt_startup_ccs.c currently has unrelated pre-existing syntax/preprocessor damage around the vector table conditional compilation, so file-level validation is failing outside the UART7 edit region.

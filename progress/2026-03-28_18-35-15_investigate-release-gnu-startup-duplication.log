@@ -1,0 +1,5 @@
+[2026-03-28 18:35:15] Investigated Release__GNU linker failure caused by duplicate startup objects.
+Request: fix Release__GNU multiple-definition errors for ResetISR and g_pfnVectors.
+Findings: TM4C129E_Project/.cproject Release__GNU sourceEntries no longer exclude tm4c129encpdt_startup_ccs_gcc.c; generated Release__GNU/makefile still links tm4c129encpdt_startup_ccs_gcc.o together with tm4c129encpdt_startup_ccs.o.
+Affected files: TM4C129E_Project/.cproject, TM4C129E_Project/Release__GNU/* generated build files as needed.
+Status: root cause confirmed; patch in progress.

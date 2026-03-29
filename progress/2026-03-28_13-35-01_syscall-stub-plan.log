@@ -1,0 +1,5 @@
+[2026-03-28 13:35:01] Plan project-local syscall stubs to silence bare-metal newlib warnings.
+Request: Resolve remaining linker Problem entries for libc_a-closer.o, libc_a-lseekr.o, libc_a-readr.o, and libc_a-writer.o in TM4C129E_Project.
+Actions: Re-verified active GNU 15 Debug config still contains nosys.specs and confirmed no project-local syscall implementations exist under TM4C129E_Project. Reviewed tm4c129encpdt_WithoutBootloader.lds for heap symbols.
+Decision: Add explicit project-local bare-metal syscall stubs using linker-provided heap bounds so newlib resolves against project symbols instead of libnosys warning stubs.
+Planned files: TM4C129E_Project/syscalls.c.

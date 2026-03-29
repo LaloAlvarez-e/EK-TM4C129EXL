@@ -1,0 +1,5 @@
+[2026-03-28 18:42:03] Investigate TFT image loss when increasing button-driven update rate above ~30 FPS.
+Request: determine likely root cause when SPI DMA image is no longer visible at higher frame rates while testing with buttons.
+Actions: loaded TM4C129E repository skill guidance; searched TM4C129E_Project and TM4C129E_DriverLib for the TFT task, button queue flow, DMA semaphore use, and SPI/SSI DMA display path.
+Findings so far: xTask9_TFT consumes ButtonQueueHandle, waits on DMASemaphoreHandle around buffer work, and drives ST7735__vDrawBuffer for a 128x128 frame. Investigation is focused on pacing, DMA completion signaling, and task-side contention.
+Status: code-path review in progress.

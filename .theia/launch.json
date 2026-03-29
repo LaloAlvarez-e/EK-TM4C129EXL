@@ -1,0 +1,155 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "TM4C129E_ApplicationLib",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "TM4C129E_ApplicationLib",
+                "resourceId": "/TM4C129E_ApplicationLib"
+            }
+        },
+        {
+            "name": "TM4C129E_DriverLib",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "TM4C129E_DriverLib",
+                "resourceId": "/TM4C129E_DriverLib"
+            }
+        },
+        {
+            "name": "TM4C129E_Project",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "TM4C129E_Project",
+                "resourceId": "/TM4C129E_Project"
+            },
+            "connections": [
+                {
+                    "name": "Stellaris In-Circuit Debug Interface",
+                    "cores": [
+                        {
+                            "name": "CORTEX_M4_0",
+                            "debuggerSettings": {
+                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues/>\n"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "TM4C129E_WS2812",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "TM4C129E_WS2812",
+                "resourceId": "/TM4C129E_WS2812"
+            },
+            "connections": [
+                {
+                    "name": "Stellaris In-Circuit Debug Interface",
+                    "cores": [
+                        {
+                            "name": "CORTEX_M4_0",
+                            "debuggerSettings": {
+                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues/>\n"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "TM4C129E_PWMDeadBand",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "TM4C129E_PWMDeadBand",
+                "resourceId": "/TM4C129E_PWMDeadBand"
+            },
+            "connections": [
+                {
+                    "name": "Stellaris In-Circuit Debug Interface",
+                    "cores": [
+                        {
+                            "name": "CORTEX_M4_0",
+                            "debuggerSettings": {
+                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues/>\n"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "TM4C129E_MAX7219",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "TM4C129E_MAX7219",
+                "resourceId": "/TM4C129E_MAX7219"
+            },
+            "connections": [
+                {
+                    "name": "Stellaris In-Circuit Debug Interface",
+                    "cores": [
+                        {
+                            "name": "CORTEX_M4_0",
+                            "debuggerSettings": {
+                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues/>\n"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "TM4C129E_Edx_RTOS",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "TM4C129E_Edx_RTOS",
+                "resourceId": "/TM4C129E_Edx_RTOS"
+            },
+            "connections": [
+                {
+                    "name": "Stellaris In-Circuit Debug Interface",
+                    "cores": [
+                        {
+                            "name": "CORTEX_M4_0",
+                            "debuggerSettings": {
+                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues/>\n"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "TM4C129E_DM13A",
+            "type": "ccs-debug",
+            "request": "launch",
+            "projectInfo": {
+                "name": "TM4C129E_DM13A",
+                "resourceId": "/TM4C129E_DM13A"
+            },
+            "connections": [
+                {
+                    "name": "Stellaris In-Circuit Debug Interface",
+                    "cores": [
+                        {
+                            "name": "CORTEX_M4_0",
+                            "debuggerSettings": {
+                                "data": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>\n<PropertyValues/>\n"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

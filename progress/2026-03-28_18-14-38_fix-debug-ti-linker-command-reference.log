@@ -1,0 +1,5 @@
+[2026-03-28 18:14:38] Fixed Debug__TI linker command file reference in TM4C129E_Project
+- Request: make the TI debug configuration internally consistent after confirming the linker command file path was invalid.
+- Change: updated TM4C129E_Project/.cproject Debug__TI OPT_TAGS entry from LINKER_COMMAND_FILE=tm4c1294ncpdt.cmd to LINKER_COMMAND_FILE=tm4c129encpdt_WithoutBootloader.cmd.
+- Reason: tm4c1294ncpdt.cmd does not exist in TM4C129E_Project, while tm4c129encpdt_WithoutBootloader.cmd exists and matches the TI release configuration and TI RTS heap/.sysmem setup.
+- Validation: TM4C129E_Project/.cproject has no file diagnostics after the edit; grep confirms no remaining tm4c1294ncpdt.cmd reference in the project configuration.

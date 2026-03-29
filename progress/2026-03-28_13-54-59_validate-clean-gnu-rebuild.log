@@ -1,0 +1,8 @@
+[2026-03-28 13:54:59] Validated clean GNU rebuild after heap and syscall fixes
+- Located CCS bundled make executable at C:\ti\ccs1281\ccs\utils\bin\gmake.exe.
+- Ran clean rebuild in TM4C129E_Project/Debug__GNU with CCS gmake.
+- Build completed successfully and linked TM4C129E_Project.out.
+- Confirmed final GNU linker command includes -mfloat-abi=hard and -specs="nosys.specs".
+- Confirmed TM4C129E_Project.map still shows .heap from 0x20022000 to 0x2003E800 and .stack starting at 0x2003F800.
+- Confirmed no file errors in TM4C129E_Project/syscalls.c or TM4C129E_Project/tm4c129encpdt_WithoutBootloader.lds.
+- Remaining limitation: runtime hard-fault behavior cannot be revalidated without running on target hardware.

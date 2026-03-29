@@ -32,12 +32,12 @@ SYSCTL_nERROR SYSCTL__enIsPeripheralPresent(SYSCTL_nMODULE enModuleArg, SYSCTL_n
     enErrorReg = (0UL == (uintptr_t) penStateArg) ? SYSCTL_enERROR_POINTER : SYSCTL_enERROR_OK;
     if(SYSCTL_enERROR_OK ==  enErrorReg)
     {
-        SYSCTL_Register_t enRegister;
-        enRegister.uptrAddress = SYSCTL_PP_OFFSET;
-        enErrorReg =SYSCTL__enReadPeripheral(enModuleArg, enPeripheralArg, &enRegister);
+        SYSCTL_Register_t stRegister;
+        stRegister.uptrAddress = SYSCTL_PP_OFFSET;
+        enErrorReg =SYSCTL__enReadPeripheral(enModuleArg, enPeripheralArg, &stRegister);
         if(SYSCTL_enERROR_OK ==  enErrorReg)
         {
-            *penStateArg = (SYSCTL_nBOOLEAN) enRegister.uxValue;
+            *penStateArg = (SYSCTL_nBOOLEAN) stRegister.uxValue;
         }
     }
     return (enErrorReg);

@@ -4,4 +4,5 @@
 	<deviceFamily value="TMS470"/>
 	<connection value="common/targetdb/connections/Stellaris_ICDI_Connection.xml"/>
 	<isTargetManual value="false"/>
+	<activeTargetConfiguration value="targetConfigs/Tiva TM4C129ENCPDT.ccxml"/>
 </projectOptions>

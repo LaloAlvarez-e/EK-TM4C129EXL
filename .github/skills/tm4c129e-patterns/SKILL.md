@@ -216,6 +216,13 @@ When making changes in this repo:
 6. Avoid collapsing fine-grained modules into large files.
 7. Avoid introducing C++-style abstractions or dynamic patterns not already used in the module.
 
+## Progress Logging
+
+- For every request, code change, implementation step, or meaningful investigation, create a progress file under `progress/`.
+- Use the file pattern `progress/YYYY-MM-DD_HH-mm-ss_action-summary.log`.
+- The first line of each progress file must begin with `[YYYY-MM-DD HH:MM:SS]` followed by the action being logged.
+- Include the request or action, the decision or change made, affected files, and validation or blocker status.
+
 ## Quick Placement Guide
 
 - New generic queue or list helper: `TM4C129E_ApplicationLib/xUtils/...`

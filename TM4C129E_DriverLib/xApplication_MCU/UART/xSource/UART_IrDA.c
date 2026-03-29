@@ -53,6 +53,8 @@ UART_nERROR UART__enGetIrDALowPowerFrequency(UART_nMODULE enModule, UBase_t* pux
 
     uxSysClockReg = 0UL;
     uxDividerReg = 0UL;
+
+    enErrorReg = UART_enERROR_OK;
     if(0UL == (uintptr_t) puxFrequencyArg)
     {
         enErrorReg = UART_enERROR_POINTER;

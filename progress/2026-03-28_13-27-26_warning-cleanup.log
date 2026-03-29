@@ -1,0 +1,5 @@
+[2026-03-28 13:27:26] Cleaned remaining avoidable warnings in TM4C129E_Project.
+Changes: Removed explicit __GNUC__ define from TM4C129E_Project/.cproject active GNU 15 Debug configuration; removed unused static helper MAIN__enWriteBufferDMA from TM4C129E_Project/main.c; removed unused static runtime placeholders OS_Task_uxTaskSwitchedInTime and OS_Task_uxTotalRunTime from TM4C129E_Project/xOS/Task/Intrinsics/xSource/OS_Task_Runtime.c.
+Reasoning: __GNUC__ is built into GCC and should not be redefined; the other symbols were local-only and unreferenced, generating avoidable -Wunused diagnostics.
+Validation: No errors reported in edited files.
+Remaining warnings expected: libnosys/_read/_write/_close/_lseek warnings are standard for bare-metal builds using nosys.specs unless project-specific syscalls are implemented; CCS project-version compatibility warning is metadata only.
