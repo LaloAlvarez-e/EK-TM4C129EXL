@@ -74,3 +74,7 @@ RemoteSystemsTempFiles/
 **/.jxbrowser-data/**
 /.tmp/
 .gitignore~
+
+# TM4C129E DriverLib host-test generated artifacts
+/TM4C129E_DriverLib_Test/build/
+/TM4C129E_DriverLib_Test/coverage/opencppcoverage/
