@@ -1,0 +1,9 @@
+[2026-03-29 09:02:24] Analyzed placement of new SysTick calibration-related helpers
+- Reviewed repo layering guidance in .github/skills/tm4c129e-patterns/SKILL.md and TM4C129E DriverLib/firmware instruction files.
+- Reviewed current helper placement in:
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+- Classified helper roles:
+  - Calibration-domain helpers convert or validate CALIB-derived timing information.
+  - Init-domain helpers orchestrate startup policy and selected clock-source behavior.
+- Conclusion: SYSTICK__enGetTrustedCalibrationInfo() is calibration-policy logic and is the strongest candidate to move into the calibration layer; SYSTICK__enGetTickTimingPs() and SYSTICK__enGetTickCountUs() are init-facing orchestration wrappers and can stay in SYSTICK_Init.c unless a wider timing-conversion API is desired.

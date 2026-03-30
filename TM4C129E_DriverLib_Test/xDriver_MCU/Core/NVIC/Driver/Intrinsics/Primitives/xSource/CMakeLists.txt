@@ -1,0 +1,11 @@
+tm4c129e_driverlib_add_unit_test(
+    NVIC_RegisterPrimitives_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/NVIC_RegisterPrimitives_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Driver/Intrinsics/Primitives/xSource/NVIC_ReadRegister.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Driver/Intrinsics/Primitives/xSource/NVIC_WriteRegister.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Peripheral/Register/xSource/NVIC_RegisterPeripheral.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/NVIC_MCURegisterAccessMock.cpp
+)

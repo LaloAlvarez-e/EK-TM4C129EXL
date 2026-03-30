@@ -1,0 +1,7 @@
+[2026-03-29 10:09:32] Verified SysTick InitUs path does not modify the tick count twice through calibration
+- Reviewed TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c and TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c.
+- Confirmed SYSTICK__enInitUsVector() computes uxTick_Sysclk once through SYSTICK__enGetTickCountUs().
+- Confirmed SYSTICK__enInitTickVector() does not recompute or overwrite uxTickArg; it only derives timing metadata through SYSTICK__enGetTickTimingPs() and then programs the reload with SYSTICK__enSetReloadValue(enModuleArg, uxTickArg - 1U).
+- Confirmed the second calibration-aware call path only updates TickPs/PsPeriod metadata and stores the original tick span through SYSTICK__vSetTickPeriod(uxTickArg).
+- Conclusion: there is repeated calibration validation/metadata derivation, but no second calibration-based modification of the hardware tick count.
+- Residual nuance: timing metadata can still reflect integer rounding of picosecond-per-tick values, which is separate from double calibration of the programmed reload span.

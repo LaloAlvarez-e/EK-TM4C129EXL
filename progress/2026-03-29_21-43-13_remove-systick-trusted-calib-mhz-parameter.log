@@ -1,0 +1,9 @@
+[2026-03-29 21:43:13] Removing the unused MHz parameter from the trusted SysTick calibration API while preserving runtime-frequency-based fallback conversions.
+- Request: remove all references to the parameter because it is no longer needed to calculate trusted CALIB information.
+- Scope under review:
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+  - TM4C129E_DriverLib_Test mirrored SysTick calibration host tests if validation updates are needed
+- Expected design after change:
+  - SYSTICK__enGetTrustedCalibrationInfo no longer accepts runtime MHz
+  - SYSTICK__enGetTickTimingPs and SYSTICK__enGetTickCountUs still keep runtime MHz because their direct fallback conversions depend on the active system clock

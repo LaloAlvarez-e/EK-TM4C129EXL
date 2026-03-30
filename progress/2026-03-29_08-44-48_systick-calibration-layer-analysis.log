@@ -1,0 +1,11 @@
+[2026-03-29 08:44:48] Analyzed SysTick calibration layer behavior and usage guidance
+- Reviewed repository guidance: .github/skills/tm4c129e-patterns/SKILL.md, .github/instructions/tm4c129e-driverlib.instructions.md, and .github/instructions/tm4c129e-firmware.instructions.md.
+- Re-read current application-layer files:
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+- Re-read supporting raw driver calibration files:
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Driver/xHeader/SYSTICK_Calibration.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Peripheral/xHeader/SYSTICK_Enum.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Peripheral/Register/xHeader/SYSTICK_RegisterDefines.h
+- Confirmed the layer is read-only and performs timing conversions from the SysTick calibration register; it does not initialize or program SysTick by itself.
+- Confirmed usage guidance should distinguish exact versus inexact calibration via SKEW and presence or absence of reference clock via NOREF/REFERENCE.

@@ -10,6 +10,7 @@
 
 #include <xDriver_MCU/Common/xHeader/MCU_Enum.h>
 
+#define SYSTICK_MAXVALUE (0x1000000UL) /*24 bits*/
 typedef enum
 {
     SYSTICK_enERROR_OK = (UBase_t) MCU_enERROR_OK,
@@ -60,6 +61,20 @@ typedef enum
     SYSTICK_enSYSCLK = 1UL,
     SYSTICK_enCLKSOURCE_UNDEF = UNDEF_VALUE,
 }SYSTICK_nCLKSOURCE;
+
+typedef enum
+{
+    SYSTICK_enSKEW_EXACT = 0UL,
+    SYSTICK_enSKEW_INEXACT = 1UL,
+    SYSTICK_enSKEW_UNDEF = UNDEF_VALUE,
+}SYSTICK_nSKEW;
+
+typedef enum
+{
+    SYSTICK_enREFERENCE_EXTERNAL = 0UL,
+    SYSTICK_enREFERENCE_NONE = 1UL,
+    SYSTICK_enREFERENCE_UNDEF = UNDEF_VALUE,
+}SYSTICK_nREFERENCE;
 
 typedef MCU_Register_t SYSTICK_Register_t;
 typedef MCU_pvfIRQVectorHandler_t SYSTICK_pvfIRQVectorHandler_t;

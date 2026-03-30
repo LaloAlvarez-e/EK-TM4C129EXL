@@ -1,0 +1,6 @@
+[2026-03-29 02:17:21] Validation: cross-checked the intended answer against manual evidence only.
+Conclusion basis:
+- For TM4C1294 device-level driver audit surface, STCTRL/STRELOAD/STCURRENT are explicitly documented and therefore expected.
+- For Cortex-M4 core-complete surface, SYST_CALIB and its NOREF/SKEW/TENMS semantics are documented in the ARM manual and should be treated as optional/auxiliary for drivers that expose calibration/reference-clock introspection, not mandatory for basic timer control.
+- COUNTFLAG/COUNT semantics were confirmed from both manuals: set when counting reaches zero, readable as sticky-since-last-read, and cleared by reading the control/status register or by writing the current-value register.
+No repo code changes performed.

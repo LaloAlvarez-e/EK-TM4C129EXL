@@ -33,6 +33,9 @@ typedef struct
     SYSEXC_nINT enSource;
     SYSEXC_nINTMASK enStatusMask;
     UBase_t uxFaultAddress;
+    UBase_t uxICSR;
+    UBase_t uxActiveVector;
+    UBase_t uxStackedVector;
     UBase_t uxContext[8UL];
 } SYSEXC_REPORT_t;
 

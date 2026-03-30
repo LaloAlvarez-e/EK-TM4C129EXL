@@ -1,0 +1,17 @@
+[2026-03-29 10:06:46] Moved SysTick tick-timing conversion into calibration layer and added host tests
+- Refactored TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c to expose SYSTICK__enGetTickTimingPs() as a calibration-layer API.
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h to declare SYSTICK__enGetTickTimingPs() and SYSTICK__enGetTickCountUs().
+- Removed the local SYSTICK__enGetTickTimingPs() helper from TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c so init now consumes the calibration API.
+- Added a trust-policy comment in the calibration source documenting that CALIB is only trusted when skew is exact, a reference clock is present, and the calibration count matches the active frequency basis.
+- Added mirrored host-test scaffolding under TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/.
+- Added a new GoogleMock bridge for raw SysTick calibration driver getters:
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSTICK_CalibrationDriverMock.h
+  - TM4C129E_DriverLib_Test/support/src/SYSTICK_CalibrationDriverMock.cpp
+- Added host test target SYSTICK_Calibration_Test covering:
+  - fallback timing conversion when CALIB is not trusted
+  - trusted microseconds-to-ticks conversion when CALIB is exact, reference-backed, and frequency-matched
+- Updated TM4C129E_DriverLib_Test/CMakeLists.txt and the gap tracker to register the new xApplication_MCU test subtree and SysTick coverage target.
+- Validation:
+  - editor diagnostics report no errors in the touched production and test files
+  - host build command succeeded for target SYSTICK_Calibration_Test
+  - test executable ran successfully: 2 tests passed, 0 failed

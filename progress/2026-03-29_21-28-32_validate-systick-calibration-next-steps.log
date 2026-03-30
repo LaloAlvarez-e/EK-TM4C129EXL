@@ -1,0 +1,9 @@
+[2026-03-29 21:28:32] Completed the next SysTick calibration follow-up steps.
+Changes made:
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c comment wording to refer to the active frequency count basis.
+- Added a concrete host regression test in TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration_Test.cpp that verifies CALIB TENMS=40000 yields a 1 ms reload value of 3999.
+- Updated TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md so the SysTick calibration target is marked covered and the current inventory reflects count-based TENMS semantics and the new example test.
+Validation:
+- Editor diagnostics: no errors in the edited source, test, and tracker files.
+- Host build: cmake --build TM4C129E_DriverLib_Test/build --target SYSTICK_Calibration_Test --config Debug succeeded.
+- Direct test execution: SYSTICK_Calibration_Test.exe ran successfully with 5 tests passed, 0 failed.

@@ -1,0 +1,14 @@
+[2026-03-29 20:59:45] Compared SysTick TENMS semantics against Cortex-M4 and TM4C1294 documentation and cross-checked current repo usage.
+Request: verify broadly whether the SysTick calibration value requires +1, not only for 0x9C40, and compare the interpretation against the Cortex-M4 spec and the TM4C1294 spec.
+Sources reviewed:
+- Documents/cortex-m4.pdf extracted to .tmp/cortex_m4_full.txt
+- Existing TM4C1294 chapter extraction .tmp/cortex_m4_ch3/tm4c1294_ch3.txt
+- TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+- TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Driver/xSource/SYSTICK_Reload.c
+Conclusion basis:
+- ARM Cortex-M4 text states RELOAD uses N-1 encoding for N clock cycles and states TENMS is a reload value for 10 ms timing.
+- TM4C1294 device manual extraction confirms ordinary SysTick RELOAD semantics (period N+1 clocks when RELOAD=N) but does not document SYST_CALIB/TENMS/NOREF/SKEW.
+- Therefore +1 is broadly correct when converting either RELOAD or TENMS from raw register representation into an actual cycle count or elapsed time.
+- +1 is not correct when preserving raw register semantics, comparing raw reload values directly, or writing a value back to RELOAD.
+- The repo's conversion helpers that use TENMS+1 to derive counts/time are conceptually aligned with ARM reload semantics, but the trust comparison against uxSystemFrequencyMHz * 10000 is likely too strict or mismatched because it mixes a count basis with an implementation-defined calibration register that TM4C1294 does not document.
+Validation limits: documentation cross-check only, no code edits performed.

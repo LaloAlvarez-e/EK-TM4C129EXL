@@ -1,0 +1,15 @@
+[2026-03-29 21:35:47] Verified SysTick CALIB reference-clock basis against ARM Cortex-M4 and TM4C1294 documentation.
+- Request: verify whether SysTick CALIB must ignore current system frequency and instead be validated against the documented reference clock.
+- Sources checked:
+  - .github/skills/tm4c129e-reference-manual/SKILL.md
+  - .github/instructions/tm4c129e-documentation.instructions.md
+  - .tmp/cortex_m4_full.txt
+  - .tmp/cortex_m4_ch3/tm4c1294_ch3.txt
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Peripheral/xHeader/SYSTICK_Enum.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Peripheral/Register/xHeader/SYSTICK_RegisterAddress.h
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c
+- ARM documentation confirms SYST_CALIB.NOREF=0 means a reference clock is provided, SKEW=0 means TENMS is exact, and TENMS is the 10 ms calibration value associated with processor clock or external clock.
+- TM4C1294 SysTick STCTRL documentation confirms CLK_SRC=0 selects the precision internal oscillator divided by 4 and CLK_SRC=1 selects system clock.
+- Repo code already models this as SYSTICK_enPIOSC4 and defines SYSTICK_PIOSC4 as 4000000UL and SYSTICK_PIOSC4_MHZ as 4UL.
+- Conclusion: validating CALIB against uxSystemFrequencyMHzArg is not valid when CALIB is being interpreted as the reference-backed calibration source. The fixed reference basis for this device is PIOSC/4 = 4 MHz, so the expected 10 ms count basis is 40000 ticks.
+- No source files changed in this verification step.

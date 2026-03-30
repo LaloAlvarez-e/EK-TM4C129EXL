@@ -1,0 +1,10 @@
+[2026-03-29 21:56:03] Reviewing remaining SysTick init/helper paths after ratio-based calibration correction and adding positive CALIB deviation host coverage.
+- Request: do both follow-up steps and update the existing test code.
+- Review target:
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c
+- Test target updates planned:
+  - TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration_Test.cpp
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+- Expected outcome:
+  - confirm no remaining SysTick init/helper path is replacing SYSCLK counts with raw CALIB counts
+  - add host coverage for exact external-reference CALIB values above the nominal 40000 reference count

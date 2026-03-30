@@ -1,0 +1,10 @@
+[2026-03-29 23:07:23] Expanding NVIC wrapper coverage and applying the next NVIC production fixes.
+- Request: continue with point 1 and point 2, then adjust point 3 so only ENA takes the enable path and UNDEF or DIS take the non-enable path.
+- Planned production changes:
+  - fix TM4C129E_DriverLib/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Pending.c set/clear pending register selection
+  - update TM4C129E_DriverLib/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Enable.c so only NVIC_enSTATE_ENA selects ISER and all other states select ICER
+- Planned host-test additions:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Pending_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Active_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Priority_Test.cpp
+- Planned validation: rebuild and run the NVIC wrapper and primitive-related test targets, then update the gap tracker to move the next Cortex-M4 chapter target to SCB.

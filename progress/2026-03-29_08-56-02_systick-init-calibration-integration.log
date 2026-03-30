@@ -1,0 +1,9 @@
+[2026-03-29 08:56:02] Integrated SysTick calibration-aware timing setup into SYSTICK init
+- Request: use the new SysTick calibration values in SYSTICK__enInitTickVector() before SYSTICK__vSetTickPeriod().
+- Reviewed the current TickPeriod usage and confirmed SYSTICK__uxGetTickPeriod() is consumed as a raw counter span by TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/Delay/Miscellaneous/xSource/SYSTICK_TickAccumulated.c.
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c to add SYSTICK__enGetTickTimingPs(), which:
+  - computes default tick/period timing from the active clock frequency,
+  - reads SYSTICK calibration info,
+  - overrides the timing metadata only when calibration reports exact timing, a reference clock is present, and the calibration 10 ms count matches the active clock basis.
+- Kept SYSTICK__vSetTickPeriod(uxTickArg) unchanged so TickPeriod remains the raw SysTick counter span expected by the accumulation helpers.
+- Validation: editor diagnostics report no errors in TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c.

@@ -1,0 +1,10 @@
+[2026-03-29 02:09:50] Improved SYSEXC report context labeling for deferred floating-point exceptions.
+- Extended TM4C129E_DriverLib/xApplication_MCU/SYSEXC/xHeader/SYSEXC_Report.h with ICSR, active vector, and stacked vector fields.
+- Updated TM4C129E_DriverLib/xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c to capture SCB ICSR.VECTACTIVE and the stacked xPSR exception number when building the report.
+- Updated TM4C129E_DriverLib/xApplication_MCU/UART/xSource/UART_SYSEXC.c to:
+  - print ICSR raw value
+  - print active vector number and label
+  - print stacked vector number and label
+  - relabel uxFaultAddress as stacked return PC
+  - print a note explaining that INEXACT may be deferred/sticky and the stacked PC may only show the observation context
+- Goal: make SYSEXC reports distinguish current exception context from interrupted context so asynchronous FP events are easier to interpret.

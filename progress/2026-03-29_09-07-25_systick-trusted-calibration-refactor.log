@@ -1,0 +1,7 @@
+[2026-03-29 09:07:25] Refactored trusted SysTick calibration helper into calibration layer
+- Moved SYSTICK__enGetTrustedCalibrationInfo() out of TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c.
+- Added the public declaration to TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h.
+- Added the implementation to TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c.
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c to consume the calibration-layer API rather than carrying a local trust-validation helper.
+- Kept SYSTICK__enGetTickTimingPs() and SYSTICK__enGetTickCountUs() in Init because they remain init-facing orchestration wrappers over calibration and frequency fallback behavior.
+- Validation: editor diagnostics report no errors in SYSTICK_Calibration.h, SYSTICK_Calibration.c, and SYSTICK_Init.c.

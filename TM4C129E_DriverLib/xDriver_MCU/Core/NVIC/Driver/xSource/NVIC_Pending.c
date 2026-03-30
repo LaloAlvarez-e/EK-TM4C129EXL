@@ -38,8 +38,8 @@ NVIC_nERROR NVIC__enSetPendingVectorState(NVIC_nMODULE enModuleArg, NVIC_nVECTOR
 {
     NVIC_nERROR enErrorReg;
     enErrorReg = (NVIC_enTRUE == enStateArg) ?
-            NVIC__enSetWriteValue(enModuleArg, enVectorArg, NVIC_ICPR_OFFSET, (UBase_t) NVIC_enSTATE_ENA) :
-            NVIC__enSetWriteValue(enModuleArg, enVectorArg, NVIC_ISPR_OFFSET, (UBase_t) NVIC_enSTATE_ENA);
+            NVIC__enSetWriteValue(enModuleArg, enVectorArg, NVIC_ISPR_OFFSET, (UBase_t) NVIC_enSTATE_ENA) :
+            NVIC__enSetWriteValue(enModuleArg, enVectorArg, NVIC_ICPR_OFFSET, (UBase_t) NVIC_enSTATE_ENA);
     return (enErrorReg);
 
 }

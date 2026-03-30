@@ -1,0 +1,5 @@
+[2026-03-29 20:52:19] Explained why SysTick calibration value 0x9C40 matters in the current calibration context.
+Request: clarify the importance of 0x9C40 seen in SYSTICK calibration debugger state.
+Sources reviewed: TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c and prior manual audit notes in progress/2026-03-29_02-17-21_investigate-systick-manual-register-surface.log.
+Conclusion basis: 0x9C40 is the SysTick CALIB TENMS field value (40000 decimal), representing the reference count for a nominal 10 ms interval; the current repo logic converts it to 40001 effective counts and compares it against uxSystemFrequencyMHz * 10000 to decide whether calibration is trusted for the active clock basis.
+Validation limits: explanatory analysis only, no code changes performed.

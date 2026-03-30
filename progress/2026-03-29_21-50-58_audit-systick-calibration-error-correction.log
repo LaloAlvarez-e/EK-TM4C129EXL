@@ -1,0 +1,14 @@
+[2026-03-29 21:50:58] Audited SysTick calibration math against the intended error-correction model.
+- Request: verify whether calibration logic uses the 4 MHz / 10 ms reference value to compute an error factor and correct SYSCLK-based tick calculations.
+- Files reviewed:
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c
+  - TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration_Test.cpp
+- Findings:
+  - current trusted timing path replaces SYSCLK-derived timing with raw calibration timing from the 4 MHz reference basis instead of applying CALIB as an error factor
+  - current trusted tick-count path replaces SYSCLK-derived tick counts with a calibration-derived 4 MHz count, which is incorrect for SYSCLK operation
+  - current trust gate still rejects exact CALIB values that differ from the nominal 40000 reference count, which blocks using CALIB to represent oscillator error
+- Expected correction model:
+  - nominal reference count for 10 ms is 40000 at PIOSC/4
+  - calibration error ratio should be derived from CALIB count versus 40000
+  - SYSCLK-based nominal tick counts/timings should then be corrected by that ratio rather than replaced by raw reference-clock counts

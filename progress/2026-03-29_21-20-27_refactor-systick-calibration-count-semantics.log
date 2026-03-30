@@ -1,0 +1,9 @@
+[2026-03-29 21:20:27] Refactor planned: treat SysTick CALIB TENMS as a 1..N tick count across the calibration layer.
+Request: modify all calibration logic so a 10 ms calibration value of 40000 means 40000 ticks for 10 ms and the corresponding reload is 39999.
+Investigation summary: the exposed SYSTICK_CALIBRATION_INFO_t fields are only used within TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c and its host test, so the public calibration struct can be renamed to explicit count semantics without broad repo impact.
+Planned changes:
+- rename calibration info fields from reload-based names to count-based names
+- remove TENMS + 1 handling from calibration-count interpretation
+- keep reload conversions only at APIs that explicitly return or consume reload values
+- update host tests to validate the new count semantics
+Validation status: edits pending.

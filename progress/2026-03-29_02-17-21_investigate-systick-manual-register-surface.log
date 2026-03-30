@@ -1,0 +1,7 @@
+[2026-03-29 02:17:21] Investigation: extracted text from Documents/cortex-m4.pdf and Documents/tm4c1294ncpdt.pdf using Ghostscript txtwrite to temporary files and searched SysTick register sections.
+Evidence captured:
+- cortex-m4.pdf Table 4-32 and sections 4.4.1-4.4.4 show SYST_CSR, SYST_RVR, SYST_CVR, and SYST_CALIB with fields COUNTFLAG, CLKSOURCE, TICKINT, ENABLE, RELOAD, CURRENT, NOREF, SKEW, TENMS.
+- tm4c1294ncpdt.pdf chapter 3 lists only Register 1 STCTRL, Register 2 STRELOAD, and Register 3 STCURRENT under SysTick, pages 150-153.
+- tm4c1294ncpdt.pdf STCTRL documents COUNT, CLK_SRC, INTEN, ENABLE and states COUNT is cleared by register read or any write to STCURRENT.
+- no TM4C1294 device-manual SysTick calibration register entry or TENMS/SKEW/NOREF field entry was found.
+Limits: extracted text has OCR/text spacing artifacts but field names, offsets, and descriptions were readable.

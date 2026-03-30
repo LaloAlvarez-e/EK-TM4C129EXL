@@ -1,0 +1,50 @@
+tm4c129e_driverlib_add_unit_test(
+    NVIC_RegisterAccess_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/NVIC_RegisterAccess_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_ReadReg.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_WriteReg.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/NVIC_RegisterPrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    NVIC_Enable_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/NVIC_Enable_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Enable.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/NVIC_EnableDriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    NVIC_Pending_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/NVIC_Pending_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Pending.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/NVIC_EnableDriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    NVIC_Active_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/NVIC_Active_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Active.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/NVIC_EnableDriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    NVIC_Priority_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/NVIC_Priority_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Priority.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/NVIC_RegisterPrimitivesMock.cpp
+)

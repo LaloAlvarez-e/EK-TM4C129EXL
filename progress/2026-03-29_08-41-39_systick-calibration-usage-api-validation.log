@@ -1,0 +1,6 @@
+[2026-03-29 08:41:39] Refined and validated SysTick application-layer calibration usage API
+- Reviewed TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c for semantic edge cases after initial implementation.
+- Fixed 1 ms calibration rounding to preserve the original 10 ms calibration count when computing tick period in picoseconds.
+- Simplified pointer/value validation in SYSTICK__enGetCalibrationReloadUs().
+- Corrected max reload validation in SYSTICK__enGetCalibrationTimeUs() so the maximum valid SysTick reload remains accepted.
+- Verified with editor diagnostics: no errors in SYSTICK_Calibration.c, SYSTICK_Calibration.h, and SYSTICK.h.

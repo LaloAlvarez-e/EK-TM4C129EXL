@@ -23,13 +23,12 @@
  */
 #include <xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Init.h>
 
+#include <xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h>
 #include <xApplication_MCU/Core/SYSTICK/Interrupt/SYSTICK_Interrupt.h>
 #include <xApplication_MCU/Core/SYSTICK/Delay/SYSTICK_Delay.h>
 #include <xApplication_MCU/Core/SYSTICK/Intrinsics/xHeader/SYSTICK_Dependencies.h>
 
 #define SYSTICK_PIOSC4_MHZ (4UL)
-#define SYSTICK_MAXVALUE (0x1000000UL) /*24 bits*/
-#define SYSTICK_PICOSECONDS_PER_MICROSECOND (1000000ULL)
 
 static void SYSTICK_vClarAllCounter(void);
 void SYSTICK_Delay__vIRQVectorHandler(void);
@@ -72,13 +71,8 @@ SYSTICK_nERROR SYSTICK__enInitTickVector(SYSTICK_nMODULE enModuleArg, UBase_t ux
         }
         if(SYSTICK_enERROR_OK == enErrorReg)
         {
-            u64TickPicoSeconds = SYSTICK_PICOSECONDS_PER_MICROSECOND;
-            u64TickPicoSeconds += ((uint64_t) uxSystemFrequencyMHz / 2ULL);
-            u64TickPicoSeconds /= (uint64_t) uxSystemFrequencyMHz;
-
-            u64PeriodPicoSeconds = SYSTICK_PICOSECONDS_PER_MICROSECOND * (uint64_t) uxTickArg;
-            u64PeriodPicoSeconds += ((uint64_t) uxSystemFrequencyMHz / 2ULL);
-            u64PeriodPicoSeconds /= (uint64_t) uxSystemFrequencyMHz;
+            SYSTICK__enGetTickTimingPs(enModuleArg, uxTickArg, uxSystemFrequencyMHz,
+                                      &u64TickPicoSeconds, &u64PeriodPicoSeconds);
 
             SYSTICK__vSetTickPs((UBase_t) u64TickPicoSeconds);
             SYSTICK__vSetPsPeriod(u64PeriodPicoSeconds);
@@ -160,7 +154,10 @@ SYSTICK_nERROR SYSTICK__enInitUsVector(SYSTICK_nMODULE enModuleArg, UBase_t uxTi
         uxSYSTICKFrequencyMHz_Sysclk /= 1000000UL;
         SYSTICK_vClarAllCounter();
 
-        uxTick_Sysclk = uxSYSTICKFrequencyMHz_Sysclk * uxTimeUsArg;
+        enErrorReg = SYSTICK__enGetTickCountUs(enModuleArg, uxTimeUsArg, uxSYSTICKFrequencyMHz_Sysclk, &uxTick_Sysclk);
+    }
+    if(SYSTICK_enERROR_OK == enErrorReg)
+    {
         uxTick_Piosc4 = uxSYSTICKFrequencyMHz_Piosc4 * uxTimeUsArg;
         uxTick = uxTick_Sysclk;
         if(SYSTICK_MAXVALUE < uxTick_Sysclk)

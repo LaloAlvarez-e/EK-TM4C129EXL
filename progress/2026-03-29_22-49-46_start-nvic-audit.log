@@ -1,0 +1,5 @@
+[2026-03-29 22:49:46] Started NVIC Cortex-M4 audit after completing SysTick calibration work.
+Request: Continue to the next Cortex-M4 peripheral and begin verification.
+Decision: Start with NVIC driver register/vector helpers as the smallest host-testable unit, beginning with ReadReg/WriteReg and their primitive seams.
+Files reviewed: TM4C129E_DriverLib/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_ReadReg.c; TM4C129E_DriverLib/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_WriteReg.c; TM4C129E_DriverLib/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Enable.c; TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md.
+Status: Investigation in progress; likely offset-math inconsistency found in NVIC__enReadValue.

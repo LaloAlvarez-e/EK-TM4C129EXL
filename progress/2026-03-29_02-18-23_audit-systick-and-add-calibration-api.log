@@ -1,0 +1,14 @@
+[2026-03-29 02:18:23] Audited SysTick as the first Cortex-M4 peripheral and added missing calibration support.
+- Cross-checked the TM4C1294 and Cortex-M4 documentation for the SysTick register surface.
+- Verified the driver already exposes the mandatory control, reload, current-value, clock-source, enable, and COUNTFLAG-related functionality.
+- Identified the first completeness gap: no driver API exposed the architectural calibration register fields TENMS, SKEW, and NOREF.
+- Identified a semantic mismatch in TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Peripheral/Register/xHeader/SYSTICK_RegisterDefines.h:
+  - SKEW exact/inexact values were inverted relative to Cortex-M4 documentation.
+  - NOREF used ambiguous SAME/OTHER names rather than explicit reference/no-reference semantics.
+- Implemented fixes:
+  - Added SYSTICK_nSKEW and SYSTICK_nREFERENCE enums in TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Peripheral/xHeader/SYSTICK_Enum.h.
+  - Corrected SKEW bit-value semantics and added explicit NOREF_REFERENCE / NOREF_NOREFERENCE aliases in TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Peripheral/Register/xHeader/SYSTICK_RegisterDefines.h.
+  - Added TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Driver/xHeader/SYSTICK_Calibration.h.
+  - Added TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Driver/xSource/SYSTICK_Calibration.c with getters for TENMS, SKEW, and NOREF.
+  - Exported the new calibration driver surface from TM4C129E_DriverLib/xDriver_MCU/Core/SYSTICK/Driver/SYSTICK_Driver.h.
+- This establishes SysTick calibration metadata support as the first concrete Cortex-M4 peripheral completeness improvement.

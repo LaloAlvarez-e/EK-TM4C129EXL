@@ -1,0 +1,9 @@
+tm4c129e_driverlib_add_unit_test(
+    SYSTICK_Calibration_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSTICK_Calibration_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSTICK_CalibrationDriverMock.cpp
+)

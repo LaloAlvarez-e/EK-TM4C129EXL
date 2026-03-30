@@ -1,0 +1,25 @@
+[2026-03-29 22:57:24] Validated additional NVIC host-test coverage for wrapper and primitive register helpers.
+- Built targets:
+  - TM4C129E_DriverLib_Test/build :: NVIC_Enable_Test (Debug)
+  - TM4C129E_DriverLib_Test/build :: NVIC_RegisterPrimitives_Test (Debug)
+- Validation executables:
+  - TM4C129E_DriverLib_Test/build/xDriver_MCU/Core/NVIC/Driver/xSource/Debug/NVIC_Enable_Test.exe
+  - TM4C129E_DriverLib_Test/build/xDriver_MCU/Core/NVIC/Driver/Intrinsics/Primitives/xSource/Debug/NVIC_RegisterPrimitives_Test.exe
+- Results:
+  - NVIC_Enable_Test: 6 tests passed
+  - NVIC_RegisterPrimitives_Test: 4 tests passed
+- Verified behaviors:
+  - NVIC__enGetVectorState delegates through NVIC_ISER_OFFSET
+  - NVIC__enSetVectorState selects ICER for disable and ISER for enable
+  - NVIC__enEnableVector programs priority before state enable and exits early on priority failure
+  - NVIC__enDisableVector delegates to the disable-state path
+  - NVIC__enReadRegister and NVIC__enWriteRegister reject null pointers or module-validation failures appropriately
+  - NVIC primitive register helpers add the NVIC block base address before calling MCU register-access functions
+- Files validated:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Enable_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/Intrinsics/Primitives/xSource/NVIC_RegisterPrimitives_Test.cpp
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/NVIC_EnableDriverMock.h
+  - TM4C129E_DriverLib_Test/support/src/NVIC_EnableDriverMock.cpp
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/NVIC_MCURegisterAccessMock.h
+  - TM4C129E_DriverLib_Test/support/src/NVIC_MCURegisterAccessMock.cpp
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md

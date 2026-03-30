@@ -1,0 +1,6 @@
+[2026-03-29 22:51:08] Planning first NVIC host-test implementation.
+Request: proceed with the next Cortex-M4 peripheral verification.
+Decision: add the first NVIC host target around xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_ReadReg.c and NVIC_WriteReg.c because they are small, dependency-light, and expose vector-to-register mapping behavior.
+Planned test seam: mock MCU__enCheckParams plus NVIC__enReadRegister / NVIC__enWriteRegister through a GoogleMock bridge.
+Planned files: TM4C129E_DriverLib_Test/support/include/tm4c129e_test/NVIC_RegisterPrimitivesMock.h; TM4C129E_DriverLib_Test/support/src/NVIC_RegisterPrimitivesMock.cpp; mirrored CMakeLists under TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource; NVIC host test source; gap tracker update.
+Status: ready to implement.

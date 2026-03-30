@@ -1,0 +1,14 @@
+[2026-03-29 22:52:47] Validated the first NVIC host-test target for Cortex-M4 chapter coverage.
+- Built target: TM4C129E_DriverLib_Test/build :: NVIC_RegisterAccess_Test (Debug)
+- Validation executable: TM4C129E_DriverLib_Test/build/xDriver_MCU/Core/NVIC/Driver/xSource/Debug/NVIC_RegisterAccess_Test.exe
+- Result: 4 tests passed.
+- Verified behaviors:
+  - NVIC__enReadValue rejects null output pointers before primitive access
+  - NVIC__enReadValue maps vector 67 to NVIC_ISER2 byte offset with bit 3
+  - NVIC__enSetWriteValue maps vector 95 to NVIC_ICER2 byte offset with bit 31
+  - NVIC__enSetWriteValue propagates vector-validation failure from MCU__enCheckParams
+- Files validated:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_RegisterAccess_Test.cpp
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/NVIC_RegisterPrimitivesMock.h
+  - TM4C129E_DriverLib_Test/support/src/NVIC_RegisterPrimitivesMock.cpp
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md

@@ -1,0 +1,7 @@
+[2026-03-29 08:59:11] Applied SysTick calibration trust policy to the remaining frequency-derived init path
+- Reviewed TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK sources for other places that derive SysTick timing data directly from frequency.
+- Confirmed the remaining live path was TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c::SYSTICK__enInitUsVector().
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c to centralize calibration acceptance in SYSTICK__enGetTrustedCalibrationInfo().
+- Added SYSTICK__enGetTickCountUs() so the microseconds-based init path uses calibration-derived counts when calibration is exact, reference-backed, and matches the active SYSCLK basis.
+- Preserved the original SYSCLK-to-PIOSC4 fallback by leaving range selection in SYSTICK__enInitUsVector() rather than rejecting oversized SYSCLK counts inside the helper.
+- Validation: editor diagnostics report no errors in TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c.

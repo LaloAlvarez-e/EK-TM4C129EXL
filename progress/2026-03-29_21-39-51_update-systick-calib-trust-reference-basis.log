@@ -1,0 +1,8 @@
+[2026-03-29 21:39:51] Updating SysTick CALIB trust policy to use the documented reference-clock basis instead of runtime SYSCLK.
+- Request: apply all changes so trusted CALIB validation no longer depends on current system frequency and instead uses the documented PIOSC/4 reference basis.
+- Planned production file changes:
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+- Planned test and tracking changes:
+  - TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration_Test.cpp
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+- Expected trust rule after change: exact skew, external reference present, TENMS count matches the fixed SysTick reference basis of PIOSC/4 = 4 MHz, equivalent to 40000 counts for 10 ms.

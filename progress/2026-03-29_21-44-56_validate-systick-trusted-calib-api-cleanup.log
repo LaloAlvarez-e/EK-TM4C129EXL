@@ -1,0 +1,13 @@
+[2026-03-29 21:44:56] Validated removal of the unused MHz parameter from the trusted SysTick calibration API.
+- Updated API:
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+- Change summary:
+  - SYSTICK__enGetTrustedCalibrationInfo no longer accepts runtime MHz
+  - internal call sites now pass only module and output info
+  - public timing/count helpers still retain runtime MHz for direct SYSCLK-based fallback conversions
+- Validation:
+  - editor diagnostics: no errors in updated production files
+  - rebuilt SYSTICK_Calibration_Test successfully
+  - ran SYSTICK_Calibration_Test.exe successfully
+  - result: 7 tests passed

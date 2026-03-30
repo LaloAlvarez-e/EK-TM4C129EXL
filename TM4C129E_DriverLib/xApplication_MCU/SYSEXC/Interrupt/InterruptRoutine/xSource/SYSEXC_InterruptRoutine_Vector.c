@@ -24,6 +24,8 @@
 #include <xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xHeader/SYSEXC_InterruptRoutine_Vector.h>
 #include <xApplication_MCU/SYSEXC/Intrinsics/xHeader/SYSEXC_Dependencies.h>
 #include <xApplication_MCU/SYSEXC/xHeader/SYSEXC_Report.h>
+#include <xDriver_MCU/Core/SCB/Peripheral/Register/xHeader/SCB_RegisterPeripheral.h>
+#include <xDriver_MCU/Core/SCB/Peripheral/Register/RegisterDefines/xHeader/SCB_RegisterDefines_INTCTLR.h>
 
 static void SYSEXC__vCreateReport(SYSEXC_REPORT_t* pstReportArg, SYSEXC_nINT enSourceArg,
                                   UBase_t uxStatusMaskArg, UBase_t uxFaultAddressArg,
@@ -40,6 +42,9 @@ static void SYSEXC__vCreateReport(SYSEXC_REPORT_t* pstReportArg, SYSEXC_nINT enS
     pstReportArg->enSource = enSourceArg;
     pstReportArg->enStatusMask = (SYSEXC_nINTMASK) uxStatusMaskArg;
     pstReportArg->uxFaultAddress = uxFaultAddressArg;
+    pstReportArg->uxICSR = SCB_ICSR_R;
+    pstReportArg->uxActiveVector = (pstReportArg->uxICSR & SCB_ICSR_R_VECTACTIVE_MASK) >> SCB_ICSR_R_VECTACTIVE_BIT;
+    pstReportArg->uxStackedVector = puxContextArg[7UL] & 0x1FFUL;
 
     for(uxIndexReg = 0UL; uxIndexReg < 8UL; uxIndexReg++)
     {
@@ -69,6 +74,9 @@ void SYSEXC__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgument)
     stReport.enSource = 0;
     stReport.enStatusMask = 0;
     stReport.uxFaultAddress = 0;
+    stReport.uxICSR = 0;
+    stReport.uxActiveVector = 0;
+    stReport.uxStackedVector = 0;
     stReport.uxContext[0UL] = 0;
     stReport.uxContext[1UL] = 0;
     stReport.uxContext[2UL] = 0;

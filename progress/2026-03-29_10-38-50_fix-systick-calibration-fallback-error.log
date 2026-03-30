@@ -1,0 +1,12 @@
+[2026-03-29 10:38:50] Fixed SysTick calibration fallback error exposed by SYSTICK__enGetTickCountUs debugger state.
+Request: resolve the case where SYSTICK__enGetCalibrationValue succeeds and calibration info is populated, but uxReloadReg stays zero and enErrorReg returns SYSTICK_enERROR_VALUE.
+Changes made:
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c so SYSTICK__enGetTickCountUs() preserves the direct frequency-based tick count as the default result and only overrides it when trusted calibration succeeds.
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c so SYSTICK__enGetTickTimingPs() initializes its error state correctly, validates zero MHz input, preserves the direct timing conversion as the default result, and only overrides it when trusted calibration succeeds.
+- Extended TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration_Test.cpp with a regression test for untrusted-calibration fallback and strengthened the existing timing fallback test to assert an OK return code.
+Root cause: the calibration trust check was being treated as a hard error path instead of an optional override path, so untrusted calibration prevented the already computed default conversion from being returned.
+Validation:
+- Editor diagnostics: no errors in the edited production and test files.
+- Host build: cmake --build TM4C129E_DriverLib_Test/build --target SYSTICK_Calibration_Test --config Debug succeeded.
+- ctest note: ctest -R SYSTICK_Calibration_Test reported no discovered tests in the current CMake registration setup.
+- Direct test execution: SYSTICK_Calibration_Test.exe ran successfully with 3 tests passed, 0 failed.

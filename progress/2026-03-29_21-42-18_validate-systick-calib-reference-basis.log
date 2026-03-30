@@ -1,0 +1,13 @@
+[2026-03-29 21:42:18] Validated SysTick CALIB trust policy against the fixed reference-clock basis after implementation.
+- Rebuilt target: TM4C129E_DriverLib_Test/build :: SYSTICK_Calibration_Test (Debug)
+- Validation executable: TM4C129E_DriverLib_Test/build/xApplication_MCU/Core/SYSTICK/xSource/Debug/SYSTICK_Calibration_Test.exe
+- Result: 7 tests passed.
+- Verified behaviors:
+  - fallback timing remains frequency-based when CALIB is not trusted
+  - exact external-reference CALIB is now trusted against the fixed PIOSC/4 basis of 40000 counts per 10 ms
+  - trusted timing remains available even when runtime SYSCLK differs
+  - trusted microseconds-to-ticks conversion now returns the reference-based 1 ms count of 4000 ticks from TENMS=40000
+- Files validated:
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c
+  - TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration_Test.cpp
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md

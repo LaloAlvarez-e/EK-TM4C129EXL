@@ -38,9 +38,9 @@ NVIC_nERROR NVIC__enGetVectorState(NVIC_nMODULE enModuleArg, NVIC_nVECTOR enVect
 NVIC_nERROR NVIC__enSetVectorState(NVIC_nMODULE enModuleArg, NVIC_nVECTOR enVectorArg, NVIC_nSTATE enStateArg)
 {
     NVIC_nERROR enErrorReg;
-    enErrorReg = (NVIC_enSTATE_DIS == enStateArg) ?
-            NVIC__enSetWriteValue(enModuleArg, enVectorArg, NVIC_ICER_OFFSET, (UBase_t) NVIC_enSTATE_ENA) :
-            NVIC__enSetWriteValue(enModuleArg, enVectorArg, NVIC_ISER_OFFSET, (UBase_t) NVIC_enSTATE_ENA);
+    enErrorReg = (NVIC_enSTATE_ENA == enStateArg) ?
+            NVIC__enSetWriteValue(enModuleArg, enVectorArg, NVIC_ISER_OFFSET, (UBase_t) NVIC_enSTATE_ENA) :
+            NVIC__enSetWriteValue(enModuleArg, enVectorArg, NVIC_ICER_OFFSET, (UBase_t) NVIC_enSTATE_ENA);
     return (enErrorReg);
 
 }

@@ -1,0 +1,12 @@
+[2026-03-29 21:25:35] Applied SysTick calibration count semantics across the calibration layer.
+Request: align all calibration logic so CALIB TENMS is treated as a 1..N tick count, with 0 invalid, and reload values derived as count - 1.
+Changes made:
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h to rename calibration info fields from reload semantics to count semantics.
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c so SYSTICK__enGetCalibrationCount10Ms() now returns the raw TENMS value as the 10 ms tick count without adding one.
+- Updated calibration info, trusted calibration matching, tick-picosecond derivation, and derived 1 ms calibration values to use count semantics consistently.
+- Kept reload conversion only at reload-specific boundaries such as SYSTICK__enGetCalibrationReloadUs() and SYSTICK__enGetCalibrationTimeUs().
+- Updated TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration_Test.cpp to reflect the new raw calibration access pattern and added a regression test that verifies TENMS is interpreted as a count.
+Validation:
+- Editor diagnostics: no errors in the edited production and test files.
+- Host build: cmake --build TM4C129E_DriverLib_Test/build --target SYSTICK_Calibration_Test --config Debug succeeded.
+- Direct test execution: SYSTICK_Calibration_Test.exe ran successfully with 4 tests passed, 0 failed.

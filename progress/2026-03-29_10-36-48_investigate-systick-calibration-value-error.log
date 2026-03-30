@@ -1,0 +1,6 @@
+[2026-03-29 10:36:48] Investigated SysTick calibration VALUE error in SYSTICK__enGetTickCountUs.
+Request: analyze debugger state where SYSTICK__enGetCalibrationValue reads 0x00009C40 successfully, stCalibrationInfo is populated, but uxReloadReg remains 0 and enErrorReg returns SYSTICK_enERROR_VALUE.
+Decision: treat calibration trust as an optional override, not a hard dependency, because the helper already computes a frequency-based fallback tick count before calibration is consulted.
+Findings: TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c currently overwrites enErrorReg with SYSTICK__enGetTrustedCalibrationInfo() inside SYSTICK__enGetTickCountUs() and SYSTICK__vGetTickTimingPs(); this makes untrusted calibration return VALUE instead of preserving the default frequency-derived result.
+Affected files planned: TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c and TM4C129E_DriverLib_Test/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration_Test.cpp.
+Validation status: investigation complete, code fix and host-test validation pending.

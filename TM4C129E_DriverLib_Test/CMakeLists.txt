@@ -27,6 +27,7 @@ include(cmake/TM4C129E_DriverLibTestFunctions.cmake)
 include(cmake/OpenCppCoverage.cmake)
 
 add_subdirectory(xDriver_MCU)
+add_subdirectory(xApplication_MCU)
 
 get_property(TM4C129E_DRIVERLIB_TEST_TARGETS GLOBAL PROPERTY TM4C129E_DRIVERLIB_TEST_TARGETS)
 

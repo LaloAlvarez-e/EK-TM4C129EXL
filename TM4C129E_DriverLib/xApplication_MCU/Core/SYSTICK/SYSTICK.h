@@ -27,6 +27,7 @@
 
 #include <xApplication_MCU/Core/SYSTICK/Delay/SYSTICK_Delay.h>
 
+#include <xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h>
 #include <xApplication_MCU/Core/SYSTICK/Interrupt/SYSTICK_Interrupt.h>
 #include <xApplication_MCU/Core/SYSTICK/Intrinsics/SYSTICK_Intrinsics.h>
 #include <xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Init.h>

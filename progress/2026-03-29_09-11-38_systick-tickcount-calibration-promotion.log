@@ -1,0 +1,6 @@
+[2026-03-29 09:11:38] Promoted SysTick trusted tick-count conversion into calibration layer
+- Added public API declaration SYSTICK__enGetTickCountUs() to TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xHeader/SYSTICK_Calibration.h.
+- Moved the implementation from TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c to TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c.
+- Added an internal comment documenting the trusted CALIB policy: exact skew, reference present, and active-frequency match.
+- Updated TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Init.c to consume the calibration-layer SYSTICK__enGetTickCountUs() API.
+- Validation: editor diagnostics report no errors in SYSTICK_Calibration.h, SYSTICK_Calibration.c, and SYSTICK_Init.c.

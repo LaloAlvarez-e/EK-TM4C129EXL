@@ -25,11 +25,18 @@ Use this tracker to answer three questions quickly:
 | Area | Production Source | Test Target | Status | Notes |
 | --- | --- | --- | --- | --- |
 | Chapter 6 SYSEXC | `xDriver_MCU/SYSEXC/Driver/Intrinsics/Interrupt/xSource/SYSEXC_InterruptSource.c` | `SYSEXC_InterruptSource_Test` | `covered` | Current target validates register offset, bit shift, null pointer handling, MIS read path, and IC write path. |
+| Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_ReadReg.c` + `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_WriteReg.c` | `NVIC_RegisterAccess_Test` | `covered` | Current target validates vector-to-register byte-offset math, bit-position selection, null pointer handling, and vector validation error propagation through the primitive seam. |
+| Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Enable.c` | `NVIC_Enable_Test` | `covered` | Current target validates ISER/ICER path selection, state delegation, priority-before-enable ordering, and early exit when priority programming fails. |
+| Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Pending.c` | `NVIC_Pending_Test` | `covered` | Current target validates ISPR read delegation, corrected ISPR/ICPR write-path selection for set versus clear pending state, and wrapper delegation for set/clear helpers. |
+| Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Active.c` | `NVIC_Active_Test` | `covered` | Current target validates IABR read delegation and read-error propagation in the active-state wrapper. |
+| Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Priority.c` | `NVIC_Priority_Test` | `covered` | Current target validates null-pointer rejection, vector-to-IPR register byte-offset math, priority bit-position mapping, and vector-validation error propagation for get/set priority paths. |
+| Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/Intrinsics/Primitives/xSource/NVIC_ReadRegister.c` + `xDriver_MCU/Core/NVIC/Driver/Intrinsics/Primitives/xSource/NVIC_WriteRegister.c` | `NVIC_RegisterPrimitives_Test` | `covered` | Current target validates null pointer rejection, module validation error propagation, and base-address addition before MCU register-access calls. |
 | Chapter 6 SYSEXC | `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_ReadRegister.c` | none | `not-started` | Useful next target for read-mask and shift behavior. |
 | Chapter 6 SYSEXC | `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_WriteRegister.c` | none | `not-started` | Useful next target for write-mask and shift behavior. |
 | Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/xSource/SYSEXC_Init.c` | none | `not-started` | Needs mock seams for vector registration and interrupt enable helpers. |
 | Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/xSource/SYSEXC_Report.c` | none | `not-started` | Low-risk host target for callback registration and null handling. |
 | Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c` | none | `not-started` | Higher-value target, but requires broader ISR and callback seams. |
+| Chapter 3 SysTick | `xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c` | `SYSTICK_Calibration_Test` | `covered` | Host target validates fallback timing, count-based TENMS interpretation, forward and inverse 40000/3999/1000us examples, trust acceptance for exact external-reference deviation, ratio-based timing and microseconds-to-ticks correction from CALIB error in both negative and positive directions, and the init path review found no remaining raw-CALIB replacement logic outside the corrected helpers. |
 | Chapter 5 SYSCTL | multiple production files | none | `not-started` | Chapter audit is ahead of test coverage; host-test expansion has not started yet. |
 | Chapter 7 HIB | production module missing | none | `blocked` | No HIB production implementation exists yet in `TM4C129E_DriverLib`. |
 
@@ -41,6 +48,60 @@ Use this tracker to answer three questions quickly:
 - validates null output-pointer rejection in the getter path
 - validates masked-status reads through `SYSEXC_MIS_OFFSET`
 - validates clear-by-mask writes through `SYSEXC_IC_OFFSET`
+
+### NVIC_RegisterAccess_Test
+
+- validates null output-pointer rejection in `NVIC__enReadValue`
+- validates vector-to-byte-offset and bit-position mapping in `NVIC__enReadValue` for the ISER path
+- validates vector-to-byte-offset and bit-position mapping in `NVIC__enSetWriteValue` for the ICER path
+- validates vector-validation error propagation when `MCU__enCheckParams` rejects an invalid NVIC vector
+
+### NVIC_Enable_Test
+
+- validates that `NVIC__enGetVectorState` delegates through `NVIC_ISER_OFFSET`
+- validates that disable state routes through `NVIC_ICER_OFFSET`
+- validates that enable state routes through `NVIC_ISER_OFFSET`
+- validates that undefined state now follows the disable path instead of the enable path
+- validates that `NVIC__enEnableVector` programs priority before enabling the vector
+- validates that `NVIC__enEnableVector` exits early when priority programming fails
+- validates that `NVIC__enDisableVector` delegates to the disable state path
+
+### NVIC_Pending_Test
+
+- validates that `NVIC__enIsVectorPending` delegates through `NVIC_ISPR_OFFSET`
+- validates that true pending state writes through `NVIC_ISPR_OFFSET`
+- validates that false pending state writes through `NVIC_ICPR_OFFSET`
+- validates that `NVIC__enSetPendingVector` delegates to the set-pending state path
+- validates that `NVIC__enClearPendingVector` delegates to the clear-pending state path
+
+### NVIC_Active_Test
+
+- validates that `NVIC__enGetActiveVector` delegates through `NVIC_IABR_OFFSET`
+- validates that active-state reads propagate underlying read errors
+
+### NVIC_Priority_Test
+
+- validates null pointer rejection in `NVIC__enGetVectorPriority`
+- validates vector-to-IPR byte-offset and bit-position mapping in `NVIC__enGetVectorPriority`
+- validates vector-to-IPR byte-offset and bit-position mapping in `NVIC__enSetVectorPriority`
+- validates vector-validation error propagation in `NVIC__enSetVectorPriority`
+
+### NVIC_RegisterPrimitives_Test
+
+- validates null pointer rejection in `NVIC__enReadRegister`
+- validates block-base address addition before `MCU__enReadRegister`
+- validates block-base address addition before `MCU__enWriteRegister`
+- validates module-validation error propagation in `NVIC__enWriteRegister`
+
+### SYSTICK_Calibration_Test
+
+- validates fallback tick and period timing when calibration is not trusted
+- validates trusted tick and period timing as a ratio-based correction of the SYSCLK-derived nominal timing
+- validates that CALIB TENMS is interpreted as a direct 1..N tick count
+- validates that exact external-reference CALIB counts differing from 40000 remain trusted for error correction
+- validates the concrete TENMS `40000` to 1 ms reload `3999` conversion through the reload helper
+- validates the inverse reload `3999` to `1000 us` conversion through the time helper
+- validates trusted microseconds-to-ticks conversion by correcting the SYSCLK-derived nominal count with the CALIB ratio for both below-nominal and above-nominal exact CALIB values
 
 ## Gaps That Still Matter
 
@@ -54,16 +115,16 @@ Use this tracker to answer three questions quickly:
 ### Framework remaining gaps
 
 - OpenCppCoverage is not currently installed in this environment
-- only one mock bridge family exists so far
-- no mirrored `xApplication_MCU` test subtree has been started yet
+- mock bridge families now exist for SYSEXC, SYSTICK, and multiple NVIC seams
+- mirrored `xApplication_MCU` test subtree has started with SysTick calibration coverage, but broader wrapper coverage is still missing
 
 ## Recommended Next Targets
 
-1. `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_ReadRegister.c`
-2. `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_WriteRegister.c`
-3. `xApplication_MCU/SYSEXC/xSource/SYSEXC_Report.c`
-4. `xApplication_MCU/SYSEXC/xSource/SYSEXC_Init.c`
-5. `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c`
+1. `xDriver_MCU/Core/SCB/Driver/xSource/SCB_PriorityGroup.c`
+2. `xDriver_MCU/Core/SCB/Driver/xSource/SCB_VectorOffset.c`
+3. `xDriver_MCU/Core/SCB/Driver/xSource/SCB_SleepMode.c`
+4. `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_ReadRegister.c`
+5. `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_WriteRegister.c`
 
 ## Update Rule
 
