@@ -59,6 +59,16 @@ Generated coverage outputs:
 
 - `coverage/TM4C129E_DriverLib_Test_GapTracker.md`
 
+## Requirement Traceability
+
+- `coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md`
+
+Use this matrix to record:
+
+- the requirement linked to each host test case
+- whether the requirement is manual-backed, mixed, or derived software behavior
+- the manual chapter, register family, and page context when a hardware requirement exists
+
 Use this tracker to record:
 
 - sources currently covered by host tests
@@ -73,8 +83,9 @@ Use this tracker to record:
 3. Add overlay headers only for the heavy dependencies the source under test cannot bring to the host build.
 4. Add a GoogleMock bridge source if the production C file calls C functions that need interception.
 5. Add a full Doxygen-style comment block above every test describing the summary, inputs, outputs, return behavior, and dependencies.
-6. Update the gap tracker.
-7. Register the target through `tm4c129e_driverlib_add_unit_test(...)`.
+6. Add or update the matching rows in the requirement traceability matrix.
+7. Update the gap tracker.
+8. Register the target through `tm4c129e_driverlib_add_unit_test(...)`.
 
 ## Configure
 

@@ -17,3 +17,147 @@ tm4c129e_driverlib_add_unit_test(
     MOCK_SOURCES
         ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
 )
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_ResetCause_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_ResetCause_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetCause.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_NMICause_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_NMICause_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_NMICause.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_ResetBehavior_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_ResetBehavior_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetBehavior.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PeripheralPresent_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PeripheralPresent_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralPresent.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PeripheralGenericMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PeripheralReady_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PeripheralReady_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReady.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PeripheralGenericMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PeripheralPower_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PeripheralPower_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralPower.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PeripheralGenericMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PeripheralReset_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PeripheralReset_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReset.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReady.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PeripheralGenericMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PeripheralSleepMode_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PeripheralSleepMode_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralSleepMode.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReady.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PeripheralGenericMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PeripheralRunMode_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PeripheralRunMode_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralRunMode.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReady.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PeripheralGenericMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PeripheralDeepSleepMode_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PeripheralDeepSleepMode_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralDeepSleepMode.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReady.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PeripheralGenericMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_GatingClock_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_GatingClock_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_GatingClock.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_DeepSleepGatingClock_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_DeepSleepGatingClock_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_DeepSleepGatingClock.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_MemoryTiming_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_MemoryTiming_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MemoryTiming.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_InternalOsc_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_InternalOsc_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_InternalOsc.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)

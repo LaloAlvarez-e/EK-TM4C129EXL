@@ -1,0 +1,3 @@
+[2026-03-30 23:29:14] Request received: produce a concise traceability map from Documents/tm4c129xnczad.pdf for currently covered TM4C129E_DriverLib_Test host-test families SYSEXC, NVIC, SCB, SYSTICK, and SYSCTL.
+Scope focus: register and field families actually exercised by tests, including SYSEXC RIS/IM/MIS/IC and exception status sources; NVIC ISER/ICER/ISPR/ICPR/IABR/IPR/STIR; SCB AIRCR/CCR/VTOR/SCR/ICSR relevant bits; SysTick CALIB/CSR/RVR semantics where covered by calibration tests; SYSCTL ALTCLKCFG/DIVSCLK/RESC/NMIC/RESET_BEHAVCTL/PP/PR/PC.
+Planned evidence sources: host-test files under TM4C129E_DriverLib_Test, workspace documentation instructions, and the TM4C129x reference manual PDF with page or nearby page context where extraction permits.

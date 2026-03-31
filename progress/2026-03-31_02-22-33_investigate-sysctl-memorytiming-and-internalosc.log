@@ -1,0 +1,23 @@
+[2026-03-31 02:22:33] Investigated SYSCTL_MemoryTiming and SYSCTL_InternalOsc before continuing the next SYSCTL host-test slice.
+- Reviewed the next adjacent primitive-seam SYSCTL driver sources:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MemoryTiming.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_InternalOsc.c
+- Reviewed the public APIs and register definitions used by those sources:
+  - SYSCTL_MemoryTiming.h
+  - SYSCTL_InternalOsc.h
+  - SYSCTL_RegisterDefines_MEMTIM0.h
+  - SYSCTL_RegisterDefines_PIOSCCAL.h
+  - SYSCTL_RegisterDefines_PIOSCSTAT.h
+  - SYSCTL_RegisterAddress.h
+- Verified manual anchors available for requirement traceability:
+  - TM4C129x manual Table 5-12 MEMTIM0 register configuration versus frequency on p.277
+  - TM4C129x manual PIOSC operation description showing PIOSCCAL update/CAL control and PIOSCSTAT result fields in section 5.2.5.3
+- Surrounding implementation review findings before edits:
+  - SYSCTL_MemoryTiming.c remains a pure primitive-seam wrapper/policy source; no production defect was identified during review.
+  - SYSCTL_InternalOsc.c contains a real defect in the first three getters: they decode PIOSC_STAT fields but read from PIOSC_CAL_OFFSET instead of PIOSC_STAT_OFFSET.
+  - SYSCTL__enStartPIOSCCalibration uses PIOSC_CAL_UPDATE_UPDATE for the CAL field. The normalized value matches the start command value, so this is a clarity issue but not a functional mismatch on the current bit encoding.
+- Planned implementation slice:
+  - patch the confirmed PIOSC status-register offset defect in SYSCTL_InternalOsc.c
+  - add SYSCTL_MemoryTiming_Test and SYSCTL_InternalOsc_Test
+  - register both targets in the SYSCTL driver xSource CMakeLists
+  - extend requirement traceability and gap tracking after validation

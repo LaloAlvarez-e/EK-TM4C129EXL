@@ -1,0 +1,21 @@
+[2026-03-31 01:34:50] Validated the SYSCTL GatingClock and DeepSleepGatingClock host-test slice and refreshed the measured coverage artifacts.
+- Host configure and focused build:
+  - cmake -S TM4C129E_DriverLib_Test -B TM4C129E_DriverLib_Test/build
+  - cmake --build TM4C129E_DriverLib_Test/build --config Debug --target SYSCTL_GatingClock_Test SYSCTL_DeepSleepGatingClock_Test
+- Focused execution:
+  - Direct executable run was used because ctest -R did not discover these target names in the current registration layout.
+  - SYSCTL_GatingClock_Test.exe passed 26/26 tests.
+  - SYSCTL_DeepSleepGatingClock_Test.exe passed 18/18 tests.
+- Full-suite validation:
+  - ctest --test-dir TM4C129E_DriverLib_Test/build -C Debug --output-on-failure
+  - Result: 204/204 tests passed.
+- Coverage refresh:
+  - cmake --build TM4C129E_DriverLib_Test/build --config Debug --target driverlib_test_coverage
+  - Coverage artifact: TM4C129E_DriverLib_Test/coverage/opencppcoverage/coverage.xml
+  - Measured line coverage: 1327/1474, line-rate 0.90027137042062411.
+- Traceability basis used for this slice:
+  - RSCLKCFG register map Table 5-11 p.260 and register description pp.288-289.
+  - DSCLKCFG register map Table 5-11 p.260 and register description pp.294-296.
+- Surrounding implementation review after validation:
+  - no new seam was required beyond SYSCTL_PrimitivesMock
+  - the next smallest adjacent primitive-seam SYSCTL targets remain SYSCTL_MemoryTiming.c and SYSCTL_InternalOsc.c.

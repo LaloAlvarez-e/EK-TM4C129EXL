@@ -1,0 +1,18 @@
+[2026-03-31 00:35:35] Started the host-test requirement-traceability retrofit and selected the repository-wide traceability scheme.
+- Re-read the TM4C129E DriverLib unit-test skill, the reference-manual skill, and the documentation instructions.
+- Inventoried the currently covered host-test files and current TEST case set under TM4C129E_DriverLib_Test.
+- Used the TM4C129E Reference Manual Analyst to map each covered test file to the relevant manual source and verified chapter/register/page context where possible.
+- Confirmed that not every current host test can be traced directly to a manual paragraph:
+  - register and field composition tests are directly manual-backed
+  - pointer validation, error propagation, sequencing, callback registration, and some wrapper policies are derived software requirements
+- Chose the repository traceability model:
+  - maintain a central requirement traceability matrix under TM4C129E_DriverLib_Test/coverage/
+  - link every host test case to either a direct manual requirement or a clearly labeled derived software requirement
+  - keep manual chapter/register/page context at the test-file section level to avoid repeating the same reference on every row
+  - require future tests to add both a requirement row in the matrix and an in-source requirements tag for new test comments
+- Reviewed the next SYSCTL files to continue after the retrofit:
+  - SYSCTL_PeripheralReset.c
+  - SYSCTL_PeripheralSleepMode.c
+- Current surrounding-implementation review result before edits:
+  - the traceability retrofit can be added without changing existing production code
+  - SYSCTL_PeripheralReset.c and SYSCTL_PeripheralSleepMode.c can reuse the existing SYSCTL_PeripheralGenericMock seam by compiling the original SYSCTL_PeripheralReady.c alongside the sources under test.

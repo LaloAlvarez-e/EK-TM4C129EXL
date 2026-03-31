@@ -1,0 +1,16 @@
+[2026-03-31 01:24:07] Continued SYSCTL coverage with GatingClock and DeepSleepGatingClock after validating the run-mode and deep-sleep-mode slice.
+- Read and reviewed the next SYSCTL wrapper sources:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_GatingClock.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_DeepSleepGatingClock.c
+- Confirmed both sources use the existing SYSCTL primitive seam with no production edits required.
+- Verified register and manual context for requirement traceability:
+  - RSCLK_CFG register description pp.288-289 with register map p.260 and run/sleep context pp.252-253
+  - DSCLK_CFG register description pp.294-296 with register map p.260 and deep-sleep context pp.253-254
+- Planned implementation slice:
+  - add SYSCTL_GatingClock_Test
+  - add SYSCTL_DeepSleepGatingClock_Test
+  - register both targets in the mirrored SYSCTL Driver xSource CMakeLists
+  - extend requirement traceability and gap tracking after validation
+- Current surrounding-implementation review result before edits:
+  - no new seam is needed beyond SYSCTL_PrimitivesMock
+  - after this slice, the next smallest adjacent primitive-seam SYSCTL targets are SYSCTL_MemoryTiming.c and SYSCTL_InternalOsc.c.

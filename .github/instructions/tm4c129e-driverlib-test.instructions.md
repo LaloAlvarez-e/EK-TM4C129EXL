@@ -16,4 +16,6 @@ applyTo: "TM4C129E_DriverLib_Test/**/*.{c,h,cpp,hpp,cmake,txt,md}"
 - Prefer small focused test targets that validate one production source at a time.
 - Use a tool-generated coverage report for measured coverage; in this workspace prefer OpenCppCoverage for the MSVC host-test flow.
 - Maintain a separate gap tracker under `TM4C129E_DriverLib_Test/coverage/` that identifies covered sources, missing coverage, blockers, and next targets.
+- Maintain `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md` so every `TEST`, `TEST_F`, or equivalent case is linked to either a direct manual requirement or a clearly labeled derived software requirement.
+- When a test is manual-backed, record the manual source, chapter or register family, and page context in the traceability matrix. When the behavior is software-only, label it as derived instead of forcing a false manual citation.
 - Add a full Doxygen-style comment block above every `TEST`, `TEST_F`, or equivalent test case, including `@brief`, summary/details, inputs, outputs, return behavior, and dependencies.

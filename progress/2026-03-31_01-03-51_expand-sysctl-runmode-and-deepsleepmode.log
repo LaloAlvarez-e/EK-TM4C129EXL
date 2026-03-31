@@ -1,0 +1,21 @@
+[2026-03-31 01:03:51] Continued SYSCTL coverage with PeripheralRunMode and PeripheralDeepSleepMode after validating the reset and sleep-mode slice.
+- Read and reviewed the next SYSCTL wrapper sources:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralRunMode.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralDeepSleepMode.c
+- Verified register-offset anchors used by the next slice:
+  - SYSCTL_RCGC_OFFSET = 0x600
+  - SYSCTL_DCGC_OFFSET = 0x800
+  - SYSCTL_PR_OFFSET = 0xA00
+- Verified manual context for requirement traceability:
+  - tm4c129xnczad.pdf Chapter 5 System Control
+  - run-mode clock-gating family semantics around p.239 and Table 5-11 RCGCx family start p.250
+  - deep-sleep clock-gating family semantics around pp.239-240 and Table 5-11 DCGCx family start p.252
+- Confirmed that both targets can reuse the existing SYSCTL_PeripheralGenericMock seam if the original SYSCTL_PeripheralReady.c is compiled into the host targets to satisfy the ready-poll path.
+- Added the next implementation slice:
+  - SYSCTL_PeripheralRunMode_Test
+  - SYSCTL_PeripheralDeepSleepMode_Test
+  - traceability rows for the new test cases
+  - gap-tracker updates for covered sources and next recommended targets
+- Current surrounding-implementation review result before build:
+  - no production-side changes are required for SYSCTL_PeripheralRunMode.c or SYSCTL_PeripheralDeepSleepMode.c
+  - after this slice, the next smallest adjacent SYSCTL wrappers are SYSCTL_GatingClock.c and SYSCTL_DeepSleepGatingClock.c, which return to the primitive register seam.

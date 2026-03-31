@@ -1,0 +1,14 @@
+[2026-03-30 22:00:44] Continued SYSCTL wrapper coverage into ResetCause and NMICause and added an explicit workspace verification rule.
+- Read current customization and host-test guidance.
+- Confirmed the workspace copilot instructions did not explicitly require surrounding-implementation verification for missing companion changes.
+- Updated .github/copilot-instructions.md to require inspection of surrounding implementation before and after each slice and to record findings under progress/.
+- Read and reviewed the next recommended SYSCTL wrapper sources:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetCause.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_NMICause.c
+- Verified both sources are simple wrapper-level read/clear helpers using the existing SYSCTL primitive seam.
+- Added new host-test targets in TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt:
+  - SYSCTL_ResetCause_Test
+  - SYSCTL_NMICause_Test
+- Added focused wrapper tests for null-pointer rejection, full-register read mask/shift composition, clear-write composition, and read-error propagation.
+- Current implementation review result before build:
+  - no production-side changes are required for SYSCTL_ResetCause.c or SYSCTL_NMICause.c based on the inspected wrapper logic; work remains purely in host coverage.

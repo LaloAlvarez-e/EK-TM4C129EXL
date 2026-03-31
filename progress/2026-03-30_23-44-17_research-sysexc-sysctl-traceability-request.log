@@ -1,0 +1,4 @@
+[2026-03-30 23:44:17] Research documentation traceability for covered SYSEXC and SYSCTL TM4C129E_DriverLib_Test host-test families.
+- Request: map existing host-test families to official TM4C129x reference-manual evidence for SYSEXC interrupt/register behavior and SYSCTL primitive, ALTCLKCFG, DIVSCLK, RESC, NMIC, RESBEHAVCTL, PP, PR, and PC behaviors.
+- Scope: use local manuals under Documents, especially Documents/tm4c129xnczad.pdf; do not change product code or test code; return research results only.
+- Initial files reviewed: TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md and the covered production SYSCTL/SYSEXC driver sources under TM4C129E_DriverLib/xDriver_MCU.

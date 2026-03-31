@@ -1,0 +1,15 @@
+[2026-03-31 00:05:15] Verified tm4c129xnczad.pdf page anchors and documented behavior for the requested SYSEXC and SYSCTL traceability map.
+- Manual source verified: Documents/tm4c129xnczad.pdf.
+- SYSCTL findings from direct Ghostscript txtwrite extraction:
+  - Chapter 5 System Control starts on manual page 232.
+  - Table 5-11 register map confirms ALTCLKCFG page 293, DIVSCLK page 297, RESC page 280, NMIC page 284, RESBEHAVCTL page 322, PP family start page 335, PC family start page 475, and PR family start page 525.
+  - RESC bits are sticky across reset sequences and individual cause bits clear by writing 0 to the corresponding bit.
+  - NMIC requires a broader clear sequence than a single write: read NMIC, clear the underlying source, read again, write 0 to the NMIC bit, and read back to confirm.
+  - RESBEHAVCTL fields WDOG1, WDOG0, BOR, and EXTRES encode system reset with value 0x2 and simulated POR with value 0x3.
+  - PCx semantics depend on the corresponding RCGCx/SCGCx/DCGCx bits and current run/sleep/deep-sleep mode; some families such as PCWD and PCGPIO explicitly note no current power-down effect and exist for future software compatibility.
+  - PRx bits clear on power, run-mode clock, or reset changes and are set again only when the peripheral is completely powered, enabled, and internally reset.
+- SYSEXC findings from direct Ghostscript txtwrite extraction against the same manual:
+  - Chapter 6 Processor Support and Exception Module starts on manual page 555, with Table 6-1 on page 556.
+  - The System Exception base address is 0x400F.9000, and the register map confirms SYSEXCRIS page 557, SYSEXCIM page 559, SYSEXCMIS page 561, and SYSEXCIC page 563.
+  - Functional description confirms raw status is visible through SYSEXCRIS, controller-level interrupt masking is controlled by SYSEXCIM, masked status is read from SYSEXCMIS, and both raw and masked status are cleared by writing 1 to the corresponding SYSEXCIC bit.
+  - Current manual placement differs from earlier TM4C129 variant audit notes that used a different PDF; final research output must cite tm4c129xnczad.pdf page numbers.

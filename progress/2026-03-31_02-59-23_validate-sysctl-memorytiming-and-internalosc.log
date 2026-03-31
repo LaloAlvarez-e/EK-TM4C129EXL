@@ -1,0 +1,27 @@
+[2026-03-31 02:59:23] Validate the SYSCTL MemoryTiming and InternalOsc host-test slice and refresh the SYSCTL coverage tracking artifacts.
+- Focused configure/build:
+  - `cmake -S TM4C129E_DriverLib_Test -B TM4C129E_DriverLib_Test/build`
+  - `cmake --build TM4C129E_DriverLib_Test/build --config Debug --target SYSCTL_MemoryTiming_Test SYSCTL_InternalOsc_Test`
+- Initial build issue:
+  - both newly added test files contained an accidental duplicated second copy of the suite body, which caused GoogleTest class redefinition errors during compilation
+  - corrected by trimming each file back to the first complete suite body before rebuilding
+- Focused execution:
+  - `TM4C129E_DriverLib_Test/build/xDriver_MCU/SYSCTL/Driver/xSource/Debug/SYSCTL_MemoryTiming_Test.exe`
+  - result: 15/15 tests passed
+  - `TM4C129E_DriverLib_Test/build/xDriver_MCU/SYSCTL/Driver/xSource/Debug/SYSCTL_InternalOsc_Test.exe`
+  - result: 11/11 tests passed
+- Full-suite validation:
+  - `ctest --test-dir TM4C129E_DriverLib_Test/build -C Debug --output-on-failure`
+  - result: 230/230 tests passed, 0 failed
+- Coverage refresh:
+  - `cmake --build TM4C129E_DriverLib_Test/build --config Debug --target driverlib_test_coverage`
+  - regenerated artifact timestamp: `TM4C129E_DriverLib_Test/coverage/opencppcoverage/coverage.xml` at `2026-03-31 02:56:37`
+  - updated coverage summary from coverage.xml: `lines-covered=1581`, `lines-valid=1730`, `line-rate=0.91387283236994221`
+- Documentation updates after validation:
+  - added `REQ-SYSCTL-MEMTIM0-001..015` and `REQ-SYSCTL-PIOSC-001..011` to `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md`
+  - marked `SYSCTL_MemoryTiming.c` and `SYSCTL_InternalOsc.c` as covered in `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md`
+  - updated the current test inventory and advanced the recommended next SYSCTL targets to `SYSCTL_PLLCLock.c` and `SYSCTL_MainOsc.c`
+- Post-validation inspection:
+  - the confirmed production defect fixed in this slice was limited to `SYSCTL_InternalOsc.c` status getters reading from `PIOSC_CAL_OFFSET` instead of `PIOSC_STAT_OFFSET`
+  - no additional seam work was required because `SYSCTL_PrimitivesMock` remained sufficient for both files
+  - the previously noted `SYSCTL_enPIOSC_RESULT_SUCCESS` concern is not a defect in the current sources; the enum value is `1UL` in `SYSCTL_Enum.h`

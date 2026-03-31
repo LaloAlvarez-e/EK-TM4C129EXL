@@ -1,0 +1,19 @@
+[2026-03-31 02:44:09] Expand SYSCTL host coverage for MemoryTiming and InternalOsc after the prior investigation.
+- Request context: continue with the next SYSCTL files while validating for missing implementation paths and real bugs.
+- Implemented production fix in TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_InternalOsc.c:
+  - corrected SYSCTL__enGetPIOSCCalibrationResult, SYSCTL__enGetPIOSCCalibrationValue, and SYSCTL__enGetPIOSCDefaultCalibrationValue to read PIOSCSTAT fields from PIOSC_STAT_OFFSET instead of PIOSC_CAL_OFFSET
+  - corrected SYSCTL__enStartPIOSCCalibration to use the CAL symbolic constant PIOSC_CAL_CAL_START
+- Added host targets in TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt:
+  - SYSCTL_MemoryTiming_Test
+  - SYSCTL_InternalOsc_Test
+- Added host test sources:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MemoryTiming_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_InternalOsc_Test.cpp
+- Post-implementation inspection:
+  - no new seam was required because both files stay within SYSCTL register primitive wrappers already exposed by SYSCTL_PrimitivesMock
+  - likely next companion SYSCTL files after this slice remain SYSCTL_PLLCLock.c and SYSCTL_MainOsc.c
+  - unresolved follow-up note: SYSCTL_enPIOSC_RESULT_SUCCESS in SYSCTL_Enum.h still looks suspicious and should only be changed with direct manual confirmation
+- Pending after this implementation step:
+  - reconfigure CMake and build the two new targets
+  - run focused executables, then the full suite and measured coverage
+  - update requirement traceability and the gap tracker after validation succeeds

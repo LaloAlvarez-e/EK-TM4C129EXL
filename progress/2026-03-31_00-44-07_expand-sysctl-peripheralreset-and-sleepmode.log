@@ -1,0 +1,17 @@
+[2026-03-31 00:44:07] Continued SYSCTL coverage with PeripheralReset and PeripheralSleepMode after establishing central requirement traceability.
+- Read and reviewed the next SYSCTL wrapper sources:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReset.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralSleepMode.c
+- Verified register-offset anchors used by the next slice:
+  - SYSCTL_SR_OFFSET = 0x500
+  - SYSCTL_SCGC_OFFSET = 0x700
+  - SYSCTL_PR_OFFSET = 0xA00
+- Confirmed that both targets can reuse the existing SYSCTL_PeripheralGenericMock seam if the original SYSCTL_PeripheralReady.c is compiled into the host targets to satisfy the ready-poll path.
+- Added the next implementation slice:
+  - SYSCTL_PeripheralReset_Test
+  - SYSCTL_PeripheralSleepMode_Test
+  - traceability rows for the new test cases
+  - gap-tracker updates for covered sources and next recommended targets
+- Current surrounding-implementation review result before build:
+  - no production-side changes are required for SYSCTL_PeripheralReset.c or SYSCTL_PeripheralSleepMode.c
+  - after this slice, the next smallest related consumers of the same seam will be SYSCTL_PeripheralRunMode.c and SYSCTL_PeripheralDeepSleepMode.c.

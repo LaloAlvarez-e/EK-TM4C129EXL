@@ -1,0 +1,23 @@
+[2026-03-31 01:02:03] Researched the tm4c129xnczad.pdf manual basis for SYSCTL run-mode and deep-sleep peripheral clock-gating wrappers.
+- Request scope: determine the reference-manual basis for the RCGCx and DCGCx register families used by SYSCTL_PeripheralRunMode.c and SYSCTL_PeripheralDeepSleepMode.c without changing production or test code.
+- Production sources reviewed:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralRunMode.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralDeepSleepMode.c
+- Existing evidence reviewed:
+  - progress/2026-03-31_00-05-15_verify-sysexc-sysctl-manual-pages.log
+  - .tmp/tm4c1294_sysexc_ch6/page_020.txt and page_021.txt
+  - .tmp/tm4c1294_sysctl_ch5/page_005.txt, page_006.txt, and page_007.txt
+  - extracted page images page_020.png and page_021.png to visually confirm manual pages 239 and 240.
+- Verified manual anchors from Documents/tm4c129xnczad.pdf:
+  - Section 5.2.6 System Control on page 239 states that peripheral-specific RCGCx, SCGCx, and DCGCx registers control clock gating in Run, Sleep, and Deep-Sleep mode, respectively, and places those families at offsets 0x600, 0x700, and 0x800.
+  - The same page recommends polling the peripheral-ready PRx register because changes in RCGCx/SCGCx/DCGCx/PCx/SRx may not take effect immediately.
+  - Section 5.2.6.3 Deep-Sleep Mode on page 240 states that peripherals are clocked from peripheral-specific DCGC registers when auto-clock gating is enabled, or from RCGC registers when auto-clock gating is disabled.
+  - Table 5-11 System Control Register Map on page 250 begins the RCGCx family at offset 0x600 with RCGCWD and continues on page 251.
+  - Table 5-11 on page 252 begins the DCGCx family at offset 0x800 with DCGCWD.
+- Best available per-register page anchors from the extracted register-map pages:
+  - RCGCGPIO page 382, RCGCDMA page 385, RCGCUART page 388, RCGCSSI page 390, RCGCQEI page 399.
+  - DCGCTIMER page 428, DCGCGPIO page 430, DCGCDMA page 433, DCGCSSI page 438, DCGCI2C page 439, DCGCADC page 444, DCGCQEI page 447.
+- Companion-path review:
+  - the wrapper pattern matches the adjacent sleep-mode clock-gating helper that uses SCGCx at offset 0x700 plus PR polling.
+  - no production or traceability file changes were requested or required for this research slice.
+- Uncertainty: the current extracted artifacts confirm the family semantics and register-map start pages exactly, but they do not expose a single dedicated "RCGCx family description page" or "DCGCx family description page" beyond Section 5.2.6 and Table 5-11, and the first detailed page for every individual member register was not uniformly recovered.

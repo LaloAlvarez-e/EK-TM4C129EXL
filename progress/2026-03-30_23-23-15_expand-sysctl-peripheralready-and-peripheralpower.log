@@ -1,0 +1,15 @@
+[2026-03-30 23:23:15] Expanded SYSCTL peripheral-generic wrapper coverage into PeripheralReady and PeripheralPower.
+- Read and reviewed the next suggested SYSCTL wrapper sources:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReady.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralPower.c
+- Confirmed both sources reuse the existing SYSCTL_PeripheralGenericMock seam and require no additional overlay headers.
+- Reviewed adjacent SYSCTL wrappers to verify the next follow-on work after this slice:
+  - SYSCTL_PeripheralReset.c
+  - SYSCTL_PeripheralSleepMode.c
+- Chose the current implementation slice:
+  - add SYSCTL_PeripheralReady_Test
+  - add SYSCTL_PeripheralPower_Test
+  - register both targets in the mirrored SYSCTL Driver xSource CMakeLists
+  - update the SYSCTL gap tracker and next-target recommendations after validation
+- Current surrounding-implementation review result before edits:
+  - no production-side changes are required for SYSCTL_PeripheralReady.c or SYSCTL_PeripheralPower.c; both remain pure host-coverage additions over the reusable peripheral-generic seam.

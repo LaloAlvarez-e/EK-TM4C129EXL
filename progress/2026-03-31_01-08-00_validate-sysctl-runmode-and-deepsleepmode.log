@@ -1,0 +1,17 @@
+[2026-03-31 01:08:00] Validated the SYSCTL PeripheralRunMode and PeripheralDeepSleepMode host-test slice and refreshed suite coverage.
+- Built the new host-test targets successfully:
+  - SYSCTL_PeripheralRunMode_Test
+  - SYSCTL_PeripheralDeepSleepMode_Test
+- Focused validation:
+  - ran `ctest --test-dir TM4C129E_DriverLib_Test/build -C Debug --output-on-failure -R "SYSCTL_Peripheral(RunMode|DeepSleepMode)"`
+  - result: 14/14 targeted tests passed
+- Full-suite validation:
+  - ran `ctest --test-dir TM4C129E_DriverLib_Test/build -C Debug --output-on-failure`
+  - result: 160/160 tests passed
+- Coverage refresh:
+  - refreshed artifact: TM4C129E_DriverLib_Test/coverage/opencppcoverage/coverage.xml
+  - line coverage: 1119 / 1266
+  - line-rate: 0.88388625592417058
+- Surrounding-implementation review after validation:
+  - the reusable SYSCTL peripheral-generic seam remains appropriate for adjacent run, sleep, deep-sleep, power, reset, presence, and ready wrapper families
+  - the next smallest adjacent SYSCTL wrappers are SYSCTL_GatingClock.c and SYSCTL_DeepSleepGatingClock.c, which move back to the primitive register seam.

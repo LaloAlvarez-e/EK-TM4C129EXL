@@ -1,0 +1,17 @@
+[2026-03-30 22:07:28] Expanded SYSCTL wrapper coverage into ResetBehavior and PeripheralPresent after reviewing the next adjacent wrapper seams.
+- Read and reviewed the next suggested SYSCTL wrapper sources:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetBehavior.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralPresent.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReady.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralPower.c
+- Confirmed SYSCTL_ResetBehavior.c remains a direct wrapper over SYSCTL__enReadRegister and SYSCTL__enWriteRegister, so the existing SYSCTL_PrimitivesMock seam is sufficient.
+- Confirmed SYSCTL_PeripheralPresent.c introduces SYSCTL__enReadPeripheral, which justifies a reusable peripheral-generic seam instead of an ad hoc wrapper-specific mock.
+- Chose a shared host seam for SYSCTL__enReadPeripheral and SYSCTL__enWritePeripheral so adjacent files such as SYSCTL_PeripheralReady.c and SYSCTL_PeripheralPower.c can reuse the same bridge.
+- Planned implementation slice:
+  - add SYSCTL_PeripheralGenericMock shared support
+  - add SYSCTL_ResetBehavior_Test
+  - add SYSCTL_PeripheralPresent_Test
+  - register both targets in the mirrored SYSCTL Driver xSource CMakeLists
+  - update the SYSCTL gap tracker and next-target recommendations after validation
+- Current surrounding-implementation review result before edits:
+  - no production-side changes are required for SYSCTL_ResetBehavior.c or SYSCTL_PeripheralPresent.c; remaining work stays in host coverage and seam support.

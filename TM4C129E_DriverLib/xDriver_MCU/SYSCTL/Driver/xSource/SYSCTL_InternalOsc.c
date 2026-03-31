@@ -36,7 +36,7 @@ SYSCTL_nERROR SYSCTL__enGetPIOSCCalibrationResult(SYSCTL_nMODULE enModuleArg, SY
         SYSCTL_Register_t stRegister;
         stRegister.uxShift = PIOSC_STAT_R_RESULT_BIT;
         stRegister.uxMask = PIOSC_STAT_RESULT_MASK;
-        stRegister.uptrAddress = PIOSC_CAL_OFFSET;
+        stRegister.uptrAddress = PIOSC_STAT_OFFSET;
         enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
         if(SYSCTL_enERROR_OK == enErrorReg)
         {
@@ -55,7 +55,7 @@ SYSCTL_nERROR SYSCTL__enGetPIOSCCalibrationValue(SYSCTL_nMODULE enModuleArg, UBa
         SYSCTL_Register_t stRegister;
         stRegister.uxShift = PIOSC_STAT_R_CT_BIT;
         stRegister.uxMask = PIOSC_STAT_CT_MASK;
-        stRegister.uptrAddress = PIOSC_CAL_OFFSET;
+        stRegister.uptrAddress = PIOSC_STAT_OFFSET;
         enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
         if(SYSCTL_enERROR_OK == enErrorReg)
         {
@@ -74,7 +74,7 @@ SYSCTL_nERROR SYSCTL__enGetPIOSCDefaultCalibrationValue(SYSCTL_nMODULE enModuleA
         SYSCTL_Register_t stRegister;
         stRegister.uxShift = PIOSC_STAT_R_DT_BIT;
         stRegister.uxMask = PIOSC_STAT_DT_MASK;
-        stRegister.uptrAddress = PIOSC_CAL_OFFSET;
+        stRegister.uptrAddress = PIOSC_STAT_OFFSET;
         enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
         if(SYSCTL_enERROR_OK == enErrorReg)
         {
@@ -188,7 +188,7 @@ SYSCTL_nERROR SYSCTL__enStartPIOSCCalibration(SYSCTL_nMODULE enModuleArg)
     stRegister.uxShift = PIOSC_CAL_R_CAL_BIT;
     stRegister.uxMask = PIOSC_CAL_CAL_MASK;
     stRegister.uptrAddress = PIOSC_CAL_OFFSET;
-    stRegister.uxValue = PIOSC_CAL_UPDATE_UPDATE;
+    stRegister.uxValue = PIOSC_CAL_CAL_START;
 
     SYSCTL_nERROR enErrorReg;
     enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);
