@@ -1,0 +1,5 @@
+[2026-03-30 00:21:11] Investigated SYSEXC_InterruptRoutine_Vector host build failure after latest rebuild.
+- Read captured build log from workspaceStorage output file.
+- Confirmed remaining errors are in production C compilation, not the C++ test body.
+- Read SYSEXC_InterruptRoutine_Vector.c, mirrored target CMake file, SYSEXC struct header, SYSEXC register address header, and host overlay SYSEXC_Dependencies.h.
+- Current hypothesis: the host overlay for SYSEXC_Dependencies.h is hiding transitive declarations required by the production source, specifically SYSEXC_t and SYSEXC_BASE.

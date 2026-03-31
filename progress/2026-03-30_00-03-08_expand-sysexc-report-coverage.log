@@ -1,0 +1,5 @@
+[2026-03-30 00:03:08] Expanding SYSEXC application-layer host coverage with the next natural target.
+- Request: continue with the next natural steps after closing SYSEXC register primitives.
+- Decision: start with `xApplication_MCU/SYSEXC/xSource/SYSEXC_Report.c` because it is the smallest remaining SYSEXC application wrapper and needs no hardware seam.
+- Implementation: added a mirrored `xApplication_MCU/SYSEXC/xSource` test subtree and a focused `SYSEXC_Report_Test` target for callback registration, unregister behavior, and null-report dispatch suppression.
+- Secondary cleanup: prepared to fix the gap tracker narrative so it no longer claims SYSEXC primitive helpers are uncovered.

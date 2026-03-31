@@ -1,0 +1,17 @@
+[2026-03-29 23:44:29] Expanding SCB coverage to the next natural targets and correcting the reset helper after a TM4C129X plus Cortex-M4 spec cross-check.
+- Production sources under review:
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/xSource/SCB_SysReset.c
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/Traps/xSource/SCB_DivisionTrap.c
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/Traps/xSource/SCB_UnalignTrap.c
+- Documentation basis reviewed from extracted manuals:
+  - Cortex-M4 AIRCR requires keyed writes with `VECTKEY = 0x5FA`.
+  - Cortex-M4 marks `VECTRESET` debug-reserved and requires `0` unless the implementation defines its use.
+  - TM4C129X documents `SYSRESREQ` for full microcontroller reset and `VECTRESET` for core-only reset.
+  - CCR `DIV_0_TRP` and `UNALIGN_TRP` semantics match the existing wrapper intent.
+- Production defect found and corrected in `SCB_SysReset.c`:
+  - the debug reset path used an incorrect AIRCR mask/value composition
+  - both reset helpers entered the fallback no-op loop even when the write primitive reported an error
+- Planned host targets:
+  - SCB_SysReset_Test
+  - SCB_DivisionTrap_Test
+  - SCB_UnalignTrap_Test

@@ -1,0 +1,69 @@
+tm4c129e_driverlib_add_unit_test(
+    SCB_PriorityGroup_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SCB_PriorityGroup_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/SCB/Driver/xSource/SCB_PriorityGroup.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SCB_DriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SCB_VectorOffset_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SCB_VectorOffset_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/SCB/Driver/xSource/SCB_VectorOffset.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SCB_DriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SCB_SleepMode_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SCB_SleepMode_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/SCB/Driver/xSource/SCB_SleepMode.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SCB_DriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SCB_WakeUp_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SCB_WakeUp_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/SCB/Driver/xSource/SCB_WakeUp.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SCB_DriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SCB_StackAligment_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SCB_StackAligment_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/SCB/Driver/xSource/SCB_StackAligment.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SCB_DriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SCB_SoftwareInterruptTrigger_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SCB_SoftwareInterruptTrigger_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/SCB/Driver/xSource/SCB_SoftwareInterruptTrigger.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SCB_DriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SCB_SysReset_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SCB_SysReset_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Core/SCB/Driver/xSource/SCB_SysReset.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SCB_DriverMock.cpp
+)

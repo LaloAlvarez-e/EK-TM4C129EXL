@@ -1,0 +1,5 @@
+[2026-03-30 00:14:05] Expanding SYSEXC host coverage to the remaining interrupt routine vector path.
+- Request: follow with the next natural steps after closing SYSEXC report and init coverage.
+- Decision: cover `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c`, the last remaining SYSEXC target in the gap tracker.
+- Implementation: added a host SCB ICSR overlay, a reusable SYSEXC interrupt-routine mock bridge for report invocation and source-handler lookup, mirrored interrupt-routine CMake wiring, and focused tests for report creation plus custom callback dispatch.
+- Pending validation: build and directly run `SYSEXC_InterruptRoutine_Vector_Test`, then update the tracker with the validated result if any test adjustments are needed.

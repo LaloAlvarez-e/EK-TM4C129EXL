@@ -1,0 +1,16 @@
+[2026-03-29 23:40:44] Rebuilt and revalidated the full NVIC host-test suite after finishing the remaining NVIC coverage work.
+- Build command:
+  - `cmake --build . --config Debug --target NVIC_RegisterAccess_Test NVIC_Enable_Test NVIC_Pending_Test NVIC_Active_Test NVIC_Priority_Test NVIC_Trigger_Test NVIC_DeInitInterrupts_Test NVIC_RegisterPrimitives_Test`
+- Direct executable validation results:
+  - `NVIC_RegisterAccess_Test.exe`: 4 tests passed.
+  - `NVIC_Enable_Test.exe`: 7 tests passed.
+  - `NVIC_Pending_Test.exe`: 5 tests passed.
+  - `NVIC_Active_Test.exe`: 2 tests passed.
+  - `NVIC_Priority_Test.exe`: 4 tests passed.
+  - `NVIC_Trigger_Test.exe`: 2 tests passed.
+  - `NVIC_DeInitInterrupts_Test.exe`: 2 tests passed.
+  - `NVIC_RegisterPrimitives_Test.exe`: 4 tests passed.
+- Review conclusion:
+  - No new NVIC production defect was found during the TM4C129X plus Cortex-M4 manual revisit.
+  - The repo’s current NVIC implementation aligns with the documented semantics reviewed for ISER, ICER, ISPR, ICPR, IABR, IPR, STIR, and USERSETMPEND-controlled access to STIR.
+  - The pending and enable-state production fixes made earlier remain validated by the full suite.

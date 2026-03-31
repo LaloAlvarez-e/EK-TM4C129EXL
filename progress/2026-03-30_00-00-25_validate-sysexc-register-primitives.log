@@ -1,0 +1,6 @@
+[2026-03-30 00:00:25] Validated SYSEXC primitive host coverage.
+- Configure: `cmake -S TM4C129E_DriverLib_Test -B TM4C129E_DriverLib_Test/build`
+- Build: `cmake --build TM4C129E_DriverLib_Test/build --config Debug --target SYSEXC_RegisterPrimitives_Test`
+- Run: `TM4C129E_DriverLib_Test/build/xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/Debug/SYSEXC_RegisterPrimitives_Test.exe`
+- Result: build succeeded and `SYSEXC_RegisterPrimitives_Test` passed 4 of 4 tests.
+- Coverage slice validated: null-pointer rejection, module validation error propagation, and SYSEXC base-address addition before MCU read/write register access.

@@ -1,0 +1,5 @@
+[2026-03-30 00:23:26] Fixed host SCB ICSR symbol linkage for SYSEXC interrupt routine vector test.
+- Read SCB host overlay declaration and SYSEXC_InterruptRoutineMock.cpp after link failure.
+- Confirmed the remaining blocker was name mangling: the production C object expected a C symbol for TM4C129E_DriverLib_Test__u32HostSCBICSRValue while the C++ mock source defined a C++ symbol.
+- Updated SCB_RegisterPeripheral.h to wrap the extern declaration in __cplusplus guards with extern "C".
+- Updated SYSEXC_InterruptRoutineMock.cpp to define TM4C129E_DriverLib_Test__u32HostSCBICSRValue with C linkage.

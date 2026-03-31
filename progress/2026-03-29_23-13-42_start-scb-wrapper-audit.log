@@ -1,0 +1,7 @@
+[2026-03-29 23:13:42] Starting the next Cortex-M4 chapter step for SCB wrapper coverage.
+- Request: continue with the natural next steps after NVIC.
+- Decision: start with the first three recommended SCB wrapper targets because they are small, host-testable, and share the same read/write primitive seam:
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/xSource/SCB_PriorityGroup.c
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/xSource/SCB_VectorOffset.c
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/xSource/SCB_SleepMode.c
+- Planned harness change: extend the test-only MCU_Common overlay and add a reusable SCB driver mock bridge for register access, barrier hooks, global interrupt hooks, and wait-for-interrupt hooks.

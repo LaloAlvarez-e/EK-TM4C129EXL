@@ -1,0 +1,7 @@
+[2026-03-30 00:21:52] Patched host SYSEXC dependency overlay for interrupt routine vector coverage.
+- Updated TM4C129E_DriverLib_Test/support/include/xApplication_MCU/SYSEXC/Intrinsics/xHeader/SYSEXC_Dependencies.h.
+- Restored production-side SYSEXC includes:
+  - xDriver_MCU/SYSEXC/SYSEXC.h
+  - xDriver_MCU/SYSEXC/Peripheral/SYSEXC_Peripheral.h
+- Kept test seam declarations for mocked dependency entry points.
+- Goal: provide SYSEXC_t and SYSEXC_BASE to SYSEXC_InterruptRoutine_Vector.c during host compilation.

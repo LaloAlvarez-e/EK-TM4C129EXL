@@ -1,0 +1,22 @@
+[2026-03-29 23:35:30] Finishing the pending NVIC coverage work and revisiting TM4C129X plus Cortex-M4 NVIC specs.
+- Documentation sources reviewed:
+  - Documents/tm4c129xnczad.pdf
+  - Documents/cortex-m4.pdf
+- Extraction method used:
+  - Ghostscript txtwrite output under TM4C129E_DriverLib_Test/build/manual_extract/
+- Manual facts captured for the NVIC closure review:
+  - ISER writes `1` to enable interrupts.
+  - ICER writes `1` to disable interrupts.
+  - ISPR writes `1` to set interrupts pending.
+  - ICPR writes `1` to clear pending interrupts.
+  - IABR reads active or active-and-pending state.
+  - IPR uses byte-addressable priority fields with `n = m DIV 4` and byte offset `m MOD 4`.
+  - Cortex-M4 generic STIR exposes `INTID` in bits `[8:0]` for a generic 0..239 range.
+  - TM4C129X device-specific SWTRIG narrows the implemented `INTID` field to bits `[7:0]`, which matches the repo register defines for the device interrupt range.
+  - USERSETMPEND controls unprivileged software access to STIR.
+- Planned test additions:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Trigger_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_DeInitInterrupts_Test.cpp
+- Planned support seam addition:
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/NVIC_DeInitDriverMock.h
+  - TM4C129E_DriverLib_Test/support/src/NVIC_DeInitDriverMock.cpp

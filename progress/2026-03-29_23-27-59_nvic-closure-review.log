@@ -1,0 +1,17 @@
+[2026-03-29 23:27:59] Performed a short NVIC closure review before leaving the chapter.
+- Reviewed current NVIC test registration in TM4C129E_DriverLib_Test/xDriver_MCU/Core/NVIC/Driver/xSource/CMakeLists.txt.
+- Cross-checked the NVIC production source set under TM4C129E_DriverLib/xDriver_MCU/Core/NVIC.
+- Confirmed the covered NVIC targets remain:
+  - NVIC_ReadReg.c + NVIC_WriteReg.c
+  - NVIC_Enable.c
+  - NVIC_Pending.c
+  - NVIC_Active.c
+  - NVIC_Priority.c
+  - NVIC_ReadRegister.c + NVIC_WriteRegister.c
+- Found two material NVIC sources still uncovered by host targets:
+  - NVIC_Trigger.c
+  - NVIC_DeInitInterrupts.c
+- Assessment:
+  - NVIC should not be considered fully closed yet.
+  - NVIC_RegisterPeripheral.c was not elevated as a standalone blocker because the primitive register tests already validate block-base address usage before MCU register access.
+- Updated the gap tracker so the remaining NVIC work is explicit and prioritized ahead of the next SCB targets.

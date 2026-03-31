@@ -1,0 +1,5 @@
+[2026-03-30 00:27:02] Validated SYSEXC interrupt routine vector host coverage.
+- Build: `cmake --build TM4C129E_DriverLib_Test/build --config Debug --target SYSEXC_InterruptRoutine_Vector_Test`
+- Run: `TM4C129E_DriverLib_Test/build/xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/Debug/SYSEXC_InterruptRoutine_Vector_Test.exe`
+- Result: build succeeded and `SYSEXC_InterruptRoutine_Vector_Test` passed 4 of 4 tests.
+- Coverage slice validated: software-report creation, multi-source report emission with preserved MIS mask, ICSR and stacked-vector decoding, software callback dispatch, and IC clearing plus callback dispatch for asserted MIS bits.

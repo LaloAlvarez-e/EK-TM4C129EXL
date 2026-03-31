@@ -1,0 +1,5 @@
+[2026-03-30 00:07:51] Expanding SYSEXC application-layer host coverage with init sequencing.
+- Request: continue with the next natural steps after validating `SYSEXC_Report.c`.
+- Decision: cover `xApplication_MCU/SYSEXC/xSource/SYSEXC_Init.c` before the larger interrupt routine vector path because init is a single ordered wrapper over a narrow dependency surface.
+- Implementation: added a test-only overlay for `SYSEXC_Dependencies.h`, a reusable `SYSEXC_InitDriverMock` bridge, and focused host tests for module validation, ordered init sequencing, and first-error early exit.
+- Pending validation: configure/build and directly run `SYSEXC_Init_Test`, then update the tracker with the validated result.

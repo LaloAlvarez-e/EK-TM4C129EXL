@@ -32,6 +32,15 @@
 #include <xDriver_MCU/Common/xHeader/MCU_CheckParams.h>
 #include <xDriver_MCU/Common/xHeader/MCU_Variables.h>
 
+MCU_nSTATE MCU__enDisableGlobalInterrupt(void);
+void MCU__vSetGlobalInterrupt(MCU_nSTATE enStateInterrupt);
+
+void TM4C129E_DriverLib_Test__vHostDataSyncBarrier(void);
+void TM4C129E_DriverLib_Test__vHostWaitForInterrupt(void);
+
+#define MCU__vDataSyncBarrier() { TM4C129E_DriverLib_Test__vHostDataSyncBarrier(); }
+#define MCU__vWaitForInterrupt() { TM4C129E_DriverLib_Test__vHostWaitForInterrupt(); }
+
 #endif /* TM4C129E_DRIVERLIB_TEST_SUPPORT_INCLUDE_XDRIVER_MCU_COMMON_MCU_COMMON_H_ */
 
 

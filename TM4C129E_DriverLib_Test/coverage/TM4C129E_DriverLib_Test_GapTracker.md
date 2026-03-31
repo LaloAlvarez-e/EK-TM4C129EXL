@@ -30,12 +30,22 @@ Use this tracker to answer three questions quickly:
 | Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Pending.c` | `NVIC_Pending_Test` | `covered` | Current target validates ISPR read delegation, corrected ISPR/ICPR write-path selection for set versus clear pending state, and wrapper delegation for set/clear helpers. |
 | Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Active.c` | `NVIC_Active_Test` | `covered` | Current target validates IABR read delegation and read-error propagation in the active-state wrapper. |
 | Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Priority.c` | `NVIC_Priority_Test` | `covered` | Current target validates null-pointer rejection, vector-to-IPR register byte-offset math, priority bit-position mapping, and vector-validation error propagation for get/set priority paths. |
+| Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_Trigger.c` | `NVIC_Trigger_Test` | `covered` | Current target validates STIR INTID field programming through the register primitive seam and invalid-vector rejection before the write path. |
+| Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/xSource/NVIC_DeInitInterrupts.c` | `NVIC_DeInitInterrupts_Test` | `covered` | Current target validates full-vector disable looping across `0 .. NVIC_enVECTOR_MAX - 1` and early stop on the first disable-vector error. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/xSource/SCB_PriorityGroup.c` | `SCB_PriorityGroup_Test` | `covered` | Current target validates AIRCR PRIGROUP write-key composition, barrier ordering, null-pointer rejection, and PRIGROUP read mask/shift behavior. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/xSource/SCB_VectorOffset.c` | `SCB_VectorOffset_Test` | `covered` | Current target validates VTOR mask selection, interrupt disable/restore sequencing, data-sync barrier usage, null-pointer rejection, and VTOR read path behavior. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/xSource/SCB_SleepMode.c` | `SCB_SleepMode_Test` | `covered` | Current target validates SLEEPDEEP and SLEEPONEXIT field access plus enter-sleep sequencing through the host wait-for-interrupt seam. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/xSource/SCB_WakeUp.c` | `SCB_WakeUp_Test` | `covered` | Current target validates SCR SEVONPEND field access for set/get wake-up source helpers. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/xSource/SCB_StackAligment.c` | `SCB_StackAligment_Test` | `covered` | Current target validates CCR STKALIGN field access for set/get stack-alignment helpers. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/xSource/SCB_SoftwareInterruptTrigger.c` | `SCB_SoftwareInterruptTrigger_Test` | `covered` | Current target validates CCR USERSETMPEND field access and wrapper delegation for unprivileged software-trigger enable state helpers. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/xSource/SCB_SysReset.c` | `SCB_SysReset_Test` | `covered` | Current target validates AIRCR VECTKEY readback rejection, corrected AIRCR write composition for `SYSRESETREQ` and debug `VECTRESET`, and write-error propagation without falling into the fallback loop. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/Traps/xSource/SCB_DivisionTrap.c` | `SCB_DivisionTrap_Test` | `covered` | Current target validates CCR `DIV_0_TRP` field access, wrapper delegation for enable/disable helpers, and null-pointer rejection in the getter. |
+| Chapter 3 SCB | `xDriver_MCU/Core/SCB/Driver/Traps/xSource/SCB_UnalignTrap.c` | `SCB_UnalignTrap_Test` | `covered` | Current target validates CCR `UNALIGN_TRP` field access, wrapper delegation for enable/disable helpers, and null-pointer rejection in the getter. |
 | Chapter 3 NVIC | `xDriver_MCU/Core/NVIC/Driver/Intrinsics/Primitives/xSource/NVIC_ReadRegister.c` + `xDriver_MCU/Core/NVIC/Driver/Intrinsics/Primitives/xSource/NVIC_WriteRegister.c` | `NVIC_RegisterPrimitives_Test` | `covered` | Current target validates null pointer rejection, module validation error propagation, and base-address addition before MCU register-access calls. |
-| Chapter 6 SYSEXC | `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_ReadRegister.c` | none | `not-started` | Useful next target for read-mask and shift behavior. |
-| Chapter 6 SYSEXC | `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_WriteRegister.c` | none | `not-started` | Useful next target for write-mask and shift behavior. |
-| Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/xSource/SYSEXC_Init.c` | none | `not-started` | Needs mock seams for vector registration and interrupt enable helpers. |
-| Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/xSource/SYSEXC_Report.c` | none | `not-started` | Low-risk host target for callback registration and null handling. |
-| Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c` | none | `not-started` | Higher-value target, but requires broader ISR and callback seams. |
+| Chapter 6 SYSEXC | `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_ReadRegister.c` + `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_WriteRegister.c` | `SYSEXC_RegisterPrimitives_Test` | `covered` | Current target validates null pointer rejection, module validation error propagation, and SYSEXC base-address addition before MCU register-access calls. |
+| Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/xSource/SYSEXC_Report.c` | `SYSEXC_Report_Test` | `covered` | Current target validates null callback rejection, callback plus context registration, unregister behavior, and null-report dispatch suppression. |
+| Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/xSource/SYSEXC_Init.c` | `SYSEXC_Init_Test` | `covered` | Current target validates module validation, ordered IRQ-handler and interrupt-source setup, and first-error early exit before later enable steps. |
+| Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c` | `SYSEXC_InterruptRoutine_Vector_Test` | `covered` | Current target validates software and multi-source report creation, ICSR and stacked-context decoding, source callback lookup, and IC clearing plus callback dispatch for asserted MIS bits. |
 | Chapter 3 SysTick | `xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c` | `SYSTICK_Calibration_Test` | `covered` | Host target validates fallback timing, count-based TENMS interpretation, forward and inverse 40000/3999/1000us examples, trust acceptance for exact external-reference deviation, ratio-based timing and microseconds-to-ticks correction from CALIB error in both negative and positive directions, and the init path review found no remaining raw-CALIB replacement logic outside the corrected helpers. |
 | Chapter 5 SYSCTL | multiple production files | none | `not-started` | Chapter audit is ahead of test coverage; host-test expansion has not started yet. |
 | Chapter 7 HIB | production module missing | none | `blocked` | No HIB production implementation exists yet in `TM4C129E_DriverLib`. |
@@ -86,12 +96,118 @@ Use this tracker to answer three questions quickly:
 - validates vector-to-IPR byte-offset and bit-position mapping in `NVIC__enSetVectorPriority`
 - validates vector-validation error propagation in `NVIC__enSetVectorPriority`
 
+### NVIC_Trigger_Test
+
+- validates STIR INTID field programming in `NVIC__enTriggerVector`
+- validates vector-range error propagation before the STIR write path
+
+### NVIC_DeInitInterrupts_Test
+
+- validates iteration across every implemented IRQ vector in `NVIC__enDisableAllInterrupts`
+- validates stop-on-error behavior when `NVIC__enDisableVector` fails mid-loop
+
+### SCB_PriorityGroup_Test
+
+- validates AIRCR priority-group write-key composition and barrier ordering in `SCB__enSetPriorityGroup`
+- validates null pointer rejection in `SCB__enGetPriorityGroup`
+- validates AIRCR PRIGROUP read address, mask, and shift behavior in `SCB__enGetPriorityGroup`
+
+### SCB_VectorOffset_Test
+
+- validates VTOR mask selection in `SCB__enSetVectorOffset`
+- validates interrupt disable/restore sequencing and post-write data-sync barrier usage
+- validates null pointer rejection in `SCB__enGetVectorOffset`
+- validates VTOR read address and mask behavior in `SCB__enGetVectorOffset`
+
+### SCB_SleepMode_Test
+
+- validates SLEEPDEEP field programming in `SCB__enSetSleepMode`
+- validates SLEEPDEEP field reads in `SCB__enGetSleepMode`
+- validates `SCB__enEnterDeepSleep` programs mode before waiting for interrupt
+- validates SLEEPONEXIT field access in set/get helpers
+
+### SCB_WakeUp_Test
+
+- validates SCR SEVONPEND field programming in `SCB__enSetWakeUpSource`
+- validates SCR SEVONPEND field reads in `SCB__enGetWakeUpSource`
+
+### SCB_StackAligment_Test
+
+- validates CCR STKALIGN field programming in `SCB__enSetStackAligment`
+- validates CCR STKALIGN field reads in `SCB__enGetStackAligment`
+
+### SCB_SoftwareInterruptTrigger_Test
+
+- validates CCR USERSETMPEND field programming in `SCB__enSetUnprivilegedSWTriggerEnableState`
+- validates wrapper delegation for enable and disable helpers
+- validates null pointer rejection and CCR USERSETMPEND field reads in the getter
+
+### SCB_SysReset_Test
+
+- validates AIRCR VECTKEY readback rejection in `SCB__enRequestSystemReset`
+- validates corrected AIRCR write composition for `SYSRESETREQ`
+- validates corrected AIRCR write composition for debug `VECTRESET`
+- validates that write errors are propagated instead of entering the fallback no-op loop
+
+### SCB_DivisionTrap_Test
+
+- validates CCR `DIV_0_TRP` field programming in `SCB__enSetDivisionTrapEnableState`
+- validates wrapper delegation for enable and disable helpers
+- validates null pointer rejection and CCR `DIV_0_TRP` field reads in the getter
+
+### SCB_UnalignTrap_Test
+
+- validates CCR `UNALIGN_TRP` field programming in `SCB__enSetUnalignTrapEnableState`
+- validates wrapper delegation for enable and disable helpers
+- validates null pointer rejection and CCR `UNALIGN_TRP` field reads in the getter
+
 ### NVIC_RegisterPrimitives_Test
 
 - validates null pointer rejection in `NVIC__enReadRegister`
 - validates block-base address addition before `MCU__enReadRegister`
 - validates block-base address addition before `MCU__enWriteRegister`
 - validates module-validation error propagation in `NVIC__enWriteRegister`
+
+### SYSEXC_RegisterPrimitives_Test
+
+- validates null pointer rejection in `SYSEXC__enReadRegister`
+- validates SYSEXC block-base address addition before `MCU__enReadRegister`
+- validates SYSEXC block-base address addition before `MCU__enWriteRegister`
+- validates module-validation error propagation in `SYSEXC__enWriteRegister`
+
+### SYSEXC_Report_Test
+
+- validates null callback rejection in `SYSEXC__enRegisterReportHandler`
+- validates callback and context storage through `SYSEXC__enRegisterReportHandler`
+- validates report dispatch forwarding in `SYSEXC__vInvokeReportHandler`
+- validates unregister behavior and null-report suppression in the dispatch path
+
+### SYSEXC_Init_Test
+
+- validates module validation error propagation in `SYSEXC__enInit`
+- validates ordered IRQ handler registration and interrupt-source setup in `SYSEXC__enInit`
+- validates first-error early exit before later source-enable and vector-enable steps
+
+### SYSEXC_InterruptRoutine_Vector_Test
+
+- validates software-report creation when no architected MIS bits are asserted
+- validates multi-source report emission with preserved original MIS status mask
+- validates software custom-callback dispatch when no architected MIS bits are asserted
+- validates IC clearing and callback dispatch for asserted MIS bits in source order
+
+### NVIC closure note
+
+- the previously covered NVIC slice remains stable after the pending-state and enable-state fixes
+- TM4C129X and Cortex-M4 manual cross-checks confirm the current implementation families match the documented NVIC register semantics for ISER, ICER, ISPR, ICPR, IABR, IPR, STIR, and USERSETMPEND-controlled unprivileged STIR access
+- `NVIC_RegisterPeripheral.c` is exercised through `NVIC_RegisterPrimitives_Test`, which validates block-base address addition before MCU register access
+- after `NVIC_Trigger_Test` and `NVIC_DeInitInterrupts_Test`, the NVIC driver-level implementation set is closed for the current host-test chapter scope
+
+### SCB spec cross-check note
+
+- Cortex-M4 AIRCR requires `VECTKEY = 0x5FA` on writes and marks `VECTRESET` debug-reserved, requiring `0` unless the implementation documents otherwise
+- TM4C129X APINT documents `SYSRESREQ` for full microcontroller reset and `VECTRESET` for core-only reset, but still requires correct keyed AIRCR/APINT writes
+- the SCB reset helper implementation previously contained a real defect in the debug-reset path write composition and also looped forever even when the AIRCR write primitive reported an error
+- `SCB_SysReset.c` is now corrected and covered for the host-test-visible behaviors
 
 ### SYSTICK_Calibration_Test
 
@@ -107,10 +223,7 @@ Use this tracker to answer three questions quickly:
 
 ### SYSEXC remaining gaps
 
-- primitive register helper behavior is not covered yet
-- callback registration and unregister behavior is not covered yet
-- application-layer init sequencing is not covered yet
-- interrupt-vector dispatch and multi-source handling are not covered yet
+- no remaining SYSEXC gaps are currently tracked in this host-test slice
 
 ### Framework remaining gaps
 
@@ -120,11 +233,7 @@ Use this tracker to answer three questions quickly:
 
 ## Recommended Next Targets
 
-1. `xDriver_MCU/Core/SCB/Driver/xSource/SCB_PriorityGroup.c`
-2. `xDriver_MCU/Core/SCB/Driver/xSource/SCB_VectorOffset.c`
-3. `xDriver_MCU/Core/SCB/Driver/xSource/SCB_SleepMode.c`
-4. `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_ReadRegister.c`
-5. `xDriver_MCU/SYSEXC/Driver/Intrinsics/Primitives/xSource/SYSEXC_WriteRegister.c`
+1. `xDriver_MCU/SYSCTL` chapter host-test expansion
 
 ## Update Rule
 

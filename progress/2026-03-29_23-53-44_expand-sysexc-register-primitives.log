@@ -1,0 +1,6 @@
+[2026-03-29 23:53:44] Expanded SYSEXC primitive host coverage.
+- Request: confirm whether revisiting SYSEXC was necessary and proceed only if remaining implementation gaps existed.
+- Investigation: reviewed the gap tracker, SYSEXC production inventory, existing SYSEXC interrupt-source host test, and current mock seams.
+- Finding: only `SYSEXC_InterruptSource.c` was already covered; primitive register helpers `SYSEXC_ReadRegister.c` and `SYSEXC_WriteRegister.c` were still uncovered.
+- Implementation: added a dedicated SYSEXC MCU register-access mock bridge, mirrored `Driver/Intrinsics/Primitives/xSource` CMake wiring, and focused host tests for primitive read/write helpers.
+- Pending validation: configure/build and directly run the new `SYSEXC_RegisterPrimitives_Test` target, then update tracker status with the validation result.
