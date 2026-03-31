@@ -1,0 +1,13 @@
+[2026-03-30 00:54:30] Expanded SYSCTL host-test coverage from primitives into wrapper-level driver xSource targets.
+- Added SYSCTL wrapper seam support:
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_PrimitivesMock.h
+  - TM4C129E_DriverLib_Test/support/src/SYSCTL_PrimitivesMock.cpp
+- Extended mirrored SYSCTL test tree:
+  - updated TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/CMakeLists.txt to include xSource
+  - added TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt
+- Added wrapper tests for the next natural SYSCTL sources:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_AlternateClock_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_OutputClock_Test.cpp
+- Test design uses the wrapper-level primitive seam, not the lower MCU access seam, so original production wrapper sources are compiled directly while SYSCTL__enReadRegister and SYSCTL__enWriteRegister are intercepted.
+- AlternateClock tests target ALTCLKCFG offset, field mask, field shift, null-pointer rejection, and read-error propagation.
+- OutputClock tests target DIVSCLK enable/source/divisor field composition plus config sequencing and early-exit behavior.

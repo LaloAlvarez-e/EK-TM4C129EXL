@@ -1,0 +1,7 @@
+[2026-03-30 00:40:42] Started Chapter 5 SYSCTL host coverage with the primitive register slice.
+- Decision: begin with SYSCTL_ReadRegister.c and SYSCTL_WriteRegister.c because they are the smallest reusable seam and they directly support later wrapper targets such as SYSCTL_AlternateClock.c.
+- Implementation:
+  - added SYSCTL mirrored CMake path under TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/Intrinsics/Primitives/xSource
+  - added SYSCTL_MCURegisterAccessMock bridge header and source
+  - added SYSCTL_RegisterPrimitives_Test.cpp covering null-pointer rejection, module validation, and block-base address addition before MCU read/write register access
+  - updated the gap tracker to mark the SYSCTL primitive slice covered and to move the next recommended wrappers to SYSCTL_AlternateClock.c and SYSCTL_OutputClock.c

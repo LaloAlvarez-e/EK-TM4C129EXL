@@ -1,0 +1,7 @@
+[2026-03-30 00:37:31] Patched the SCB host overlay so the full host-test suite can build again.
+- Updated TM4C129E_DriverLib_Test/support/include/xDriver_MCU/Core/SCB/Peripheral/Register/xHeader/SCB_RegisterPeripheral.h.
+- Restored production-side SCB transitive includes:
+  - xDriver_MCU/Core/SCB/Peripheral/Struct/xHeader/SCB_StructPeripheral.h
+  - xDriver_MCU/Core/SCB/Peripheral/Register/xHeader/SCB_RegisterAddress.h
+- Restored the key production-style register macros required by the existing SCB wrapper tests while preserving the host-controlled SCB_ICSR_R seam.
+- Goal: unblock full-suite build before running `ctest` and `driverlib_test_coverage`.

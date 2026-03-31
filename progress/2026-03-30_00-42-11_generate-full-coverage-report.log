@@ -1,0 +1,10 @@
+[2026-03-30 00:42:11] Generated the full OpenCppCoverage report for the passing DriverLib host-test suite.
+- Coverage command: `cmake --build TM4C129E_DriverLib_Test/build --config Debug --target driverlib_test_coverage`
+- Artifacts generated:
+  - TM4C129E_DriverLib_Test/coverage/opencppcoverage/coverage.xml
+  - TM4C129E_DriverLib_Test/coverage/opencppcoverage/html/
+- Coverage summary from coverage.xml:
+  - line-rate: 0.82766705744431424
+  - lines-covered: 706
+  - lines-valid: 853
+- Coverage generation reran the full suite and completed successfully.

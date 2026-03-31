@@ -1,0 +1,23 @@
+[2026-03-30 00:49:00] Validated live SYSCTL test definitions, host-test structure, and manual basis before continuing with SYSCTL wrapper coverage.
+- Read unit-test and reference-manual skills plus documentation instructions.
+- Re-read live files after external edits:
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_MCURegisterAccessMock.h
+  - TM4C129E_DriverLib_Test/support/include/xDriver_MCU/Core/SCB/Peripheral/Register/xHeader/SCB_RegisterPeripheral.h
+- Confirmed no diagnostics in the live SYSCTL mock header, SCB overlay header, or SYSCTL_RegisterPrimitives_Test.cpp.
+- Rebuilt SYSCTL_RegisterPrimitives_Test target successfully.
+- Executed SYSCTL_RegisterPrimitives_Test.exe directly: 4/4 tests passed.
+- Verified current measured coverage artifact at TM4C129E_DriverLib_Test/coverage/opencppcoverage/coverage.xml reports line-rate 0.83238312428734318 with 730/877 covered lines.
+- Checked local manual availability at Documents/tm4c129xnczad.pdf.
+- pdftotext.exe exists but is blocked by application control in this environment.
+- Used Ghostscript txtwrite extraction against the local TM4C129x manual to confirm SYSCTL chapter and register entries:
+  - System Control chapter starts on page 232.
+  - Register map entry shows ALTCLKCFG at offset 0x138 and DIVSCLK at offset 0x148.
+  - Manual text states ALTCLK field is bits 3:0 in ALTCLKCFG.
+  - Manual text states DIVSCLK register defines source/divisor and EN bit for optional clock output.
+- Cross-checked these manual facts against production DriverLib headers:
+  - SYSCTL_RegisterAddress.h: ALTCLK_CFG_OFFSET 0x0138, DIVSCLK_CFG_OFFSET 0x0148, SYSCTL_BASE 0x400FE000.
+  - SYSCTL_RegisterDefines_ALTCLKCFG.h: ALTCLK mask 0xF, bit 0.
+  - SYSCTL_RegisterDefines_DIVSCLK.h: DIV mask 0xFF at bit 0, SRC mask 0x3 at bit 16, EN mask at bit 31.
+- Conclusion:
+  - Current SYSCTL primitive tests are structurally valid and verify code-contract behavior only.
+  - Manual-backed confirmation now exists for the next wrapper targets ALTCLKCFG and DIVSCLK semantics.

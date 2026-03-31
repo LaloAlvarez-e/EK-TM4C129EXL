@@ -1,0 +1,6 @@
+[2026-03-30 00:36:48] Investigated the full-suite build blocker before coverage generation.
+- Full `driverlib_test_build` rebuild failed in the existing SCB host-test slice, before any SYSCTL work.
+- Failing production sources: SCB_PriorityGroup.c, SCB_SleepMode.c, SCB_SysReset.c, and SCB_VectorOffset.c.
+- Common error: missing SCB register offset macros such as SCB_AIRCR_OFFSET, SCB_SCR_OFFSET, and SCB_VTOR_OFFSET.
+- Read the current test overlay SCB_RegisterPeripheral.h and confirmed it only exposes the host ICSR seam.
+- Current hypothesis: the SCB overlay is masking the production SCB peripheral include chain and needs to restore transitive register-address and struct declarations while preserving the host ICSR override.

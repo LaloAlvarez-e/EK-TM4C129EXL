@@ -47,7 +47,10 @@ Use this tracker to answer three questions quickly:
 | Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/xSource/SYSEXC_Init.c` | `SYSEXC_Init_Test` | `covered` | Current target validates module validation, ordered IRQ-handler and interrupt-source setup, and first-error early exit before later enable steps. |
 | Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c` | `SYSEXC_InterruptRoutine_Vector_Test` | `covered` | Current target validates software and multi-source report creation, ICSR and stacked-context decoding, source callback lookup, and IC clearing plus callback dispatch for asserted MIS bits. |
 | Chapter 3 SysTick | `xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c` | `SYSTICK_Calibration_Test` | `covered` | Host target validates fallback timing, count-based TENMS interpretation, forward and inverse 40000/3999/1000us examples, trust acceptance for exact external-reference deviation, ratio-based timing and microseconds-to-ticks correction from CALIB error in both negative and positive directions, and the init path review found no remaining raw-CALIB replacement logic outside the corrected helpers. |
-| Chapter 5 SYSCTL | multiple production files | none | `not-started` | Chapter audit is ahead of test coverage; host-test expansion has not started yet. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/Intrinsics/Primitives/xSource/SYSCTL_ReadRegister.c` + `xDriver_MCU/SYSCTL/Driver/Intrinsics/Primitives/xSource/SYSCTL_WriteRegister.c` | `SYSCTL_RegisterPrimitives_Test` | `covered` | Current target validates null pointer rejection, module validation error propagation, and SYSCTL base-address addition before MCU register-access calls. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_AlternateClock.c` | `SYSCTL_AlternateClock_Test` | `covered` | Current target validates ALTCLKCFG field offset, mask, shift, null-pointer rejection, and read-error propagation through the wrapper primitive seam. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_OutputClock.c` | `SYSCTL_OutputClock_Test` | `covered` | Current target validates DIVSCLK enable/source/divisor field composition plus config sequencing and first-error early exit through the wrapper primitive seam. |
+| Chapter 5 SYSCTL | multiple remaining production files | none | `in-progress` | Chapter expansion now covers primitive and first wrapper slices; several SYSCTL driver wrappers remain open. |
 | Chapter 7 HIB | production module missing | none | `blocked` | No HIB production implementation exists yet in `TM4C129E_DriverLib`. |
 
 ## Current Test Inventory
@@ -195,6 +198,32 @@ Use this tracker to answer three questions quickly:
 - validates software custom-callback dispatch when no architected MIS bits are asserted
 - validates IC clearing and callback dispatch for asserted MIS bits in source order
 
+### SYSCTL_RegisterPrimitives_Test
+
+- validates null pointer rejection in `SYSCTL__enReadRegister`
+- validates SYSCTL block-base address addition before `MCU__enReadRegister`
+- validates SYSCTL block-base address addition before `MCU__enWriteRegister`
+- validates module-validation error propagation in `SYSCTL__enWriteRegister`
+
+### SYSCTL_AlternateClock_Test
+
+- validates ALTCLKCFG ALTCLK field programming in `SYSCTL__enSetAlternateClockSource`
+- validates null pointer rejection in `SYSCTL__enGetAlternateClockSource`
+- validates ALTCLKCFG ALTCLK field reads in `SYSCTL__enGetAlternateClockSource`
+- validates primitive read-error propagation in the alternate-clock getter
+
+### SYSCTL_OutputClock_Test
+
+- validates DIVSCLK EN field programming in `SYSCTL__enSetOutputClockState`
+- validates DIVSCLK SRC field programming in `SYSCTL__enSetOutputClockSource`
+- validates DIVSCLK DIV field programming in `SYSCTL__enSetOutputClockDivisor`
+- validates null pointer rejection in `SYSCTL__enGetOutputClockState`
+- validates DIVSCLK EN, SRC, and DIV field reads in the individual getters
+- validates disable -> divisor -> source -> final-state ordering in `SYSCTL__enSetOutputClockConfig`
+- validates first-error early exit in `SYSCTL__enSetOutputClockConfig`
+- validates divisor -> source -> state ordering in `SYSCTL__enGetOutputClockConfig`
+- validates first-error early exit in `SYSCTL__enGetOutputClockConfig`
+
 ### NVIC closure note
 
 - the previously covered NVIC slice remains stable after the pending-state and enable-state fixes
@@ -227,13 +256,15 @@ Use this tracker to answer three questions quickly:
 
 ### Framework remaining gaps
 
-- OpenCppCoverage is not currently installed in this environment
+- OpenCppCoverage is installed and the latest report is under `coverage/opencppcoverage/`
 - mock bridge families now exist for SYSEXC, SYSTICK, and multiple NVIC seams
 - mirrored `xApplication_MCU` test subtree has started with SysTick calibration coverage, but broader wrapper coverage is still missing
+- SYSCTL chapter coverage now includes the primitive register layer plus ALTCLKCFG and DIVSCLK wrapper coverage
 
 ## Recommended Next Targets
 
-1. `xDriver_MCU/SYSCTL` chapter host-test expansion
+1. `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetCause.c`
+2. `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_NMICause.c`
 
 ## Update Rule
 
