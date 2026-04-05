@@ -1,0 +1,24 @@
+[2026-04-05 08:19:49] Investigated TM4C129XNCZAD manual context for SYSCTL SYSPROP and the memory-capability registers FLASHPP and SSIZE.
+- Primary evidence reviewed: TM4C129E_DriverLib_Test/build/manual_extract/tm4c129xnczad.txt derived from Documents/tm4c129xnczad.pdf.
+- Confirmed chapter and section anchors from the extracted table of contents:
+  - Chapter 5 System Control, section 5.2.1 Device Identification, page 233.
+  - Chapter 5 System Control, section 5.2.6.4 Dynamic Power Management, page 254.
+  - Chapter 5 System Control, section 5.5 System Control Register Descriptions (System Control Offset), page 267.
+  - Chapter 8 Internal Memory, section 8.4 Internal Memory Register Descriptions (Internal Memory Control Offset), page 657.
+- Confirmed SYSPROP evidence:
+  - Register 16: System Properties (SYSPROP), offset 0x14C, page 299.
+  - Dynamic Power Management states that SYSPROP indicates whether low-power features are supported on a given MCU.
+  - Relevant documented SYSPROP fields are FPU, LDOSEQ, FLASHLPM, SRAMLPM, SRAMSM, PIOSCPDE, TSPDE, and LDOSME.
+- Confirmed FLASHPP and SSIZE evidence:
+  - Register 11: Flash Peripheral Properties (FLASHPP), offset 0xFC0, page 675.
+  - Register 12: SRAM Size (SSIZE), offset 0xFC4, page 677.
+  - Both registers appear under Chapter 8 Internal Memory at base 0x400F.D000, not in the SYSCTL register block.
+  - FLASHPP fields relevant to capability discovery are PFC, FMM, DFA, EESS, MAINSS, and SIZE.
+  - SSIZE provides a single implemented SRAM size field, SIZE.
+- Capability-model conclusion from the manual:
+  - Section 5.2.1 says TM4C129 capability information comes from DID0/DID1, SYSCTL Peripheral Present registers at offset 0x300, and per-peripheral Properties registers at offset 0xFC0.
+  - This supports using SYSPROP plus FLASHPP and SSIZE as current documented capability targets instead of treating legacy DC0/DC1 names as authoritative TM4C129 SYSCTL registers.
+- Surrounding implementation review:
+  - Existing repo register defines include a SYSPROP raw header, which is consistent with the manual-backed SYSCTL register.
+  - Earlier workspace manual audits already established that DC0/DC1 do not appear in the TM4C129 SYSCTL register map.
+- No source files were edited for this request; only progress logging was added.

@@ -63,6 +63,21 @@ Manual basis: `derived`, initialization policy built around the SYSCTL controlle
 - `REQ-SYSCTL-INIT-006` -> `InitPropagatesVectorDisableFailure` | `derived` | The SYSCTL initialization path shall propagate interrupt-vector disable failures on the `SYSCTL_enINTMASK_NONE` branch after completing the ordered source-setup sequence.
 - `REQ-SYSCTL-INIT-007` -> `InitStopsWhenClearAllSourcesFails` | `derived` | The SYSCTL initialization path shall stop on the first clear-source failure and avoid later source-enable or vector-selection steps.
 
+Path: `xDriver_MCU/SYSCTL/App/xSource/SYSCTL_Ready_Test.cpp`
+Manual basis: `derived`, repository SYSCTL app-layer ready sequencing and error-propagation policy above the Chapter 5 run-mode and reset helpers.
+
+- `REQ-SYSCTL-READY-001` -> `SetReadyOnRunModePropagatesReadyQueryError` | `derived` | The SYSCTL ready-on-run helper shall propagate the peripheral-ready query error without attempting later run-mode or reset operations.
+- `REQ-SYSCTL-READY-002` -> `SetReadyOnRunModeEnablesRunModeThenResets` | `derived` | The SYSCTL ready-on-run helper shall enable run mode and then assert peripheral reset when the selected peripheral is not yet ready.
+- `REQ-SYSCTL-READY-003` -> `ClearReadyOnRunModeResetsThenDisablesRunMode` | `derived` | The SYSCTL clear-ready-on-run helper shall assert peripheral reset and then disable run mode when the selected peripheral is currently ready.
+- `REQ-SYSCTL-READY-004` -> `ResetPropagatesPeripheralResetError` | `derived` | The SYSCTL app-layer reset helper shall propagate the underlying peripheral-reset write error when reset assertion fails for a ready peripheral.
+- `REQ-SYSCTL-READY-005` -> `IsReadyDelegatesToPeripheralReady` | `derived` | The SYSCTL app-layer ready wrapper shall forward its arguments to the peripheral-ready query and return the resulting status unchanged.
+
+Path: `xDriver_MCU/SYSCTL/App/xSource/SYSCTL_DeInitClockGates_Test.cpp`
+Manual basis: `derived`, repository SYSCTL clock-gate deinitialization policy built on the app-layer ready-clear helper.
+
+- `REQ-SYSCTL-DEINIT-001` -> `DeInitClockGatesIteratesAllPeripheralsInOrder` | `derived` | The SYSCTL clock-gate deinitialization helper shall visit the current peripheral inventory in source order and delegate each entry through the ready-clear helper.
+- `REQ-SYSCTL-DEINIT-002` -> `DeInitClockGatesStopsOnFirstError` | `derived` | The SYSCTL clock-gate deinitialization helper shall stop at the first ready-clear failure and return that error without attempting later peripherals.
+
 Path: `xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Test.cpp`
 Manual basis: `derived`, repository SYSCTL vector-handler storage policy for the application interrupt wrapper.
 
@@ -90,6 +105,58 @@ Manual basis: `derived`, repository SYSCTL-to-NVIC wrapper policy for the fixed 
 - `REQ-SYSCTL-IRQVEC-003` -> `DisInterruptVectorUsesSYSCTLVector` | `derived` | The SYSCTL interrupt-vector disable wrapper shall delegate to the fixed SYSCTL NVIC vector and return the resulting status.
 - `REQ-SYSCTL-IRQVEC-004` -> `DisableInterruptVectorPropagatesNVICError` | `derived` | The SYSCTL interrupt-vector disable wrapper shall propagate the NVIC disable-vector error status.
 
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_DeviceID_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control, section 5.2.1 Device Identification, `DID0` p.268 and `DID1` p.270.
+
+- `REQ-SYSCTL-DID-001` -> `GetDID0MinorRevisionRejectsNullPointer` | `derived` | The SYSCTL DID getter family shall reject a null destination pointer before issuing the register read.
+- `REQ-SYSCTL-DID-002` -> `GettersUseExpectedDIDOffsetsMasksAndShifts` | `tm4c` | The SYSCTL DID getter family shall read the documented DID0 and DID1 fields using the corresponding register offsets, masks, and shifts, and return the decoded field value.
+- `REQ-SYSCTL-DID-003` -> `GetDID1VersionPropagatesReadError` | `derived` | The SYSCTL DID getter family shall propagate SYSCTL primitive read errors without modifying the caller output value.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_NonVolatileMemoryInfo_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control, section 5.5 System Control Register Descriptions, `NVMSTAT` p.312.
+
+- `REQ-SYSCTL-NVMSTAT-001` -> `IsFlashWriteBufferAvailableRejectsNullPointer` | `derived` | The SYSCTL NVMSTAT getter shall reject a null destination pointer before issuing the register read.
+- `REQ-SYSCTL-NVMSTAT-002` -> `IsFlashWriteBufferAvailableUsesExpectedOffsetMaskAndShift` | `tm4c` | The SYSCTL NVMSTAT getter shall read the documented `NVMSTAT.FWB` field using the corresponding register offset, mask, and shift, and return the flash-write-buffer availability state as a boolean value.
+- `REQ-SYSCTL-NVMSTAT-003` -> `IsFlashWriteBufferAvailablePropagatesReadError` | `derived` | The SYSCTL NVMSTAT getter shall propagate SYSCTL primitive read errors without modifying the caller output value.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_BootConfig_Test.cpp`
+Manual basis: `tm4c`, Chapter 8 Internal Memory, section 8.6 Memory Register Descriptions (System Control Offset), `BOOTCFG` pp.706-709.
+
+- `REQ-SYSCTL-BOOTCFG-001` -> `GetBootConfigDebug0RejectsNullPointer` | `derived` | The SYSCTL BOOTCFG state getter family shall reject a null destination pointer before issuing the register read.
+- `REQ-SYSCTL-BOOTCFG-002` -> `GetBootConfigGPIOPinRejectsNullPointer` | `derived` | The SYSCTL BOOTCFG numeric getter family shall reject a null destination pointer before issuing the register read.
+- `REQ-SYSCTL-BOOTCFG-003` -> `StateGettersUseExpectedBOOTCFGMasksAndShifts` | `tm4c` | The SYSCTL BOOTCFG one-bit field getters shall read the documented BOOTCFG fields using the corresponding register offset, masks, and shifts, and return each raw field state as a boolean value.
+- `REQ-SYSCTL-BOOTCFG-004` -> `ValueGettersUseExpectedBOOTCFGMasksAndShifts` | `tm4c` | The SYSCTL BOOTCFG multi-bit field getters shall read the documented BOOTCFG fields using the corresponding register offset, masks, and shifts, and return each decoded numeric field value unchanged.
+- `REQ-SYSCTL-BOOTCFG-005` -> `GetBootConfigNotWrittenPropagatesReadError` | `derived` | The SYSCTL BOOTCFG state getter family shall propagate SYSCTL primitive read errors without modifying the caller output value.
+- `REQ-SYSCTL-BOOTCFG-006` -> `GetBootConfigGPIOPortPropagatesReadError` | `derived` | The SYSCTL BOOTCFG numeric getter family shall propagate SYSCTL primitive read errors without modifying the caller output value.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_UserRegisters_Test.cpp`
+Manual basis: `tm4c`, Chapter 8 Internal Memory, section 8.6 Memory Register Descriptions (System Control Offset), `USER_REG0` through `USER_REG3` p.710, with section 8.2.3.12 Non-Volatile Register Programming for staged readback semantics.
+
+- `REQ-SYSCTL-USERREG-001` -> `GetUserRegister0RejectsNullPointer` | `derived` | The SYSCTL USER_REG getter family shall reject a null destination pointer before issuing the register read.
+- `REQ-SYSCTL-USERREG-002` -> `GettersUseExpectedUserRegisterOffsetsMasksAndShifts` | `tm4c` | The SYSCTL USER_REG getter family shall read the documented USER_REG0 through USER_REG3 fields using the corresponding register offsets, masks, and shifts, and return each 32-bit register value unchanged.
+- `REQ-SYSCTL-USERREG-003` -> `GetUserRegister2PropagatesReadError` | `derived` | The SYSCTL USER_REG getter family shall propagate SYSCTL primitive read errors without modifying the caller output value.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetVectorPointer_Test.cpp`
+Manual basis: `tm4c`, Chapter 8 Internal Memory, section 8.6 Memory Register Descriptions (System Control Offset), `RVP` p.701.
+
+- `REQ-SYSCTL-RVP-001` -> `GetResetVectorPointerRejectsNullPointer` | `derived` | The SYSCTL reset-vector-pointer getter shall reject a null destination pointer before issuing the register read.
+- `REQ-SYSCTL-RVP-002` -> `GetResetVectorPointerUsesExpectedOffsetMaskAndShift` | `tm4c` | The SYSCTL reset-vector-pointer getter shall read the documented `RVP.RV` field using the corresponding register offset, mask, and shift, and return the raw reset-vector address unchanged.
+- `REQ-SYSCTL-RVP-003` -> `GetResetVectorPointerPropagatesReadError` | `derived` | The SYSCTL reset-vector-pointer getter shall propagate SYSCTL primitive read errors without modifying the caller output value.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemProperties_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control, section 5.5 System Control Register Descriptions, `SYSPROP` p.299, with section 5.2.6.4 Dynamic Power Management p.254 for capability semantics.
+
+- `REQ-SYSCTL-SYSPROP-001` -> `IsFPUPresentRejectsNullPointer` | `derived` | The SYSCTL system-properties getter family shall reject a null destination pointer before issuing the register read.
+- `REQ-SYSCTL-SYSPROP-002` -> `GettersUseExpectedSYSPROPMasksAndShifts` | `tm4c` | The SYSCTL system-properties getter family shall read the documented `SYSPROP` capability bits using the corresponding register offset, masks, and shifts, and return each support state as a boolean value.
+- `REQ-SYSCTL-SYSPROP-003` -> `IsLDOSleepModeSupportedPropagatesReadError` | `derived` | The SYSCTL system-properties getter family shall propagate SYSCTL primitive read errors without modifying the caller output value.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_UniqueID_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control, section 5.5 System Control Register Descriptions, `UNIQUEID0` through `UNIQUEID3` p.554.
+
+- `REQ-SYSCTL-UNIQUEID-001` -> `GetUniqueID0RejectsNullPointer` | `derived` | The SYSCTL Unique ID getter family shall reject a null destination pointer before issuing the register read.
+- `REQ-SYSCTL-UNIQUEID-002` -> `GettersUseExpectedUniqueIDOffsetsMasksAndShifts` | `tm4c` | The SYSCTL Unique ID getter family shall read the documented `UNIQUEID0` through `UNIQUEID3` raw identifier fields using the corresponding register offsets, masks, and shifts, and return each 32-bit identifier slice unchanged.
+- `REQ-SYSCTL-UNIQUEID-003` -> `GetUniqueID2PropagatesReadError` | `derived` | The SYSCTL Unique ID getter family shall propagate SYSCTL primitive read errors without modifying the caller output value.
+
 Path: `xApplication_MCU/TIMER/xSource/TIMER_Init_Test.cpp`
 Manual basis: `derived`, repository TIMER initialization policy for application IRQ-vector registration.
 
@@ -110,6 +177,13 @@ Manual basis: `derived`, repository TIMER-to-NVIC wrapper policy for mapped time
 - `REQ-TIMER-IRQVEC-002` -> `EnableInterruptVectorPropagatesNVICError` | `derived` | The TIMER interrupt-vector enable wrapper shall propagate the NVIC enable-vector error status for the selected mapped timer vector.
 - `REQ-TIMER-IRQVEC-003` -> `DisableInterruptVectorUsesMappedTimerVector` | `derived` | The TIMER interrupt-vector disable wrapper shall route the caller module to the mapped TIMER NVIC vector and return the delegated status.
 - `REQ-TIMER-IRQVEC-004` -> `DisableInterruptVectorPropagatesNVICError` | `derived` | The TIMER interrupt-vector disable wrapper shall propagate the NVIC disable-vector error status for the selected mapped timer vector.
+
+Path: `xApplication_MCU/ACMP/xSource/ACMP_Init_Test.cpp`
+Manual basis: `derived`, repository ACMP initialization policy for application IRQ-vector registration.
+
+- `REQ-ACMP-INIT-001` -> `InitPropagatesReadyError` | `derived` | The ACMP initialization path shall propagate ready-state setup errors without attempting comparator IRQ-handler lookup or registration.
+- `REQ-ACMP-INIT-002` -> `InitRegistersAllComparatorsInOrder` | `derived` | The ACMP initialization path shall obtain and register the application IRQ vector handler for comparators 0 through 2 in order after ready-state setup succeeds.
+- `REQ-ACMP-INIT-003` -> `InitStopsWhenComparatorRegistrationFails` | `derived` | The ACMP initialization path shall stop and propagate the first comparator IRQ-registration failure without attempting later comparator registrations.
 
 Path: `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector_Test.cpp`
 Manual basis: `both`, `tm4c` Chapter 6 `SYSEXCMIS` p.561 and `SYSEXCIC` p.563, plus `cortex` SCB `ICSR` context in section 4.3.3, pp.4-13 to 4-15.

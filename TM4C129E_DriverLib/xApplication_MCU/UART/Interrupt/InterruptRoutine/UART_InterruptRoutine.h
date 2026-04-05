@@ -35,7 +35,7 @@
 #include <xApplication_MCU/UART/Interrupt/InterruptRoutine/xHeader/UART_InterruptRoutine_Vector_Module6.h>
 #include <xApplication_MCU/UART/Interrupt/InterruptRoutine/xHeader/UART_InterruptRoutine_Vector_Module7.h>
 
-void (*UART__pvfGetIRQVectorHandler(UART_nMODULE enUARTModule))(void);
-void (**UART__pvfGetIRQVectorHandlerPointer(UART_nMODULE enUARTModule))(void);
+UART_pvfIRQVectorHandler_t UART__pvfGetIRQVectorHandler(UART_nMODULE enUARTModule);
+UART_pvfIRQVectorHandler_t* UART__pvfGetIRQVectorHandlerPointer(UART_nMODULE enUARTModule);
 
 #endif /* XAPPLICATION_MCU_UART_INTERRUPT_INTERRUPTROUTINE_UART_INTERRUPTROUTINE_H_ */

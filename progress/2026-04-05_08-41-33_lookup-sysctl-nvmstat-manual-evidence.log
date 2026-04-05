@@ -1,0 +1,16 @@
+[2026-04-05 08:41:33] investigation: SYSCTL NVMSTAT manual evidence confirmed from extracted TM4C129x reference manual
+Sources checked:
+- .github/skills/tm4c129e-reference-manual/SKILL.md
+- .github/instructions/tm4c129e-documentation.instructions.md
+- TM4C129E_DriverLib_Test/build/manual_extract/tm4c129xnczad.txt
+Confirmed evidence:
+- Table of contents shows Chapter 5 System Control at page 232.
+- Table of contents shows Section 5.5 System Control Register Descriptions (System Control Offset) at page 267.
+- Register list shows Register 24: Non-Volatile Memory Information (NVMSTAT), offset 0x1A0, at page 312.
+- Register description states: This register is predefined by the part and can be used to verify features.
+- Register type is RO with reset 0x0000.0001.
+- Bit 0 FWB is RO and means 32 Word Flash Write Buffer Available; when set, the feature is available.
+Decision:
+- NVMSTAT is documented as read-only feature/status information and should not be exposed as writable control.
+Validation limits:
+- Evidence came from the existing extracted manual text file rather than opening the PDF directly, but the extracted file includes the relevant page references and register text.

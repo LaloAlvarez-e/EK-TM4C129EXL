@@ -1,0 +1,11 @@
+[2026-04-05 08:19:50] Prepared final manual-backed answer for SYSCTL SYSPROP and memory-capability registers FLASHPP and SSIZE.
+- Answer points to return:
+  - SYSPROP is a SYSCTL register in Chapter 5 and is specifically framed by Dynamic Power Management plus its own register description.
+  - FLASHPP and SSIZE are not SYSCTL registers on TM4C129; they are Chapter 8 Internal Memory registers.
+  - Page numbers confirmed from the local extracted manual text: Device Identification page 233, Dynamic Power Management page 254, SYSPROP page 299, FLASHPP page 675, SSIZE page 677.
+  - SYSPROP field summary: presence bits for FPU and several sleep or deep-sleep power-management capabilities.
+  - FLASHPP field summary: flash feature and size reporting, including prefetch, mirror mode, DMA flash access, EEPROM sector size, flash sector size, and flash size.
+  - SSIZE field summary: implemented SRAM size only.
+  - Recommendation: for TM4C129 capability work, SYSPROP is a better next SYSCTL target than legacy DC0/DC1, and FLASHPP plus SSIZE are the better memory-capability targets even though they live in Internal Memory rather than SYSCTL.
+- Final-answer caution to include:
+  - Separate confirmed manual fact from inference and state explicitly that FLASHPP and SSIZE are outside SYSCTL.

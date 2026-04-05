@@ -1,0 +1,3 @@
+[2026-04-04 22:42:56] Request received: locate TM4C129E reference-manual documentation context for SYSCTL DID0 and DID1, including chapter/section, confirmed page numbers if available, and concise field summary relevant to firmware getters.
+Sources planned: .github skill/instruction files, workspace-derived notes if present, and Documents/tm4c129xnczad.pdf via verified local extraction path if needed.
+Constraints: do not edit source files; separate confirmed manual facts from inference in final response.

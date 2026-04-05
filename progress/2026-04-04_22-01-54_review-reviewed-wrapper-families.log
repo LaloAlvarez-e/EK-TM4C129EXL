@@ -1,0 +1,17 @@
+[2026-04-04 22:01:54] Audited the broader xApplication_MCU wrapper families after the SYSCTL and TIMER enum-return redesign work.
+- User request addressed in this review:
+  - Continue the same enum-return sweep for all peripheral families already reviewed.
+- Audit scope:
+  - Reviewed the live `xApplication_MCU` wrappers that delegate to `SCB__enRegisterIRQVectorHandler(...)` or `NVIC__enEnableVector(...)` / `NVIC__enDisableVector(...)`.
+  - Rechecked the higher-level init helpers above those wrappers to determine whether any still hide the delegated SCB/NVIC status.
+- Findings:
+  - SYSCTL and TIMER are already corrected in the current tree: their application IRQ-register wrappers, vector wrappers, and top-level init helpers now return module-specific enum status and propagate failures.
+  - The other reviewed peripheral families already use enum-returning APIs for the relevant SCB registration and init paths: ADC, DMA, FLASH, GPIO, I2C, PWM, QEI, SSI, SYSEXC, SYSTICK, UART, and WDT.
+  - No remaining reviewed application wrapper family was found to still return `void` while swallowing `SCB__enRegisterIRQVectorHandler(...)` or `NVIC__enEnableVector(...)` / `NVIC__enDisableVector(...)` status.
+  - One remaining consistency outlier exists in the reviewed set: `ACMP__vInit(...)` already returns `ACMP_nERROR` and propagates comparator registration failures correctly, but the public API still carries the wrong `v` prefix for an enum-returning function.
+  - No workspace callers of `ACMP__vInit(...)` were found outside the ACMP header/source pair, so normalizing that API is a contained cleanup.
+  - No existing ACMP host-test targets were found in `TM4C129E_DriverLib_Test`, so finishing the sweep cleanly requires a small new focused test target for `ACMP_Init.c`.
+- Planned implementation:
+  - Rename `ACMP__vInit(...)` to `ACMP__enInit(...)` in the ACMP public header/source.
+  - Add a focused ACMP init host test with the minimal mock seam required for ready-state setup, IRQ-handler lookup, and IRQ-vector registration sequencing.
+  - Update traceability and gap-tracker coverage docs, then validate with focused and full host test runs.

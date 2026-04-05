@@ -1,0 +1,4 @@
+[2026-04-05 08:16:52] User requested TM4C129E reference-manual context for SYSCTL SYSPROP and, if present in SYSCTL, FLASHPP and SSIZE.
+- Scope: confirm chapter/section names, exact register names, page numbers if verified, concise field summaries, and whether these are better TM4C129 capability targets than legacy DC0/DC1.
+- Sources to inspect: Documents/tm4c129xnczad.pdf, existing extraction/progress artifacts, and related repo notes if needed.
+- Validation goal: distinguish manual fact from prior repo notes and explicitly state whether FLASHPP/SSIZE belong to SYSCTL.

@@ -29,11 +29,14 @@
 
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_AlternateClock.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_DeepSleepGatingClock.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_DeviceID.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_GatingClock.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_InternalOsc.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_LDOVoltage.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_MainOsc.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_MemoryTiming.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_BootConfig.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_NonVolatileMemoryInfo.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_NMICause.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_OutputClock.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_PeripheralDeepSleepMode.h>
@@ -46,7 +49,11 @@
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_PLLCLock.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_ResetBehavior.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_ResetCause.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_ResetVectorPointer.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_SystemProperties.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_SystemClock.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_UniqueID.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_UserRegisters.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_Voltage.h>
 
 #endif /* XDRIVER_MCU_DRIVER_HEADER_SYSCTL_SYSCTL_DRIVER_SYSCTL_DRIVER_H_ */

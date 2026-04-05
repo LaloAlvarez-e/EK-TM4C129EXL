@@ -1,0 +1,4 @@
+[2026-04-05 15:10:14] Searched the workspace for existing extracted manual text covering SYSCTL BOOTCFG and USER_REG0-3.
+Sources checked: Documents/ for text or markdown extracts; progress/ logs; TM4C129E_DriverLib_Test/coverage notes; SYSCTL raw register definition headers.
+Findings: No standalone extracted text files were present under Documents. Prior progress and coverage notes only confirm USER_REG and BOOTCFG as documented SYSCTL families and future API candidates. Repo register headers confirm offsets and field macro names, but not the manual prose required for chapter/page-backed field meanings.
+Next step: extract the relevant manual pages from Documents/tm4c129xnczad.pdf.

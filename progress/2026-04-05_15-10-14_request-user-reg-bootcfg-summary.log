@@ -1,0 +1,3 @@
+[2026-04-05 15:10:14] Requested manual-grounded summary of SYSCTL USER_REG0-3 and BOOTCFG, including chapter/section names, page numbers, register offsets, access semantics, BOOTCFG field meanings, and recommended narrow public driver API surface in this repository.
+Sources planned: existing extracted manual text in workspace, Documents/tm4c129xnczad.pdf if needed, and current SYSCTL driver headers/sources for API cross-check.
+Status: investigation started.

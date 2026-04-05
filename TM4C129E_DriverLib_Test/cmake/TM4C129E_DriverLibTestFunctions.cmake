@@ -1,7 +1,7 @@
 include(GoogleTest)
 
 function(tm4c129e_driverlib_add_unit_test TARGET_NAME)
-    set(options)
+    set(options STATIC_TEST_DISCOVERY)
     set(oneValueArgs)
     set(multiValueArgs TEST_SOURCES ORIGINAL_SOURCES MOCK_SOURCES INCLUDE_DIRS)
 
@@ -42,5 +42,9 @@ function(tm4c129e_driverlib_add_unit_test TARGET_NAME)
 
     set_property(GLOBAL APPEND PROPERTY TM4C129E_DRIVERLIB_TEST_TARGETS ${TARGET_NAME})
 
-    gtest_discover_tests(${TARGET_NAME} DISCOVERY_TIMEOUT 60)
+    if(TM4CDLT_STATIC_TEST_DISCOVERY)
+        gtest_add_tests(TARGET ${TARGET_NAME})
+    else()
+        gtest_discover_tests(${TARGET_NAME} DISCOVERY_TIMEOUT 60)
+    endif()
 endfunction()

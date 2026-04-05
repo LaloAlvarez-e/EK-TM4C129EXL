@@ -1,0 +1,8 @@
+[2026-04-05 08:37:01] validated SYSCTL NVMSTAT answer against extracted manual text and repo register model
+Validation result:
+- Chapter context supported by extracted table of contents and section heading in TM4C129E_DriverLib_Test/build/manual_extract/tm4c129xnczad.txt.
+- Register name, offset, type, reset value, page number, and FWB meaning supported by the extracted register map and register description.
+- Repo cross-check in TM4C129E_DriverLib xDriver_MCU SYSCTL register headers is consistent with RO status exposure and does not indicate writable control semantics.
+Limits:
+- Evidence came from the existing extracted text file rather than a fresh OCR pass of the PDF, but the extraction already contains the needed page and register text verbatim.
+Status: complete, no code changes made.

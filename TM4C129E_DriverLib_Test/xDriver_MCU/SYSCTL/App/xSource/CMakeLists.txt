@@ -1,0 +1,19 @@
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_Ready_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_Ready_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/App/xSource/SYSCTL_Ready.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_ReadyDriverMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_DeInitClockGates_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_DeInitClockGates_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/App/xSource/SYSCTL_DeInitClockGates.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_DeInitClockGatesMock.cpp
+)

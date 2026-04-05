@@ -1,0 +1,5 @@
+[2026-04-05 15:12:30] Started direct extraction of Documents/tm4c129xnczad.pdf to searchable text using Ghostscript txtwrite.
+Tool path: C:\Program Files\gs\gs10.07.0\bin\gswin64c.exe
+Output path: progress/manual_extract_2026-04-05_15-12-30/tm4c129xnczad.txt
+Purpose: recover chapter/section, page, and field descriptions for SYSCTL BOOTCFG and USER_REG0-3 from the official manual.
+Status: extraction artifact check pending because terminal output was not returned cleanly.

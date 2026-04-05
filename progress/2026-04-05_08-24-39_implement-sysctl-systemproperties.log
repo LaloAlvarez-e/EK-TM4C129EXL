@@ -1,0 +1,28 @@
+[2026-04-05 08:24:39] Implemented the documented SYSCTL SYSPROP getter family with mirrored host-test coverage.
+- Production driver changes:
+  - Added `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_SystemProperties.h`
+  - Added `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemProperties.c`
+  - Updated `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/SYSCTL_Driver.h` to export the new family.
+- Public SYSCTL APIs added:
+  - `SYSCTL__enIsFPUPresent`
+  - `SYSCTL__enIsLDOSequenceSupported`
+  - `SYSCTL__enIsFlashLowPowerModeSupported`
+  - `SYSCTL__enIsSRAMLowPowerModeSupported`
+  - `SYSCTL__enIsSRAMStandbyModeSupported`
+  - `SYSCTL__enIsPIOSCPowerDownModeSupported`
+  - `SYSCTL__enIsTempSensorPowerDownModeSupported`
+  - `SYSCTL__enIsLDOSleepModeSupported`
+- Implementation notes:
+  - Used a single internal SYSPROP read helper to keep all public getters aligned on `SYSCTL_PROP_OFFSET`.
+  - Returned capability states as `SYSCTL_nBOOLEAN` because the underlying fields are one-bit supported/present flags.
+  - Surrounding review found no existing public SYSPROP wrapper family to preserve or extend.
+- Host-test changes:
+  - Added `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemProperties_Test.cpp`
+  - Updated `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt`
+  - Reused the existing `SYSCTL_PrimitivesMock` seam.
+- Documentation changes:
+  - Updated `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md`
+  - Updated `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md`
+- Status:
+  - Editor diagnostics are clean on the touched SYSCTL driver, test, and coverage files.
+  - Next step is focused build and execution of the new SYSCTL host target.

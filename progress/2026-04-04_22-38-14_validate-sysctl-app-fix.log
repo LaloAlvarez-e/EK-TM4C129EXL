@@ -1,0 +1,17 @@
+[2026-04-04 22:38:14] validated SYSCTL app-layer fix and recorded remaining external blocker
+- Diagnostics:
+  - `get_errors` reported no editor diagnostics in the touched production, test, CMake, or coverage files.
+- Host validation:
+  - Reconfigured `TM4C129E_DriverLib_Test/build` with CMake.
+  - Built the host test tree; new targets compiled successfully:
+    - `SYSCTL_Ready_Test.exe`
+    - `SYSCTL_DeInitClockGates_Test.exe`
+  - Direct execution results:
+    - `SYSCTL_Ready_Test`: 5/5 passed
+    - `SYSCTL_DeInitClockGates_Test`: 2/2 passed
+- Broader SYSCTL validation limit:
+  - Building the larger registered host target set still hit a pre-existing failure while CMake tried to discover tests from `SYSCTL_PeripheralReset_Test.exe`.
+  - Direct probe of `SYSCTL_PeripheralReset_Test.exe --gtest_list_tests` failed before test execution because Windows Application Control blocked the executable.
+  - This blocker is external to the files changed in this slice and prevented a clean end-to-end `ctest -R ^SYSCTL_` run.
+- Additional observation:
+  - MSVC also emitted the existing pointer-truncation warning in `TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c` during the broader build; not modified in this slice.

@@ -1,0 +1,24 @@
+[2026-04-04 23:07:11] implemented SYSCTL UniqueID and ResetVectorPointer getters and fixed the IRQ wrapper pointer-warning sites
+- Production driver changes:
+  - Added `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_UniqueID.h`
+  - Added `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_UniqueID.c`
+  - Added `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_ResetVectorPointer.h`
+  - Added `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetVectorPointer.c`
+  - Updated `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/SYSCTL_Driver.h` to export both new families.
+- New public SYSCTL APIs:
+  - `SYSCTL__enGetUniqueID0`
+  - `SYSCTL__enGetUniqueID1`
+  - `SYSCTL__enGetUniqueID2`
+  - `SYSCTL__enGetUniqueID3`
+  - `SYSCTL__enGetResetVectorPointer`
+- Host-test changes:
+  - Added `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_UniqueID_Test.cpp`
+  - Added `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetVectorPointer_Test.cpp`
+  - Updated `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt`
+- Documentation updates:
+  - `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md`
+  - `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md`
+- Warning-fix changes:
+  - Updated `TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c`
+  - Updated `TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/InterruptRegister/xSource/TIMER_InterruptRegisterIRQVector.c`
+  - Replaced the `UBase_t` cast null checks with direct typed function-pointer null comparisons.

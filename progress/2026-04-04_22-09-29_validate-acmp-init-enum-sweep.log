@@ -1,0 +1,20 @@
+[2026-04-04 22:09:29] Validated the ACMP enum-return consistency cleanup and the broader reviewed-wrapper audit conclusion.
+- Diagnostics:
+  - `get_errors` reported no editor or compile diagnostics in the edited ACMP production files, new ACMP host-test files, updated CMake files, or updated coverage markdown files.
+- Focused validation:
+  - Reconfigured `TM4C129E_DriverLib_Test/build` successfully.
+  - Built the focused `ACMP_Init_Test` target successfully.
+  - Ran the focused ACMP tests successfully: `3/3` passed.
+  - Passing cases:
+    - `InitPropagatesReadyError`
+    - `InitRegistersAllComparatorsInOrder`
+    - `InitStopsWhenComparatorRegistrationFails`
+- Full regression:
+  - Ran the full host suite successfully: `325/325` tests passed, `0` failed.
+  - Reported total host regression time: `2.55 sec`.
+- Symbol and scope verification:
+  - No searchable workspace references to `ACMP__vInit(...)` remain after the rename.
+  - The broader reviewed-wrapper audit remains unchanged after validation: no remaining reviewed `xApplication_MCU` wrapper family still returns `void` while swallowing SCB or NVIC status.
+- Validation status:
+  - ACMP init naming is now aligned with its enum return type.
+  - The reviewed SCB/NVIC wrapper sweep is complete for the currently audited peripheral families.

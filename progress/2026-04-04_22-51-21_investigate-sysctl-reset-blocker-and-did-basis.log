@@ -1,0 +1,16 @@
+[2026-04-04 22:51:21] investigated the SYSCTL reset host-test blocker and selected the next SYSCTL API batch
+- Request: follow the next 2 SYSCTL steps after the previous audit.
+- Investigation:
+  - Re-checked `TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_ReadyDriverMock.h` and `TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_DeInitClockGatesMock.h` because they changed externally after the prior edit.
+  - Confirmed both headers now have extra outer include guards; no edit was made to avoid trampling user or formatter changes.
+  - Inspected `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PeripheralReset_Test.cpp` and the corresponding target wiring.
+  - Probed `SYSCTL_PeripheralReset_Test.exe` directly plus renamed copies in the build folder and `%TEMP%`.
+- Result:
+  - Windows Application Control blocks execution of the reset test binary by content or policy, not by original path or file name, because renamed copies are blocked too.
+  - This means the safe repo-side fix is to stop build-time test discovery from executing that binary rather than trying to evade the machine policy.
+- Next API batch selection:
+  - Audited raw-only SYSCTL candidates and confirmed there was no existing public DID or UNIQUEID wrapper family.
+  - Selected `DID0/DID1` as the next low-risk read-only SYSCTL API batch.
+- Manual basis gathered:
+  - Chapter 5 System Control, section 5.2.1 Device Identification.
+  - `DID0` page 268 and `DID1` page 270 from the TM4C129E reference manual.

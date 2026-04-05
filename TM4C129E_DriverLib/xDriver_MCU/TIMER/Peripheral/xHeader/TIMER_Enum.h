@@ -529,4 +529,8 @@ typedef struct
     TIMER_nMATCH_EVENT enMatchEvent;
 }TIMER_EXTRAMODE_t;
 
+typedef MCU_Register_t TIMER_Register_t;
+typedef MCU_pvfIRQVectorHandler_t TIMER_pvfIRQVectorHandler_t;
+typedef MCU_pvfIRQSourceHandler_t TIMER_pvfIRQSourceHandler_t;
+
 #endif /* XDRIVER_MCU_DRIVER_HEADER_TIMER_TIMER_PERIPHERAL_TIMER_ENUM_H_ */

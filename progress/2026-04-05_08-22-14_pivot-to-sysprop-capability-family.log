@@ -1,0 +1,17 @@
+[2026-04-05 08:22:14] Pivoted the next SYSCTL capability-family slice from legacy DC0/DC1 to documented SYSPROP.
+- Request context:
+  - Continue with the next SYSCTL capability-register family after DID, UNIQUEID, and RVP.
+- Investigation summary:
+  - Re-audited the SYSCTL capability direction against the TM4C129 reference manual.
+  - Confirmed that the repo still contains legacy `SYSCTL_RegisterDefines_DC.h` macros, but TM4C129 Chapter 5 does not document SYSCTL DC0/DC1 as active SYSCTL registers for this device family.
+  - Confirmed that `SYSPROP` is a documented SYSCTL register at offset `0x14C`, page 299, and that it exposes supported system and low-power capability bits.
+- Decision:
+  - Do not add new public wrappers or tests that encode undocumented TM4C129 SYSCTL DC0/DC1 offsets.
+  - Use the documented `SYSPROP` register as the next SYSCTL capability slice because it remains inside SYSCTL, has existing raw definitions in the repo, and provides a narrow low-risk host-test target.
+- Evidence reviewed:
+  - `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_DC.h`
+  - `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_SYSPROP.h`
+  - `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterAddress.h`
+  - TM4C129 reference-manual findings for Chapter 5 `SYSPROP` and the earlier DC0/DC1 replacement guidance.
+- Status:
+  - Proceeding with `SYSCTL_SystemProperties` implementation and mirrored host tests.

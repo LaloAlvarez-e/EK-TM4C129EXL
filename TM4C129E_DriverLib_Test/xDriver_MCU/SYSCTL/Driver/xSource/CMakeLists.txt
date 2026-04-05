@@ -9,6 +9,69 @@ tm4c129e_driverlib_add_unit_test(
 )
 
 tm4c129e_driverlib_add_unit_test(
+    SYSCTL_DeviceID_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_DeviceID_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_DeviceID.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_BootConfig_Test
+    STATIC_TEST_DISCOVERY
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_BootConfig_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_BootConfig.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_NonVolatileMemoryInfo_Test
+    STATIC_TEST_DISCOVERY
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_NonVolatileMemoryInfo_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_NonVolatileMemoryInfo.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_SystemProperties_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_SystemProperties_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemProperties.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_UserRegisters_Test
+    STATIC_TEST_DISCOVERY
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_UserRegisters_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_UserRegisters.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_ResetVectorPointer_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_ResetVectorPointer_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetVectorPointer.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
     SYSCTL_OutputClock_Test
     TEST_SOURCES
         ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_OutputClock_Test.cpp
@@ -24,6 +87,16 @@ tm4c129e_driverlib_add_unit_test(
         ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_ResetCause_Test.cpp
     ORIGINAL_SOURCES
         ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetCause.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_UniqueID_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_UniqueID_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_UniqueID.c
     MOCK_SOURCES
         ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
 )
@@ -80,6 +153,7 @@ tm4c129e_driverlib_add_unit_test(
 
 tm4c129e_driverlib_add_unit_test(
     SYSCTL_PeripheralReset_Test
+    STATIC_TEST_DISCOVERY
     TEST_SOURCES
         ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PeripheralReset_Test.cpp
     ORIGINAL_SOURCES

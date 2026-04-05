@@ -27,7 +27,7 @@
 #include <xApplication_MCU/ACMP/Interrupt/ACMP_Interrupt.h>
 #include <xApplication_MCU/ACMP/Intrinsics/xHeader/ACMP_Dependencies.h>
 
-ACMP_nERROR ACMP__vInit(ACMP_nMODULE enModuleArg)
+ACMP_nERROR ACMP__enInit(ACMP_nMODULE enModuleArg)
 {
     ACMP_nERROR enErrorReg;
     UBase_t uxCompReg;

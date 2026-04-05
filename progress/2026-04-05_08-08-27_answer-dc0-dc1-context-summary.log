@@ -1,0 +1,7 @@
+[2026-04-05 08:08:27] Prepared final answer for SYSCTL DC0/DC1 documentation context from TM4C129XNCZAD manual.
+Answer basis summary:
+- Chapter 5 / section 5.2.1 Device Identification (page 233) states capability information is exposed through DID0/DID1, Peripheral Present registers, and per-peripheral property registers at offset 0xFC0.
+- Chapter 5 / section 5.5 System Control Register Descriptions (page 267) plus Table 5-11 shows DID0 at 0x000 (page 268), DID1 at 0x004 (page 270), and PTBOCTL at 0x038 (page 272); there are no SYSCTL DC0/DC1 entries documented for TM4C129.
+- Chapter 8 / section 8.4 Internal Memory Register Descriptions provides the actual size registers: FLASHPP.SIZE = 1024 KB flash on page 675 and SSIZE.SIZE = 256 KB SRAM on page 677.
+- Chapter 18 / section 18.5 ADC register map/descriptions provides ADC Peripheral Properties (ADCPP) on page 1311, where TS is explicitly called similar to the legacy DC1 TEMPSNS bit and MCR/ADCPC describe conversion-rate capability/configuration.
+- Codebase legacy headers still define SYSCTL DC0/DC1, but they are not backed by TM4C129 SYSCTL register-map evidence and should be treated as legacy/stale for wrapper naming and host tests.

@@ -27,6 +27,6 @@
 
 #include <xApplication_MCU/ACMP/Intrinsics/xHeader/ACMP_Defines.h>
 
-ACMP_nERROR ACMP__vInit(ACMP_nMODULE enModuleArg);
+ACMP_nERROR ACMP__enInit(ACMP_nMODULE enModuleArg);
 
 #endif /* XAPPLICATION_MCU_ACMP_XHEADER_ACMP_INIT_H_ */

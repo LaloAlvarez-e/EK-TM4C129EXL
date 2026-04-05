@@ -23,21 +23,21 @@
  */
 #include <xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/SYSCTL_InterruptRoutine.h>
 
-static void (*SYSCTL__pvIRQVectorHandler[1UL]) (void) =
+static SYSCTL_pvfIRQVectorHandler_t SYSCTL__pvIRQVectorHandler[1UL] =
 {
     &SYSCTL__vIRQVectorHandler
 };
 
-void (*SYSCTL__pvfGetIRQVectorHandler(void))(void)
+SYSCTL_pvfIRQVectorHandler_t SYSCTL__pvfGetIRQVectorHandler(void)
 {
-    void(*pvfFunctionReg)(void) = (void(*)(void)) 0UL;
+    SYSCTL_pvfIRQVectorHandler_t pvfFunctionReg = (SYSCTL_pvfIRQVectorHandler_t) 0UL;
     pvfFunctionReg = SYSCTL__pvIRQVectorHandler[(UBase_t) 0UL];
     return (pvfFunctionReg);
 }
 
-void (**SYSCTL__pvfGetIRQVectorHandlerPointer(void))(void)
+SYSCTL_pvfIRQVectorHandler_t* SYSCTL__pvfGetIRQVectorHandlerPointer(void)
 {
-    void(**pvfFunctionReg)(void) = (void(**)(void)) 0UL;
-    pvfFunctionReg = (void(**)(void)) &SYSCTL__pvIRQVectorHandler[(UBase_t) 0UL];
+    SYSCTL_pvfIRQVectorHandler_t* pvfFunctionReg = (SYSCTL_pvfIRQVectorHandler_t*) 0UL;
+    pvfFunctionReg = (SYSCTL_pvfIRQVectorHandler_t*) &SYSCTL__pvIRQVectorHandler[(UBase_t) 0UL];
     return (pvfFunctionReg);
 }

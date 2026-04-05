@@ -26,7 +26,7 @@
 #include <xApplication_MCU/TIMER/Interrupt/InterruptRoutine/TIMER_InterruptRoutine.h>
 #include <xApplication_MCU/TIMER/Intrinsics/xHeader/TIMER_Dependencies.h>
 
-TIMER_nERROR TIMER__enRegisterIRQVectorHandler(void (*pfIrqVectorHandlerArg) (void), TIMER_nMODULE enModuleArg)
+TIMER_nERROR TIMER__enRegisterIRQVectorHandler( TIMER_nMODULE enModuleArg, TIMER_pvfIRQVectorHandler_t pfIrqVectorHandlerArg)
 {
   SCB_nVECISR enVectorReg = SCB_enVECISR_TIMER0A;
   UBase_t uxModuleNumberReg = 0UL;
@@ -41,7 +41,7 @@ TIMER_nERROR TIMER__enRegisterIRQVectorHandler(void (*pfIrqVectorHandlerArg) (vo
           SCB_enVECISR_TIMER4B, SCB_enVECISR_TIMER5B, SCB_enVECISR_TIMER6B, SCB_enVECISR_TIMER7B}
     };
 
-  if(0UL != (UBase_t) pfIrqVectorHandlerArg)
+  if((TIMER_pvfIRQVectorHandler_t) 0UL != pfIrqVectorHandlerArg)
     {
     TIMER__vGetSubParams(enModuleArg, &uxSubModuleReg, &uxModuleNumberReg);
     uxSubModuleReg &= 0x1UL;

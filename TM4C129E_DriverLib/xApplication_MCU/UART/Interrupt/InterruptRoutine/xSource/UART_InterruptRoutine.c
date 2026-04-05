@@ -23,7 +23,7 @@
  */
 #include <xApplication_MCU/UART/Interrupt/InterruptRoutine/UART_InterruptRoutine.h>
 
-void (*UART__pvIRQVectorHandler[(UBase_t) UART_enMODULE_MAX]) (void)=
+UART_pvfIRQVectorHandler_t UART__pvIRQVectorHandler[(UBase_t) UART_enMODULE_MAX] =
 {
     &UART0__vIRQVectorHandler,&UART1__vIRQVectorHandler,
     &UART2__vIRQVectorHandler,&UART3__vIRQVectorHandler,
@@ -31,16 +31,16 @@ void (*UART__pvIRQVectorHandler[(UBase_t) UART_enMODULE_MAX]) (void)=
     &UART6__vIRQVectorHandler,&UART7__vIRQVectorHandler
 };
 
-void (*UART__pvfGetIRQVectorHandler(UART_nMODULE enUARTModule))(void)
+UART_pvfIRQVectorHandler_t UART__pvfGetIRQVectorHandler(UART_nMODULE enUARTModule)
 {
-    void(*pvfFunctionReg)(void) = (void(*)(void)) 0UL;
+    UART_pvfIRQVectorHandler_t pvfFunctionReg = (UART_pvfIRQVectorHandler_t) 0UL;
     pvfFunctionReg = UART__pvIRQVectorHandler[(UBase_t) enUARTModule];
     return (pvfFunctionReg);
 }
 
-void (**UART__pvfGetIRQVectorHandlerPointer(UART_nMODULE enUARTModule))(void)
+UART_pvfIRQVectorHandler_t* UART__pvfGetIRQVectorHandlerPointer(UART_nMODULE enUARTModule)
 {
-    void(**pvfFunctionReg)(void) = (void(**)(void)) 0UL;
-    pvfFunctionReg = (void(**)(void)) &UART__pvIRQVectorHandler[(UBase_t) enUARTModule];
+    UART_pvfIRQVectorHandler_t* pvfFunctionReg = (UART_pvfIRQVectorHandler_t*) 0UL;
+    pvfFunctionReg = (UART_pvfIRQVectorHandler_t*) &UART__pvIRQVectorHandler[(UBase_t) enUARTModule];
     return (pvfFunctionReg);
 }

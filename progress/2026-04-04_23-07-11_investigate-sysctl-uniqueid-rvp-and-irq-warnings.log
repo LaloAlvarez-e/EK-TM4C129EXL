@@ -1,0 +1,20 @@
+[2026-04-04 23:07:11] investigated the next SYSCTL API slices and the SYSCTL and TIMER IRQ wrapper warnings
+- Request: follow the next three points after the prior SYSCTL DeviceID and reset-discovery work.
+- Scope selected:
+  - add the next read-only SYSCTL API family for `UNIQUEID0` through `UNIQUEID3`
+  - add the next low-risk capability or read-only register batch using `RVP`
+  - audit the existing pointer-truncation warnings in the SYSCTL and TIMER IRQ-register wrappers
+- Safety check:
+  - Re-read `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_DeviceID.h` because it changed externally after the previous slice.
+  - Preserved the current nested include-guard form and made no edit to that header.
+- Manual basis gathered:
+  - `UNIQUEID0` through `UNIQUEID3`: TM4C129E Chapter 5 System Control, section 5.5 System Control Register Descriptions, page 554.
+  - `RVP`: TM4C129E Chapter 8 Internal Memory, section 8.6 Memory Register Descriptions (System Control Offset), page 701.
+- Design decisions:
+  - Treat `UNIQUEID0` through `UNIQUEID3` as four raw 32-bit slices of one 128-bit device identifier.
+  - Name the RVP wrapper by semantics as `ResetVectorPointer` instead of exposing only the raw acronym.
+- Warning audit result:
+  - `TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c`
+  - `TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/InterruptRegister/xSource/TIMER_InterruptRegisterIRQVector.c`
+  - Both warnings came from casting a function pointer to `UBase_t` only to check for null.
+  - The minimal safe fix is a direct typed null comparison, which preserves runtime behavior and removes the host-only pointer truncation warning.

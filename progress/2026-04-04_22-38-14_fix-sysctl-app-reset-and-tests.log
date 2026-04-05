@@ -1,0 +1,18 @@
+[2026-04-04 22:38:14] implemented SYSCTL app-layer reset fix and added SYSCTL app host tests
+- Production change:
+  - Updated `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/App/xSource/SYSCTL_Ready.c` so `SYSCTL__enReset` now propagates `SYSCTL__enSetPeripheralReset(...)` status.
+- Test scaffolding added:
+  - Added `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/App/CMakeLists.txt`.
+  - Added `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/App/xSource/CMakeLists.txt`.
+  - Updated `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/CMakeLists.txt` to include the new SYSCTL app subtree.
+  - Added shared mock bridges:
+    - `TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_ReadyDriverMock.h`
+    - `TM4C129E_DriverLib_Test/support/src/SYSCTL_ReadyDriverMock.cpp`
+    - `TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_DeInitClockGatesMock.h`
+    - `TM4C129E_DriverLib_Test/support/src/SYSCTL_DeInitClockGatesMock.cpp`
+- New host tests:
+  - `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/App/xSource/SYSCTL_Ready_Test.cpp`
+  - `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/App/xSource/SYSCTL_DeInitClockGates_Test.cpp`
+- Documentation updates:
+  - `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md`
+  - `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md`

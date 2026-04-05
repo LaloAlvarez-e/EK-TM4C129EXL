@@ -1,0 +1,13 @@
+[2026-04-04 22:44:49] Investigated SYSCTL DID0/DID1 documentation context using the local TM4C129x manual text extraction and code-facing SYSCTL register definitions.
+Primary source reviewed: TM4C129E_DriverLib_Test/build/manual_extract/tm4c129xnczad.txt.
+Confirmed from extracted manual text:
+- System Control chapter starts on page 232.
+- Section 5.2.1 Device Identification is referenced on page 233.
+- Table 5-11 lists DID0 on page 268 and DID1 on page 270.
+- DID0 fields relevant to getters: VER, CLASS, MAJOR, MINOR.
+- DID1 fields relevant to getters: VER, FAM, PARTNO, PINCOUNT, TEMP, PKG, ROHS, QUAL.
+Code cross-check reviewed:
+- TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Struct/xHeader/SYSCTL_StructRegister.h
+- TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_DID.h
+Validation limit noted: the extracted DID1 table shows TEMP reset value 0x3 while the description block in the same excerpt documents encodings 0x0..0x2 only; final answer should treat field meaning as confirmed and avoid inferring undocumented semantics for 0x3 from this excerpt alone.
+No source files edited; only progress logging updated.

@@ -1,0 +1,7 @@
+[2026-04-05 08:42:29] Selected the next SYSCTL family as NVMSTAT after auditing USER_REG, BOOTCFG, and NVMSTAT against the repo and TM4C129 manual evidence.
+Request: Continue inside SYSCTL with USER_REG, BOOTCFG, or NVMSTAT.
+Decision: Implement NVMSTAT next because it is the narrowest documented SYSCTL register family in scope, with one RO capability/status bit (FWB) at SYSCTL offset 0x1A0.
+Evidence: Existing raw register definitions in SYSCTL_RegisterDefines_NVMSTAT.h and manual evidence from Chapter 5 System Control, section 5.5 System Control Register Descriptions, NVMSTAT p.312.
+Files reviewed: TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_NVMSTAT.h; TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral.h; TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Struct/xHeader/SYSCTL_StructRegister.h; TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_SystemProperties.h.
+Planned follow-on: Add a focused getter wrapper, host tests through SYSCTL_PrimitivesMock, then update SYSCTL traceability and gap-tracker entries and validate via host build plus CTest.
+Status: Investigation complete, implementation pending.

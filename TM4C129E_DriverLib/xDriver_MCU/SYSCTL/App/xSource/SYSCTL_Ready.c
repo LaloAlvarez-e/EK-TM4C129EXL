@@ -67,7 +67,7 @@ SYSCTL_nERROR SYSCTL__enReset(SYSCTL_nMODULE enModuleArg, SYSCTL_nPERIPHERAL enP
     enErrorReg = SYSCTL__enIsPeripheralReady(enModuleArg, enPeripheralArg, &enReady);
     if((SYSCTL_enERROR_OK == enErrorReg) && (SYSCTL_enTRUE == enReady))
     {
-        SYSCTL__enSetPeripheralReset(enModuleArg, enPeripheralArg);
+        enErrorReg = SYSCTL__enSetPeripheralReset(enModuleArg, enPeripheralArg);
     }
     return (enErrorReg);
 }

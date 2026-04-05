@@ -1,0 +1,9 @@
+[2026-04-05 08:14:50] Prepared concise answer for the SYSCTL DC0/DC1 documentation-context request.
+Answer basis:
+- DC0/DC1 are legacy names in the repo headers, but TM4C129 Chapter 5 documents DID0/DID1 plus PP*/per-peripheral *PP registers instead of SYSCTL DC0/DC1.
+- Use FLASHPP and SSIZE for memory-size semantics on TM4C129.
+- Use ADCPP/ADCPC/ADCCC for the only directly comparable ADC capability/rate/divider semantics; do not present them as a unified SYSCTL DC1 register.
+User-facing cautions to include:
+- Avoid wrapper or test names that imply TM4C129 exposes authoritative SYSCTL DC0/DC1 hardware registers.
+- Prefer DID0/DID1, SYSCTL PP* registers, and per-peripheral *PP/*PC/*CC register names in wrappers and host tests.
+- Treat ADCPP.TS as explicitly legacy-related because the manual itself calls out the legacy DC1 TEMPSNS bit, but do not infer undocumented one-to-one mappings for the rest of DC1.

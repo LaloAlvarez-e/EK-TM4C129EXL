@@ -57,7 +57,7 @@ void OS_Adapt__vStartScheduler(OS_UBase_t uxUsPeriod)
     SCB__enRegisterIRQVectorHandler(SCB_enMODULE_0,
                                     SCB_enVECISR_PENDSV,
                                     &OS_Adapt_vPendSVHandler,
-                                    (void (**) (void)) 0UL);
+                                    (SCB_pvfIRQVectorHandler_t*) 0UL);
     SCB_SVCall__vRegisterIRQSourceHandler(&OS_Adapt_vSVCHandler, 0UL);
     SCB_PendSV__vSetPriority(SCB_enSHPR7);
     SCB_Systick__vSetPriority(SCB_enSHPR7);

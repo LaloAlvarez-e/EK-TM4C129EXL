@@ -1,0 +1,25 @@
+[2026-04-05 15:27:54] Validated the SYSCTL USER_REG and BOOTCFG getter families and rechecked the NVMSTAT target in the host-test build.
+- Build validation:
+  - Rebuilt `SYSCTL_BootConfig_Test` and `SYSCTL_UserRegisters_Test` from `TM4C129E_DriverLib_Test/build` with `cmake --build . --config Debug --target SYSCTL_BootConfig_Test SYSCTL_UserRegisters_Test`.
+  - Both targets compiled and linked successfully after CMake regenerated the SYSCTL driver test subtree.
+- Test registration results:
+  - `ctest -N -C Debug | Select-String "SYSCTL_(BootConfig|UserRegisters|NonVolatileMemoryInfo)Test"` listed all twelve registered cases across the BOOTCFG, USER_REG, and NVMSTAT families.
+- Execution results:
+  - `ctest -C Debug -R "SYSCTL_(BootConfig|UserRegisters|NonVolatileMemoryInfo)Test" --output-on-failure` passed 12/12 registered entries.
+  - This run confirms that the previously blocked `SYSCTL_NonVolatileMemoryInfo_Test` cases now execute successfully under the current environment.
+- Covered tests:
+  - `SYSCTL_BootConfigTest.GetBootConfigDebug0RejectsNullPointer`
+  - `SYSCTL_BootConfigTest.GetBootConfigGPIOPinRejectsNullPointer`
+  - `SYSCTL_BootConfigTest.StateGettersUseExpectedBOOTCFGMasksAndShifts`
+  - `SYSCTL_BootConfigTest.ValueGettersUseExpectedBOOTCFGMasksAndShifts`
+  - `SYSCTL_BootConfigTest.GetBootConfigNotWrittenPropagatesReadError`
+  - `SYSCTL_BootConfigTest.GetBootConfigGPIOPortPropagatesReadError`
+  - `SYSCTL_NonVolatileMemoryInfoTest.IsFlashWriteBufferAvailableRejectsNullPointer`
+  - `SYSCTL_NonVolatileMemoryInfoTest.IsFlashWriteBufferAvailableUsesExpectedOffsetMaskAndShift`
+  - `SYSCTL_NonVolatileMemoryInfoTest.IsFlashWriteBufferAvailablePropagatesReadError`
+  - `SYSCTL_UserRegistersTest.GetUserRegister0RejectsNullPointer`
+  - `SYSCTL_UserRegistersTest.GettersUseExpectedUserRegisterOffsetsMasksAndShifts`
+  - `SYSCTL_UserRegistersTest.GetUserRegister2PropagatesReadError`
+- Status:
+  - The USER_REG and BOOTCFG SYSCTL slices are implemented and validated.
+  - The NVMSTAT static-registration workaround remains in place, but runtime host-test execution is now passing in the current environment.

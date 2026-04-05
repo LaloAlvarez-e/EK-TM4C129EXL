@@ -1,0 +1,8 @@
+[2026-04-04 23:01:16] lookup completed for SYSCTL UNIQUEID0..3 and RVP manual context
+- Primary evidence: TM4C129E_DriverLib_Test/build/manual_extract/tm4c129xnczad.txt.
+- Confirmed from table of contents: Chapter 5 System Control, section 5.5 System Control Register Descriptions (System Control Offset), page 267; Chapter 8 Internal Memory, section 8.6 Memory Register Descriptions (System Control Offset), page 700.
+- Confirmed register pages: UNIQUEID0..3 on page 554; RVP on page 701.
+- UNIQUEID evidence: registers 196-199 at offsets 0xF20/0xF24/0xF28/0xF2C form a concatenated 128-bit unique identifier; read-only; not user-modifiable; unique per die but not random.
+- RVP evidence: register 35 at offset 0x0D4 is the read-only reset vector pointer address executed after boot loader execution; documented reset value 0x0101FFF0; initialized by power-on reset.
+- Surrounding code inspection: raw register defines already exist in TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral.h and RegisterDefines/xHeader headers for UNIQUEID and RVP.
+- Follow-on caution for future wrappers/tests: model UNIQUEID as four 32-bit slices of one 128-bit identifier, not four unrelated IDs or a random source; model RVP as a raw pointer/address, not a writable flash configuration control.

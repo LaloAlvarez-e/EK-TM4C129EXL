@@ -1,0 +1,15 @@
+[2026-04-04 22:38:14] audited SYSCTL for remaining changes, missing tests, and possible missing APIs
+- Request: double-check whether SYSCTL still needs code changes, new tests, or API additions for uncovered registers.
+- Investigation:
+  - Reviewed current SYSCTL driver/app inventory, host-test CMake wiring, gap tracker, and traceability matrix.
+  - Re-checked uncovered or weakly covered SYSCTL helper files and compared the public SYSCTL header surface against the available register families.
+- Confirmed issue:
+  - `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/App/xSource/SYSCTL_Ready.c`
+  - `SYSCTL__enReset` ignored the return value from `SYSCTL__enSetPeripheralReset(...)`, so reset-write failures could be reported as success.
+- Confirmed test gap:
+  - `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL` had no `App` subtree even though `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/App/SYSCTL_App.h` exposes public APIs.
+  - Public app sources missing direct host coverage: `xDriver_MCU/SYSCTL/App/xSource/SYSCTL_Ready.c` and `xDriver_MCU/SYSCTL/App/xSource/SYSCTL_DeInitClockGates.c`.
+- Possible API expansion candidates, not confirmed defects:
+  - Raw-only SYSCTL register families with register defines but no public driver wrapper family were noted for future scope: `DID/DCx`, `RVP`, `SYSPROP`, `UNIQUEID`, `USER_REG`, `BOOTCFG`, `NVMSTAT`, `FMPRE/FMPPE`, `SLPPWRCFG/DSLPPWRCFG`, `SDPMST`, and `MPC/PDS` groups.
+- Decision:
+  - Implement the confirmed app-layer fix and add focused host tests for the public SYSCTL app helpers.

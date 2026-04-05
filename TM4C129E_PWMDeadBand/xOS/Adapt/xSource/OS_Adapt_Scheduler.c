@@ -48,7 +48,7 @@ static void OS_Adapt_vSetupTimerInterrupt(OS_UBase_t uxUsPeriod)
 void OS_Adapt__vStartScheduler(OS_UBase_t uxUsPeriod)
 {
     FPU__enInit(FPU_enMODULE_0);
-    SCB__enRegisterIRQVectorHandler(SCB_enMODULE_0, SCB_enVECISR_PENDSV, &OS_Adapt_vPendSVHandler, (void (**) (void)) 0UL);
+    SCB__enRegisterIRQVectorHandler(SCB_enMODULE_0, SCB_enVECISR_PENDSV, &OS_Adapt_vPendSVHandler, (SCB_pvfIRQVectorHandler_t*) 0UL);
     SCB_SVCall__enRegisterIRQSourceHandler(SCB_enMODULE_0, 0UL, &OS_Adapt_vSVCHandler);
     SCB_PendSV__enSetPriority(SCB_enMODULE_0, SCB_enPRI7);
     SCB_SYSTICK__enSetPriority(SCB_enMODULE_0, SCB_enPRI7);

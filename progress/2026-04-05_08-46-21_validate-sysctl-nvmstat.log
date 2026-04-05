@@ -1,0 +1,19 @@
+[2026-04-05 08:46:21] Validated the SYSCTL NVMSTAT getter family in the host-test build as far as the current environment allows.
+- Build validation:
+  - Rebuilt `SYSCTL_NonVolatileMemoryInfo_Test` from `TM4C129E_DriverLib_Test/build` with `cmake --build . --config Debug --target SYSCTL_NonVolatileMemoryInfo_Test`.
+  - Initial build completed compilation and linking successfully, but dynamic GoogleTest discovery failed because the executable could not be started during the post-build discovery step.
+- Discovery workaround:
+  - Updated the target to use `STATIC_TEST_DISCOVERY` in `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt` to switch from `gtest_discover_tests()` to source-based `gtest_add_tests()`.
+  - Rebuilt successfully after the change.
+- Test registration results:
+  - `ctest -N -C Debug -R SYSCTL_NonVolatileMemoryInfoTest` now lists all three registered cases:
+    - `SYSCTL_NonVolatileMemoryInfoTest.IsFlashWriteBufferAvailableRejectsNullPointer`
+    - `SYSCTL_NonVolatileMemoryInfoTest.IsFlashWriteBufferAvailableUsesExpectedOffsetMaskAndShift`
+    - `SYSCTL_NonVolatileMemoryInfoTest.IsFlashWriteBufferAvailablePropagatesReadError`
+- Runtime blocker:
+  - Direct execution of `SYSCTL_NonVolatileMemoryInfo_Test.exe` is blocked by Windows Application Control in the current environment.
+  - `ctest -C Debug -R SYSCTL_NonVolatileMemoryInfoTest --output-on-failure` reports all three entries as `BAD_COMMAND` / `Process not started` for the same reason.
+- Status:
+  - Production and test code compile cleanly.
+  - Static registration is fixed.
+  - Runtime host-test execution remains blocked by external Application Control policy.

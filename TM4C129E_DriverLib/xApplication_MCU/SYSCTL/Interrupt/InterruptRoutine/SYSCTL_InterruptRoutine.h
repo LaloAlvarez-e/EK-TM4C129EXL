@@ -28,7 +28,7 @@
 #include <xApplication_MCU/SYSCTL/Intrinsics/xHeader/SYSCTL_Defines.h>
 #include <xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xHeader/SYSCTL_InterruptRoutine_Vector.h>
 
-void (*SYSCTL__pvfGetIRQVectorHandler(void))(void);
-void (**SYSCTL__pvfGetIRQVectorHandlerPointer(void))(void);
+SYSCTL_pvfIRQVectorHandler_t SYSCTL__pvfGetIRQVectorHandler(void);
+SYSCTL_pvfIRQVectorHandler_t* SYSCTL__pvfGetIRQVectorHandlerPointer(void);
 
 #endif /* XAPPLICATION_MCU_SYSCTL_INTERRUPT_INTERRUPTROUTINE_SYSCTL_INTERRUPTROUTINE_H_ */

@@ -32,7 +32,7 @@ SYSCTL_nERROR SYSCTL__enRegisterIRQVectorHandler(SYSCTL_pvfIRQVectorHandler_t pf
     SYSCTL_nERROR enErrorReg;
 
     enErrorReg = SYSCTL_enERROR_OK;
-    if(0UL != (UBase_t) pfIrqVectorHandlerArg)
+    if((SYSCTL_pvfIRQVectorHandler_t) 0UL != pfIrqVectorHandlerArg)
     {
         enErrorReg = (SYSCTL_nERROR) SCB__enRegisterIRQVectorHandler(SCB_enMODULE_0,
                                                                      enVector,

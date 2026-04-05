@@ -1,0 +1,16 @@
+[2026-04-04 22:51:21] implemented SYSCTL DeviceID support and a static-discovery workaround for the blocked reset host target
+- Build-system change:
+  - Updated `TM4C129E_DriverLib_Test/cmake/TM4C129E_DriverLibTestFunctions.cmake` to support `STATIC_TEST_DISCOVERY` and use `gtest_add_tests(...)` for source-based registration when requested.
+  - Updated `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt` so `SYSCTL_PeripheralReset_Test` uses static discovery and added the new `SYSCTL_DeviceID_Test` target.
+- Production SYSCTL change:
+  - Added `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_DeviceID.h`.
+  - Added `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_DeviceID.c`.
+  - Updated `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/SYSCTL_Driver.h` to export the new DeviceID driver family.
+- New public DID getter family:
+  - DID0 version, class, major revision, minor revision.
+  - DID1 version, family, part number, pin count, temperature range, package, RoHS, qualification.
+- New host coverage:
+  - Added `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_DeviceID_Test.cpp`.
+- Documentation updates:
+  - `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md`
+  - `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md`

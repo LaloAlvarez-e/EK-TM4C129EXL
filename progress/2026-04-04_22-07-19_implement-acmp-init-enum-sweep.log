@@ -1,0 +1,16 @@
+[2026-04-04 22:07:19] Implemented the remaining ACMP enum-return consistency cleanup identified by the broader reviewed-wrapper audit.
+- Production API cleanup:
+  - Renamed the ACMP public init declaration from `ACMP__vInit(...)` to `ACMP__enInit(...)` in `TM4C129E_DriverLib/xApplication_MCU/ACMP/xHeader/ACMP_Init.h`.
+  - Renamed the ACMP init definition to `ACMP__enInit(...)` in `TM4C129E_DriverLib/xApplication_MCU/ACMP/xSource/ACMP_Init.c`.
+  - No external workspace callers of `ACMP__vInit(...)` were found, so no firmware or project updates were required.
+- Host-test scaffold added:
+  - Added `TM4C129E_DriverLib_Test/xApplication_MCU/ACMP/CMakeLists.txt` and `TM4C129E_DriverLib_Test/xApplication_MCU/ACMP/xSource/CMakeLists.txt`.
+  - Added `TM4C129E_DriverLib_Test/support/include/tm4c129e_test/ACMP_InitDriverMock.h` and `TM4C129E_DriverLib_Test/support/src/ACMP_InitDriverMock.cpp`.
+  - Added `TM4C129E_DriverLib_Test/xApplication_MCU/ACMP/xSource/ACMP_Init_Test.cpp` with focused coverage for ready-state error propagation, ordered comparator registration, and early exit on registration failure.
+  - Updated `TM4C129E_DriverLib_Test/xApplication_MCU/CMakeLists.txt` to include the new ACMP test subtree.
+- Coverage/documentation updates:
+  - Added ACMP init traceability requirements to `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md`.
+  - Added the ACMP init target to `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md`.
+- Post-implementation audit result:
+  - No remaining reviewed `xApplication_MCU` wrapper family was found to return `void` while swallowing SCB/NVIC status.
+  - The only remaining reviewed inconsistency was the ACMP init name prefix, which is now aligned with its enum return type.

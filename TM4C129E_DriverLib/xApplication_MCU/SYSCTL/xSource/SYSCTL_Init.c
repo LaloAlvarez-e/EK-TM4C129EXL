@@ -29,7 +29,7 @@
 SYSCTL_nERROR SYSCTL__enInit(SYSCTL_nMODULE enModuleArg, SYSCTL_nINTMASK enInterruptMaskArg, SYSCTL_nPRIORITY enPriorityArg)
 {
     SYSCTL_nERROR enErrorReg;
-    void (*pfIrqVectorHandlerReg) (void);
+    SYSCTL_pvfIRQVectorHandler_t pfIrqVectorHandlerReg;
 
     enErrorReg = (SYSCTL_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) SYSCTL_enMODULE_MAX);
     if(SYSCTL_enERROR_OK == enErrorReg)

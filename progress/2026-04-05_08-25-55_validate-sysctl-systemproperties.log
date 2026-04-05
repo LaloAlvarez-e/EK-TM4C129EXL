@@ -1,0 +1,16 @@
+[2026-04-05 08:25:55] Validated the SYSCTL SYSPROP getter family in the host-test build.
+- Build validation:
+  - Rebuilt `SYSCTL_SystemProperties_Test` from `TM4C129E_DriverLib_Test/build` with `cmake --build . --target SYSCTL_SystemProperties_Test --config Debug`.
+  - The target compiled and linked successfully after CMake regenerated the SYSCTL driver test subtree.
+- Test-discovery note:
+  - An initial `ctest -R SYSCTL_SystemProperties_Test` search returned no tests because GoogleTest discovery registers the individual test names under the `SYSCTL_SystemPropertiesTest.*` prefix rather than the target name.
+  - Confirmed discovery with `ctest -C Debug -N | Select-String "SystemProperties"`.
+- Execution results:
+  - `SYSCTL_SystemProperties_Test.exe --gtest_color=no` passed 3/3 tests.
+  - `ctest -C Debug -R SYSCTL_SystemPropertiesTest --output-on-failure` passed 3/3 discovered entries.
+- Covered tests:
+  - `SYSCTL_SystemPropertiesTest.IsFPUPresentRejectsNullPointer`
+  - `SYSCTL_SystemPropertiesTest.GettersUseExpectedSYSPROPMasksAndShifts`
+  - `SYSCTL_SystemPropertiesTest.IsLDOSleepModeSupportedPropagatesReadError`
+- Status:
+  - The documented SYSCTL capability slice is complete and validated.

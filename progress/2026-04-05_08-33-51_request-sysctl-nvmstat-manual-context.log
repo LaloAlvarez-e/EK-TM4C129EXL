@@ -1,0 +1,4 @@
+[2026-04-05 08:33:51] received request to find TM4C129E reference-manual context for SYSCTL NVMSTAT
+Requested output: chapter and section names, exact register name and offset, confirmed page number if available, FWB bit meaning, and whether NVMSTAT is read-only status or writable control.
+Planned approach: load documentation-reading instructions and reference-manual skill, search workspace for existing extracted manual text or notes, then use direct extraction only if needed.
+Status: complete, proceeding to workspace search.

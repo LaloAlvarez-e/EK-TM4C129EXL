@@ -1,0 +1,9 @@
+[2026-04-05 15:14:20] Extracted searchable text from Documents/tm4c129xnczad.pdf and located the BOOTCFG and USER_REG0-3 register descriptions.
+Manual evidence located:
+- Chapter 8 Internal Memory (TOC page 633).
+- Section 8.2.3.12 Non-Volatile Register Programming-- Flash Memory Resident Registers (page 646) for commit semantics.
+- Section 8.6 Memory Register Descriptions (System Control Offset) (page 700) for the register map.
+- BOOTCFG register description and field definitions on pages 706-709, with the register map entry pointing to page 707.
+- USER_REG0-3 register description on page 710.
+Key extracted facts: BOOTCFG is shown as Type RO and is not written directly; it is programmed indirectly through FMD and committed through FMC, and committed data is not readable until after power cycle. USER_REG0-3 are shown in the map as Type W0, but the register body shows DATA bits as RW before commit, with programming constrained to 1-to-0 transitions and one-time non-volatile commitment behavior.
+Status: manual evidence captured for final synthesis.

@@ -9,3 +9,8 @@
 - If the task is read-only or analysis-only, log it anyway.
 - Do not delete or rewrite previous progress files unless the user explicitly asks for log cleanup.
 - Before finishing a substantial task, ensure the corresponding progress entry was recorded.
+
+## Scope Discipline
+
+- When a broad audit or cleanup finds no additional live matches for the requested bug class, stop widening scope instead of inventing adjacent cleanup work.
+- If the user asks to pause a side task and return to an earlier subsystem or topic, log the stopping point, preserve the conclusion, and immediately resume the earlier requested scope.

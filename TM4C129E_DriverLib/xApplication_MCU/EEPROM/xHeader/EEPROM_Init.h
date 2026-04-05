@@ -54,7 +54,7 @@ EEPROM_nERROR EEPROM__enInit (EEPROM_nMODULE enModuleArg);
  * @code{.c}
  * main()
  * {
- *      EEPROM__vDeInit();
+ *      EEPROM__enDeInit();
  * }
  * @endcode
  * @remark This function could be call after EEPROM Initialization @ref EEPROM__enInit

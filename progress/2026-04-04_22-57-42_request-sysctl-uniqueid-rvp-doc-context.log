@@ -1,0 +1,4 @@
+[2026-04-04 22:57:42] request documented context for SYSCTL UNIQUEID0..3 and RVP
+- User asked for chapter/section names, exact register names, confirmed page numbers if available, short field summaries, and semantic cautions affecting wrapper naming or tests.
+- Planned source order: workspace notes/extracted manual text first, then code cross-check only if relevant.
+- Applicable guidance loaded: .github/skills/tm4c129e-reference-manual/SKILL.md and .github/instructions/tm4c129e-documentation.instructions.md.

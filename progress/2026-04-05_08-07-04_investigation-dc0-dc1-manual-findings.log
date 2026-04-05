@@ -1,0 +1,12 @@
+[2026-04-05 08:07:04] Investigated TM4C129XNCZAD reference-manual context for SYSCTL DC0/DC1 using local extracted manual text and SYSCTL code headers.
+Manual evidence:
+- Chapter 5 System Control, section 5.2.1 Device Identification starts on page 233 and states that device/peripheral capability information is provided by DID0/DID1, Peripheral Present registers, and per-peripheral properties registers at offset 0xFC0.
+- Table 5-11 / section 5.5 shows SYSCTL register map entries DID0 at 0x000 (page 268), DID1 at 0x004 (page 270), then PTBOCTL at 0x038 (page 272), with no DC0/DC1 entries at 0x008/0x010.
+- The only direct DC1 reference found in the TM4C129 manual is in ADC Peripheral Properties (ADCPP) page 1311, where the TS field is described as similar to the legacy DC1 TEMPSNS bit.
+- No direct DC0 register entry or DC0 field table was found in the TM4C129 manual extract.
+Codebase cross-check:
+- Legacy headers remain in TM4C129E_DriverLib under SYSCTL_RegisterDefines_DC.h and SYSCTL_RegisterDefines_DCGC_Legacy.h.
+- No SYSCTL DC0/DC1 offset definitions or include references were found in the SYSCTL register-address layer, which suggests the DC header is legacy/stale rather than an active TM4C129 mapping.
+Conclusion for answer:
+- Present DC0/DC1 as legacy, not documented TM4C129 SYSCTL registers.
+- Recommend wrapper naming/tests avoid treating DC0/DC1 as authoritative TM4C129 hardware registers; use DID0/DID1, SYSPROP, PP* and peripheral property registers instead.

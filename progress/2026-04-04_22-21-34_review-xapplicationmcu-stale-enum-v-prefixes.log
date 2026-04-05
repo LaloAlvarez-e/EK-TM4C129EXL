@@ -1,0 +1,13 @@
+[2026-04-04 22:21:34] Audited xApplication_MCU for enum-return APIs that still carry stale `__v` naming outside the previously reviewed SCB/NVIC wrapper families.
+- Audit scope:
+  - Searched `TM4C129E_DriverLib/xApplication_MCU/**/*.{c,h}` for declarations and definitions whose return type is a module enum family (`*_n...`) while the function name still uses a `__v...` prefix.
+  - Rechecked split-line declarations/definitions with a small source-line window to avoid missing multiline signatures.
+- Findings:
+  - No additional live enum-return `__v...` APIs were found in `xApplication_MCU` after the earlier SYSCTL, TIMER, and ACMP cleanup work.
+  - The only residual stale naming found in this audit pass was comment/example drift in `TM4C129E_DriverLib/xApplication_MCU/EEPROM/xHeader/EEPROM_Init.h`, where the deinit usage example still referenced `EEPROM__vDeInit()` even though the public API is `EEPROM__enDeInit(...)`.
+  - `TM4C129E_DriverLib/xApplication_MCU/Core/MPU/xHeader/MPU_Init.h` and `TM4C129E_DriverLib/xApplication_MCU/Core/MPU/xSource/MPU_Init.c` still use `MPU__vInit(void)`, but that function actually returns `void`, so it is not part of the enum-return stale-prefix problem.
+- Action taken:
+  - Corrected the EEPROM deinit usage example to `EEPROM__enDeInit()`.
+- Audit conclusion:
+  - The enum-return stale-`v` naming sweep is effectively closed across the current `xApplication_MCU` tree.
+  - Any further naming cleanup would be a broader style audit beyond enum-return prefixes rather than a continuation of this specific bug class.

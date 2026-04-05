@@ -1,0 +1,15 @@
+[2026-04-05 08:14:49] Investigated TM4C129XNCZAD manual context for legacy SYSCTL DC0/DC1 register names.
+Request scope: identify chapter/section names, exact register names, confirmed page numbers when available, concise field summary, and naming/test cautions.
+Sources checked:
+- Documents/tm4c129xnczad.pdf via the existing extracted text at TM4C129E_DriverLib_Test/build/manual_extract/tm4c129xnczad.txt.
+- Existing repo progress notes for earlier DID/DC0/DC1 manual lookups.
+- SYSCTL register headers and register-address layer in TM4C129E_DriverLib.
+Confirmed manual evidence:
+- Chapter 5, section 5.2.1 Device Identification states that device/peripheral capability information comes from DID0/DID1, Peripheral Present registers at system-control offset 0x300, and per-peripheral Properties registers at offset 0xFC0.
+- Chapter 5, section 5.5 System Control Register Descriptions and Table 5-11 show DID0 at offset 0x000/page 268 and DID1 at offset 0x004/page 270, with no SYSCTL DC0/DC1 entries in the TM4C129 System Control register map.
+- Chapter 8, section 8.4 Internal Memory Register Descriptions provides FLASHPP.SIZE = 0x01FF => 1024 KB flash on page 675 and SSIZE.SIZE = 0x03FF => 256 KB SRAM on page 677.
+- Chapter 18 ADC register descriptions provide ADCPP on page 1311, ADCPC on page 1313, and ADCCC on page 1314; ADCPP.TS explicitly says it provides similar information to legacy DC1.TEMPSNS.
+Surrounding implementation review:
+- SYSCTL_RegisterDefines_DC.h still carries legacy DC0/DC1 macros.
+- SYSCTL_RegisterAddress.h does not define SYSCTL DC0/DC1 offsets, which is a stale seam and reinforces that DC0/DC1 are not active TM4C129 SYSCTL register-map entries.
+Validation limits: relied on the local extracted manual text rather than re-OCRing the PDF because the extract already contained the needed page-marked passages.

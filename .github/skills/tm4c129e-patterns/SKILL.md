@@ -215,6 +215,8 @@ When making changes in this repo:
 5. Preserve typedef and parameter prefixes.
 6. Avoid collapsing fine-grained modules into large files.
 7. Avoid introducing C++-style abstractions or dynamic patterns not already used in the module.
+8. When an audit or cleanup request is exhausted for the requested bug class, stop there unless the user explicitly asks to broaden scope.
+9. If the user redirects back to an earlier subsystem, preserve the current audit conclusion and resume the earlier subsystem instead of continuing the side task.
 
 ## Progress Logging
 

@@ -1,0 +1,13 @@
+[2026-04-04 22:45:34] Prepared final DID0/DID1 documentation answer from confirmed manual evidence.
+Documentation basis:
+- TM4C129E_DriverLib_Test/build/manual_extract/tm4c129xnczad.txt section 5.2.1 Device Identification.
+- Table 5-11 System Control Register Map entries for DID0 and DID1.
+- DID0 register page excerpt and DID1 register page excerpt from the same extracted manual.
+Answer content to return:
+- Chapter 5 System Control; section 5.2.1 Device Identification.
+- Confirmed pages: Device Identification page 233, DID0 page 268, DID1 page 270, System Control chapter page 232.
+- DID0 fields summarized for firmware getters: VER, CLASS, MAJOR, MINOR.
+- DID1 fields summarized for firmware getters: VER, FAM, PARTNO, PINCOUNT, TEMP, PKG, ROHS, QUAL.
+- Explicit separation between confirmed manual facts and inference.
+Uncertainty retained in final answer: the extracted DID1 TEMP field excerpt shows reset value 0x3 while the listed encoding table in the same excerpt documents 0x0..0x2 only; no semantic meaning for 0x3 will be inferred.
+No source files edited; only progress logs added per repository instructions.
