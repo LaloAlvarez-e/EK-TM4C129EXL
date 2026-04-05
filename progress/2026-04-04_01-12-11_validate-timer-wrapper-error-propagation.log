@@ -1,0 +1,20 @@
+[2026-04-04 01:12:11] Validated the TIMER wrapper error-propagation redesign and the pending SCB caller updates.
+- Diagnostics:
+  - `get_errors` reported no editor diagnostics in the edited TIMER DriverLib headers/sources, new TIMER host-test files, new TIMER CMake files, updated project `main.c` caller files, or the coverage markdown updates.
+  - The scheduler files under MAX7219, DM13A, and Edx_RTOS still report pre-existing IntelliSense/parser errors around GNU `__attribute__((naked))` functions and related assembler syntax; those diagnostics were already present for these GCC-oriented sources and were not introduced by the `SCB__enRegisterIRQVectorHandler(...)` caller update.
+- Focused build validation:
+  - `cmake ..` reconfigured the DriverLib test build successfully after adding the TIMER test targets.
+  - `cmake --build . --config Debug --target TIMER_Init_Test TIMER_InterruptRegisterIRQVector_Test TIMER_InterruptVector_Test` completed successfully from `TM4C129E_DriverLib_Test/build`.
+  - The restored old cast-style null check in `TIMER_InterruptRegisterIRQVector.c` produces the expected MSVC host warning `C4311` about pointer truncation, matching the requested local style while still building successfully.
+- Focused execution validation:
+  - `ctest -C Debug --output-on-failure -R "TIMER_InitTest|TIMER_InterruptRegisterIRQVectorTest|TIMER_InterruptVectorTest"` passed `9/9` tests.
+  - The focused pass covered mapped SCB delegation, SCB error propagation, null-handler suppression, wide-timer to A-vector NVIC mapping, NVIC enable/disable error propagation, ordered TIMER init registration, and first-error early exit during init.
+- Full host-suite validation:
+  - `ctest -C Debug --output-on-failure` rerun through redirected capture completed with `ExitCode=0`.
+  - Final result: `100% tests passed, 0 tests failed out of 322`, total real time `2.25 sec`.
+- Symbol sweep:
+  - Workspace search after the patch found no remaining live code matches for `SCB__vRegisterIRQVectorHandler(...)`, `TIMER__vRegisterIRQVectorHandler(...)`, `TIMER__vEnInterruptVector(...)`, `TIMER__vDisInterruptVector(...)`, or `TIMER__vInit(...)`.
+- Validation conclusion:
+  - TIMER application interrupt registration, vector enable/disable, and init now return and propagate `TIMER_nERROR` consistently.
+  - The pending project scheduler callers now use `SCB__enRegisterIRQVectorHandler(...)`.
+  - Focused and full host validation are green, with the only residual warning being the intentional cast-style host warning in the TIMER IRQ-register wrapper.

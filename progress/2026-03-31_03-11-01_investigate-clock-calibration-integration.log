@@ -1,0 +1,19 @@
+[2026-03-31 03:11:01] Investigated whether SYSCTL clock configuration performs oscillator calibration and whether calibration should be integrated into system-clock setup.
+- Request: verify if the existing code calibrates the oscillator while configuring the system clock, and assess whether calibration can or should be used from the clock-configuration path.
+- Files reviewed:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_InternalOsc.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_SystemClock.h
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/xHeader/SYSCTL_Enum.h
+  - .tmp/tm4c1294_sysexc_ch6/page_017.txt
+  - .tmp/tm4c1294_sysexc_ch6/page_019.txt
+- Findings:
+  - SYSCTL__enSetSystemClock() stages the transition through PIOSC and updates MEMTIM0, but it does not include xHeader/SYSCTL_InternalOsc.h and does not call any PIOSC calibration helper.
+  - PIOSC calibration APIs exist in SYSCTL_InternalOsc.c: set/get user trim, enable user trim, update trim, start automatic calibration, and read RESULT/cT/dT.
+  - Workspace-wide search found no runtime call sites for the PIOSC calibration helpers outside their definitions and the dedicated host tests.
+  - SYSCTL_CONFIG_t contains oscillator source, external crystal, system clock source, and VCO range only; it has no calibration policy fields.
+  - Manual extract states PIOSC can be default-calibrated, user-trimmed, or automatically calibrated with the 32.768-kHz hibernation oscillator, and that automatic calibration trims the PIOSC after completion.
+  - Manual extract also states PLL changes must be performed while the system is temporarily using PIOSC/MOSC, which matches the current staging logic but does not imply calibration must run during every system-clock change.
+- Conclusion:
+  - The repo currently has calibration support for PIOSC as a separate driver capability, but not as part of the generic system-clock configuration flow.
+  - Integrating calibration into clock setup is possible, but it should be conditional and explicit rather than unconditional inside SYSCTL__enSetSystemClock().

@@ -41,7 +41,7 @@
 #define LDO_SPCTL_R_VADJEN_MASK    ((UBase_t) 0x80000000UL)
 #define LDO_SPCTL_R_VADJEN_BIT    (31UL)
 
-#define LDO_SPCTL_VADJEN_MASK    ((UBase_t) 0x000000F01UL)
+#define LDO_SPCTL_VADJEN_MASK    ((UBase_t) 0x00000001UL)
 /*--------*/
 
 /******************************************************************************************
@@ -75,24 +75,23 @@
 #define LDO_DPCTL_R_VADJEN_MASK    ((UBase_t) 0x80000000UL)
 #define LDO_DPCTL_R_VADJEN_BIT    (31UL)
 
-#define LDO_DPCTL_VADJEN_MASK    ((UBase_t) 0x000000F01UL)
+#define LDO_DPCTL_VADJEN_MASK    ((UBase_t) 0x00000001UL)
 /*--------*/
 
 /******************************************************************************************
 ************************************24 LDODPCAL *********************************************
 ******************************************************************************************/
 /*--------*/
-#define LDO_DPCAL_R_NOPLL_MASK    ((UBase_t) 0x000000FFUL)
-#define LDO_DPCAL_R_NOPLL_BIT    (0UL)
-
-#define LDO_DPCAL_NOPLL_MASK    ((UBase_t) 0x000000FFUL)
-/*--------*/
-
-/*--------*/
-#define LDO_DPCAL_R_KHZ30_MASK    ((UBase_t) 0x0000FF00UL)
-#define LDO_DPCAL_R_KHZ30_BIT    (8UL)
+#define LDO_DPCAL_R_KHZ30_MASK    ((UBase_t) 0x000000FFUL)
+#define LDO_DPCAL_R_KHZ30_BIT    (0UL)
 
 #define LDO_DPCAL_KHZ30_MASK    ((UBase_t) 0x000000FFUL)
+/*--------*/
+/*--------*/
+#define LDO_DPCAL_R_NOPLL_MASK    ((UBase_t) 0x0000FF00UL)
+#define LDO_DPCAL_R_NOPLL_BIT    (8UL)
+
+#define LDO_DPCAL_NOPLL_MASK    ((UBase_t) 0x000000FFUL)
 /*--------*/
 
 #endif /* XDRIVER_MCU_DRIVER_HEADER_SYSCTL_SYSCTL_PERIPHERAL_SYSCTL_REGISTER_SYSCTL_REGISTERDEFINES_SYSCTL_REGISTERDEFINES_LDO_H_ */

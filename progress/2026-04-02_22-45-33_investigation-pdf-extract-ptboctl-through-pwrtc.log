@@ -1,0 +1,2 @@
+[2026-04-02 22:45:33] Using the manual TOC and the chapter extract's internal register order to target a broader full-PDF page range likely spanning PTBOCTL through PWRTC.
+Hypothesis under test: chapter extract page_002 aligns to manual page 260, making the needed MISC/RESC/PWRTC pages fall roughly in the 278-281 range of the full PDF. Extracting 272-281 provides a safe window for verification.

@@ -1,0 +1,7 @@
+[2026-04-03 01:58:49] Continuing to the next SYSCTL files after the user patched the LDODPCAL register-definition issue.
+- Request: continue with the next files.
+- Current live-state check confirmed the LDODPCAL macro order is now corrected in both SYSCTL_RegisterDefines_LDO.h and SYSCTL_RegisterDefines_LDODPCAL.h.
+- Gap-tracker next targets remain:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c for broader orchestration coverage beyond the targeted PLL-source and MOSC-availability regressions.
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/SYSCTL_InterruptSource.c for standalone interrupt-source coverage.
+- Next step: inspect both live production files plus existing tests and registration to choose the smallest useful next implementation slice while preserving current user changes.

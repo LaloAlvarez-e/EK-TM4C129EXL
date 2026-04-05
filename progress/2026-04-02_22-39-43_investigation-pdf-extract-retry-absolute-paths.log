@@ -1,0 +1,2 @@
+[2026-04-02 22:39:43] Retried official PDF extraction with absolute paths after Ghostscript failed to resolve the relative manual path.
+Expected outcome: create OCR text for the missing SYSCTL pages that likely contain MISC, RESC, and PWRTC.

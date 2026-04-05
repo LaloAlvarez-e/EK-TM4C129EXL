@@ -27,7 +27,7 @@
 
 #include <xApplication_MCU/TIMER/Intrinsics/xHeader/TIMER_Defines.h>
 
-void TIMER__vEnInterruptVector(TIMER_nMODULE enModule, TIMER_nPRIORITY enTimerPriority);
-void TIMER__vDisInterruptVector(TIMER_nMODULE enModule);
+TIMER_nERROR TIMER__enEnableInterruptVector(TIMER_nMODULE enModuleArg, TIMER_nPRIORITY enTimerPriorityArg);
+TIMER_nERROR TIMER__enDisableInterruptVector(TIMER_nMODULE enModuleArg);
 
 #endif /* XAPPLICATION_MCU_TIMER_INTERRUPT_XHEADER_TIMER_INTERRUPTVECTOR_H_ */

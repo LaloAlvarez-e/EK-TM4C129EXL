@@ -25,40 +25,87 @@
 
 #include <xApplication_MCU/TIMER/Interrupt/TIMER_Interrupt.h>
 
-void TIMER__vInit(void)
+TIMER_nERROR TIMER__enInit(void)
 {
-    void (*pfIrqVectorHandler) (void) = (void (*) (void)) 0UL;
+    void (*pfIrqVectorHandlerReg) (void) = (void (*) (void)) 0UL;
+    TIMER_nERROR enErrorReg = TIMER_enERROR_OK;
 
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_0);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT0A);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_0);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT0B);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_1);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT1A);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_1);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT1B);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_2);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT2A);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_2);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT2B);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_3);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT3A);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_3);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT3B);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_4);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT4A);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_4);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT4B);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_5);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT5A);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_5);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT5B);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_6);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT6A);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_6);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT6B);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_7);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT7A);
-    pfIrqVectorHandler = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_7);
-    TIMER__vRegisterIRQVectorHandler( pfIrqVectorHandler, TIMER_enT7B);
+    pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_0);
+    enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT0A);
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_0);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT0B);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_1);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT1A);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_1);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT1B);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_2);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT2A);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_2);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT2B);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_3);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT3A);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_3);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT3B);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_4);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT4A);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_4);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT4B);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_5);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT5A);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_5);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT5B);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_6);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT6A);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_6);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT6B);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_7);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT7A);
+    }
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        pfIrqVectorHandlerReg = TIMER__pvfGetIRQVectorHandler(TIMER_enSUBMODULE_B, TIMER_enMODULE_NUM_7);
+        enErrorReg = TIMER__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg, TIMER_enT7B);
+    }
+    return (enErrorReg);
 }

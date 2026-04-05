@@ -87,7 +87,7 @@ SYSCTL_nERROR SYSCTL__enSetInterruptSourceStateByNumber(SYSCTL_nMODULE enModuleA
     {
         SYSCTL_Register_t stRegister;
         stRegister.uxShift = uxShiftReg;
-        stRegister.uxMask = 0UL;
+        stRegister.uxMask = SYSCTL_IMC_BOR_MASK;
         stRegister.uptrAddress = SYSCTL_IMC_OFFSET;
         stRegister.uxValue = (UBase_t) enStateArg;
         enErrorReg = SYSCTL__enWriteRegister(enModuleArg, &stRegister);
@@ -137,7 +137,7 @@ SYSCTL_nERROR SYSCTL__enGetInterruptSourceStateByNumber(SYSCTL_nMODULE enModuleA
     {
         SYSCTL_Register_t stRegister;
         stRegister.uxShift = uxShiftReg;
-        stRegister.uxMask = 0UL;
+        stRegister.uxMask = SYSCTL_IMC_BOR_MASK;
         stRegister.uptrAddress = SYSCTL_IMC_OFFSET;
         enErrorReg = SYSCTL__enReadRegister(enModuleArg, &stRegister);
         if(SYSCTL_enERROR_OK == enErrorReg)

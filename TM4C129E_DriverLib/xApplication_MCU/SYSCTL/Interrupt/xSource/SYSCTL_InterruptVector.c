@@ -25,15 +25,15 @@
 
 #include <xApplication_MCU/SYSCTL/Intrinsics/xHeader/SYSCTL_Dependencies.h>
 
-void SYSCTL__vEnInterruptVector(SYSCTL_nPRIORITY enSYSCTLPriority)
+SYSCTL_nERROR SYSCTL__enEnableInterruptVector(SYSCTL_nPRIORITY enSYSCTLPriority)
 {
     NVIC_nVECTOR enVector = NVIC_enVECTOR_SYSCTL;
     enSYSCTLPriority &= 0x7U;
-    NVIC__enEnableVector(NVIC_enMODULE_0, enVector, (NVIC_nPRIORITY) enSYSCTLPriority);
+    return ((SYSCTL_nERROR) NVIC__enEnableVector(NVIC_enMODULE_0, enVector, (NVIC_nPRIORITY) enSYSCTLPriority));
 }
 
-void SYSCTL__vDisInterruptVector(void)
+SYSCTL_nERROR SYSCTL__enDisableInterruptVector(void)
 {
     NVIC_nVECTOR enVector = NVIC_enVECTOR_SYSCTL;
-    NVIC__enDisableVector(NVIC_enMODULE_0, enVector);
+    return ((SYSCTL_nERROR) NVIC__enDisableVector(NVIC_enMODULE_0, enVector));
 }

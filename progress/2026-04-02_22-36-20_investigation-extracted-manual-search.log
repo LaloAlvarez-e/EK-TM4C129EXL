@@ -1,0 +1,4 @@
+[2026-04-02 22:36:20] Investigated extracted manual artifacts for SYSCTL brown-out evidence.
+Loaded TM4C129E reference-manual skill and documentation instructions.
+Used workspace search to locate existing extracted manual text mentioning PWRTC, VDD_UBOR, VDDA_UBOR, BORRIS, BORMIS, and SYSCTL_MISC.
+Initial finding: .tmp extracted SYSCTL and system exception chapter text exists and includes PTBOCTL, RIS, MISC, and BOR overview excerpts. Next step is to resolve the exact PWRTC register page and explicit clear semantics.

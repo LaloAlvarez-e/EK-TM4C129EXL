@@ -1,0 +1,20 @@
+[2026-04-02 22:42:25] captured manual page context for SYSCTL LDO voltage wrappers
+Source manual: Documents/tm4c129xnczad.pdf via Ghostscript txtwrite extraction.
+Relevant manual context found in System Control register descriptions:
+- Register 25, LDO Sleep Power Control (LDOSPCTL), offset 0x1B4: manual page 313.
+  - VADJEN field description on page 313.
+  - VLDO field description and encodings on page 314.
+- Register 26, LDO Sleep Power Calibration (LDOSPCAL), offset 0x1B8: manual page 315.
+  - WITHPLL field description on page 315.
+  - NOPLL field description on page 315.
+- Register 27, LDO Deep-Sleep Power Control (LDODPCTL), offset 0x1BC: manual page 316.
+  - VADJEN field description on page 316.
+  - VLDO field description and encodings on page 317.
+- Register 28, LDO Deep-Sleep Power Calibration (LDODPCAL), offset 0x1C0: manual page 318.
+  - NOPLL field description on page 318.
+  - Manual field name 30KHZ on page 318; repo wrapper uses KHZ30/30KHz naming normalization.
+Code cross-check against TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c:
+- Wrappers are direct register-field wrappers for VLDO, VADJEN, NOPLL, and WITHPLL.
+- The deep-sleep 30 kHz wrapper is also a direct field wrapper, with only identifier normalization from manual 30KHZ to code KHZ30/30KHz.
+- Additional surrounding-code finding: TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Struct/xHeader/SYSCTL_StructRegister.h labels LDO_DPCAL_t bits 15:8 as WITHPLL, which does not match the manual's NOPLL name for LDODPCAL[15:8]. The wrapper source itself still uses the correct raw NOPLL macros.
+Validation status: manual page mapping and wrapper semantics confirmed from extracted manual text and source review.

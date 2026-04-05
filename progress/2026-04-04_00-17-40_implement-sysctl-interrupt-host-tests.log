@@ -1,0 +1,8 @@
+[2026-04-04 00:17:40] Implemented the SYSCTL application interrupt host-test slice.
+- Extended `TM4C129E_DriverLib_Test/support/include/xApplication_MCU/SYSCTL/Intrinsics/xHeader/SYSCTL_Dependencies.h` so the application interrupt sources can compile on the host with the real SYSCTL and NVIC headers plus a host-backed `SYSCTL_MISC_R` alias.
+- Added mirrored CMake wiring under `TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/` for the remaining application-layer SYSCTL targets.
+- Added `support/include/tm4c129e_test/SYSCTL_InterruptRoutineMock.h` and `support/src/SYSCTL_InterruptRoutineMock.cpp` to intercept `SYSCTL__pvfGetIRQSourceHandler(...)` and host the `SYSCTL_MISC_R` storage used by `SYSCTL_InterruptRoutine_Vector.c`.
+- Added `support/include/tm4c129e_test/SYSCTL_InterruptVectorDriverMock.h` and `support/src/SYSCTL_InterruptVectorDriverMock.cpp` to intercept `NVIC__enEnableVector(...)` and `NVIC__enDisableVector(...)` for `SYSCTL_InterruptVector.c`.
+- Added `TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Vector_Test.cpp` with software-path and all-active-source callback/clear coverage.
+- Added `TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/xSource/SYSCTL_InterruptVector_Test.cpp` with SYSCTL vector enable and disable delegation coverage.
+- Updated `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md` and `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md` for the new SYSCTL interrupt routine/vector tests.

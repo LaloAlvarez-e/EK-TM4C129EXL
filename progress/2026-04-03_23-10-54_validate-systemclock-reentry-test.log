@@ -1,0 +1,13 @@
+[2026-04-03 23:10:54] Validated the explicit SystemClock re-entry stale-divisor regression update.
+- Request context: after agreeing with the stale-divisor fix rationale, the user requested host coverage that reflects the re-entry case where a previous PLL divisor may already be programmed.
+- Validation targets:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock_Test.cpp
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+- Validation results:
+  - Edited files reported no diagnostics.
+  - Focused build succeeded for SYSCTL_SystemClock_Test.
+  - Focused executable run succeeded: 9/9 tests passed, including `SetSystemClockPLLReentryIgnoresPreviousDivisorState`.
+  - Compact full host-suite rerun summary from TM4C129E_DriverLib_Test/build reported `Total Tests: 283` and `ExitCode=0`.
+- Coverage outcome:
+  - The existing stale-divisor requirement coverage is now expressed explicitly as a re-entry case that asserts `SYSCTL__enSetSystemClock()` does not read `RSCLKCFG.PLLSYSDIV` while recomputing the next divider from VCO frequency.

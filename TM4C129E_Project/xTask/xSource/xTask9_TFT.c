@@ -56,7 +56,7 @@ void xTask9_TFT(void* pvParams)
 {
     /*Period Handling*/
     const UBase_t uxPeriodTaskMin = 1UL;
-    const UBase_t uxPeriodTaskMax = 60UL;
+    const UBase_t uxPeriodTaskMax = 240UL;
     UBase_t uxLastWakeTime;
     UBase_t uxPeriodTicks;
     UBase_t uxPeriodTicksOld;

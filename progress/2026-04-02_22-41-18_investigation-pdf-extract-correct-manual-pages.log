@@ -1,0 +1,2 @@
+[2026-04-02 22:41:18] Corrected the PDF extraction target to actual manual pages 265-269 after realizing the prior extraction used literal document pages 20-24.
+Objective: capture the SYSCTL MISC, RESC, and PWRTC register descriptions that follow the previously extracted SYSCTL chapter slice.

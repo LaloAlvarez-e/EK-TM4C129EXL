@@ -1,0 +1,7 @@
+[2026-04-02 22:41:20] located System Control manual chapter range from front-matter extraction
+Used Ghostscript txtwrite against Documents/tm4c129xnczad.pdf pages 1-80 and searched for System Control chapter references.
+Confirmed relevant table-of-contents context:
+- System Control chapter begins at manual page 232.
+- System Control Register Descriptions begin at manual page 267.
+This narrows the likely search band for SYSCTL LDO registers used by SYSCTL_LDOVoltage.c.
+Status: complete, proceeding to direct register-name lookup within the System Control register-description pages.

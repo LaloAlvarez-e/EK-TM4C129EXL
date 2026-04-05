@@ -1,0 +1,24 @@
+[2026-04-02 21:57:44] Validated the SYSCTL SystemClock PIOSC PLL-source defect fix and recorded the resulting coverage state.
+- Request context: explain the previously logged SystemClock defect and fix it before proceeding to the next uncovered SYSCTL wrapper targets.
+- Production change completed:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c
+  - Removed the invalid MOSC-state dependency from the `RSCLKCFG.PLLSRC = PIOSC` branch in SYSCTL__enGetVCOClockFrequency().
+  - The PIOSC PLL-reference path now reads the documented PIOSC frequency directly instead of zeroing the PLL input when MOSC is disabled.
+- Host regression coverage added:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt
+  - The new target validates null-pointer rejection, the PIOSC-based VCO calculation without MOSC dependence, and PLL output division through `RSCLKCFG.PLLSYSDIV + 1`.
+- Documentation updated:
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+  - SystemClock coverage is recorded as targeted `in-progress` coverage, not full file closure, because broader orchestration paths remain untested.
+- Validation results:
+  - Focused build for SYSCTL_SystemClock_Test completed successfully.
+  - SYSCTL_SystemClock_Test.exe: 3/3 tests passed.
+  - Full suite validation completed successfully: 254/254 tests passed, 0 failed.
+  - XML-only OpenCppCoverage refresh updated TM4C129E_DriverLib_Test/coverage/opencppcoverage/coverage.xml.
+  - Refreshed measured coverage snapshot: lines-covered=2415, lines-valid=2978, line-rate=0.81094694425789116.
+- Follow-on assessment before closing this slice:
+  - The specific PLLSRC=PIOSC defect is fixed and regression-tested.
+  - SYSCTL_SystemClock.c still has broader uncovered flows, especially wider source-selection/orchestration behavior and SYSCTL__enSetSystemClock() sequencing.
+  - The next recommended SYSCTL wrapper targets remain SYSCTL_LDOVoltage.c and SYSCTL_Voltage.c.

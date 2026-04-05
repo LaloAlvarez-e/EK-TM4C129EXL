@@ -1,0 +1,27 @@
+[2026-04-04 00:47:50] Reviewed the SYSCTL application interrupt wrappers that currently return void and suppress lower-layer error codes.
+- Request context:
+  - revert the recent direct function-pointer null-check style and keep the old `(Base_t)`-style cast convention in the SYSCTL IRQ-register wrapper
+  - verify whether SYSCTL `__v...` wrappers that call enum-returning SCB/NVIC helpers should instead return `SYSCTL_nERROR`
+  - review all SYSCTL functions that require this change
+- Files reviewed in this slice:
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xHeader/SYSCTL_InterruptRegisterIRQVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/xSource/SYSCTL_InterruptVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/xHeader/SYSCTL_InterruptVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/xSource/SYSCTL_Init.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/xHeader/SYSCTL_Enum.h
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SYSTICK/Interrupt/InterruptRegister/xSource/SYSTICK_InterruptRegisterIRQVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/SYSEXC/Interrupt/InterruptRegister/xSource/SYSEXC_InterruptRegisterIRQVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/SYSEXC/Interrupt/xSource/SYSEXC_InterruptVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/SYSEXC/xSource/SYSEXC_Init.c
+- Findings before implementation:
+  - `SYSCTL__vRegisterIRQVectorHandler(...)` calls `SCB__enRegisterIRQVectorHandler(...)` and discards its `SCB_nERROR` result.
+  - `SYSCTL__vEnInterruptVector(...)` and `SYSCTL__vDisInterruptVector(...)` call `NVIC__enEnableVector(...)` and `NVIC__enDisableVector(...)` and discard their `NVIC_nERROR` results.
+  - `SYSCTL__enInit(...)` currently cannot propagate IRQ-registration or NVIC-vector failures because those wrapper signatures are `void`.
+  - Comparable application layers already use enum-returning wrappers with the expected `__en...` naming, especially SYSEXC and SYSTICK.
+  - Inside the current SYSCTL application tree, the wrappers that require this change are the IRQ-register helper plus the two fixed-vector helpers; no additional SYSCTL `void` wrappers that discard enum-returning lower-layer results were identified in this pass.
+- Planned implementation:
+  - convert the SYSCTL IRQ-register wrapper to `SYSCTL__enRegisterIRQVectorHandler(...)`
+  - convert the SYSCTL fixed-vector helpers to `SYSCTL__enEnableInterruptVector(...)` and `SYSCTL__enDisableInterruptVector(...)`
+  - update `SYSCTL__enInit(...)` to propagate those wrapper errors in order
+  - update the SYSCTL host mocks and focused tests so the new error-return contract is validated explicitly

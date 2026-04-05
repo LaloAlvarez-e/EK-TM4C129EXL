@@ -1,0 +1,3 @@
+[2026-04-02 22:42:37] Cross-checking page-number alignment between the existing chapter-specific SYSCTL extract and direct full-PDF extraction.
+Reason: the first direct full-PDF extraction that targeted manual pages 265-269 did not land on the expected MISC/RESC/PWRTC register descriptions.
+Next step: derive the actual offset or chapter-page mapping before extracting more PDF pages.

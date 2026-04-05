@@ -1,0 +1,4 @@
+[2026-04-02 22:35:41] Request logged for read-only SYSCTL brown-out manual verification.
+User question: determine meaning and clear semantics of PWRTC.VDD_UBOR and PWRTC.VDDA_UBOR, whether PWRTC writes clear BOR status, whether SYSCTL_MISC clears it instead, and whether VDD/VDDA brown-out causes can be cleared independently.
+Planned sources: extracted TM4C1294/TM4C129E manual text under .tmp, official PDF fallback if needed, and production code cross-check in SYSCTL_Voltage.c and SYSCTL_InterruptSource.c.
+Validation limit: read-only research only; no production code changes.

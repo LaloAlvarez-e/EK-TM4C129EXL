@@ -1,0 +1,38 @@
+[2026-04-04 01:10:51] Implemented the TIMER application-wrapper error-propagation redesign and the pending project caller updates.
+- Production DriverLib files updated:
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/InterruptRegister/xHeader/TIMER_InterruptRegisterIRQVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/InterruptRegister/xSource/TIMER_InterruptRegisterIRQVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/xHeader/TIMER_InterruptVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/xSource/TIMER_InterruptVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/xHeader/TIMER_Init.h
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/xSource/TIMER_Init.c
+- Project caller files updated:
+  - TM4C129E_Project/main.c
+  - TM4C129E_Bootloader/main.c
+  - TM4C129E_DM13A/main.c
+  - TM4C129E_Edx_RTOS/main.c
+  - TM4C129E_MAX7219/main.c
+  - TM4C129E_MAX7219/xOS/Adapt/xSource/OS_Adapt_Scheduler.c
+  - TM4C129E_DM13A/xOS/Adapt/xSource/OS_Adapt_Scheduler.c
+  - TM4C129E_Edx_RTOS/xOS/Adapt/xSource/OS_Adapt_Scheduler.c
+- Host-test scaffolding added:
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/TIMER_InterruptRegisterMock.h
+  - TM4C129E_DriverLib_Test/support/src/TIMER_InterruptRegisterMock.cpp
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/TIMER_InterruptVectorDriverMock.h
+  - TM4C129E_DriverLib_Test/support/src/TIMER_InterruptVectorDriverMock.cpp
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/TIMER_InitDriverMock.h
+  - TM4C129E_DriverLib_Test/support/src/TIMER_InitDriverMock.cpp
+  - TM4C129E_DriverLib_Test/xApplication_MCU/TIMER/** CMakeLists and focused test targets for TIMER init, IRQ-vector registration, and vector enable/disable
+- Coverage/documentation updates:
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+- Change summary:
+  - Replaced `TIMER__vRegisterIRQVectorHandler(...)` with `TIMER__enRegisterIRQVectorHandler(...)` returning `TIMER_nERROR` and propagating the selected SCB registration result.
+  - Replaced `TIMER__vEnInterruptVector(...)` and `TIMER__vDisInterruptVector(...)` with `TIMER__enEnableInterruptVector(...)` and `TIMER__enDisableInterruptVector(...)`, both returning the delegated NVIC status as `TIMER_nERROR`.
+  - Replaced `TIMER__vInit(void)` with `TIMER__enInit(void)` so the ordered TIMER0A..TIMER7B registration sequence now stops and propagates the first IRQ-registration failure.
+  - Updated active and commented TIMER caller sites in the project variants to the new `TIMER__en...` names.
+  - Replaced the remaining obsolete `SCB__vRegisterIRQVectorHandler(...)` project callers with `SCB__enRegisterIRQVectorHandler(...)` in the scheduler variants that still referenced the removed symbol.
+- Post-implementation audit:
+  - The TIMER application interrupt register/vector wrappers now match the enum-returning application-wrapper pattern already used by SYSCTL, SYSEXC, SYSTICK, and other modules that delegate into SCB or NVIC.
+  - The higher-level TIMER init helper was included in the redesign because leaving it `void` would still hide IRQ-registration failures after the lower wrapper conversion.
+  - The only remaining references to the old TIMER and SCB wrapper names should now be historical notes in progress logs rather than live code.

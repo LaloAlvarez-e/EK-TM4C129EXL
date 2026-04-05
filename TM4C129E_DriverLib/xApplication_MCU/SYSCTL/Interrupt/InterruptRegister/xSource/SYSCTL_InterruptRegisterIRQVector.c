@@ -26,11 +26,19 @@
 #include <xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/SYSCTL_InterruptRoutine.h>
 #include <xApplication_MCU/SYSCTL/Intrinsics/xHeader/SYSCTL_Dependencies.h>
 
-void SYSCTL__vRegisterIRQVectorHandler(void (*pfIrqVectorHandler) (void))
+SYSCTL_nERROR SYSCTL__enRegisterIRQVectorHandler(SYSCTL_pvfIRQVectorHandler_t pfIrqVectorHandlerArg)
 {
     SCB_nVECISR enVector = SCB_enVECISR_SYSCTL;
-    if(0UL != (UBase_t) pfIrqVectorHandler)
+    SYSCTL_nERROR enErrorReg;
+
+    enErrorReg = SYSCTL_enERROR_OK;
+    if(0UL != (UBase_t) pfIrqVectorHandlerArg)
     {
-        SCB__enRegisterIRQVectorHandler(SCB_enMODULE_0, enVector, pfIrqVectorHandler, SYSCTL__pvfGetIRQVectorHandlerPointer());
+        enErrorReg = (SYSCTL_nERROR) SCB__enRegisterIRQVectorHandler(SCB_enMODULE_0,
+                                                                     enVector,
+                                                                     pfIrqVectorHandlerArg,
+                                                                     SYSCTL__pvfGetIRQVectorHandlerPointer());
     }
+
+    return (enErrorReg);
 }

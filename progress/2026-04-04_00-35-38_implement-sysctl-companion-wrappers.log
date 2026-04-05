@@ -1,0 +1,25 @@
+[2026-04-04 00:35:38] Implemented the next two SYSCTL companion wrapper steps and recorded the post-edit audit.
+- Request context: continue with the next two ordered SYSCTL steps after closing the application interrupt routine/vector slice.
+- Production sources covered in this slice:
+	- TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine.c
+	- TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c
+- Production update completed:
+	- TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c
+	- Replaced the host-unsafe null check `0UL != (UBase_t) pfIrqVectorHandler` with a direct function-pointer null comparison so the wrapper no longer truncates function pointers in the 64-bit host harness.
+- Host support and test additions:
+	- TM4C129E_DriverLib_Test/support/include/xApplication_MCU/SYSCTL/Intrinsics/xHeader/SYSCTL_Dependencies.h
+	- TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_InterruptRegisterMock.h
+	- TM4C129E_DriverLib_Test/support/src/SYSCTL_InterruptRegisterMock.cpp
+	- TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/CMakeLists.txt
+	- TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/CMakeLists.txt
+	- TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Test.cpp
+	- TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/CMakeLists.txt
+	- TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/CMakeLists.txt
+	- TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector_Test.cpp
+- Documentation updates completed:
+	- TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md
+	- TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+- Post-implementation companion-path review:
+	- The current `xApplication_MCU/SYSCTL` production inventory contains five `.c` files total and all five are now host-covered after this slice.
+	- No additional missing companion path remains inside the current `xApplication_MCU/SYSCTL` tree; the gap tracker should move to a fresh Chapter 5 SYSCTL audit rather than another residual application-wrapper target.
+	- A similar function-pointer-to-`UBase_t` null-check pattern still exists outside this SYSCTL slice in `xApplication_MCU/TIMER/Interrupt/InterruptRegister/xSource/TIMER_InterruptRegisterIRQVector.c`, `xApplication_MCU/Core/SCB/xSource/SCB_RegisterIRQVector.c`, and `xDriver_MCU/Common/xSource/MCU_RegisterSourceIRQ.c`; those follow-on portability cleanups were not changed here.

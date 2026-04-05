@@ -98,7 +98,7 @@ int main(void)
     EEPROM__enInit(EEPROM_enMODULE_0);
     DMA__enInit(DMA_enMODULE_0);
     GPIO__enInit();
-    TIMER__vInit();
+    TIMER__enInit();
     ADC__enInit(ADC_enMODULE_0);
     ADC__enInit(ADC_enMODULE_1);
     UART__enInit(UART_enMODULE_0);

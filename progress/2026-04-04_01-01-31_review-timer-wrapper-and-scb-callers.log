@@ -1,0 +1,28 @@
+[2026-04-04 01:01:31] Reviewed the TIMER application-layer wrapper outliers and the remaining direct callers of the obsolete SCB IRQ-vector registration symbol.
+- User request addressed in this review:
+  - Proceed with the same enum-return cleanup for TIMER.
+  - Sweep the remaining pending uses related to `SCB__vRegisterIRQVectorHandler`.
+- Files reviewed during scope definition:
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/InterruptRegister/xHeader/TIMER_InterruptRegisterIRQVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/InterruptRegister/xSource/TIMER_InterruptRegisterIRQVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/xHeader/TIMER_InterruptVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/Interrupt/xSource/TIMER_InterruptVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/xHeader/TIMER_Init.h
+  - TM4C129E_DriverLib/xApplication_MCU/TIMER/xSource/TIMER_Init.c
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SCB/xHeader/SCB_RegisterIRQVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/Core/SCB/xSource/SCB_RegisterIRQVector.c
+  - TM4C129E_MAX7219/xOS/Adapt/xSource/OS_Adapt_Scheduler.c
+  - TM4C129E_DM13A/xOS/Adapt/xSource/OS_Adapt_Scheduler.c
+  - TM4C129E_Edx_RTOS/xOS/Adapt/xSource/OS_Adapt_Scheduler.c
+- Findings:
+  - `TIMER__vRegisterIRQVectorHandler(...)` wraps `SCB__enRegisterIRQVectorHandler(...)` but discards the `SCB_nERROR` status.
+  - `TIMER__vEnInterruptVector(...)` and `TIMER__vDisInterruptVector(...)` wrap `NVIC__enEnableVector(...)` and `NVIC__enDisableVector(...)` but discard the `NVIC_nERROR` result.
+  - `TIMER__vInit(...)` is the higher-level composed caller of the TIMER IRQ-vector registration wrapper, so leaving it `void` would still hide registration failures after the lower wrapper is corrected.
+  - Workspace search found three remaining project call sites still using the obsolete `SCB__vRegisterIRQVectorHandler(...)` symbol in scheduler variants under MAX7219, DM13A, and Edx_RTOS.
+  - Workspace search also found project main files still using `TIMER__vInit(...)` and `TIMER__vEnInterruptVector(...)`, so any API rename must include those call sites.
+  - No existing TIMER host-test targets were found in `TM4C129E_DriverLib_Test`, so this slice requires new focused test targets and matching coverage/doc entries instead of incremental edits to an existing TIMER harness.
+- Planned implementation:
+  - Convert the TIMER interrupt register/vector wrappers to enum-returning APIs and propagate the results from `TIMER__enInit(...)`.
+  - Update the project call sites that still reference the old TIMER and SCB wrapper names.
+  - Add focused host tests plus the minimal mock seams needed for TIMER interrupt register, interrupt vector, and init behavior.
+  - Update requirement traceability and the gap tracker for the new TIMER coverage slice.

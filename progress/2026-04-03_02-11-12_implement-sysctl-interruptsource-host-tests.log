@@ -1,0 +1,10 @@
+[2026-04-03 02:11:12] Implementing the SYSCTL interrupt-source host-test slice.
+- Production source under test: TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/SYSCTL_InterruptSource.c.
+- Planned production change: replace the invalid zero logical mask in the IMC by-number state setter/getter with the documented single-bit logical mask so the generic register primitives preserve the selected source bit.
+- Planned test scaffolding:
+  - create mirrored host-test path TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/
+  - register a standalone SYSCTL_InterruptSource_Test target in the SYSCTL Intrinsics CMake tree
+  - link both SYSCTL_PrimitivesMock.cpp and SYSCTL_MCURegisterAccessMock.cpp because this source mixes SYSCTL primitive accesses with direct MCU__enCheckParams validation
+- Planned documentation updates:
+  - add requirement traceability rows for the new SYSCTL interrupt-source tests
+  - mark SYSCTL_InterruptSource.c as covered and advance the next-target list in the gap tracker.

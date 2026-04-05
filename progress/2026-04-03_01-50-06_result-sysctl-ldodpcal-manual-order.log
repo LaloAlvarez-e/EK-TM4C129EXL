@@ -1,0 +1,11 @@
+[2026-04-03 01:50:06] Captured direct manual evidence for SYSCTL LDODPCAL field order and compared it to repo definitions.
+Manual source: Documents/tm4c129xnczad.pdf, System Control Register 28, page 318, extracted directly with Ghostscript txtwrite.
+Direct page text confirmed:
+- Register title: "Register 28: LDO Deep-Sleep Power Calibration (LDODPCAL), offset 0x1C0"
+- Field table: "15:8 NOPLL RO 0x12 Deep-Sleep without PLL"
+- Field table: "7:0 30KHZ RO 0x12 Deep-Sleep with IOSC"
+Code cross-check:
+- TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_LDODPCAL.h defines NOPLL at bit 0 and KHZ30 at bit 8.
+- TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Struct/xHeader/SYSCTL_StructRegister.h defines LDO_DPCAL_t as KHZ30 :8 followed by NOPLL :8, which matches the manual order for a low-to-high C bitfield layout.
+- TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Struct/xHeader/SYSCTL_StructRegister_Bitbanding.h defines LDO_BITBANDING_DPCAL_t as KHZ30[8] followed by NOPLL[8], which likewise matches the manual bit order.
+Conclusion: the manual places 30KHZ/KHZ30 in bits 7:0 and NOPLL in bits 15:8. The current raw macros in SYSCTL_RegisterDefines_LDODPCAL.h are reversed relative to the manual, while the current struct and bitbanding member order is correct.

@@ -27,6 +27,6 @@
 
 #include <xApplication_MCU/TIMER/Intrinsics/xHeader/TIMER_Defines.h>
 
-void TIMER__vRegisterIRQVectorHandler(void (*pfIrqVectorHandler) (void),TIMER_nMODULE enModule);
+TIMER_nERROR TIMER__enRegisterIRQVectorHandler(void (*pfIrqVectorHandlerArg) (void), TIMER_nMODULE enModuleArg);
 
 #endif /* XAPPLICATION_MCU_TIMER_INTERRUPT_INTERRUPTREGISTER_XHEADER_TIMER_INTERRUPTREGISTERIRQVECTOR_H_ */

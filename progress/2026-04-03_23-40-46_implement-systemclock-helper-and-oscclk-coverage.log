@@ -1,0 +1,17 @@
+[2026-04-03 23:40:46] Implemented the remaining SYSCTL_SystemClock host-test coverage before pivoting to SYSCTL init.
+- File edited:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock_Test.cpp
+- Added helper coverage for public frequency APIs:
+  - nominal PIOSC/MOSC/LFIOSC frequency helpers
+  - alternate clock source selection and invalid-source rejection
+  - non-MOSC oscillator source selection and divisor handling
+  - system clock delegation across OSCCLK and PLLCLK
+  - output clock delegation across PIOSC and SYSCLK plus invalid-source rejection
+- Added setter coverage for the remaining SystemClock orchestration branches:
+  - invalid PLL-source rejection
+  - invalid MOSC crystal-range rejection
+  - successful OSCCLK path using PIOSC
+  - successful OSCCLK path using MOSC after power-up
+- Added a local reusable helper for the safe PIOSC staging sequence to keep the new orchestration expectations consistent.
+- Adjacent implementation review:
+  - The board-targeted hard-coded MOSC nominal frequency remains consistent with EK-TM4C129EXL's 25 MHz crystal, so the new MOSC success-path coverage stays on the 25 MHz board path instead of opening a new production change here.

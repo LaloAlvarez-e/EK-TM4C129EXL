@@ -1,0 +1,20 @@
+[2026-04-02 23:40:42] Verified the manual basis for the SYSCTL LDO and brown-out voltage slice before finalizing production and test changes.
+- Request context: continue with point 1 on SYSCTL_LDOVoltage.c and SYSCTL_Voltage.c while checking for adjacent production defects.
+- Documentation reviewed:
+  - Documents/tm4c129xnczad.pdf via the TM4C129E Reference Manual Analyst
+  - .tmp/tm4c1294_sysexc_ch6/page_006.txt
+  - .tmp/tm4c1294_sysctl_probe_272_281/page_001.txt
+  - .tmp/tm4c1294_sysctl_probe_272_281/page_007.txt
+  - .tmp/tm4c1294_sysctl_probe_272_281/page_008.txt
+  - .tmp/tm4c1294_sysctl_probe_282_286/page_001.txt
+  - .tmp/tm4c1294_sysctl_probe_282_286/page_002.txt
+- Manual findings:
+  - PTBOCTL VDD_UBOR and VDDA_UBOR are the brown-out event-action fields.
+  - PWRTC.VDD_UBOR and PWRTC.VDDA_UBOR are per-rail brown-out cause/status bits and the PWRTC register is RW1C, so writing those bits back to PWRTC is the correct clear path for the per-rail cause latches.
+  - The combined BOR interrupt clear path remains SYSCTL_MISC.BOR, which matches the existing SYSCTL_InterruptSource.c implementation.
+  - LDOSPCTL, LDOSPCAL, LDODPCTL, and LDODPCAL are documented in System Control Register 25 through Register 28 on pages 313 through 318 and the wrappers in SYSCTL_LDOVoltage.c are direct register-field wrappers.
+- Additional consistency finding:
+  - SYSCTL peripheral struct definitions for LDODPCAL label the fields inconsistently with the manual and the raw register macros; the deep-sleep calibration register should expose NOPLL and KHZ30, not WITHPLL.
+- Decision:
+  - keep SYSCTL_Voltage.c brown-out clear helpers intact
+  - fix the real LDO production inconsistencies in the register-family definitions while adding focused host tests for SYSCTL_LDOVoltage.c and SYSCTL_Voltage.c.

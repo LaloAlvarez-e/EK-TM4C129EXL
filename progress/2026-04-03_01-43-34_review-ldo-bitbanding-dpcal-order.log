@@ -1,0 +1,3 @@
+[2026-04-03 01:43:34] Review request for LDO_BITBANDING_DPCAL_t field order after a user modification.
+- Scope: verify whether the current bitbanding struct order in SYSCTL_StructRegister_Bitbanding.h matches the raw register defines, the non-bitbanding SYSCTL struct layout, and the TM4C129E reference manual basis.
+- Files to inspect: SYSCTL_StructRegister_Bitbanding.h, SYSCTL_StructRegister.h, SYSCTL_RegisterDefines_LDODPCAL.h, and relevant prior progress/manual notes if needed.

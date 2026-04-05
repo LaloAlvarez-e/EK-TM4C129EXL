@@ -1,0 +1,3 @@
+[2026-04-02 22:37:08] Continued register-level manual review for SYSCTL brown-out handling.
+Read extracted SYSCTL chapter pages around RIS and adjacent registers to verify the documented clear path.
+Confirmed from RIS text that BORRIS is cleared by writing 1 to BORMIS/BORMISC clear bit in MISC; next check is PWRTC and RESC to determine whether per-supply cause bits are read-only and whether separate clear support exists.

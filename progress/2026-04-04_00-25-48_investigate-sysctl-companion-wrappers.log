@@ -1,0 +1,18 @@
+[2026-04-04 00:25:48] Investigated the next two SYSCTL companion wrapper steps after closing the application interrupt routine/vector slice.
+- Request: continue with the next two steps in order.
+- Ordered scope selected from the current SYSCTL gap tracker:
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine.c
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c
+- Live-state checks completed before editing:
+  - Re-read the current test mock headers `TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_InterruptRoutineMock.h` and `TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_InterruptVectorDriverMock.h` because the user indicated they may have changed.
+  - Re-read the current production companions plus the SYSEXC analog implementation files.
+  - Re-read the production and host `SYSCTL_Dependencies.h` overlays to confirm the current transitive include requirements.
+- Findings:
+  - `SYSCTL_InterruptRoutine.c` is a tiny getter/pointer wrapper around the installed vector-handler storage and does not show a new production defect.
+  - `SYSCTL_InterruptRegisterIRQVector.c` is a thin SCB registration wrapper and does not show a new production defect.
+  - The current host SYSCTL dependency overlay lacks the SCB include that the register-wrapper source now needs.
+  - The cleanest host-test pattern is to compile the original SYSCTL companion sources directly and add one narrow bridge for `SCB__enRegisterIRQVectorHandler(...)`, rather than modifying production code or faking the SYSCTL vector-pointer getter.
+- Planned implementation:
+  - add a focused `SYSCTL_InterruptRoutine_Test` target that compiles the original companion routine source with the existing SYSCTL interrupt routine/vector seam support
+  - add a focused `SYSCTL_InterruptRegisterIRQVector_Test` target that compiles the original register-wrapper source plus the original SYSCTL routine companion source and uses a narrow SCB registration mock bridge
+  - update SYSCTL interrupt CMake wiring, requirement traceability, gap tracker, and then run focused plus full host validation

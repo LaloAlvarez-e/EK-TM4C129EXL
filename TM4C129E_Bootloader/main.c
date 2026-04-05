@@ -87,7 +87,7 @@ uint32_t main(void)
     SYSCTL__vEnRunModePeripheral(SYSCTL_enUART0);
 
     GPIO__vInit();
-    TIMER__vInit();
+    TIMER__enInit();
     UART__vInit();
 
     GPIO__enSetDigitalConfig(GPIO_enGPIOF2, GPIO_enCONFIG_OUTPUT_2MA_PUSHPULL);
@@ -102,7 +102,7 @@ uint32_t main(void)
 
     TIMER__vRegisterIRQSourceHandler(&Led2ON, TIMER_enT0W, TIMER_enINTERRUPT_TIMEOUT);
     TIMER__vSetClockSource(TIMER_enT0W, TIMER_enCLOCK_SYSCLK);
-    TIMER__vEnInterruptVector(TIMER_enT0W, (TIMER_nPRIORITY) NVIC_enPriority_TIMER0A);
+    TIMER__enEnableInterruptVector(TIMER_enT0W, (TIMER_nPRIORITY) NVIC_enPriority_TIMER0A);
     TIMER__vEnInterruptSource(TIMER_enT0W, TIMER_enINT_TIMEOUT);
     TIMER__vSetStall(TIMER_enT0W, TIMER_enSTALL_FREEZE);
     TIMER__enSetMode_ReloadMatch(TIMER_enT0W, TIMER_enMODE_PERIODIC_WIDE_DOWN,

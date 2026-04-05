@@ -1,0 +1,2 @@
+[2026-04-02 22:46:06] Searching the broader full-PDF SYSCTL extract for PTBOCTL, RIS, MISC, RESC, PWRTC, and BOR clear semantics.
+Goal: jump directly to the relevant OCR text instead of reading the entire extracted window linearly.

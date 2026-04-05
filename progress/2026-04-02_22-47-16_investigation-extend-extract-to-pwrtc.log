@@ -1,0 +1,2 @@
+[2026-04-02 22:47:16] Extended the official SYSCTL PDF extraction forward because page 279 confirmed MISC, pages 280-281 are RESC, and the PWRTC definition is expected on the next pages.
+Objective: capture RESC BOR clearing text and the full PWRTC field descriptions.

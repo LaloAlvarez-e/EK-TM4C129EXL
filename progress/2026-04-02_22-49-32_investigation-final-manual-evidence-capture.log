@@ -1,0 +1,3 @@
+[2026-04-02 22:49:32] Capturing the exact final manual evidence lines for MISC, RESC, and PWRTC.
+Findings so far: PWRTC.VDD_UBOR and PWRTC.VDDA_UBOR are documented as RW1C under-voltage BOR status bits; MISC.BORMIS is documented RW1C and explicitly clears BORRIS; RESC.BOR aggregates both VDD and VDDA BOR reset causes.
+Remaining check: pull the descriptive PWRTC lines that state the register records detailed cause information independent of the programmed action in PTBOCTL.

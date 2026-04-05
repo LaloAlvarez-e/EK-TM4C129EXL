@@ -1,0 +1,3 @@
+[2026-04-02 22:38:06] Switched to text search across extracted .tmp manual text because OCR page headers and filenames are not sufficient to locate PWRTC reliably by sequence alone.
+Search targets: Power-Temperature Cause (PWRTC), VDD_UBOR, VDDA_UBOR, BORMIS/BORMTS, and explicit clear phrases.
+Expected outcome: exact register-definition excerpts and clear semantics for SYSCTL brown-out status versus interrupt status.

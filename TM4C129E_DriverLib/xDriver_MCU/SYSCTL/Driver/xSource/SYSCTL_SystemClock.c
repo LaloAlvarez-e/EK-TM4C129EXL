@@ -29,6 +29,7 @@
 #define SYSCTL_uxLFIOSCFrequency (33000UL)
 
 static SYSCTL_nERROR SYSCTL_enGetMOSCFrequencyGeneric(SYSCTL_nXTAL enXtalArg, UBase_t* puxXtalFrequencyArg);
+static SYSCTL_nERROR SYSCTL_enGetMOSCAvailableFrequency(SYSCTL_nMODULE enModuleArg, UBase_t* puxFrequencyArg);
 static SYSCTL_nERROR SYSCTL_enGetDivValueByVCOAndXTAL(SYSCTL_nVCO enVcoRangeArg, SYSCTL_nXTAL enXtalArg, UBase_t uxRequestArg, UBase_t* puxResponseArg);
 
 static SYSCTL_nERROR SYSCTL_enGetDivValueByVCOAndXTAL(SYSCTL_nVCO enVcoRangeArg, SYSCTL_nXTAL enXtalArg, UBase_t uxRequestArg, UBase_t* puxResponseArg)
@@ -158,6 +159,39 @@ SYSCTL_nERROR SYSCTL__enGetMOSCFrequency(UBase_t* puxFrequencyArg)
     return (enErrorReg);
 }
 
+static SYSCTL_nERROR SYSCTL_enGetMOSCAvailableFrequency(SYSCTL_nMODULE enModuleArg, UBase_t* puxFrequencyArg)
+{
+    SYSCTL_nERROR enErrorReg;
+    SYSCTL_nSTATE enMOSCStateReg;
+    SYSCTL_nSTATE enMOSCPowerStateReg;
+    enErrorReg = (0UL == (uintptr_t) puxFrequencyArg) ? SYSCTL_enERROR_POINTER : SYSCTL_enERROR_OK;
+
+    enMOSCStateReg = SYSCTL_enSTATE_DIS;
+    enMOSCPowerStateReg = SYSCTL_enSTATE_DIS;
+    if(SYSCTL_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = SYSCTL__enGetMOSCState(enModuleArg, &enMOSCStateReg);
+    }
+
+    if(SYSCTL_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = SYSCTL__enGetMOSCPowerState(enModuleArg, &enMOSCPowerStateReg);
+    }
+
+    if(SYSCTL_enERROR_OK == enErrorReg)
+    {
+        if((SYSCTL_enSTATE_ENA == enMOSCStateReg) && (SYSCTL_enSTATE_ENA == enMOSCPowerStateReg))
+        {
+            enErrorReg = SYSCTL__enGetMOSCFrequency(puxFrequencyArg);
+        }
+        else
+        {
+            *puxFrequencyArg = 0UL;
+        }
+    }
+    return (enErrorReg);
+}
+
 SYSCTL_nERROR SYSCTL__enGetLFIOSCFrequency(UBase_t* puxFrequencyArg)
 {
     SYSCTL_nERROR enErrorReg;
@@ -186,23 +220,11 @@ SYSCTL_nERROR SYSCTL__enGetVCOClockFrequency(SYSCTL_nMODULE enModuleArg, UBase_t
     {
         if(SYSCTL_enOSCCLK_SRC_PIOSC == enPLLClockSourceReg)
         {
-            SYSCTL_nSTATE enMOSCState = SYSCTL_enSTATE_DIS;
-            enErrorReg = SYSCTL__enGetMOSCState(enModuleArg, &enMOSCState);
-            if(SYSCTL_enERROR_OK == enErrorReg)
-            {
-                if(SYSCTL_enSTATE_DIS == enMOSCState)
-                {
-                    uxFrequencyClockReg = 0UL;
-                }
-                else
-                {
-                    enErrorReg = SYSCTL__enGetPIOSCFrequency(&uxFrequencyClockReg);
-                }
-            }
+            enErrorReg = SYSCTL__enGetPIOSCFrequency(&uxFrequencyClockReg);
         }
         else if(SYSCTL_enOSCCLK_SRC_MOSC == enPLLClockSourceReg)
         {
-            enErrorReg = SYSCTL__enGetMOSCFrequency(&uxFrequencyClockReg);
+            enErrorReg = SYSCTL_enGetMOSCAvailableFrequency(enModuleArg, &uxFrequencyClockReg);
         }
         else
         {
@@ -322,7 +344,7 @@ SYSCTL_nERROR SYSCTL__enGetOscillatorFrequency(SYSCTL_nMODULE enModuleArg, UBase
             uxFrequencyReg = 32768UL;
             break;
         case SYSCTL_enOSCCLK_SRC_MOSC:
-            enErrorReg = SYSCTL__enGetMOSCFrequency(&uxFrequencyReg);
+            enErrorReg = SYSCTL_enGetMOSCAvailableFrequency(enModuleArg, &uxFrequencyReg);
             break;
         case SYSCTL_enOSCCLK_SRC_LFIOSC:
             enErrorReg = SYSCTL__enGetLFIOSCFrequency(&uxFrequencyReg);
@@ -370,7 +392,7 @@ SYSCTL_nERROR SYSCTL__enGetOutputClockFrequency(SYSCTL_nMODULE enModuleArg, UBas
             enErrorReg = SYSCTL__enGetPIOSCFrequency(&uxFrequencyReg);
             break;
         case SYSCTL_enOUTCLK_SRC_MOSC:
-            enErrorReg = SYSCTL__enGetMOSCFrequency(&uxFrequencyReg);
+            enErrorReg = SYSCTL_enGetMOSCAvailableFrequency(enModuleArg, &uxFrequencyReg);
             break;
         case SYSCTL_enOUTCLK_SRC_SYSCLK:
             enErrorReg = SYSCTL__enGetSystemClockFrequency(enModuleArg, &uxFrequencyReg);
@@ -644,7 +666,7 @@ SYSCTL_nERROR SYSCTL__enSetSystemClock(SYSCTL_nMODULE enModuleArg, UBase_t uxSys
         UBase_t uxPLLDivisorReg = 0UL;
         if(SYSCTL_enERROR_OK == enErrorReg)
         {
-            enErrorReg = SYSCTL__enGetPLLClockFrequency(enModuleArg, &uxSystemFrequencyReg);
+            enErrorReg = SYSCTL__enGetVCOClockFrequency(enModuleArg, &uxSystemFrequencyReg);
             if(SYSCTL_enERROR_OK == enErrorReg)
             {
                 uxPLLDivisorReg = uxSystemFrequencyReg;

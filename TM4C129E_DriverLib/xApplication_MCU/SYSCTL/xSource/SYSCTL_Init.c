@@ -35,7 +35,10 @@ SYSCTL_nERROR SYSCTL__enInit(SYSCTL_nMODULE enModuleArg, SYSCTL_nINTMASK enInter
     if(SYSCTL_enERROR_OK == enErrorReg)
     {
         pfIrqVectorHandlerReg = SYSCTL__pvfGetIRQVectorHandler();
-        SYSCTL__vRegisterIRQVectorHandler(pfIrqVectorHandlerReg);
+        enErrorReg = SYSCTL__enRegisterIRQVectorHandler(pfIrqVectorHandlerReg);
+    }
+    if(SYSCTL_enERROR_OK == enErrorReg)
+    {
         enErrorReg = SYSCTL__enDisableInterruptSourceByMask(enModuleArg, SYSCTL_enINTMASK_ALL);
     }
     if(SYSCTL_enERROR_OK == enErrorReg)
@@ -50,11 +53,11 @@ SYSCTL_nERROR SYSCTL__enInit(SYSCTL_nMODULE enModuleArg, SYSCTL_nINTMASK enInter
     {
         if(SYSCTL_enINTMASK_NONE != enInterruptMaskArg)
         {
-            SYSCTL__vEnInterruptVector(enPriorityArg);
+            enErrorReg = SYSCTL__enEnableInterruptVector(enPriorityArg);
         }
         else
         {
-            SYSCTL__vDisInterruptVector();
+            enErrorReg = SYSCTL__enDisableInterruptVector();
         }
     }
 

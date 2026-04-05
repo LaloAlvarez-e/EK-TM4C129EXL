@@ -52,6 +52,65 @@ Manual basis: `derived`, initialization policy built around the SYSEXC controlle
 - `REQ-SYSEXC-INIT-002` -> `InitPerformsExpectedOrderedSetup` | `derived` | The SYSEXC initialization path shall perform the expected ordered setup of handlers and source configuration.
 - `REQ-SYSEXC-INIT-003` -> `InitStopsWhenClearAllSourcesFails` | `derived` | The SYSEXC initialization path shall stop on the first clear-source failure.
 
+Path: `xApplication_MCU/SYSCTL/xSource/SYSCTL_Init_Test.cpp`
+Manual basis: `derived`, initialization policy built around the SYSCTL controller and interrupt path described in `tm4c` Chapter 5.
+
+- `REQ-SYSCTL-INIT-001` -> `InitPropagatesModuleValidationError` | `derived` | The SYSCTL initialization path shall propagate module-validation errors without continuing setup.
+- `REQ-SYSCTL-INIT-002` -> `InitPerformsExpectedOrderedSetupWithVectorEnable` | `derived` | The SYSCTL initialization path shall perform the expected ordered handler registration and interrupt-source setup, then enable the vector when the requested interrupt mask is non-zero.
+- `REQ-SYSCTL-INIT-003` -> `InitStopsWhenIRQRegistrationFails` | `derived` | The SYSCTL initialization path shall stop and propagate IRQ-registration failures before any interrupt-source configuration begins.
+- `REQ-SYSCTL-INIT-004` -> `InitDisablesVectorWhenInterruptMaskIsNone` | `derived` | The SYSCTL initialization path shall disable the interrupt vector when the requested interrupt mask is `SYSCTL_enINTMASK_NONE` after completing the ordered source-setup sequence.
+- `REQ-SYSCTL-INIT-005` -> `InitPropagatesVectorEnableFailure` | `derived` | The SYSCTL initialization path shall propagate interrupt-vector enable failures after completing the ordered source-setup sequence for a non-zero requested mask.
+- `REQ-SYSCTL-INIT-006` -> `InitPropagatesVectorDisableFailure` | `derived` | The SYSCTL initialization path shall propagate interrupt-vector disable failures on the `SYSCTL_enINTMASK_NONE` branch after completing the ordered source-setup sequence.
+- `REQ-SYSCTL-INIT-007` -> `InitStopsWhenClearAllSourcesFails` | `derived` | The SYSCTL initialization path shall stop on the first clear-source failure and avoid later source-enable or vector-selection steps.
+
+Path: `xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Test.cpp`
+Manual basis: `derived`, repository SYSCTL vector-handler storage policy for the application interrupt wrapper.
+
+- `REQ-SYSCTL-IRQROUT-001` -> `IRQVectorHandlerGetterReturnsInstalledHandler` | `derived` | The SYSCTL IRQ routine getter shall return the currently installed SYSCTL IRQ vector handler.
+- `REQ-SYSCTL-IRQROUT-002` -> `IRQVectorHandlerPointerExposesWritableInstalledHandlerStorage` | `derived` | The SYSCTL IRQ routine pointer getter shall expose the writable installed-handler storage used by the SYSCTL IRQ registration layer.
+
+Path: `xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Vector_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control, `MISC` p.279 and SYSCTL register-map context Table 5-11 p.260.
+
+- `REQ-SYSCTL-VECTOR-001` -> `IRQVectorHandlerDispatchesSoftwareCallbackWhenNoBitsAreSet` | `derived` | The SYSCTL application interrupt routine shall dispatch the software-source callback when no architected `MISC` source bit is asserted.
+- `REQ-SYSCTL-VECTOR-002` -> `IRQVectorHandlerClearsAndDispatchesEachAssertedSource` | `mixed` | The SYSCTL application interrupt routine shall clear each asserted `MISC` source and dispatch the corresponding callback in source order for the active BOR, MOSC failure, PLL lock, and MOSC power-up bits.
+
+Path: `xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector_Test.cpp`
+Manual basis: `derived`, repository SCB registration policy for the fixed SYSCTL interrupt vector.
+
+- `REQ-SYSCTL-IRQREG-001` -> `RegisterIRQVectorHandlerDelegatesFixedSYSCTLVectorToSCB` | `derived` | The SYSCTL IRQ-register wrapper shall delegate non-null handler registration through SCB using the fixed SYSCTL vector selector and the SYSCTL installed-handler storage pointer.
+- `REQ-SYSCTL-IRQREG-002` -> `RegisterIRQVectorHandlerSkipsNullHandler` | `derived` | The SYSCTL IRQ-register wrapper shall skip SCB registration when the caller supplies a null handler pointer.
+- `REQ-SYSCTL-IRQREG-003` -> `RegisterIRQVectorHandlerPropagatesSCBError` | `derived` | The SYSCTL IRQ-register wrapper shall propagate the SCB registration error status for the fixed SYSCTL vector.
+
+Path: `xApplication_MCU/SYSCTL/Interrupt/xSource/SYSCTL_InterruptVector_Test.cpp`
+Manual basis: `derived`, repository SYSCTL-to-NVIC wrapper policy for the fixed SYSCTL interrupt vector.
+
+- `REQ-SYSCTL-IRQVEC-001` -> `EnInterruptVectorMasksPriorityAndUsesSYSCTLVector` | `derived` | The SYSCTL interrupt-vector enable wrapper shall mask the public priority to three bits, delegate to the fixed SYSCTL NVIC vector, and return the resulting status.
+- `REQ-SYSCTL-IRQVEC-002` -> `EnableInterruptVectorPropagatesNVICError` | `derived` | The SYSCTL interrupt-vector enable wrapper shall propagate the NVIC enable-vector error status.
+- `REQ-SYSCTL-IRQVEC-003` -> `DisInterruptVectorUsesSYSCTLVector` | `derived` | The SYSCTL interrupt-vector disable wrapper shall delegate to the fixed SYSCTL NVIC vector and return the resulting status.
+- `REQ-SYSCTL-IRQVEC-004` -> `DisableInterruptVectorPropagatesNVICError` | `derived` | The SYSCTL interrupt-vector disable wrapper shall propagate the NVIC disable-vector error status.
+
+Path: `xApplication_MCU/TIMER/xSource/TIMER_Init_Test.cpp`
+Manual basis: `derived`, repository TIMER initialization policy for application IRQ-vector registration.
+
+- `REQ-TIMER-INIT-001` -> `InitRegistersAllTimerVectorsInOrder` | `derived` | The TIMER initialization path shall obtain and register the application IRQ vector handler for each TIMER0A through TIMER7B slot in order.
+- `REQ-TIMER-INIT-002` -> `InitStopsWhenRegistrationFails` | `derived` | The TIMER initialization path shall stop and propagate the first IRQ-registration failure without attempting later TIMER slots.
+
+Path: `xApplication_MCU/TIMER/Interrupt/InterruptRegister/xSource/TIMER_InterruptRegisterIRQVector_Test.cpp`
+Manual basis: `derived`, repository SCB registration policy for mapped TIMER interrupt vectors.
+
+- `REQ-TIMER-IRQREG-001` -> `RegisterIRQVectorHandlerDelegatesMappedTimerVectorToSCB` | `derived` | The TIMER IRQ-register wrapper shall map the caller module to the corresponding SCB timer vector, use the installed-handler storage pointer for that slot, and return the SCB registration status.
+- `REQ-TIMER-IRQREG-002` -> `RegisterIRQVectorHandlerPropagatesSCBError` | `derived` | The TIMER IRQ-register wrapper shall propagate the SCB registration error for the selected mapped timer vector.
+- `REQ-TIMER-IRQREG-003` -> `RegisterIRQVectorHandlerSkipsNullHandler` | `derived` | The TIMER IRQ-register wrapper shall skip SCB registration when the caller supplies a null handler pointer.
+
+Path: `xApplication_MCU/TIMER/Interrupt/xSource/TIMER_InterruptVector_Test.cpp`
+Manual basis: `derived`, repository TIMER-to-NVIC wrapper policy for mapped timer vectors.
+
+- `REQ-TIMER-IRQVEC-001` -> `EnableInterruptVectorMapsWideTimerToTimerAVector` | `derived` | The TIMER interrupt-vector enable wrapper shall map wide-timer modules to the corresponding A-side NVIC vector and return the delegated status.
+- `REQ-TIMER-IRQVEC-002` -> `EnableInterruptVectorPropagatesNVICError` | `derived` | The TIMER interrupt-vector enable wrapper shall propagate the NVIC enable-vector error status for the selected mapped timer vector.
+- `REQ-TIMER-IRQVEC-003` -> `DisableInterruptVectorUsesMappedTimerVector` | `derived` | The TIMER interrupt-vector disable wrapper shall route the caller module to the mapped TIMER NVIC vector and return the delegated status.
+- `REQ-TIMER-IRQVEC-004` -> `DisableInterruptVectorPropagatesNVICError` | `derived` | The TIMER interrupt-vector disable wrapper shall propagate the NVIC disable-vector error status for the selected mapped timer vector.
+
 Path: `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector_Test.cpp`
 Manual basis: `both`, `tm4c` Chapter 6 `SYSEXCMIS` p.561 and `SYSEXCIC` p.563, plus `cortex` SCB `ICSR` context in section 4.3.3, pp.4-13 to 4-15.
 
@@ -204,6 +263,18 @@ Manual basis: `tm4c`, Chapter 5 System Control, Table 5-11 register map p.260.
 - `REQ-SYSCTL-PRIM-002` -> `ReadRegisterAddsBlockBaseBeforeMCUAccess` | `tm4c` | The SYSCTL read primitive shall add the documented SYSCTL block base address to the caller offset before MCU access.
 - `REQ-SYSCTL-PRIM-003` -> `WriteRegisterAddsBlockBaseBeforeMCUAccess` | `tm4c` | The SYSCTL write primitive shall add the documented SYSCTL block base address to the caller offset before MCU access.
 - `REQ-SYSCTL-PRIM-004` -> `WriteRegisterPropagatesModuleValidationError` | `derived` | The SYSCTL write primitive shall propagate module-validation failures without attempting a register write.
+
+Path: `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/SYSCTL_InterruptSource_Test.cpp`
+Manual basis: `tm4c`, System Control Register 4 `RIS`, Register 5 `IMC`, and Register 6 `MISC` around pp.277-279.
+
+- `REQ-SYSCTL-INTSRC-001` -> `EnableAndDisableInterruptSourceByNumberUseSingleBitIMCField` | `mixed` | The by-number interrupt enable and disable helpers shall map the selected SYSCTL source to the documented `IMC` bit position and use a single-bit logical field through the primitive seam.
+- `REQ-SYSCTL-INTSRC-002` -> `SetAndGetInterruptSourceStateByMaskUseWholeIMCField` | `tm4c` | The by-mask interrupt-state helpers shall access the documented `IMC` mask bits selected by the caller.
+- `REQ-SYSCTL-INTSRC-003` -> `GetInterruptSourceStateByNumberUsesSingleBitIMCField` | `mixed` | The by-number interrupt-state getter shall read the selected `IMC` source bit as a single-bit logical field and return the decoded public state.
+- `REQ-SYSCTL-INTSRC-004` -> `InterruptSourceGettersRejectNullPointers` | `derived` | The SYSCTL interrupt getter family shall reject null output pointers before touching the register block.
+- `REQ-SYSCTL-INTSRC-005` -> `ClearInterruptSourceWrappersUseMISCRegister` | `tm4c` | The SYSCTL interrupt clear helpers shall write the requested raw source bits through the documented `MISC` RW1C path.
+- `REQ-SYSCTL-INTSRC-006` -> `StatusInterruptSourceWrappersReadRISRegister` | `tm4c` | The SYSCTL raw-status helpers shall read the documented `RIS` register family for by-mask and by-number queries.
+- `REQ-SYSCTL-INTSRC-007` -> `StatusMaskedInterruptSourceWrappersReadMISCRegister` | `tm4c` | The SYSCTL masked-status helpers shall read the documented `MISC` register family for by-mask and by-number queries.
+- `REQ-SYSCTL-INTSRC-008` -> `InterruptSourceHelpersPropagateValidationAndPrimitiveErrors` | `derived` | Invalid SYSCTL interrupt selections shall stop at parameter validation and valid helpers shall propagate primitive read and write failures unchanged.
 
 Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_AlternateClock_Test.cpp`
 Manual basis: `tm4c`, `ALTCLKCFG` p.293.
@@ -411,6 +482,83 @@ Manual basis: `tm4c`, Section 5.2.5.3 Precision Internal Oscillator Operation (P
 - `REQ-SYSCTL-PIOSC-009` -> `UpdatePIOSCCalibrationValueAndStatusUseUpdateField` | `tm4c` | The update helper and update-status getter shall access the documented `PIOSCCAL.UPDATE` field.
 - `REQ-SYSCTL-PIOSC-010` -> `StartPIOSCCalibrationUsesCalField` | `tm4c` | The calibration-start helper shall program the documented `PIOSCCAL.CAL` field.
 - `REQ-SYSCTL-PIOSC-011` -> `IsPIOCCalibrationOngoingUsesCalField` | `tm4c` | The calibration-status getter shall read the documented `PIOSCCAL.CAL` field.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PLLCLock_Test.cpp`
+Manual basis: `tm4c`, Section 6.2.5.5 PLL pp.236-238, system-clock initialization sequence p.246, and `PLLFREQ0`, `PLLFREQ1`, and `PLLSTAT` register context.
+
+- `REQ-SYSCTL-PLL-001` -> `SetPLLClockStateUsesExpectedField` | `mixed` | The PLL state setter shall program the documented `PLLFREQ0.PLLPWR` field using the public enabled and disabled state encodings.
+- `REQ-SYSCTL-PLL-002` -> `PLLStateAndValueGettersRejectNullPointer` | `derived` | The PLL state, divider-value, and lock-status getters shall reject null output pointers.
+- `REQ-SYSCTL-PLL-003` -> `GetPLLClockStateUsesExpectedField` | `mixed` | The PLL state getter shall read the documented `PLLFREQ0.PLLPWR` field and return the decoded public state.
+- `REQ-SYSCTL-PLL-004` -> `SetAndGetPLLClockIntegerValueMUseExpectedField` | `tm4c` | The MINT setter and getter shall access the documented `PLLFREQ0.MINT` field.
+- `REQ-SYSCTL-PLL-005` -> `SetAndGetPLLClockFractionalValueMUseExpectedField` | `tm4c` | The MFRAC setter and getter shall access the documented `PLLFREQ0.MFRAC` field.
+- `REQ-SYSCTL-PLL-006` -> `SetAndGetPLLClockValueQUseExpectedField` | `tm4c` | The Q-divider setter and getter shall access the documented `PLLFREQ1.Q` field.
+- `REQ-SYSCTL-PLL-007` -> `SetAndGetPLLClockValueNUseExpectedField` | `tm4c` | The N-divider setter and getter shall access the documented `PLLFREQ1.N` field.
+- `REQ-SYSCTL-PLL-008` -> `IsPLLClockLockedUsesExpectedField` | `tm4c` | The PLL lock-status getter shall read the documented `PLLSTAT.LOCK` field.
+- `REQ-SYSCTL-PLL-009` -> `PLLStateAndValueGettersPropagateReadErrors` | `derived` | The PLL state, divider-value, and lock-status getters shall propagate primitive read failures without modifying caller state.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc_Test.cpp`
+Manual basis: `tm4c`, Section 6.2.5.4 Main Oscillator (MOSC) p.236, main-oscillator verification and failure behavior p.236, initialization sequence pp.246-247, and `MOSCCTL` register context.
+
+- `REQ-SYSCTL-MOSCCTL-001` -> `SetMOSCMonitorStateUsesExpectedField` | `tm4c` | The MOSC monitor setter shall program the documented `MOSCCTL.CVAL` field.
+- `REQ-SYSCTL-MOSCCTL-002` -> `SetMOSCFailureActionUsesExpectedField` | `tm4c` | The MOSC failure-action setter shall program the documented `MOSCCTL.MOSCIM` field.
+- `REQ-SYSCTL-MOSCCTL-003` -> `SetMOSCStateMapsPublicStateToNOXTALField` | `mixed` | The MOSC state setter shall translate the public enabled and disabled states into the documented `MOSCCTL.NOXTAL` field encodings.
+- `REQ-SYSCTL-MOSCCTL-004` -> `SetMOSCPowerStateMapsPublicStateToPWRDNField` | `mixed` | The MOSC power-state setter shall translate the public enabled and disabled states into the documented `MOSCCTL.PWRDN` field encodings.
+- `REQ-SYSCTL-MOSCCTL-005` -> `SetMOSCFrequencyRangeUsesExpectedField` | `tm4c` | The MOSC frequency-range setter shall program the documented `MOSCCTL.OSCRNG` field.
+- `REQ-SYSCTL-MOSCCTL-006` -> `MOSCGettersRejectNullPointer` | `derived` | The MOSC monitor, failure-action, state, power-state, and frequency-range getters shall reject null output pointers.
+- `REQ-SYSCTL-MOSCCTL-007` -> `GetMOSCMonitorStateUsesExpectedField` | `tm4c` | The MOSC monitor getter shall read the documented `MOSCCTL.CVAL` field.
+- `REQ-SYSCTL-MOSCCTL-008` -> `GetMOSCFailureActionUsesExpectedField` | `tm4c` | The MOSC failure-action getter shall read the documented `MOSCCTL.MOSCIM` field.
+- `REQ-SYSCTL-MOSCCTL-009` -> `GetMOSCStateMapsNOXTALFieldToPublicState` | `mixed` | The MOSC state getter shall translate the documented `MOSCCTL.NOXTAL` encodings into public enabled and disabled states.
+- `REQ-SYSCTL-MOSCCTL-010` -> `GetMOSCPowerStateMapsPWRDNFieldToPublicState` | `mixed` | The MOSC power-state getter shall translate the documented `MOSCCTL.PWRDN` encodings into public enabled and disabled states.
+- `REQ-SYSCTL-MOSCCTL-011` -> `GetMOSCFrequencyRangeUsesExpectedField` | `tm4c` | The MOSC frequency-range getter shall read the documented `MOSCCTL.OSCRNG` field.
+- `REQ-SYSCTL-MOSCCTL-012` -> `MOSCGettersPropagateReadError` | `derived` | The MOSC monitor, failure-action, state, power-state, and frequency-range getters shall propagate primitive read failures without modifying caller state.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock_Test.cpp`
+Manual basis: `tm4c`, Section 6.2.5.5 PLL pp.237-238, including the documented PIOSC and MOSC PLL reference selection through `RSCLKCFG.PLLSRC`, the VCO calculation using `PLLFREQ0` and `PLLFREQ1`, and the PLL output divisor in `RSCLKCFG.PLLSYSDIV`.
+
+- `REQ-SYSCTL-SYSCLK-001` -> `GetVCOAndPLLClockFrequencyRejectNullPointer` | `derived` | The VCO and PLL clock frequency getters shall reject null output pointers.
+- `REQ-SYSCTL-SYSCLK-002` -> `GetVCOClockFrequencyUsesPIOSCReferenceWithoutMOSCDependency` | `mixed` | When `RSCLKCFG.PLLSRC` selects PIOSC, the VCO frequency helper shall use the documented PIOSC reference path independently of MOSC state and apply the programmed `PLLFREQ0.MINT`, `PLLFREQ0.MFRAC`, `PLLFREQ1.N`, and `PLLFREQ1.Q` values.
+- `REQ-SYSCTL-SYSCLK-003` -> `GetPLLClockFrequencyUsesDerivedVCOAndPllDivisor` | `mixed` | The PLL clock frequency helper shall divide the derived VCO frequency by the documented `RSCLKCFG.PLLSYSDIV + 1` factor.
+- `REQ-SYSCTL-SYSCLK-004` -> `GetVCOClockFrequencyUsesMOSCReferenceOnlyWhenMOSCAvailable` | `mixed` | When `RSCLKCFG.PLLSRC` selects MOSC, the VCO frequency helper shall only use the nominal MOSC reference when the crystal is connected and the MOSC power state is enabled.
+- `REQ-SYSCTL-SYSCLK-005` -> `GetOscillatorFrequencyReturnsZeroWhenMOSCIsUnavailable` | `derived` | When the oscillator clock source selects MOSC but MOSC is unavailable, the oscillator frequency helper shall return `0` rather than the nominal MOSC frequency.
+- `REQ-SYSCTL-SYSCLK-006` -> `GetOutputClockFrequencyReturnsZeroWhenMOSCIsUnavailable` | `derived` | When the output clock source selects MOSC but MOSC is unavailable, the output clock frequency helper shall return `0` rather than the nominal MOSC frequency.
+- `REQ-SYSCTL-SYSCLK-007` -> `SetSystemClockRejectsInvalidValueAndNullConfig` | `derived` | The composite system-clock setter shall reject zero or out-of-range requested clock values and reject a null configuration pointer before starting clock reconfiguration.
+- `REQ-SYSCTL-SYSCLK-008` -> `SetSystemClockPLLReentryIgnoresPreviousDivisorState` | `mixed` | On re-entry after a prior PLL configuration, the PLL system-clock path shall derive the new `RSCLKCFG.PLLSYSDIV` value from the configured VCO frequency and shall not depend on the stale previously programmed divider state.
+- `REQ-SYSCTL-SYSCLK-009` -> `SetSystemClockTimesOutWhileWaitingForMOSCPowerUpStatus` | `mixed` | For MOSC-based system-clock requests, the composite setter shall monitor the documented MOSC power-up interrupt status and return a timeout when the source never becomes ready within the caller-provided limit.
+- `REQ-SYSCTL-SYSCLK-010` -> `SetSystemClockPLLRefreshesValuesWhenAlreadyEnabled` | `mixed` | When the PLL is already enabled, the PLL system-clock path shall latch the newly programmed PLL parameters through the documented `RSCLKCFG.NEW_PLLFREQ` update path rather than re-enabling PLL power.
+- `REQ-SYSCTL-SYSCLK-011` -> `SetSystemClockTimesOutWhileWaitingForPLLLock` | `mixed` | For PLL-based system-clock requests, the composite setter shall return a timeout when `PLLSTAT.LOCK` never asserts within the caller-provided limit after PLL configuration.
+- `REQ-SYSCTL-SYSCLK-012` -> `GetStaticClockHelpersReturnExpectedNominalValuesAndRejectNullPointers` | `mixed` | The direct PIOSC, board MOSC, and LFIOSC nominal-frequency helpers shall reject null output pointers and return the expected fixed reference frequencies used by the SystemClock module.
+- `REQ-SYSCTL-SYSCLK-013` -> `GetAlternateClockFrequencyRejectsNullPointer` | `derived` | The alternate clock frequency helper shall reject a null output pointer.
+- `REQ-SYSCTL-SYSCLK-014` -> `GetAlternateClockFrequencyUsesAllDocumentedSourcesAndRejectsInvalidSource` | `mixed` | The alternate clock frequency helper shall return the documented PIOSC, RTCOSC, or LFIOSC frequency for the programmed `ALTCLKCFG.ALTCLK` source and reject unsupported source values.
+- `REQ-SYSCTL-SYSCLK-015` -> `GetOscillatorFrequencyRejectsNullPointer` | `derived` | The oscillator frequency helper shall reject a null output pointer.
+- `REQ-SYSCTL-SYSCLK-016` -> `GetOscillatorFrequencyUsesNonMOSCSourcesAndRejectsInvalidSource` | `mixed` | The oscillator frequency helper shall apply the programmed `RSCLKCFG.OSYSDIV + 1` divisor to the selected PIOSC, RTCOSC, or LFIOSC source and reject unsupported oscillator source values.
+- `REQ-SYSCTL-SYSCLK-017` -> `GetSystemClockFrequencyRejectsNullPointerAndDelegatesBySource` | `mixed` | The system clock frequency helper shall reject a null output pointer and delegate to the oscillator or PLL frequency path according to the programmed `RSCLKCFG.USEPLL` selection.
+- `REQ-SYSCTL-SYSCLK-018` -> `GetOutputClockFrequencyRejectsNullPointerAndDelegatesBySelectedSource` | `mixed` | The output clock frequency helper shall reject a null output pointer, apply the programmed `DIVSCLK.DIV + 1` divisor to the selected PIOSC or SYSCLK source, and reject unsupported output source values.
+- `REQ-SYSCTL-SYSCLK-019` -> `SetSystemClockRejectsUnsupportedPLLSourceAndInvalidMOSCCrystal` | `derived` | The composite system-clock setter shall reject unsupported PLL source selections and reject MOSC configurations whose crystal selection falls outside the accepted range.
+- `REQ-SYSCTL-SYSCLK-020` -> `SetSystemClockUsesOSCCLKPIOSCPathAndDisablesPLL` | `mixed` | For PIOSC-driven OSCCLK requests, the composite setter shall complete the safe staging sequence, program the final oscillator divisor, disable the PLL path, and select OSCCLK as the final system source.
+- `REQ-SYSCTL-SYSCLK-021` -> `SetSystemClockUsesOSCCLKMOSCPathAfterSuccessfulPowerUp` | `mixed` | For the 25 MHz EK-TM4C129EXL MOSC path, the composite setter shall enable and confirm MOSC readiness, then commit the final MOSC-based OSCCLK system-clock configuration with the corresponding memory-timing update.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage_Test.cpp`
+Manual basis: `tm4c`, System Control Register 25 through Register 28 on pp.313-318, including the documented `LDOSPCTL`, `LDOSPCAL`, `LDODPCTL`, and `LDODPCAL` `VLDO`, `VADJEN`, `NOPLL`, `WITHPLL`, and `30KHZ` fields.
+
+- `REQ-SYSCTL-LDO-001` -> `SetLDOCustomVoltageWrappersUseExpectedFields` | `tm4c` | The sleep and deep-sleep custom LDO voltage setters shall program the documented `LDOSPCTL.VLDO` and `LDODPCTL.VLDO` fields.
+- `REQ-SYSCTL-LDO-002` -> `LDOVoltageGettersRejectNullPointer` | `derived` | The custom-voltage, default-voltage, and custom-use getters shall reject null output pointers.
+- `REQ-SYSCTL-LDO-003` -> `GetLDOCustomVoltageWrappersUseExpectedFields` | `tm4c` | The sleep and deep-sleep custom LDO voltage getters shall read the documented `LDOSPCTL.VLDO` and `LDODPCTL.VLDO` fields.
+- `REQ-SYSCTL-LDO-004` -> `GetLDODefaultVoltageWrappersUseExpectedFields` | `tm4c` | The default-voltage getters shall read the documented `LDOSPCAL.WITHPLL`, `LDOSPCAL.NOPLL`, `LDODPCAL.30KHZ`, and `LDODPCAL.NOPLL` fields.
+- `REQ-SYSCTL-LDO-005` -> `UseLDOCustomVoltageWrappersUseSingleBitMask` | `mixed` | The custom-voltage use setters shall program the documented `LDOSPCTL.VADJEN` and `LDODPCTL.VADJEN` fields as single-bit logical values through the primitive seam.
+- `REQ-SYSCTL-LDO-006` -> `IsLDOCustomVoltageUsedWrappersUseSingleBitMask` | `mixed` | The custom-voltage use getters shall read the documented `LDOSPCTL.VADJEN` and `LDODPCTL.VADJEN` fields as single-bit logical values through the primitive seam.
+- `REQ-SYSCTL-LDO-007` -> `LDOVoltageGettersPropagateReadErrors` | `derived` | The LDO getter family shall propagate primitive read failures without modifying caller output state.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_Voltage_Test.cpp`
+Manual basis: `tm4c`, System Control Register 3 `PTBOCTL` register context pp.272-273, Register 6 `MISC` pp.278-279 for the separate combined BOR interrupt clear path, and Register 8 `PWRTC` p.283 for the per-rail RW1C brown-out cause bits.
+
+- `REQ-SYSCTL-VOLT-001` -> `SetBrownOutEventActionFieldWrappersUseExpectedFields` | `tm4c` | The VDD and VDDA brown-out action setters shall program the documented `PTBOCTL.VDD_UBOR` and `PTBOCTL.VDDA_UBOR` fields.
+- `REQ-SYSCTL-VOLT-002` -> `BrownOutIndividualGettersRejectNullPointer` | `derived` | The individual brown-out action and trip-status getters shall reject null output pointers.
+- `REQ-SYSCTL-VOLT-003` -> `GetBrownOutEventActionFieldWrappersUseExpectedFields` | `tm4c` | The VDD and VDDA brown-out action getters shall read the documented `PTBOCTL.VDD_UBOR` and `PTBOCTL.VDDA_UBOR` fields.
+- `REQ-SYSCTL-VOLT-004` -> `SetBrownOutEventActionGroupedWrapperSequencesAndPropagatesErrors` | `mixed` | The grouped brown-out action setter shall program VDD first and then VDDA, returning the first primitive write failure unchanged.
+- `REQ-SYSCTL-VOLT-005` -> `GetBrownOutEventActionGroupedWrapperSequencesAndPropagatesErrors` | `mixed` | The grouped brown-out action getter shall read VDD first and then VDDA, propagating primitive read failures while preserving any output that has not yet been updated.
+- `REQ-SYSCTL-VOLT-006` -> `BrownOutTripStatusGettersUsePWRTCFields` | `tm4c` | The brown-out trip-status getters shall read the documented `PWRTC.VDD_UBOR` and `PWRTC.VDDA_UBOR` cause bits.
+- `REQ-SYSCTL-VOLT-007` -> `ClearBrownOutStatusWrappersUsePWRTCRW1CValues` | `tm4c` | The brown-out cause clear helpers shall write the documented `PWRTC` RW1C bits for VDD, VDDA, or both causes.
+- `REQ-SYSCTL-VOLT-008` -> `BrownOutTripStatusGettersPropagateReadErrors` | `derived` | The brown-out trip-status getters shall propagate primitive read failures without modifying caller output state.
 
 ## Update Rule
 

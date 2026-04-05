@@ -25,6 +25,8 @@
 #ifndef XAPPLICATION_MCU_TIMER_XHEADER_TIMER_INIT_H_
 #define XAPPLICATION_MCU_TIMER_XHEADER_TIMER_INIT_H_
 
-void TIMER__vInit(void);
+#include <xApplication_MCU/TIMER/Intrinsics/xHeader/TIMER_Defines.h>
+
+TIMER_nERROR TIMER__enInit(void);
 
 #endif /* XAPPLICATION_MCU_TIMER_XHEADER_TIMER_INIT_H_ */

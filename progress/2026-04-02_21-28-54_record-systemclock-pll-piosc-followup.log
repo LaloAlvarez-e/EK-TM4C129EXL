@@ -1,0 +1,15 @@
+[2026-04-02 21:28:54] Recorded an adjacent SYSCTL_SystemClock follow-up defect while investigating the next PLL/MOSC host-test slice.
+- Context: during pre-implementation inspection for SYSCTL_PLLCLock.c and SYSCTL_MainOsc.c, reviewed the surrounding system-clock helpers for missing companion paths and defects.
+- Files reviewed:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c
+  - .tmp/tm4c1294_sysexc_ch6/page_018.txt
+  - .tmp/tm4c1294_sysexc_ch6/page_019.txt
+- Finding:
+  - SYSCTL__enGetVCOClockFrequency() checks MOSC state when the PLL source is PIOSC and returns zero input frequency if MOSC is disabled.
+  - This is inconsistent with the documented PLL behavior because the PLL reference can be PIOSC or MOSC independently; PIOSC frequency calculation should not depend on MOSC state.
+- Impact estimate:
+  - Can corrupt PLL/VCO frequency calculation when PLLSRC is PIOSC and MOSC is disabled.
+  - May affect SYSCTL__enGetPLLClockFrequency() and any callers that derive divisors from it.
+- Decision:
+  - Keep the current slice focused on SYSCTL_PLLCLock.c and SYSCTL_MainOsc.c.
+  - Preserve this finding for a follow-up SystemClock fix/test slice after the current narrow register-wrapper coverage is completed.

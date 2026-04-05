@@ -1,0 +1,33 @@
+[2026-04-02 21:33:29] Validated the SYSCTL PLL and MOSC host-test slice and updated the chapter tracking artifacts.
+- Request context: continue with the next SYSCTL task after deferring the clock-calibration API work.
+- Production sources covered in this slice:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PLLCLock.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc.c
+- Files added/updated:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PLLCLock_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc_Test.cpp
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+- Investigation result for current slice:
+  - SYSCTL_PLLCLock.c and SYSCTL_MainOsc.c both fit the existing SYSCTL primitive seam cleanly.
+  - No production changes were required in either source during this slice.
+- Focused build/validation:
+  - Configured and built SYSCTL_PLLCLock_Test and SYSCTL_MainOsc_Test successfully with CMake/MSBuild.
+  - SYSCTL_PLLCLock_Test.exe: 9/9 tests passed.
+  - SYSCTL_MainOsc_Test.exe: 12/12 tests passed.
+- Full-suite validation:
+  - ctest --test-dir TM4C129E_DriverLib_Test/build -C Debug --output-on-failure completed successfully.
+  - Result: 251/251 tests passed, 0 failed, total real time 22.49 sec.
+- Coverage validation:
+  - The built-in driverlib_test_coverage target currently fails in the OpenCppCoverage HTML export step with boost::filesystem::create_directories invalid argument.
+  - Manual XML-only OpenCppCoverage rerun succeeded and refreshed coverage/opencppcoverage/coverage.xml.
+  - Refreshed measured coverage: lines-covered=1786, lines-valid=1935, line-rate=0.92299741602067187.
+  - coverage.xml last write time after the rerun: 2026-04-02 21:31:45.
+- Documentation updates:
+  - Added traceability sections for SYSCTL_PLLCLock_Test.cpp and SYSCTL_MainOsc_Test.cpp.
+  - Marked SYSCTL_PLLCLock.c and SYSCTL_MainOsc.c as covered in the gap tracker.
+  - Extended the SYSCTL framework summary to include PLLFREQ/PLLSTAT and MOSCCTL wrapper coverage.
+  - Advanced the recommended next targets to SYSCTL_LDOVoltage.c and SYSCTL_Voltage.c.
+- Follow-up finding preserved separately:
+  - Adjacent investigation found a real defect in SYSCTL_SystemClock.c where the PIOSC-based PLL frequency path incorrectly depends on MOSC state; logged in progress/2026-04-02_21-28-54_record-systemclock-pll-piosc-followup.log for a later focused fix/test slice.

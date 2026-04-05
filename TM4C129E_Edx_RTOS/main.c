@@ -113,7 +113,7 @@ uint32_t main(void)
     EEPROM__enInit();
     DMA__vInit();
     GPIO__vInit();
-    TIMER__vInit();
+    TIMER__enInit();
     ADC__vInit();
     UART__vInit();
     SSI__vInit();
@@ -136,7 +136,7 @@ uint32_t main(void)
 
     TIMER__vRegisterIRQSourceHandler(&Led2ON, TIMER_enT0W, TIMER_enINTERRUPT_TIMEOUT);
     TIMER__vSetClockSource(TIMER_enT0W, TIMER_enCLOCK_SYSCLK);
-    TIMER__vEnInterruptVector(TIMER_enT0W, (TIMER_nPRIORITY) NVIC_enPriority_TIMER0A);
+    TIMER__enEnableInterruptVector(TIMER_enT0W, (TIMER_nPRIORITY) NVIC_enPriority_TIMER0A);
     TIMER__vEnInterruptSource(TIMER_enT0W, TIMER_enINT_TIMEOUT);
     TIMER__vSetStall(TIMER_enT0W, TIMER_enSTALL_FREEZE);
     TIMER__enSetMode_ReloadMatch(TIMER_enT0W, TIMER_enMODE_PERIODIC_WIDE_DOWN,

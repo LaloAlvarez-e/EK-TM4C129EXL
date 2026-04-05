@@ -1,0 +1,19 @@
+[2026-04-03 02:32:09] Validated the SYSCTL SystemClock orchestration follow-up after closing the interrupt-source slice.
+- Production change completed:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c
+  - Corrected the PLL configuration branch in SYSCTL__enSetSystemClock() to derive the new PLL divisor from the raw VCO frequency instead of the current PLL output frequency.
+- Host regression coverage expanded:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock_Test.cpp
+  - Added composite-setter input rejection coverage, a stale-PLLSYSDIV regression that proves the final divider comes from the configured VCO, and a MOSC startup timeout regression that exercises the interrupt-status wait path.
+- Documentation updated:
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+  - SystemClock remains marked `in-progress`, but the gap description now reflects the narrower remaining orchestration combinations after this fix.
+- Validation results:
+  - Edited SystemClock production and test files reported no diagnostics.
+  - Focused build succeeded for SYSCTL_SystemClock_Test.
+  - Focused test run: 9/9 SYSCTL_SystemClockTest cases passed.
+  - Full host suite rerun from TM4C129E_DriverLib_Test/build completed successfully with `ExitCode=0`; discovered total tests: 283.
+- Follow-on assessment before closing this step:
+  - The stale-divider production defect is fixed and regression-tested.
+  - Remaining SYSCTL driver work is now mostly broader happy-path orchestration combinations in SYSCTL_SystemClock.c plus higher-level xApplication_MCU/SYSCTL coverage.

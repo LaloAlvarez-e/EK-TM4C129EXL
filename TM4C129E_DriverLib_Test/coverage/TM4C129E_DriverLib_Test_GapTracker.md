@@ -49,6 +49,7 @@ Use this tracker to answer three questions quickly:
 | Chapter 6 SYSEXC | `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector.c` | `SYSEXC_InterruptRoutine_Vector_Test` | `covered` | Current target validates software and multi-source report creation, ICSR and stacked-context decoding, source callback lookup, and IC clearing plus callback dispatch for asserted MIS bits. |
 | Chapter 3 SysTick | `xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c` | `SYSTICK_Calibration_Test` | `covered` | Host target validates fallback timing, count-based TENMS interpretation, forward and inverse 40000/3999/1000us examples, trust acceptance for exact external-reference deviation, ratio-based timing and microseconds-to-ticks correction from CALIB error in both negative and positive directions, and the init path review found no remaining raw-CALIB replacement logic outside the corrected helpers. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/Intrinsics/Primitives/xSource/SYSCTL_ReadRegister.c` + `xDriver_MCU/SYSCTL/Driver/Intrinsics/Primitives/xSource/SYSCTL_WriteRegister.c` | `SYSCTL_RegisterPrimitives_Test` | `covered` | Current target validates null pointer rejection, module validation error propagation, and SYSCTL base-address addition before MCU register-access calls. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/SYSCTL_InterruptSource.c` | `SYSCTL_InterruptSource_Test` | `covered` | Current target validates corrected single-bit IMC by-number state access, whole-mask IMC state access, MISC clear routing, RIS and MISC status reads, null-pointer rejection, and validation plus primitive error propagation. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_AlternateClock.c` | `SYSCTL_AlternateClock_Test` | `covered` | Current target validates ALTCLKCFG field offset, mask, shift, null-pointer rejection, and read-error propagation through the wrapper primitive seam. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_OutputClock.c` | `SYSCTL_OutputClock_Test` | `covered` | Current target validates DIVSCLK enable/source/divisor field composition plus config sequencing and first-error early exit through the wrapper primitive seam. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ResetCause.c` | `SYSCTL_ResetCause_Test` | `covered` | Current target validates RESC full-mask reads, clear-write composition, null-pointer rejection, and read-error propagation through the wrapper primitive seam. |
@@ -65,7 +66,20 @@ Use this tracker to answer three questions quickly:
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_DeepSleepGatingClock.c` | `SYSCTL_DeepSleepGatingClock_Test` | `covered` | Current target validates DSCLKCFG PIOSCPD, MOSCDPD, DSOSCSRC, and DSSYSDIV field composition and decoding plus null-pointer rejection and read-error propagation through the primitive seam. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MemoryTiming.c` | `SYSCTL_MemoryTiming_Test` | `covered` | Current target validates paired MEMTIM0 BCHT, wait-state, and clock-edge field programming and decoding, 16 MHz and 120 MHz predefined table entries, mismatch rejection, null-pointer rejection, and read/write error propagation through the primitive seam. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_InternalOsc.c` | `SYSCTL_InternalOsc_Test` | `covered` | Current target validates corrected PIOSCSTAT RESULT, CT, and DT read routing plus PIOSCCAL UT, UTEN, UPDATE, and CAL field access, null-pointer rejection, and read-error propagation through the primitive seam. |
-| Chapter 5 SYSCTL | multiple remaining production files | none | `in-progress` | Chapter expansion now covers primitive, register-wrapper, RSCLKCFG, DSCLKCFG, MEMTIM0, and PIOSC calibration/status wrappers, plus reset, run, sleep, deep-sleep, power, presence, and ready peripheral-generic slices; several SYSCTL driver wrappers remain open. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PLLCLock.c` | `SYSCTL_PLLCLock_Test` | `covered` | Current target validates PLLFREQ0 PLLPWR, MINT, and MFRAC field access, PLLFREQ1 Q and N field access, PLLSTAT LOCK reads, null-pointer rejection, and read-error propagation through the primitive seam. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc.c` | `SYSCTL_MainOsc_Test` | `covered` | Current target validates MOSCCTL CVAL, MOSCIM, NOXTAL, PWRDN, and OSCRNG field programming and decoding, null-pointer rejection, and read-error propagation through the primitive seam. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c` | `SYSCTL_SystemClock_Test` | `covered` | Current target validates null-pointer rejection across the VCO, PLL, alternate, oscillator, system, and output frequency helpers; fixed PIOSC/MOSC/LFIOSC nominal-frequency helpers; alternate/output/oscillator/system source delegation and invalid-source rejection; MOSC-gated VCO/oscillator/output frequency handling; PLL output division; composite-setter input and unsupported-configuration rejection; explicit re-entry stale-PLLSYSDIV independence in the PLL path; already-enabled PLL refresh through `RSCLKCFG.NEW_PLLFREQ`; successful PIOSC and board-MOSC OSCCLK orchestration; and timeout handling for both MOSC startup and PLL lock. |
+| Chapter 5 SYSCTL | `xApplication_MCU/SYSCTL/xSource/SYSCTL_Init.c` | `SYSCTL_Init_Test` | `covered` | Current target validates module validation, ordered IRQ-handler registration and interrupt-source setup, vector enable vs disable selection based on the requested mask, propagation of IRQ-registration and vector-state failures, and first-error early exit before later source or vector steps. |
+| Chapter 5 SYSCTL | `xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Vector.c` | `SYSCTL_InterruptRoutine_Vector_Test` | `covered` | Current target validates software callback dispatch when no architected `MISC` source is active plus per-source `MISC` clearing and callback dispatch order for BOR, MOSC failure, PLL lock, and MOSC power-up. |
+| Chapter 5 SYSCTL | `xApplication_MCU/SYSCTL/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine.c` | `SYSCTL_InterruptRoutine_Test` | `covered` | Current target validates that the SYSCTL IRQ routine getter returns the installed handler and that the pointer getter exposes the writable installed-handler storage used by the registration layer. |
+| Chapter 5 SYSCTL | `xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c` | `SYSCTL_InterruptRegisterIRQVector_Test` | `covered` | Current target validates SCB delegation for non-null SYSCTL IRQ handler registration through the fixed SYSCTL vector and installed-handler storage pointer, SCB error propagation, and null-handler suppression. |
+| Chapter 5 SYSCTL | `xApplication_MCU/SYSCTL/Interrupt/xSource/SYSCTL_InterruptVector.c` | `SYSCTL_InterruptVector_Test` | `covered` | Current target validates SYSCTL NVIC-vector enable routing, three-bit priority masking, disable delegation, and propagated NVIC error returns through the application interrupt-vector wrapper. |
+| Application TIMER | `xApplication_MCU/TIMER/xSource/TIMER_Init.c` | `TIMER_Init_Test` | `covered` | Current target validates ordered TIMER0A through TIMER7B IRQ-handler lookup and registration sequencing plus first-error early exit on IRQ-registration failure. |
+| Application TIMER | `xApplication_MCU/TIMER/Interrupt/InterruptRegister/xSource/TIMER_InterruptRegisterIRQVector.c` | `TIMER_InterruptRegisterIRQVector_Test` | `covered` | Current target validates module-to-vector mapping, installed-handler storage-pointer delegation, SCB error propagation, and null-handler suppression in the TIMER IRQ-register wrapper. |
+| Application TIMER | `xApplication_MCU/TIMER/Interrupt/xSource/TIMER_InterruptVector.c` | `TIMER_InterruptVector_Test` | `covered` | Current target validates wide-timer to A-vector mapping, selected TIMER vector routing, and propagated NVIC enable/disable error returns through the TIMER interrupt-vector wrapper. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c` | `SYSCTL_LDOVoltage_Test` | `covered` | Current target validates LDOSPCTL and LDODPCTL VLDO/VADJEN field routing, LDOSPCAL and LDODPCAL default-calibration field reads, null-pointer rejection, corrected single-bit VADJEN mask behavior, and read-error propagation through the primitive seam; the surrounding review also fixed LDO register-family definition inconsistencies. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_Voltage.c` | `SYSCTL_Voltage_Test` | `covered` | Current target validates PTBOCTL VDD/VDDA brown-out action field programming and decoding, grouped setter/getter sequencing and first-error behavior, PWRTC trip-status reads, PWRTC RW1C brown-out cause clears, null-pointer rejection, and trip-status read-error propagation through the primitive seam. |
+| Chapter 5 SYSCTL | post-closure chapter audit pending | none | `in-progress` | Chapter expansion now covers primitive, interrupt-source, RSCLKCFG, DSCLKCFG, MEMTIM0, PIOSC calibration/status, PLLFREQ/PLLSTAT, MOSCCTL, LDO, brown-out/voltage wrappers, SystemClock orchestration, and the full current `xApplication_MCU/SYSCTL` production inventory; any further Chapter 5 SYSCTL targets now require a fresh post-closure audit. |
 | Chapter 7 HIB | production module missing | none | `blocked` | No HIB production implementation exists yet in `TM4C129E_DriverLib`. |
 
 ## Current Test Inventory
@@ -220,6 +234,17 @@ Use this tracker to answer three questions quickly:
 - validates SYSCTL block-base address addition before `MCU__enWriteRegister`
 - validates module-validation error propagation in `SYSCTL__enWriteRegister`
 
+### SYSCTL_InterruptSource_Test
+
+- validates corrected single-bit IMC routing in the by-number enable and disable helpers
+- validates whole-mask IMC routing in the by-mask state helpers
+- validates corrected single-bit IMC routing in the by-number state getter
+- validates null-pointer rejection across the SYSCTL interrupt getter family
+- validates MISC RW1C routing in the by-mask and by-number clear helpers
+- validates RIS raw-status reads for by-mask and by-number queries
+- validates MISC masked-status reads for by-mask and by-number queries
+- validates parameter-validation and primitive error propagation in the interrupt helper family
+
 ### SYSCTL_AlternateClock_Test
 
 - validates ALTCLKCFG ALTCLK field programming in `SYSCTL__enSetAlternateClockSource`
@@ -236,6 +261,25 @@ Use this tracker to answer three questions quickly:
 - validates DIVSCLK EN, SRC, and DIV field reads in the individual getters
 - validates disable -> divisor -> source -> final-state ordering in `SYSCTL__enSetOutputClockConfig`
 - validates first-error early exit in `SYSCTL__enSetOutputClockConfig`
+
+### TIMER_Init_Test
+
+- validates ordered IRQ-handler lookup and registration across `TIMER0A` through `TIMER7B`
+- validates first-error early exit when TIMER IRQ registration fails mid-sequence
+
+### TIMER_InterruptRegisterIRQVector_Test
+
+- validates TIMER module/submodule mapping to the expected SCB timer vector
+- validates delegation of the selected TIMER installed-handler storage pointer to SCB registration
+- validates SCB error propagation in the TIMER IRQ-register wrapper
+- validates null-handler suppression in the TIMER IRQ-register wrapper
+
+### TIMER_InterruptVector_Test
+
+- validates wide-timer routing to the corresponding `TIMERxA` NVIC vector on enable
+- validates propagated NVIC enable-vector failure for mapped TIMER vectors
+- validates mapped TIMER vector routing on disable
+- validates propagated NVIC disable-vector failure for mapped TIMER vectors
 - validates divisor -> source -> state ordering in `SYSCTL__enGetOutputClockConfig`
 - validates first-error early exit in `SYSCTL__enGetOutputClockConfig`
 
@@ -333,6 +377,92 @@ Use this tracker to answer three questions quickly:
 - validates PIOSCCAL UT and UTEN field programming and readback in the user-calibration helpers
 - validates PIOSCCAL UPDATE and CAL command/status access in the calibration update and start helpers
 
+### SYSCTL_PLLCLock_Test
+
+- validates PLLFREQ0 PLLPWR field programming and decoding in the PLL state helpers
+- validates null-pointer rejection across the PLL state, divider-value, and lock-status getters
+- validates PLLFREQ0 MINT and MFRAC field access in the integer and fractional divider helpers
+- validates PLLFREQ1 Q and N field access in the divider helpers
+- validates PLLSTAT LOCK field reads plus grouped read-error propagation across the getter family
+
+### SYSCTL_MainOsc_Test
+
+- validates MOSCCTL CVAL and MOSCIM field programming and decoding in the monitor and failure-action helpers
+- validates NOXTAL and PWRDN field encoding and decoding in the public MOSC state and power-state helpers
+- validates MOSCCTL OSCRNG field access in the frequency-range helpers
+- validates null-pointer rejection across the MOSC getter family
+- validates grouped read-error propagation across the MOSC monitor, failure-action, state, power-state, and range getters
+
+### SYSCTL_SystemClock_Test
+
+- validates null-pointer rejection in the VCO and PLL frequency getters
+- validates the fixed nominal-frequency helper APIs for PIOSC, board MOSC, and LFIOSC plus null-pointer rejection
+- validates that the PIOSC-based PLL reference path derives the documented VCO frequency without reading MOSC state
+- validates that the MOSC-based VCO reference path only uses the nominal MOSC frequency when the crystal is connected and powered
+- validates alternate clock source selection across PIOSC, RTCOSC, and LFIOSC plus invalid-source rejection
+- validates non-MOSC oscillator source selection and divisor handling plus invalid-source rejection
+- validates system clock delegation across OSCCLK and PLLCLK selections
+- validates that MOSC-selected oscillator and output clock frequency getters return `0` when MOSC is unavailable
+- validates output clock delegation across PIOSC and SYSCLK selections plus invalid-source rejection
+- validates that the PLL frequency helper applies the programmed `RSCLKCFG.PLLSYSDIV + 1` divisor after the PIOSC-based VCO calculation
+- validates composite-setter rejection of zero and out-of-range requested clocks plus null configuration pointers
+- validates composite-setter rejection of unsupported PLL-source selections and invalid MOSC crystal values
+- validates successful OSCCLK orchestration for both the PIOSC path and the 25 MHz EK-TM4C129EXL MOSC path
+- validates that the PLL system-clock path computes the final `RSCLKCFG.PLLSYSDIV` from the configured VCO frequency on re-entry and does not read stale prior divider state
+- validates that the already-enabled PLL path refreshes the newly programmed PLL values through `RSCLKCFG.NEW_PLLFREQ` instead of re-enabling PLL power
+- validates composite-setter timeout handling while waiting for `PLLSTAT.LOCK` after PLL configuration
+- validates composite-setter timeout handling while waiting for MOSC power-up interrupt status
+
+### SYSCTL_Init_Test
+
+- validates module validation error propagation in `SYSCTL__enInit`
+- validates ordered IRQ handler registration and interrupt-source setup with final vector enable when the requested mask is non-zero
+- validates early exit when IRQ registration fails before source or vector configuration begins
+- validates ordered source setup with final vector disable when the requested mask is `SYSCTL_enINTMASK_NONE`
+- validates propagated failure returns from the final vector enable and vector disable branches
+- validates first-error early exit before later source-enable or vector-selection steps
+
+### SYSCTL_InterruptRoutine_Test
+
+- validates that the SYSCTL IRQ routine getter returns the currently installed vector handler
+- validates that the pointer getter exposes writable SYSCTL installed-handler storage for the registration layer
+
+### SYSCTL_InterruptRoutine_Vector_Test
+
+- validates software callback dispatch when no architected SYSCTL `MISC` bits are set
+- validates per-source `MISC` clearing and callback dispatch ordering for BOR, MOSC failure, PLL lock, and MOSC power-up
+
+### SYSCTL_InterruptRegisterIRQVector_Test
+
+- validates that non-null SYSCTL IRQ handler registration delegates through SCB using the fixed SYSCTL vector selector
+- validates that the wrapper propagates SCB registration errors for the fixed SYSCTL vector
+- validates that null SYSCTL IRQ handler registration is suppressed without disturbing the installed handler storage
+
+### SYSCTL_InterruptVector_Test
+
+- validates that interrupt-vector enable masks the public SYSCTL priority to three bits and delegates to the fixed SYSCTL NVIC vector
+- validates that interrupt-vector enable propagates NVIC enable-vector failures
+- validates that interrupt-vector disable delegates to the fixed SYSCTL NVIC vector
+- validates that interrupt-vector disable propagates NVIC disable-vector failures
+
+### SYSCTL_LDOVoltage_Test
+
+- validates LDOSPCTL and LDODPCTL VLDO field programming in the custom sleep and deep-sleep voltage setters
+- validates null-pointer rejection across the custom-voltage, default-voltage, and custom-use getter family
+- validates LDOSPCTL and LDODPCTL VLDO field reads in the custom voltage getters
+- validates LDOSPCAL WITHPLL/NOPLL and LDODPCAL KHZ30/NOPLL default-calibration field reads
+- validates corrected single-bit LDOSPCTL/LDODPCTL VADJEN routing in the custom-voltage use setters and getters
+- validates read-error propagation across the LDO getter family while preserving caller state
+
+### SYSCTL_Voltage_Test
+
+- validates PTBOCTL VDD_UBOR and VDDA_UBOR action field programming and decoding
+- validates grouped brown-out action setter and getter sequencing plus first-error propagation
+- validates null-pointer rejection in the individual brown-out action and trip-status getters
+- validates PWRTC VDD_UBOR and VDDA_UBOR trip-status reads
+- validates PWRTC RW1C write composition in the individual and combined brown-out cause clear helpers
+- validates brown-out trip-status read-error propagation while preserving caller state
+
 ### NVIC closure note
 
 - the previously covered NVIC slice remains stable after the pending-state and enable-state fixes
@@ -367,15 +497,15 @@ Use this tracker to answer three questions quickly:
 
 - OpenCppCoverage is installed and the latest report is under `coverage/opencppcoverage/`
 - mock bridge families now exist for SYSEXC, SYSTICK, and multiple NVIC seams
-- mirrored `xApplication_MCU` test subtree has started with SysTick calibration coverage, but broader wrapper coverage is still missing
+- mirrored `xApplication_MCU` test subtree now covers SysTick calibration plus SYSEXC and the full current SYSCTL init and interrupt wrapper inventory, but broader application-layer wrapper coverage is still missing
 - SYSCTL chapter coverage now includes the primitive register layer plus ALTCLKCFG, DIVSCLK, RSCLKCFG, DSCLKCFG, RESC, and NMIC wrapper coverage
 - SYSCTL chapter coverage now includes the reusable peripheral-generic seam across PP, PR, PC, SR, RCGC, SCGC, and DCGC wrapper families
-- SYSCTL chapter coverage now includes MEMTIM0 timing composition and PIOSC calibration/status wrapper coverage
+- SYSCTL chapter coverage now includes MEMTIM0 timing composition, PIOSC calibration/status wrappers, PLLFREQ/PLLSTAT wrappers, MOSCCTL wrappers, interrupt-source intrinsics, the full current application-layer SYSCTL init and interrupt wrapper inventory, LDO voltage wrappers, brown-out/voltage wrappers, and targeted SystemClock PLL-source, MOSC-availability, stale-divisor, already-enabled PLL refresh, OSCCLK happy-path, and MOSC/PLL-timeout regression coverage
 
 ## Recommended Next Targets
 
-1. `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PLLCLock.c`
-2. `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc.c`
+1. fresh Chapter 5 SYSCTL post-closure audit to replace the aggregate audit row with the next concrete production target
+2. next uncovered Chapter 5 SYSCTL production file selected by that audit
 
 ## Update Rule
 

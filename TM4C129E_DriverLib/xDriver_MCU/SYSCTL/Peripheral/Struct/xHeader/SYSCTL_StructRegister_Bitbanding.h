@@ -382,7 +382,7 @@ typedef volatile struct
 typedef volatile struct
 {
     volatile const UBase_t KHZ30[8UL];
-    volatile const UBase_t WITHPLL[8UL];
+    volatile const UBase_t NOPLL[8UL];
     const UBase_t reserved[16UL];
 }LDO_BITBANDING_DPCAL_t;
 

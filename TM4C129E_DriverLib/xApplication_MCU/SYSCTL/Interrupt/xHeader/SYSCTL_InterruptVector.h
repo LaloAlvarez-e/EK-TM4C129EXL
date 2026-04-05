@@ -27,7 +27,7 @@
 
 #include <xApplication_MCU/SYSCTL/Intrinsics/xHeader/SYSCTL_Defines.h>
 
-void SYSCTL__vEnInterruptVector(SYSCTL_nPRIORITY enSYSCTLPriority);
-void SYSCTL__vDisInterruptVector(void);
+SYSCTL_nERROR SYSCTL__enEnableInterruptVector(SYSCTL_nPRIORITY enSYSCTLPriority);
+SYSCTL_nERROR SYSCTL__enDisableInterruptVector(void);
 
 #endif /* XAPPLICATION_MCU_SYSCTL_INTERRUPT_XHEADER_SYSCTL_INTERRUPTVECTOR_H_ */

@@ -136,7 +136,7 @@ UART_nERROR UART__enSysExcReportCallback(void* pvContextArg, const SYSEXC_REPORT
     uxFpscrReg = 0UL;
 
     enErrorReg = (0UL == (uintptr_t) pstReportArg) ? UART_enERROR_POINTER : UART_enERROR_OK;
-    
+    enModuleReg = UART_enMODULE_0;
     if(UART_enERROR_OK == enErrorReg)
     {
         enModuleReg = (UART_nMODULE) (uintptr_t) pvContextArg;

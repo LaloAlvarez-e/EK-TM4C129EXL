@@ -1,0 +1,7 @@
+[2026-04-02 21:22:11] Started the next SYSCTL host-test slice after deferring the clock-calibration API work.
+- Request: skip the optional clock-calibration API for now and continue with the next SYSCTL coverage task.
+- Scope selected from current gap tracker: TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PLLCLock.c and TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc.c.
+- Initial findings:
+  - Both production sources are currently uncovered in the gap tracker and unregistered in TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/CMakeLists.txt.
+  - Both sources use the existing SYSCTL primitive register seam, so no new host seam is obviously required at the start of the investigation.
+  - Next step is to inspect hardware/register semantics and surrounding tests for possible production defects before implementing mirrored host tests.

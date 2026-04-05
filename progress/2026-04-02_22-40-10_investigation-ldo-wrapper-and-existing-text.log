@@ -1,0 +1,10 @@
+[2026-04-02 22:40:10] investigated SYSCTL LDO wrapper source and existing extracted text
+Reviewed TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c and related SYSCTL register define/struct headers.
+Confirmed wrapper-to-field mapping under investigation:
+- LDOSPCTL: VLDO, VADJEN
+- LDOSPCAL: NOPLL, WITHPLL
+- LDODPCTL: VLDO, VADJEN
+- LDODPCAL: NOPLL, KHZ30
+Searched progress/ and Documents/ for existing extracted manual text for those register and field names.
+Result: no manual text hits found in Documents/, so direct manual extraction is still required. Prior progress notes do confirm a separate code issue: VADJEN logical masks in SYSCTL_RegisterDefines_LDO.h appear inconsistent with the single-bit raw field.
+Status: investigation complete, moving to manual extraction.

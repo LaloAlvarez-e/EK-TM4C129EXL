@@ -1,0 +1,10 @@
+[2026-04-02 21:49:22] Started investigation and fix planning for the SYSCTL SystemClock PIOSC PLL-source defect.
+- Request: explain the previously logged SystemClock follow-up defect and fix it before continuing with the next uncovered SYSCTL wrappers.
+- Initial code and manual findings:
+  - In TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c, SYSCTL__enGetVCOClockFrequency() reads PLLSRC first.
+  - When PLLSRC is PIOSC, the current implementation still calls SYSCTL__enGetMOSCState() and zeroes the PLL input frequency if MOSC is disabled.
+  - TM4C1294 manual extracts state the PLL reference clocks are PIOSC and MOSC, selected by PLLSRC independently of MOSC state.
+- Planned resolution:
+  - remove the invalid MOSC-state dependency from the PIOSC branch in SYSCTL__enGetVCOClockFrequency()
+  - add a focused host regression target for SYSCTL_SystemClock.c that proves the PIOSC PLL path does not depend on MOSC state and still calculates the expected VCO/PLL frequencies
+  - update traceability, gap tracking, and validation logs after the regression is green

@@ -26,11 +26,12 @@
 #include <xApplication_MCU/TIMER/Interrupt/InterruptRoutine/TIMER_InterruptRoutine.h>
 #include <xApplication_MCU/TIMER/Intrinsics/xHeader/TIMER_Dependencies.h>
 
-void TIMER__vRegisterIRQVectorHandler(void (*pfIrqVectorHandler) (void),TIMER_nMODULE enModule)
+TIMER_nERROR TIMER__enRegisterIRQVectorHandler(void (*pfIrqVectorHandlerArg) (void), TIMER_nMODULE enModuleArg)
 {
-    SCB_nVECISR enVector = SCB_enVECISR_TIMER0A;
-    UBase_t uxModuleNumber = 0UL;
-    UBase_t uxSubModule = 0UL;
+  SCB_nVECISR enVectorReg = SCB_enVECISR_TIMER0A;
+  UBase_t uxModuleNumberReg = 0UL;
+  UBase_t uxSubModuleReg = 0UL;
+  TIMER_nERROR enErrorReg = TIMER_enERROR_OK;
 
     const SCB_nVECISR SCB_enVECISR_TIMER[(UBase_t) TIMER_enSUBMODULE_MAX - 1UL][(UBase_t) TIMER_enMODULE_NUM_MAX] =
     {
@@ -40,13 +41,16 @@ void TIMER__vRegisterIRQVectorHandler(void (*pfIrqVectorHandler) (void),TIMER_nM
           SCB_enVECISR_TIMER4B, SCB_enVECISR_TIMER5B, SCB_enVECISR_TIMER6B, SCB_enVECISR_TIMER7B}
     };
 
-    if(0UL != (UBase_t) pfIrqVectorHandler)
+  if(0UL != (UBase_t) pfIrqVectorHandlerArg)
     {
-        TIMER__vGetSubParams(enModule, &uxSubModule, &uxModuleNumber);
-        uxSubModule &= 0x1UL;
-        enVector = SCB_enVECISR_TIMER[uxSubModule][uxModuleNumber];
-        SCB__enRegisterIRQVectorHandler(SCB_enMODULE_0, enVector, pfIrqVectorHandler,
-                                       TIMER__pvfGetIRQVectorHandlerPointer((TIMER_nSUBMODULE) uxSubModule,
-                                                                            (TIMER_nMODULE_NUM) uxModuleNumber));
+    TIMER__vGetSubParams(enModuleArg, &uxSubModuleReg, &uxModuleNumberReg);
+    uxSubModuleReg &= 0x1UL;
+    enVectorReg = SCB_enVECISR_TIMER[uxSubModuleReg][uxModuleNumberReg];
+    enErrorReg = (TIMER_nERROR) SCB__enRegisterIRQVectorHandler(SCB_enMODULE_0,
+                                  enVectorReg,
+                                  pfIrqVectorHandlerArg,
+                                  TIMER__pvfGetIRQVectorHandlerPointer((TIMER_nSUBMODULE) uxSubModuleReg,
+                                                     (TIMER_nMODULE_NUM) uxModuleNumberReg));
     }
+  return (enErrorReg);
 }

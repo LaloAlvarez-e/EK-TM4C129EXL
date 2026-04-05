@@ -1,0 +1,3 @@
+[2026-04-03 01:44:40] Request manual verification for SYSCTL LDODPCAL field order.
+User requested an evidence-based check of the TM4C129E reference manual for SYSCTL Register 28 (LDODPCAL), specifically whether bits 7:0 and 15:8 map to NOPLL or 30KHZ/KHZ30.
+Scope includes cross-checking the current raw macros in TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_LDODPCAL.h and the struct/bitbanding member order in the SYSCTL peripheral struct headers.

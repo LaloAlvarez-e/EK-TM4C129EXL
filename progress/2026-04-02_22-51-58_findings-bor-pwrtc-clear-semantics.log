@@ -1,0 +1,6 @@
+[2026-04-02 22:51:58] Final findings for SYSCTL brown-out PWRTC clear-semantics review.
+Conclusion: PWRTC.VDD_UBOR and PWRTC.VDDA_UBOR are per-supply under-voltage BOR status bits in the PWRTC register, not interrupt-clear bits. The manual defines PWRTC as RW1C and those two fields as RW1C status bits, so writing 1 back to PWRTC clears those per-supply cause bits.
+Separate finding: the combined brown-out interrupt path is cleared through SYSCTL_MISC.BORMIS, which is documented RW1C and explicitly clears BORRIS. The combined reset cause is tracked by SYSCTL_RESC.BOR, which aggregates either VDD or VDDA BOR reset and is cleared by writing 0 to RESC.BOR.
+Independence: hardware supports independent clearing of PWRTC.VDD_UBOR and PWRTC.VDDA_UBOR, but not independent clearing of the combined interrupt or reset cause; BORRIS/BORMIS and RESC.BOR are combined for both supplies.
+Code cross-check: SYSCTL_Voltage.c functions at lines 139, 152, and 165 write to PWRTC, which is correct only for clearing PWRTC cause bits. SYSCTL_InterruptSource.c clears through SYSCTL_MISC at lines 179-215, which aligns with the documented interrupt-clear path.
+Validation note: direct full-PDF extraction was used for pages 278-283 because older chapter-specific OCR text had inconsistent page-number OCR and some field-name artifacts.

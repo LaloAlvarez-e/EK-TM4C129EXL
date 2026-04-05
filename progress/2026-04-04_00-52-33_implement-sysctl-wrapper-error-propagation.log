@@ -1,0 +1,25 @@
+[2026-04-04 00:52:33] Implemented the SYSCTL application-wrapper error-propagation redesign and recorded the post-edit audit.
+- Production files updated:
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xHeader/SYSCTL_InterruptRegisterIRQVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/xHeader/SYSCTL_InterruptVector.h
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/Interrupt/xSource/SYSCTL_InterruptVector.c
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/xSource/SYSCTL_Init.c
+- Host seam, test, and documentation files updated:
+  - TM4C129E_DriverLib_Test/support/include/tm4c129e_test/SYSCTL_InitDriverMock.h
+  - TM4C129E_DriverLib_Test/support/src/SYSCTL_InitDriverMock.cpp
+  - TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQVector_Test.cpp
+  - TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/Interrupt/xSource/SYSCTL_InterruptVector_Test.cpp
+  - TM4C129E_DriverLib_Test/xApplication_MCU/SYSCTL/xSource/SYSCTL_Init_Test.cpp
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+- Change summary:
+  - Replaced `SYSCTL__vRegisterIRQVectorHandler(...)` with `SYSCTL__enRegisterIRQVectorHandler(...)` returning `SYSCTL_nERROR` and propagating the fixed-vector SCB registration status.
+  - Restored the user-requested old cast-style null check in the SYSCTL IRQ-register wrapper and kept the existing null-handler no-op behavior, now returning `SYSCTL_enERROR_OK` on that path.
+  - Replaced `SYSCTL__vEnInterruptVector(...)` and `SYSCTL__vDisInterruptVector(...)` with `SYSCTL__enEnableInterruptVector(...)` and `SYSCTL__enDisableInterruptVector(...)`, both returning the underlying NVIC status as `SYSCTL_nERROR`.
+  - Updated `SYSCTL__enInit(...)` so IRQ-registration, vector-enable, and vector-disable failures stop the ordered init sequence and propagate to the caller.
+  - Updated focused host tests so the new SCB/NVIC failure-propagation paths are asserted explicitly instead of only checking delegation side effects.
+- Post-implementation audit:
+  - The SYSCTL application-layer wrappers in the current tree now align with the existing SYSEXC/SYSTICK enum-returning wrapper pattern.
+  - No additional SYSCTL application-layer `void` wrappers that discard enum-returning SCB/NVIC status were found in this follow-up pass.
+  - Older void-wrapper outliers still exist in other modules such as TIMER, but those are outside the current SYSCTL request and were left untouched.

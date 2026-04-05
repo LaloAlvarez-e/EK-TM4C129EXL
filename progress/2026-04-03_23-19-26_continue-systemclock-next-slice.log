@@ -1,0 +1,11 @@
+[2026-04-03 23:19:26] Continuing SYSCTL coverage after the explicit SystemClock re-entry regression landed.
+- Request: continue.
+- Live-state review this step:
+  - checked current repo diff to avoid unrelated user edits; only unrelated external change is in TM4C129E_DriverLib/xApplication_MCU/UART/xSource/UART_SYSEXC.c, which will be left untouched.
+  - confirmed SYSCTL_SystemClock.c remains the highest-value uncovered SYSCTL driver target in the gap tracker.
+  - re-read the current SYSCTL__enSetSystemClock() implementation to select the next narrow orchestration branch.
+- Initial branch candidates from the live code:
+  - PLL path when the PLL is already enabled and SYSCTL__enUpdatePLLValues() should be used instead of enabling PLL power again.
+  - PLL path timeout while waiting for PLL lock after configuration.
+  - OSCCLK happy-path combinations after the safe PIOSC staging sequence.
+- Next step: inspect the PLL-update helper usage and choose the smallest branch that closes a real remaining SystemClock orchestration seam.

@@ -1,0 +1,2 @@
+[2026-04-02 22:50:41] Capturing page context for the System Exception brown-out overview text that states VDD and VDDA BOR events are combined in system logic.
+This evidence is needed to answer whether separate VDD/VDDA interrupt-reset clearing is supported.

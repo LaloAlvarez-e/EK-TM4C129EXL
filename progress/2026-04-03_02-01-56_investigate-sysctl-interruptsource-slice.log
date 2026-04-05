@@ -1,0 +1,11 @@
+[2026-04-03 02:01:56] Investigated the next SYSCTL interrupt-source slice before adding standalone host coverage.
+- Scope selected: TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/SYSCTL_InterruptSource.c.
+- Test-structure decision: add a mirrored standalone test target under TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/ instead of continuing to cover the source only indirectly through SYSCTL_SystemClock_Test.
+- Seam assessment: the source fits the existing SYSCTL primitive read/write mock seam; no new overlay header or bridge is needed.
+- Adjacent production finding:
+  - SYSCTL__enSetInterruptSourceStateByNumber() and SYSCTL__enGetInterruptSourceStateByNumber() currently use `stRegister.uxMask = 0UL`.
+  - MCU__enWriteRegister() and MCU__enReadRegister() interpret non-base masks as logical post-shift field masks, so a zero logical mask collapses the field width to zero.
+  - Comparable interrupt-source implementations such as SYSEXC and UART use a single-bit logical mask for equivalent by-number helpers.
+- Decision:
+  - fix the SYSCTL IMC by-number state helpers to use the proper single-bit logical mask before locking the behavior in standalone host tests
+  - add focused tests for enable/disable, state reads, clear, raw status, masked status, null-pointer handling, invalid-range handling, and primitive error propagation.

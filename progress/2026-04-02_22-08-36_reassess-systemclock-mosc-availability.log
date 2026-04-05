@@ -1,0 +1,11 @@
+[2026-04-02 22:08:36] Reassessed the SYSCTL SystemClock defect interpretation after the follow-up clarification about MOSC availability.
+- Request: before moving to the next SYSCTL wrapper targets, verify whether the previously removed branch actually represented a MOSC-availability check that belongs elsewhere.
+- Findings from source and test review:
+  - The removed branch was inside the `RSCLKCFG.PLLSRC = PIOSC` path, so it still did not belong there.
+  - `SYSCTL__enGetMOSCState()` in TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc.c reads `MOSCCTL.NOXTAL`, which represents crystal connection state, not MOSC power enable.
+  - `SYSCTL__enGetMOSCPowerState()` is the function that reads `MOSCCTL.PWRDN` for MOSC power availability.
+  - Existing frequency helpers returned the nominal MOSC frequency without checking MOSC availability whenever MOSC was the selected runtime source.
+- Decision:
+  - Keep the earlier PIOSC fix in place.
+  - Add a dedicated local helper so MOSC-backed runtime frequency paths check MOSC crystal connection and power state only on the MOSC branches.
+  - Extend SYSCTL_SystemClock host tests to cover the corrected MOSC-available and MOSC-unavailable cases.

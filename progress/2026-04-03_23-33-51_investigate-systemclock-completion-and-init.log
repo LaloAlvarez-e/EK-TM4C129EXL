@@ -1,0 +1,12 @@
+[2026-04-03 23:33:51] Investigated the remaining SYSCTL SystemClock closure work before moving on to SYSCTL init.
+- Request: complete the current functions first and then move to the init path.
+- Files reviewed:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock_Test.cpp
+  - TM4C129E_DriverLib/xApplication_MCU/SYSCTL/xSource/SYSCTL_Init.c
+- Current assessment:
+  - The focused SystemClock target now covers the PLL/VCO regressions and timeout paths, but several public helper functions still lack direct host coverage: alternate clock, full system-clock delegation, and the non-MOSC oscillator/output source branches.
+  - The main remaining `SYSCTL__enSetSystemClock()` gaps are the OSCCLK happy path, the MOSC low/high-range setup success path, and validation branches for unsupported PLL source selections and invalid MOSC crystal ranges.
+  - SYSCTL_Init.c is a small ordered wrapper around module validation, IRQ-vector registration, interrupt-source disable/clear/enable sequencing, and NVIC enable/disable selection based on the requested mask.
+- Planned next step:
+  - finish SystemClock by covering the remaining public helper branches and OSCCLK success/validation paths, then start a mirrored host target for SYSCTL_Init.c.

@@ -1,0 +1,24 @@
+[2026-04-02 22:15:27] Validated the SYSCTL SystemClock MOSC-availability follow-up after correcting the earlier defect interpretation.
+- Request context: confirm whether the removed branch should instead enforce MOSC availability before reporting MOSC-backed clock frequencies.
+- Production update completed:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c
+  - Added a local `SYSCTL_enGetMOSCAvailableFrequency()` helper that checks both `MOSCCTL.NOXTAL` through `SYSCTL__enGetMOSCState()` and `MOSCCTL.PWRDN` through `SYSCTL__enGetMOSCPowerState()`.
+  - Routed the MOSC branches in `SYSCTL__enGetVCOClockFrequency()`, `SYSCTL__enGetOscillatorFrequency()`, and `SYSCTL__enGetOutputClockFrequency()` through that helper.
+  - Kept the earlier PIOSC-path fix in place, because the PIOSC PLL-reference path still must not depend on MOSC state.
+- Host regression coverage expanded:
+  - TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock_Test.cpp
+  - Added MOSC-available VCO coverage plus MOSC-unavailable oscillator/output frequency coverage while preserving the existing PIOSC and PLL-divisor checks.
+- Documentation updated:
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md
+  - TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md
+  - Traceability now records the corrected MOSC-availability requirements and the gap tracker now describes the expanded targeted SystemClock coverage accurately.
+- Validation results:
+  - Edited files reported no diagnostics.
+  - Focused build for SYSCTL_SystemClock_Test completed successfully.
+  - SYSCTL_SystemClock_Test.exe: 6/6 tests passed.
+  - Full suite validation completed successfully: 257/257 tests passed, 0 failed, total real time 1.74 sec.
+- Coverage note:
+  - This follow-up did not rerun the XML coverage export; validation for this correction was completed with diagnostics plus focused and full test execution.
+- Conclusion:
+  - The earlier removed branch still did not belong on the PIOSC path.
+  - The corrected behavior is to gate MOSC-derived runtime frequency calculations on MOSC availability only when MOSC is the selected source.

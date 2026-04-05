@@ -161,3 +161,61 @@ tm4c129e_driverlib_add_unit_test(
     MOCK_SOURCES
         ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
 )
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PLLCLock_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PLLCLock_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PLLCLock.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_MainOsc_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_MainOsc_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_SystemClock_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_SystemClock_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_GatingClock.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_AlternateClock.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_OutputClock.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PLLCLock.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MemoryTiming.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/SYSCTL_InterruptSource.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_MCURegisterAccessMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_LDOVoltage_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_LDOVoltage_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_Voltage_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_Voltage_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_Voltage.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)

@@ -1,0 +1,11 @@
+[2026-04-03 01:55:01] Review result for the current LDO_BITBANDING_DPCAL_t member order.
+- Reviewed current live state in SYSCTL_StructRegister_Bitbanding.h and SYSCTL_StructRegister.h after the user modification.
+- Manual evidence from Register 28 LDODPCAL, page 318, confirms bits 15:8 are NOPLL and bits 7:0 are 30KHZ.
+- Therefore the current struct order `KHZ30` first, then `NOPLL`, is correct for the repo's low-to-high bitfield and bitbanding member layout.
+- Remaining defect is in the raw register macros:
+  - SYSCTL_RegisterDefines_LDODPCAL.h still defines NOPLL at bit 0 and KHZ30 at bit 8.
+  - SYSCTL_RegisterDefines_LDO.h mirrors the same reversed mapping.
+- Impacted wrapper/test paths still follow the reversed macro mapping:
+  - SYSCTL_LDOVoltage.c deep-sleep default-voltage getters.
+  - SYSCTL_LDOVoltage_Test.cpp expectations for LDODPCAL field reads.
+- No production code was edited in this review-only step.

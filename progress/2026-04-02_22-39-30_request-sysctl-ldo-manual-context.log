@@ -1,0 +1,5 @@
+[2026-04-02 22:39:30] request manual context for SYSCTL LDOSPCTL/LDOSPCAL/LDODPCTL/LDODPCAL fields
+User requested read-only lookup of TM4C129E manual page context for SYSCTL registers LDOSPCTL, LDOSPCAL, LDODPCTL, and LDODPCAL, specifically fields VLDO, VADJEN, NOPLL, WITHPLL, and KHZ30 used by SYSCTL_LDOVoltage.c.
+Required output: page numbers or nearest register-page context, a short manual-basis traceability sentence, and an assessment of whether wrappers are direct register-field wrappers or semantic translations.
+Planned actions: inspect wrapper source, search existing notes/extracted text, then use direct PDF extraction if needed.
+Status: started.

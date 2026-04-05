@@ -1,0 +1,13 @@
+[2026-04-03 22:49:49] Explained the SYSCTL__enGetVCOClockFrequency change against the current and original SystemClock implementation.
+- Request: clarify why the change was made, what real runtime cases it affects, and why an existing 120 MHz hardware configuration can still work with the original implementation.
+- Files reviewed:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_SystemClock.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_MainOsc.c
+  - .tmp/tm4c1294_sysexc_ch6/page_018.txt
+  - .tmp/tm4c1294_sysexc_ch6/page_019.txt
+  - progress/2026-04-02_21-28-54_record-systemclock-pll-piosc-followup.log
+- Key explanation points captured:
+  - The original VCO helper incorrectly gated the PIOSC PLL-reference path on MOSC state, even though the manual documents PIOSC and MOSC as independent PLL reference selections via PLLSRC.
+  - The old behavior is latent on boards where the external crystal is connected and MOSC remains available, so common 120 MHz configurations can still work unchanged.
+  - The practical failure case is when PLLSRC selects PIOSC but software or hardware marks MOSC unavailable; then the old helper can return a zero or invalid reference path even though the PLL reference is PIOSC.
+  - A separate later fix in SYSCTL__enSetSystemClock about stale PLL divisors is distinct from this VCO-helper change.

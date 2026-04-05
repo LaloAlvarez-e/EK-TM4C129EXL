@@ -1,0 +1,12 @@
+[2026-04-02 22:29:39] Started the next SYSCTL host-test slice for LDO voltage and brown-out voltage helpers.
+- Request: continue with point 1 on TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c and TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_Voltage.c.
+- Initial scope:
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c
+  - TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_Voltage.c
+  - mirrored host tests under TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/xSource/
+- Pre-implementation findings:
+  - Both sources fit the existing SYSCTL primitive seam cleanly and should not need new overlay headers or mock bridges.
+  - SYSCTL_RegisterDefines_LDO.h defines both logical VADJEN masks as 0x000000F01 even though the corresponding raw field is a single bit at bit 31 and the MMIO bitfield structs also define VADJEN as width 1.
+  - SYSCTL__enWriteRegister and SYSCTL__enReadRegister interpret logical masks after shifting, so the current VADJEN logical masks can affect unrelated bits and represent a production defect rather than a test-only issue.
+- Planned next step:
+  - correct the LDO VADJEN logical masks, add focused SYSCTL_LDOVoltage and SYSCTL_Voltage host tests, then update traceability, gap tracking, and validation logs.

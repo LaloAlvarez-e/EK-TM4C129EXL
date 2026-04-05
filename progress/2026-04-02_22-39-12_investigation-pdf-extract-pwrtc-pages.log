@@ -1,0 +1,3 @@
+[2026-04-02 22:39:12] Began narrow official-PDF extraction for missing SYSCTL pages.
+Reason: existing .tmp SYSCTL chapter extract ends before the MISC, RESC, and PWRTC pages needed to answer the brown-out clear-semantics question.
+Method: Ghostscript render plus Tesseract OCR on a limited page range expected to cover manual pages 265-269.
