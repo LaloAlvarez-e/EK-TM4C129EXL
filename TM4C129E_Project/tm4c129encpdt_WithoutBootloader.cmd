@@ -15,8 +15,8 @@ MEMORY
     FLASH_BANK23 (RX) : origin = 0x00080000, length = 0x00080000
     SRAM_VTABLE (RWX) : origin = 0x20000000, length = 0x00000400 /*1K*/
     SRAM_DMA (RW) : origin = 0x20000400, length = 0x00000400
-    SRAM_CODE (RWX) : origin = 0x20000800, length = 0x00001200 /*5K*/
-    SRAM (RW) : origin = 0x20001A00, length = 0x00021600
+    SRAM_CODE (RWX) : origin = 0x20000800, length = 0x00002200 /*8.5K*/
+    SRAM (RW) : origin = 0x20002A00, length = 0x00020600
     SRAM_DYNAMIC (RW) : origin = 0x20023000, length = 0x0001CE00 /*32K*/
     SRAM_MAIN_STACK (RW) : origin = 0x2003FE00, length = 0x00000200 /*1.5K*/
 }
@@ -41,9 +41,16 @@ SECTIONS
         *(.intvecs)
         __intvec_end__ = .;
     } > 0x00000000
-    .text   :   > FLASH_BANK01
+    .text :
+    {
+        *(.text*)
+    } > FLASH_BANK01
     .switch :   > FLASH_BANK01
-    .const  :   > FLASH_BANK23
+    .const :
+    {
+        *(.const*)
+        *(.rodata*)
+    } > FLASH_BANK23
     .cinit  :   > FLASH_BANK01
     .binit  :   > FLASH_BANK01
     .pinit  :   > FLASH_BANK01
@@ -51,7 +58,6 @@ SECTIONS
     .ARM.exidx : > FLASH_BANK01
     .ARM.extab :
     {
-        *(.ARM.extab*)
         __flash_exec_end__ = .;
     } > FLASH_BANK01
 
@@ -68,13 +74,17 @@ SECTIONS
                 RUN_START(__ramcode_start__),
                 RUN_END(__ramcode_end__)
 
-    .data  : LOAD = FLASH_BANK23,
+     .data :  {
+                     *(.data*)
+                 } LOAD = FLASH_BANK23,
                 RUN = SRAM,
                 LOAD_START(__data_load__),
                 LOAD_END(__data_load_end__),
                 RUN_START(__data_start__),
                 RUN_END(__data_end__)
-    .bss    :  RUN = SRAM,
+     .bss :    {
+                     *(.bss*)
+                 } RUN = SRAM,
                 RUN_START(__bss_start__),
                 RUN_END(__bss_end__)
 

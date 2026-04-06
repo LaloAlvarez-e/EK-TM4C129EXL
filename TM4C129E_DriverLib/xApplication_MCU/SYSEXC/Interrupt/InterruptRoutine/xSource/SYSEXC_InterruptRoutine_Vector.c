@@ -70,9 +70,9 @@ void SYSEXC__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgument)
     puxContextOffset += 6UL;
     uxSysExcAddressFault = *puxContextOffset;
 
-    stReport.enModule = 0;
-    stReport.enSource = 0;
-    stReport.enStatusMask = 0;
+    stReport.enModule = SYSEXC_enMODULE_0;
+    stReport.enSource = SYSEXC_enINT_DENORMAL;
+    stReport.enStatusMask = SYSEXC_enINTMASK_NONE;
     stReport.uxFaultAddress = 0;
     stReport.uxICSR = 0;
     stReport.uxActiveVector = 0;

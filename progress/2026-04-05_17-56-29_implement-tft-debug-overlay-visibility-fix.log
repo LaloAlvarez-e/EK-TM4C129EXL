@@ -1,0 +1,13 @@
+[2026-04-05 17:56:29] Implemented a TFT overlay visibility fix so debug/status text remains readable on the ST7735 image screen.
+- File edited:
+  - `TM4C129E_Project/xTask/xSource/xTask9_TFT.c`
+- Root cause addressed:
+  - Task 9 drew white 5x7 text directly on top of the moving image buffer, so the overlay could effectively disappear against bright or detailed image regions even though the rendering path was still running.
+- Fix applied:
+  - Added a local buffer-rectangle helper for the 128x128 ST7735 framebuffer.
+  - Added a small info-panel compositor that paints opaque black strips behind each two-line text block.
+  - Kept the existing image and text drawing order, but now clears the text bands immediately before `ST7735__vBufferString(...)` calls.
+- Expected result:
+  - The TFT continues showing the image, but the button/joystick/accelerometer/period overlay becomes readable again instead of blending into the image.
+- Status:
+  - Implementation complete.

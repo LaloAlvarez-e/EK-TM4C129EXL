@@ -1,0 +1,10 @@
+[2026-04-05 19:10:49] Validated the SYSCTL raw MPC/PDS register regression target.
+- Static validation: `get_errors` reported no IDE errors in the touched SYSCTL raw register headers, the new `SYSCTL_ModulePowerRegisters_Test.cpp`, or the updated coverage/traceability files.
+- Reconfigured and rebuilt the host-test tree from `TM4C129E_DriverLib_Test/build` with `cmake -S .. -B .` followed by `cmake --build . --config Debug --target SYSCTL_ModulePowerRegisters_Test`.
+- Build result: success; the new target compiled and linked to `TM4C129E_DriverLib_Test/build/xDriver_MCU/SYSCTL/Peripheral/Register/xSource/Debug/SYSCTL_ModulePowerRegisters_Test.exe`.
+- Focused execution command: `ctest -C Debug --output-on-failure -R "SYSCTLModulePowerRegistersTest"` from `TM4C129E_DriverLib_Test/build`.
+- Focused execution result: 3 of 3 tests passed.
+  - `SYSCTLModulePowerRegistersTest.UsbModulePowerRegistersUseDocumentedOffsetsValuesAndMutability`
+  - `SYSCTLModulePowerRegistersTest.EmacModulePowerRegistersUseDocumentedOffsetsValuesAndMutability`
+  - `SYSCTLModulePowerRegistersTest.CanModulePowerRegistersUseDocumentedOffsetsValuesAndMutability`
+- Validation outcome: the corrected raw `USB/EMAC/CAN` `MPC/PDS` surface is now guarded by focused host regression coverage and the previously detected mutability/truncation defects are no longer exposed.

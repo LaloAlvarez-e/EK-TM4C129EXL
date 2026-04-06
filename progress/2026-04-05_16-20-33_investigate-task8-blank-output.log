@@ -1,0 +1,17 @@
+[2026-04-05 16:20:33] Investigated the new report that Task 8 is no longer showing anything.
+- User report:
+  - Now it is not showing anything.
+- Immediate checks:
+  - Re-read the active Debug linker command file and confirmed the prior `.ramcode` fix is still present.
+  - Re-read current `TM4C129E_Project/xTask/xSource/xTask8_Debug.c`.
+  - Re-read current `TM4C129E_Project/xTask/xSource/xTask3_ButtonsLog.c`.
+  - Re-read current `TM4C129E_Project/main.c` task and semaphore creation section.
+- Current findings:
+  - The active Debug linker file remains consistent with the prior successful build, so the blank output symptom is likely runtime/display-path related rather than the earlier linker overflow.
+  - `xTask8_Debug()` currently clears the GraphTerm screen in both system-info and live-data mode helpers.
+  - Task 8 still waits on `MainSemaphoreHandle` before entering the display path.
+  - Joystick select still gives `DebugDataSemaphoreHandle` from Task 3.
+- Next step:
+  - Trace where `MainSemaphoreHandle` is given and inspect GraphTerm clear/printf behavior to determine whether the screen is being cleared without repaint or whether Task 8 is not reaching the display code.
+- Status:
+  - Investigation in progress.

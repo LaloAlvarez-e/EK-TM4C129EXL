@@ -201,14 +201,14 @@
 /******************************************************************************************
 ************************************29 SDPMST *********************************************
 ******************************************************************************************/
-#define SYSCTL_SDP_MST    ((SDP_MST_t*) (SYSCTL_BASE + SDP_MSTL_OFFSET))
+#define SYSCTL_SDP_MST    ((SDP_MST_t*) (SYSCTL_BASE + SDP_MST_OFFSET))
 #define SYSCTL_SDP_MST_R    (*((volatile const UBase_t*) (SYSCTL_BASE + SDP_MST_OFFSET)))
 
 /******************************************************************************************
 ************************************30 RESBEHAVCTL *********************************************
 ******************************************************************************************/
-#define SYSCTL_RESET_BEHAVCTL    ((RESET_BEHAVCTL_t*) (SYSCTL_BASE + RESET_BEHAVCTLL_OFFSET))
-#define SYSCTL_RESET_BEHAVCTL_R    (*((volatile const UBase_t*) (SYSCTL_BASE + RESET_BEHAVCTL_OFFSET)))
+#define SYSCTL_RESET_BEHAVCTL    ((RESET_BEHAVCTL_t*) (SYSCTL_BASE + RESET_BEHAVCTL_OFFSET))
+#define SYSCTL_RESET_BEHAVCTL_R    (*((volatile UBase_t*) (SYSCTL_BASE + RESET_BEHAVCTL_OFFSET)))
 
 /******************************************************************************************
 ************************************31 HSSR *********************************************
@@ -226,18 +226,18 @@
 ************************************33 USB_MPC *********************************************
 ******************************************************************************************/
 #define SYSCTL_USB_MPC    ((USB_MPC_t*) (SYSCTL_BASE + USB_MPC_OFFSET))
-#define SYSCTL_USB_MPC_R    (*((volatile const UBase_t*) (SYSCTL_BASE + USB_MPC_OFFSET)))
+#define SYSCTL_USB_MPC_R    (*((volatile UBase_t*) (SYSCTL_BASE + USB_MPC_OFFSET)))
 
 /******************************************************************************************
 ************************************34 EMACPDS *********************************************
 ******************************************************************************************/
 #define SYSCTL_EMAC_PDS    ((EMAC_PDS_t*) (SYSCTL_BASE + EMAC_PDS_OFFSET))
-#define SYSCTL_EMAC_PDS_R    (*((volatile const UBase_t*) (SYSCTL_BASE + EMAC_PDS_OFFSET
+#define SYSCTL_EMAC_PDS_R    (*((volatile const UBase_t*) (SYSCTL_BASE + EMAC_PDS_OFFSET)))
 /******************************************************************************************
 ************************************35 EMACMPC *********************************************
 ******************************************************************************************/
 #define SYSCTL_EMAC_MPC    ((EMAC_MPC_t*) (SYSCTL_BASE + EMAC_MPC_OFFSET))
-#define SYSCTL_EMAC_MPC_R    (*((volatile const UBase_t*) (SYSCTL_BASE + EMAC_MPC_OFFSET)))
+#define SYSCTL_EMAC_MPC_R    (*((volatile UBase_t*) (SYSCTL_BASE + EMAC_MPC_OFFSET)))
 
 /******************************************************************************************
 ************************************36 CAN0PDS *********************************************
@@ -249,7 +249,7 @@
 ************************************37 CAN0MPC *********************************************
 ******************************************************************************************/
 #define SYSCTL_CAN0_MPC    ((CAN0_MPC_t*) (SYSCTL_BASE + CAN0_MPC_OFFSET))
-#define SYSCTL_CAN0_MPC_R    (*((volatile const UBase_t*) (SYSCTL_BASE + CAN0_MPC_OFFSET)))
+#define SYSCTL_CAN0_MPC_R    (*((volatile UBase_t*) (SYSCTL_BASE + CAN0_MPC_OFFSET)))
 
 /******************************************************************************************
 ************************************38 CAN1PDS *********************************************
@@ -261,7 +261,7 @@
 ************************************39 CAN1MPC *********************************************
 ******************************************************************************************/
 #define SYSCTL_CAN1_MPC    ((CAN1_MPC_t*) (SYSCTL_BASE + CAN1_MPC_OFFSET))
-#define SYSCTL_CAN1_MPC_R    (*((volatile const UBase_t*) (SYSCTL_BASE + CAN1_MPC_OFFSET)))
+#define SYSCTL_CAN1_MPC_R    (*((volatile UBase_t*) (SYSCTL_BASE + CAN1_MPC_OFFSET)))
 
 
 

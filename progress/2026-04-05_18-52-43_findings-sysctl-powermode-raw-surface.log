@@ -1,0 +1,16 @@
+[2026-04-05 18:52:43] Compared the SYSCTL raw power-mode register surface against the TM4C129X reference-manual extract for SLPPWRCFG, DSLPPWRCFG, and SDPMST.
+Manual facts:
+- `SLPPWRCFG.FLASHPM` is a 2-bit field at bits 5:4 (TM4C129X Chapter 5, pp.308-309).
+- `DSLPPWRCFG.FLASHPM` is a 2-bit field at bits 5:4, with `TSPD` at bit 8 and `LDOSM` at bit 9 (pp.309-311).
+- `SDPMST` is read-only at offset `0x1CC`, with status bits `PRACT` 16, `LOWPWR` 17, `FLASHLP` 18, and `LDOUA` 19 (pp.319-321).
+Code facts:
+- `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_SLPPWRCFG.h` defines `SLPPWR_CFG_R_FLASH_PM_MASK = 0x30` but `SLPPWR_CFG_R_FLASH_PM_BIT = 2`, which does not match the documented field position.
+- `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_DSLPPWRCFG.h` repeats the same `FLASHPM` bit-position defect.
+- `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral.h` uses typoed offset names `SDP_MSTL_OFFSET` and `RESET_BEHAVCTLL_OFFSET` in the typed pointer macros, while `SYSCTL_RegisterAddress.h` defines the correct macros `SDP_MST_OFFSET` and `RESET_BEHAVCTL_OFFSET`.
+- `SYSCTL_RegisterPeripheral_Bitbanding.h` derives the `FLASHPM` bit-band aliases from the incorrect `*_FLASH_PM_BIT` definitions, so the bad shift propagates into the bit-band surface.
+Surrounding review:
+- `SYSCTL_StructRegister.h` already models `SLPPWR_CFG_t`, `DSLPPWR_CFG_t`, and `SDP_MST_t` with the documented field ordering; no struct-layout change is required for this slice.
+- There is no existing mirrored `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Peripheral/...` raw-register test subtree yet, so a new focused host-test target is required if this raw surface is to stay regression-protected.
+Decision:
+- Fix the incorrect `FLASHPM` shift definitions and the typoed pointer-offset macros.
+- Add a mirrored SYSCTL peripheral raw-register host test that validates documented offsets, masks, shifts, typed pointer macros, and bit-band aliases for `SLPPWRCFG`, `DSLPPWRCFG`, and `SDPMST`.

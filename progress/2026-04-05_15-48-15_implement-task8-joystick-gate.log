@@ -1,0 +1,24 @@
+[2026-04-05 15:48:15] Implemented joystick-press gating for Task 8 live data in TM4C129E_Project.
+- Files edited:
+  - `TM4C129E_Project/xTask/xHeader/xSemaphores.h`
+  - `TM4C129E_Project/xTask/xSource/xSemaphores.c`
+  - `TM4C129E_Project/main.c`
+  - `TM4C129E_Project/xTask/xSource/xTask3_ButtonsLog.c`
+  - `TM4C129E_Project/xTask/xSource/xTask8_Debug.c`
+- Implementation summary:
+  - Added new shared handle `DebugDataSemaphoreHandle` to the project semaphore registry.
+  - Created `DebugDataSemaphoreHandle` as a binary semaphore in `main.c` alongside the existing task synchronization objects.
+  - Updated `xTask3_ButtonsLog` to give the semaphore when the joystick select input transitions into `EDUMKII_enJOYSTICK_PRESS`.
+  - Updated `xTask8_Debug` to remain in system-info mode until the new semaphore is taken.
+  - Added user-facing Task 8 status lines so the UART debug screen now shows:
+    - startup system information immediately
+    - an instruction to press the joystick select button
+    - a waiting state until the press occurs
+    - live Task 8 data after the press is received
+- Surrounding implementation review before and after the edit:
+  - Reused the existing project-level RTOS handle pattern in `xSemaphores.h/.c` instead of adding ad hoc globals.
+  - Kept the change in project task orchestration only; no startup or linker changes were required.
+  - Used a binary semaphore instead of a mutex because the requirement is an inter-task start signal, not shared-resource ownership.
+  - No queue-set changes were needed because Task 8 receives the event directly through the new semaphore.
+- Status:
+  - Implementation complete.

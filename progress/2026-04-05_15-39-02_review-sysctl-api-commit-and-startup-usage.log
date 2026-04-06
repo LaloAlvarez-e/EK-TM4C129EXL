@@ -1,0 +1,22 @@
+[2026-04-05 15:39:02] Reviewed the requested BOOTCFG and USER_REG commit step and selected a concrete runtime integration path for the new SYSCTL getter APIs.
+- User request:
+  - First commit the BOOTCFG and USER_REG changes.
+  - Then evaluate whether the new SYSCTL getter APIs should be used to verify startup or active feature assumptions, and use them if they improve practical feature usage.
+- Investigation performed:
+  - Re-read the externally changed `SYSCTL_BootConfig.h` and `SYSCTL_UserRegisters.h` headers before planning any new edits.
+  - Checked the working tree and found it clean.
+  - Checked recent git history and found the recent SYSCTL getter batch already committed as `ac54c06d` with subject `Adding new SYSCTL APIs`.
+  - Explored the current firmware startup and debug paths to find a natural integration point for the new read-only SYSCTL APIs.
+- Decision:
+  - Do not create an artificial extra commit for BOOTCFG or USER_REG because there are no uncommitted changes left to commit in the current tree.
+  - Use the existing `TM4C129E_Project/xTask/xSource/xTask8_Debug.c` console task as the least intrusive runtime integration point.
+  - The debug task already owns UART/GraphTerm reporting, so it can surface startup-relevant SYSCTL data without altering boot wiring or linker surfaces.
+- Planned runtime usage:
+  - Report Device ID and pin-count information from `SYSCTL_DeviceID`.
+  - Report the flash-write-buffer capability from `SYSCTL_NonVolatileMemoryInfo`.
+  - Report boot GPIO strap information from `SYSCTL_BootConfig`.
+  - Report system capability bits from `SYSCTL_SystemProperties`.
+  - Report reset-vector pointer, unique ID, and USER_REG values as manufacturing/boot diagnostics.
+- Status:
+  - Commit step already satisfied by existing history.
+  - Runtime integration implementation pending.

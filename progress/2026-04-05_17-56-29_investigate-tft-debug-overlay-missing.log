@@ -1,0 +1,12 @@
+[2026-04-05 17:56:29] Investigating report that UART debug output works but the TFT only shows the image and not the debug overlay text.
+- User observation:
+  - Task 8 system-info and live-data text is visible.
+  - The physical screen now shows only the image, without the debug text overlay.
+- Immediate findings:
+  - `xTask8_Debug.c` prints through `GraphTerm__uxPrintf(UART_enMODULE_0, ...)`, so the pasted debug text is the UART/terminal path, not the TFT path.
+  - `xTask9_TFT.c` still owns the ST7735 display overlay and draws text via `ST7735__vBufferString(..., &FONT_s5x7)` on top of the image buffer.
+  - The recent linker warning cleanup explicitly changed how `.data.FONT_s5x7` is placed, so the font object and text-rendering path must be verified.
+- Next step:
+  - Inspect `FONT_s5x7` definition and ST7735 string rendering implementation, then determine whether the missing overlay is caused by font initialization/placement or by the image/text composition path.
+- Status:
+  - Investigation in progress.

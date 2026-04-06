@@ -1,0 +1,12 @@
+[2026-04-05 16:11:31] Implemented fixes for the reported Task 8 visibility issue and the Debug `.ramcode` linker overflow.
+- Task 8 change:
+  - Updated `TM4C129E_Project/xTask/xSource/xTask8_Debug.c` so each mode transition performs a clear-screen and cursor reset before redrawing the selected mode header and content.
+  - This makes the joystick-triggered mode toggle visually explicit instead of leaving stale text on screen.
+- Debug linker change:
+  - Updated the active CCS Debug linker command file `TM4C129E_Project/tm4c129encpdt_WithoutBootloader.cmd`.
+  - Increased `SRAM_CODE` from `0x1200` to `0x2200` and shifted the following `SRAM` region start from `0x20001A00` to `0x20002A00`, reducing only general SRAM to keep the overall layout end unchanged.
+  - Rationale: the existing generated `Debug__TI/TM4C129E_Project.map` showed `.ramcode` size about `0x19f8`, which cannot fit into the previous `0x1200` region.
+- Consistency update:
+  - Mirrored the same RAM-code expansion in `TM4C129E_Project/tm4c129encpdt_WithoutBootloader.lds` for the GNU linker script variant.
+- Companion-path review:
+  - Confirmed the generated Debug makefile links with `../tm4c129encpdt_WithoutBootloader.cmd`, so the edited file matches the active TI Debug configuration.

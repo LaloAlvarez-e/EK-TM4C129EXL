@@ -1,0 +1,16 @@
+[2026-04-05 16:09:48] Investigated the reported Task 8 issue together with the Debug linker failure `#10099-D` for `.ramcode`.
+- User report:
+  - The function is not working.
+  - Debug build fails with `#10099-D program will not fit into available memory` for section `.ramcode`.
+- Investigation performed:
+  - Re-read current `TM4C129E_Project/xTask/xSource/xTask8_Debug.c` toggle implementation.
+  - Searched the project for `.ramcode` placement sources and RAM-code pragmas.
+  - Inspected existing generated debug artifacts under `TM4C129E_Project/Debug__TI`.
+- Key finding:
+  - The Debug build overflow is not caused by the recent Task 8 code.
+  - The existing `Debug__TI/TM4C129E_Project.map` already shows `.ramcode` failed to allocate at size about `0x19f8`, with large contributions from FLASH and MCU DriverLib objects.
+  - Current linker memory layout only reserves `SRAM_CODE` length `0x1000`, which is smaller than the required `.ramcode` section size.
+- Next step:
+  - Inspect current SRAM memory partitions and map usage to determine whether `SRAM_CODE` can be enlarged safely by borrowing space from the following SRAM region.
+- Status:
+  - Investigation in progress.

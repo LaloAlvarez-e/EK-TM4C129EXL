@@ -1,0 +1,12 @@
+[2026-04-05 15:50:15] Logged user request to make joystick select toggle Task 8 between live data mode and system-info mode.
+- User request:
+  - Make the joystick press toggle back to system-info mode instead of only starting live data once.
+- Current implementation review:
+  - Task 3 gives `DebugDataSemaphoreHandle` on joystick press.
+  - Task 8 currently blocks once on that semaphore and never re-enters system-info mode after live data starts.
+- Planned implementation:
+  - Keep the existing joystick press event path in Task 3.
+  - Convert Task 8 to maintain a local mode flag that toggles each time the semaphore event is received.
+  - Redraw the debug UART screen appropriately for system-info mode and live-data mode.
+- Status:
+  - Implementation in progress.

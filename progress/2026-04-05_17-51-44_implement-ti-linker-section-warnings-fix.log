@@ -1,0 +1,16 @@
+[2026-04-05 17:51:44] Implemented a linker-script fix for repeated TI warning `#10247-D creating output section ... without a SECTIONS specification`.
+- Files edited:
+  - `TM4C129E_Project/tm4c129encpdt.cmd`
+  - `TM4C129E_Project/tm4c129encpdt_WithoutBootloader.cmd`
+- Root cause addressed:
+  - The TI build uses compiler options that emit subsectioned outputs such as `.text.<symbol>`, `.rodata.<symbol>`, `.data.<symbol>`, and `.bss.<symbol>`.
+  - The TI linker command files only mapped the base sections `.text`, `.const`, `.data`, and `.bss`, so the linker auto-created many output sections and emitted `#10247-D` warnings.
+- Fix applied:
+  - Expanded `.text` to claim `.text` and `.text.*`.
+  - Expanded `.const` to claim `.const`, `.const.*`, `.rodata`, and `.rodata*`.
+  - Expanded `.data` to claim `.data` and `.data.*` while preserving the existing load/run symbols.
+  - Expanded `.bss` to claim `.bss`, `.bss.*`, and `COMMON` while preserving the existing run symbols.
+- Scope note:
+  - Updated both project TI linker command files because the current project metadata and the generated Debug makefile disagree on which TI `.cmd` file is active.
+- Status:
+  - Implementation complete.

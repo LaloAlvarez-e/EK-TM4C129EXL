@@ -1,0 +1,14 @@
+[2026-04-05 19:07:55] Reviewed the SYSCTL API surface before continuing the raw MPC/PDS register-group audit.
+- Request: confirm whether a public API already exists for the recently covered power-mode registers before continuing the remaining raw-only SYSCTL post-audit slice for the MPC/PDS block.
+- Public API findings in `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver`:
+  - `SYSCTL_PeripheralPower.c` / `SYSCTL_PeripheralPower.h` provide the generic `PC`-family API through `SYSCTL__enSetPowerControlState`, `SYSCTL__enPowerOn`, `SYSCTL__enPowerOff`, and `SYSCTL__enGetPowerControlState`.
+  - `SYSCTL_PeripheralSleepMode.c` and `SYSCTL_PeripheralDeepSleepMode.c` provide `SCGC` / `DCGC` peripheral sleep-enable wrappers, not `SLPPWRCFG` / `DSLPPWRCFG`.
+  - `SYSCTL_LDOVoltage.c` provides wrapper APIs for `LDOSPCTL` and `LDODPCTL`, not for `SDPMST`.
+  - No dedicated public wrapper family exists for `SLPPWRCFG`, `DSLPPWRCFG`, `SDPMST`, or the device-specific `USB/EMAC/CAN` `MPC/PDS` raw register families.
+- Documentation/code cross-check for the remaining raw block:
+  - The TM4C129X manual register summary for this device includes `USBPDS`/`USBMPC`, `EMACPDS`/`EMACMPC`, `CAN0PDS`/`CAN0MPC`, and `CAN1PDS`/`CAN1MPC`.
+  - The generic manual text also mentions `LCDPDS`/`LCDMPC`, but those registers are absent from the device-specific register summary and absent from the repo address tables, so they should not be added without stronger device-specific evidence.
+- Raw-surface defects found in the existing implemented `MPC/PDS` block:
+  - `SYSCTL_RegisterPeripheral.h` truncates `SYSCTL_EMAC_PDS_R` and exposes the writable `USB_MPC`, `EMAC_MPC`, `CAN0_MPC`, and `CAN1_MPC` raw-register macros as `volatile const` even though the manual marks them `RW`.
+  - `SYSCTL_RegisterPeripheral_Bitbanding.h` exposes the read-only `USB/EMAC/CAN0/CAN1` `PDS` bit-band aliases as writable `volatile UBase_t*` even though the manual marks those status registers `RO`.
+- Decision: keep the existing public API surface unchanged for now, patch the raw `USB/EMAC/CAN` `MPC/PDS` register block for correctness, and add mirrored regression coverage for the documented raw-only families.

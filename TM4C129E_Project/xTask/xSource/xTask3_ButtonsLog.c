@@ -102,6 +102,7 @@ void xTask3_ButtonsLog(void* pvParams)
                 {
                     GPIO__enSetDataByNumber(GPIO_enPORT_F, GPIO_enPIN_4, GPIO_enLEVEL_HIGH);
                     pcStateButton[2UL] = pcState[1UL];
+                    OS_Semaphore__boGive(DebugDataSemaphoreHandle);
                 }
                 else
                 {

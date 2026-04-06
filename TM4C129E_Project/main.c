@@ -133,6 +133,7 @@ int main(void)
     OS_Queue__boAddToSet(AccelerometerQueueHandle, TFTQueueSetHandle);
     OS_Queue__boAddToSet(ButtonQueueHandle, TFTQueueSetHandle);
     MainSemaphoreHandle = OS_Semaphore__pvCreateBinary();
+    DebugDataSemaphoreHandle = OS_Semaphore__pvCreateCounting(255UL, 0UL);
     TFTSemaphoreHandle = OS_Semaphore__pvCreateBinary();
     UARTSemaphoreHandle = OS_Semaphore__pvCreateBinary();
     DMASemaphoreHandle = OS_Semaphore__pvCreateBinary();

@@ -1,0 +1,20 @@
+[2026-04-05 18:38:22] Validated final Task 9 warning scope after second MISRA cleanup slice and persistent wchar metadata change.
+Request: continue reducing remaining clean-build MISRA warnings in TM4C129E_Project/xTask/xSource/xTask9_TFT.c and ensure the wchar fix is necessary/persistent.
+Investigation:
+- Extracted final xTask9_TFT.c diagnostics from progress/2026-04-05_18-24-41_validate-task9-and-wchar-build.txt.
+- Final Task 9 diagnostics are limited to warning #1460-D at lines 580, 616, and 656 in xTask9_TFT.c.
+- Verified the remaining warnings correspond to DMA IRQ handlers that already mark pvArgument unused.
+- Confirmed DMA_pvfIRQSourceHandler_t aliases MCU_pvfIRQSourceHandler_t, which is defined as typedef void (*MCU_pvfIRQSourceHandler_t)(uintptr_t uptrModuleArg, void* pvArgument);
+- Confirmed DMA registration APIs and multiple other project/driver handlers rely on the same (uintptr_t, void*) callback signature.
+- Checked the final build log for prior wchar-related mismatch diagnostics (#10247, #16032, #10068, mismatch); no matches were found.
+- Confirmed TM4C129E_ApplicationLib/Debug__TI/makefile still contains GEN_OPTS__FLAG := -fshort-wchar.
+Decision:
+- Task 9 local cleanup is functionally exhausted for non-repo-wide warnings; the remaining #1460-D findings are driven by the shared IRQ callback typedef/API contract rather than by unique Task 9 implementation defects.
+- Changing the parameter type locally in xTask9_TFT.c would conflict with the DMA registration API and would not be a correct isolated fix.
+Affected files reviewed:
+- TM4C129E_Project/xTask/xSource/xTask9_TFT.c
+- TM4C129E_DriverLib/xDriver_MCU/Common/xHeader/MCU_Variables.h
+- TM4C129E_DriverLib/xDriver_MCU/DMA/Peripheral/xHeader/DMA_Enum.h
+- TM4C129E_DriverLib/xDriver_MCU/DMA/Driver/Intrinsics/Interrupt/InterruptRegister/xHeader/DMA_InterruptRegisterIRQSource_Software.h
+- progress/2026-04-05_18-24-41_validate-task9-and-wchar-build.txt
+Validation status: final Task 9 warnings reduced to three repo-wide callback-signature advisories; no wchar mismatch diagnostics observed in the final build log.

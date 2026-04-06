@@ -1,0 +1,10 @@
+[2026-04-05 18:59:21] Implemented SYSCTL raw power-mode register surface corrections
+- Scope resumed from the post-BOR SYSCTL re-audit slice for `SLPPWRCFG`, `DSLPPWRCFG`, and `SDPMST`.
+- Pre-edit inspection confirmed the manual-backed defects already logged in `2026-04-05_18-52-43_findings-sysctl-powermode-raw-surface.log` and re-checked the surrounding typed raw surfaces for companion drift before editing.
+- Corrected `SLPPWR_CFG_R_FLASH_PM_BIT` from `2UL` to `4UL` in `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_SLPPWRCFG.h` so the raw shift matches the documented `FLASHPM` field at bits 5:4.
+- Corrected `DSLPPWR_CFG_R_FLASH_PM_BIT` from `2UL` to `4UL` in `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_DSLPPWRCFG.h` for the same documented field position.
+- Fixed the typed raw pointer routing in `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral.h` by changing `SYSCTL_SDP_MST` to use `SDP_MST_OFFSET` and `SYSCTL_RESET_BEHAVCTL` to use `RESET_BEHAVCTL_OFFSET`.
+- During the surrounding-header review, found that the adjacent writable raw surfaces also carried incorrect access qualifiers: `SYSCTL_RESET_BEHAVCTL_R`, `DSLPPWR_BITBANDING_CFG_TS_PD`, and `DSLPPWR_BITBANDING_CFG_LDO_SM` were all exposed as read-only despite their documented `RW` behavior. Updated those macros to use writable `volatile UBase_t*` accessors.
+- Added a mirrored raw-register regression subtree under `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Peripheral/Register/xSource` with a dedicated `SYSCTL_PowerModeRegisters_Test` target and the required CMake plumbing.
+- Added focused coverage and traceability entries so the SYSCTL Chapter 5 tracker now records the raw `SLPPWRCFG` / `DSLPPWRCFG` / `SDPMST` surface as covered and reduces the remaining post-audit scope to the still-uncovered raw-only families.
+- Post-edit review did not reveal any additional missing companion updates in the same raw block beyond the corrected shift, offset, and mutability issues listed above.

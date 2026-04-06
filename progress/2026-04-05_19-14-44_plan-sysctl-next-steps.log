@@ -1,0 +1,20 @@
+[2026-04-05 19:14:44] Summarized the remaining SYSCTL work and ranked the next steps after the recent raw-surface fixes.
+- Request: identify what is still missing in SYSCTL and provide a plan that accounts for missing APIs, missing information, and remaining correctness fixes.
+- Current confirmed state from the SYSCTL gap tracker and recent progress logs:
+  - public SYSCTL driver wrappers now exist and are validated for Device ID, System Properties, Unique ID, Reset Vector Pointer, USER_REG reads, BOOTCFG reads, NVMSTAT reads, LDO voltage control, brown-out/voltage control, generic peripheral power, peripheral run/sleep/deep-sleep gating, reset behavior, clocking, and SYSCTL app helpers.
+  - raw register-surface coverage is now in place for `SLPPWRCFG`, `DSLPPWRCFG`, `SDPMST`, and the implemented `USB/EMAC/CAN` `MPC/PDS` block.
+- Remaining likely-missing public API candidates:
+  - `SLPPWRCFG` / `DSLPPWRCFG` / `SDPMST`: no dedicated public wrapper family exists yet for sleep/deep-sleep SRAM/flash power policy, temperature-sensor power-down, LDO sleep-mode selection, or the corresponding status bits.
+  - `USB/EMAC/CAN` `MPC/PDS`: no dedicated public wrapper family exists yet for memory-array power control and status despite the raw register families being implemented and now validated.
+  - `FMPRE/FMPPE`: register defines and pointer surfaces exist, but there is no public SYSCTL driver wrapper family in `xDriver_MCU/SYSCTL/Driver` and no host-test coverage yet.
+- Remaining likely-missing information or validation:
+  - direct raw register coverage for `USER_REG` / `BOOTCFG` / `NVMSTAT` is still optional if full raw-surface closure is desired, even though the public read-only driver APIs are already implemented and validated.
+  - direct host coverage for the internal interrupt source-handler helpers (`SYSCTL_InterruptRegisterIRQSource.c`, `SYSCTL_InterruptRoutine_Source.c`) is still absent; current validation reaches them indirectly through higher-level SYSCTL interrupt tests and mocks.
+- Current highest-confidence correctness statement:
+  - no new confirmed SYSCTL defects are currently outstanding in the audited slices; the remaining work is primarily completeness and API-surface expansion rather than a known broken behavior.
+- Recommended order:
+  1. decide whether the goal is public API completeness or only raw/documentation closure.
+  2. if public API completeness is the goal, implement a dedicated power-policy/status wrapper family for `SLPPWRCFG` / `DSLPPWRCFG` / `SDPMST` first because it is the most coherent missing user-facing SYSCTL feature set.
+  3. then add a public wrapper family for the implemented `USB/EMAC/CAN` `MPC/PDS` block.
+  4. then decide whether `FMPRE/FMPPE` belongs in SYSCTL public API or should remain raw-only because of flash-programming ownership boundaries.
+  5. after the public surface is settled, add any remaining raw-only closure tests for `USER_REG` / `BOOTCFG` / `NVMSTAT` and the source-handler helper files only if full chapter closure is still desired.

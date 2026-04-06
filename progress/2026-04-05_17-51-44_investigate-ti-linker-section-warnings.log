@@ -1,0 +1,13 @@
+[2026-04-05 17:51:44] Investigated repeated TI linker warning `#10247-D creating output section ... without a SECTIONS specification`.
+- User report:
+  - There are many warnings similar to `#10247-D creating output section ".data.FONT_s5x7" without a SECTIONS specification`.
+- Immediate investigation:
+  - Re-read current `TM4C129E_Project/.cproject` to determine the active Debug linker command file.
+  - Re-read current `TM4C129E_Project/tm4c129encpdt_WithoutBootloader.cmd` because it was recently edited externally.
+- Key finding so far:
+  - Current `Debug__TI` project configuration in `.cproject` points to `tm4c129encpdt.cmd`, not `tm4c129encpdt_WithoutBootloader.cmd`.
+  - The subsection warnings are likely caused by TI compiler options that emit function/data subsections while the active linker command file only maps the base output sections such as `.text`, `.const`, and `.data`.
+- Next step:
+  - Inspect the generated Debug makefile and active `tm4c129encpdt.cmd`, then patch the active linker command file so subsectioned `.text.*`, `.rodata.*`, and `.data.*` outputs are explicitly placed.
+- Status:
+  - Investigation in progress.

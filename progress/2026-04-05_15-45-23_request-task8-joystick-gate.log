@@ -1,0 +1,13 @@
+[2026-04-05 15:45:23] Logged new user request to gate Task 8 data display behind a joystick button press while showing system debug information until the press occurs.
+- User request:
+  - Add a mutex where we need to press button on joystick to start looking the data from Task 8.
+  - Until that button is pressed, only the debug/system info should be visible.
+- Initial interpretation:
+  - Keep the existing Task 8 debug task in `TM4C129E_Project`.
+  - Use an RTOS synchronization object and existing button/joystick event flow to switch Task 8 from startup system-info mode into live sensor display mode.
+- Planned investigation:
+  - Inspect current button and joystick task/event paths.
+  - Identify the existing queue/semaphore/global-handle pattern used by Task 8.
+  - Implement the smallest project-level orchestration change that preserves current architecture.
+- Status:
+  - Investigation started.

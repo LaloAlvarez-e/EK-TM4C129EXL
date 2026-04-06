@@ -33,6 +33,7 @@ extern OS_Queue_Handle_t UARTSemaphoreHandle;
 extern OS_Queue_Handle_t DMASemaphoreHandle;
 extern OS_Queue_Handle_t ST7735SemaphoreHandle;
 extern OS_Queue_Handle_t MainSemaphoreHandle;
+extern OS_Queue_Handle_t DebugDataSemaphoreHandle;
 extern OS_Queue_Handle_t YoystickQueueHandle;
 extern OS_Queue_Handle_t AccelerometerQueueHandle;
 extern OS_Queue_Handle_t ButtonQueueHandle;

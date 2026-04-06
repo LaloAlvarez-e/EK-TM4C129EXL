@@ -1,0 +1,14 @@
+[2026-04-05 16:20:33] Implemented a Task 8 display-path fix for the report that nothing is showing on the UART debug screen.
+- Target file edited:
+  - `TM4C129E_Project/xTask/xSource/xTask8_Debug.c`
+- Root-cause-oriented change:
+  - Removed the dependency on `GraphTerm__vClearScreen()` during mode transitions.
+  - Added a local helper that clears the Task 8 display area by overwriting rows 0 through 11 with spaces using the same GraphTerm print path already used for normal content.
+  - Restored an immediate startup status line before the `MainSemaphoreHandle` wait so the user sees Task 8 activity even before the system-info screen is repainted.
+- Rationale:
+  - `GraphTerm__vClearScreen()` emits only the raw ANSI clear-screen escape sequence `ESC[2J`; if the repaint path does not complete cleanly, the terminal is left blank.
+  - The earlier working behavior showed at least one startup line before the synchronization wait.
+- Companion-path review:
+  - The joystick toggle event path in `xTask3_ButtonsLog.c` and the semaphore creation path in `main.c` remained valid and did not require changes for this fix.
+- Status:
+  - Implementation complete.

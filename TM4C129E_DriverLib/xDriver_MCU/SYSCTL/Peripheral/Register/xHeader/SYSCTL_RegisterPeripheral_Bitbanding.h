@@ -268,8 +268,8 @@
 #define DSLPPWR_BITBANDING_CFG_SRAM_PM_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + DSLPPWR_CFG_OFFSET) * 32UL) + ((DSLPPWR_CFG_R_SRAM_PM_BIT + 1UL) * 4UL))))
 #define DSLPPWR_BITBANDING_CFG_FLASH_PM_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + DSLPPWR_CFG_OFFSET) * 32UL) + ((DSLPPWR_CFG_R_FLASH_PM_BIT + 0UL) * 4UL))))
 #define DSLPPWR_BITBANDING_CFG_FLASH_PM_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + DSLPPWR_CFG_OFFSET) * 32UL) + ((DSLPPWR_CFG_R_FLASH_PM_BIT + 1UL) * 4UL))))
-#define DSLPPWR_BITBANDING_CFG_TS_PD    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + DSLPPWR_CFG_OFFSET) * 32UL) + (DSLPPWR_CFG_R_TS_PD_BIT * 4UL))))
-#define DSLPPWR_BITBANDING_CFG_LDO_SM    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + DSLPPWR_CFG_OFFSET) * 32UL) + (DSLPPWR_CFG_R_LDO_SM_BIT * 4UL))))
+#define DSLPPWR_BITBANDING_CFG_TS_PD    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + DSLPPWR_CFG_OFFSET) * 32UL) + (DSLPPWR_CFG_R_TS_PD_BIT * 4UL))))
+#define DSLPPWR_BITBANDING_CFG_LDO_SM    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + DSLPPWR_CFG_OFFSET) * 32UL) + (DSLPPWR_CFG_R_LDO_SM_BIT * 4UL))))
 
 /**********************************************************************************
 ************************************24 NVMSTAT *********************************************
@@ -343,10 +343,10 @@
 ******************************************************************************************/
 #define USB_BITBANDING_PDS    ((USB_BITBANDING_PDS_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL)))
 
-#define USB_BITBANDING_PDS_PWRSTAT_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL) + ((USB_PDS_R_PWRSTAT_BIT + 0UL) * 4UL))))
-#define USB_BITBANDING_PDS_PWRSTAT_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL) + ((USB_PDS_R_PWRSTAT_BIT + 1UL) * 4UL))))
-#define USB_BITBANDING_PDS_MEMSTAT_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL) + ((USB_PDS_R_MEMSTAT_BIT + 0UL) * 4UL))))
-#define USB_BITBANDING_PDS_MEMSTAT_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL) + ((USB_PDS_R_MEMSTAT_BIT + 1UL) * 4UL))))
+#define USB_BITBANDING_PDS_PWRSTAT_0    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL) + ((USB_PDS_R_PWRSTAT_BIT + 0UL) * 4UL))))
+#define USB_BITBANDING_PDS_PWRSTAT_1    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL) + ((USB_PDS_R_PWRSTAT_BIT + 1UL) * 4UL))))
+#define USB_BITBANDING_PDS_MEMSTAT_0    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL) + ((USB_PDS_R_MEMSTAT_BIT + 0UL) * 4UL))))
+#define USB_BITBANDING_PDS_MEMSTAT_1    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + USB_PDS_OFFSET) * 32UL) + ((USB_PDS_R_MEMSTAT_BIT + 1UL) * 4UL))))
 
 /******************************************************************************************
 ************************************33 USB_MPC *********************************************
@@ -361,10 +361,10 @@
 ******************************************************************************************/
 #define EMAC_BITBANDING_PDS    ((EMAC_BITBANDING_PDS_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL)))
 
-#define EMAC_BITBANDING_PDS_PWRSTAT_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL) + ((EMAC_PDS_R_PWRSTAT_BIT + 0UL) * 4UL))))
-#define EMAC_BITBANDING_PDS_PWRSTAT_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL) + ((EMAC_PDS_R_PWRSTAT_BIT + 1UL) * 4UL))))
-#define EMAC_BITBANDING_PDS_MEMSTAT_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL) + ((EMAC_PDS_R_MEMSTAT_BIT + 0UL) * 4UL))))
-#define EMAC_BITBANDING_PDS_MEMSTAT_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL) + ((EMAC_PDS_R_MEMSTAT_BIT + 1UL) * 4UL))))
+#define EMAC_BITBANDING_PDS_PWRSTAT_0    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL) + ((EMAC_PDS_R_PWRSTAT_BIT + 0UL) * 4UL))))
+#define EMAC_BITBANDING_PDS_PWRSTAT_1    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL) + ((EMAC_PDS_R_PWRSTAT_BIT + 1UL) * 4UL))))
+#define EMAC_BITBANDING_PDS_MEMSTAT_0    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL) + ((EMAC_PDS_R_MEMSTAT_BIT + 0UL) * 4UL))))
+#define EMAC_BITBANDING_PDS_MEMSTAT_1    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + EMAC_PDS_OFFSET) * 32UL) + ((EMAC_PDS_R_MEMSTAT_BIT + 1UL) * 4UL))))
 
 /******************************************************************************************
 ************************************35 EMACMPC *********************************************
@@ -379,10 +379,10 @@
 ******************************************************************************************/
 #define CAN0_BITBANDING_PDS    ((CAN0_BITBANDING_PDS_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL)))
 
-#define CAN0_BITBANDING_PDS_PWRSTAT_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL) + ((CAN0_PDS_R_PWRSTAT_BIT + 0UL) * 4UL))))
-#define CAN0_BITBANDING_PDS_PWRSTAT_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL) + ((CAN0_PDS_R_PWRSTAT_BIT + 1UL) * 4UL))))
-#define CAN0_BITBANDING_PDS_MEMSTAT_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL) + ((CAN0_PDS_R_MEMSTAT_BIT + 0UL) * 4UL))))
-#define CAN0_BITBANDING_PDS_MEMSTAT_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL) + ((CAN0_PDS_R_MEMSTAT_BIT + 1UL) * 4UL))))
+#define CAN0_BITBANDING_PDS_PWRSTAT_0    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL) + ((CAN0_PDS_R_PWRSTAT_BIT + 0UL) * 4UL))))
+#define CAN0_BITBANDING_PDS_PWRSTAT_1    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL) + ((CAN0_PDS_R_PWRSTAT_BIT + 1UL) * 4UL))))
+#define CAN0_BITBANDING_PDS_MEMSTAT_0    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL) + ((CAN0_PDS_R_MEMSTAT_BIT + 0UL) * 4UL))))
+#define CAN0_BITBANDING_PDS_MEMSTAT_1    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN0_PDS_OFFSET) * 32UL) + ((CAN0_PDS_R_MEMSTAT_BIT + 1UL) * 4UL))))
 
 /******************************************************************************************
 ************************************37 CAN0MPC *********************************************
@@ -397,10 +397,10 @@
 ******************************************************************************************/
 #define CAN1_BITBANDING_PDS    ((CAN1_BITBANDING_PDS_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL)))
 
-#define CAN1_BITBANDING_PDS_PWRSTAT_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL) + ((CAN1_PDS_R_PWRSTAT_BIT + 0UL) * 4UL))))
-#define CAN1_BITBANDING_PDS_PWRSTAT_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL) + ((CAN1_PDS_R_PWRSTAT_BIT + 1UL) * 4UL))))
-#define CAN1_BITBANDING_PDS_MEMSTAT_0    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL) + ((CAN1_PDS_R_MEMSTAT_BIT + 0UL) * 4UL))))
-#define CAN1_BITBANDING_PDS_MEMSTAT_1    (*((volatile UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL) + ((CAN1_PDS_R_MEMSTAT_BIT + 1UL) * 4UL))))
+#define CAN1_BITBANDING_PDS_PWRSTAT_0    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL) + ((CAN1_PDS_R_PWRSTAT_BIT + 0UL) * 4UL))))
+#define CAN1_BITBANDING_PDS_PWRSTAT_1    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL) + ((CAN1_PDS_R_PWRSTAT_BIT + 1UL) * 4UL))))
+#define CAN1_BITBANDING_PDS_MEMSTAT_0    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL) + ((CAN1_PDS_R_MEMSTAT_BIT + 0UL) * 4UL))))
+#define CAN1_BITBANDING_PDS_MEMSTAT_1    (*((volatile const UBase_t*) (SYSCTL_BITBANDING_BASE + ((SYSCTL_OFFSET + CAN1_PDS_OFFSET) * 32UL) + ((CAN1_PDS_R_MEMSTAT_BIT + 1UL) * 4UL))))
 
 /******************************************************************************************
 ************************************39 CAN1MPC *********************************************

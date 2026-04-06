@@ -28,7 +28,7 @@
 
 /*--------*/
 #define SLPPWR_CFG_R_FLASH_PM_MASK    ((UBase_t) 0x00000030UL)
-#define SLPPWR_CFG_R_FLASH_PM_BIT    (2UL)
+#define SLPPWR_CFG_R_FLASH_PM_BIT    (4UL)
 #define SLPPWR_CFG_R_FLASH_PM_ACTIVE    ((UBase_t) 0x00000000UL)
 #define SLPPWR_CFG_R_FLASH_PM_LOWPOWER    ((UBase_t) 0x00000020UL)
 

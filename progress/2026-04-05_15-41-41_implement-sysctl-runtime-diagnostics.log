@@ -1,0 +1,24 @@
+[2026-04-05 15:41:41] Implemented runtime usage of the recent SYSCTL getter APIs in the project debug task.
+- Target file edited:
+  - `TM4C129E_Project/xTask/xSource/xTask8_Debug.c`
+- Surrounding implementation review before edit:
+  - Confirmed `xTask8_Debug` already owns the UART/GraphTerm debug surface in `TM4C129E_Project`.
+  - Avoided startup files and linker scripts because they are integration surfaces and the repo instructions explicitly discourage incidental edits there.
+  - No companion header change was required because the new helper functions remain file-local.
+- Implementation details:
+  - Added file-local helper `xTask8__cGetBootPortName()` to present BOOTCFG port values as `A`..`H`.
+  - Added file-local helper `xTask8__vReportSystemInfo()`.
+  - Wired the helper into `xTask8_Debug()` immediately after the main semaphore wait and before the periodic task loop starts.
+  - The startup report now uses the recently added SYSCTL getter APIs to surface:
+    - device family / part / revision data
+    - flash write-buffer capability
+    - FPU, flash low-power, and LDO-sequence support flags
+    - BOOTCFG debug/key/enable/port/pin/polarity/not-written fields
+    - reset-vector pointer
+    - UNIQUEID[0..3]
+    - USER_REG[0..3]
+- Follow-on review after edit:
+  - No additional task, queue, semaphore, or startup changes are required for this slice because the report is one-time and read-only.
+  - The low-level SYSCTL drivers remain unchanged; the new usage sits in the project-level diagnostic task, which matches the repo layering rules.
+- Status:
+  - Runtime SYSCTL diagnostics implemented.

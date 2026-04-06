@@ -30,6 +30,7 @@ OS_Queue_Handle_t UARTSemaphoreHandle = (OS_Queue_Handle_t) 0UL;
 OS_Queue_Handle_t DMASemaphoreHandle = (OS_Queue_Handle_t) 0UL;
 OS_Queue_Handle_t ST7735SemaphoreHandle = (OS_Queue_Handle_t) 0UL;
 OS_Queue_Handle_t MainSemaphoreHandle = (OS_Queue_Handle_t) 0UL;
+OS_Queue_Handle_t DebugDataSemaphoreHandle = (OS_Queue_Handle_t) 0UL;
 OS_Queue_Handle_t YoystickQueueHandle = (OS_Queue_Handle_t) 0UL;
 OS_Queue_Handle_t AccelerometerQueueHandle = (OS_Queue_Handle_t) 0UL;
 OS_Queue_Handle_t ButtonQueueHandle = (OS_Queue_Handle_t) 0UL;

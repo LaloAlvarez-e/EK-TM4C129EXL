@@ -1,0 +1,16 @@
+[2026-04-05 18:05:14] Validating the resumed Debug warning cleanup.
+- Validation planned:
+  - Rebuild `TM4C129E_ApplicationLib/Debug__TI` so the generated makefile applies `-fshort-wchar` to the library objects.
+  - Rebuild `TM4C129E_Project/Debug__TI` against the refreshed library.
+  - Check whether the prior `#16032-D` `wchar_t` mismatch and `#10068-D no matching section` warnings are eliminated.
+- Status:
+  - Validation complete.
+- Validation results:
+  - `TM4C129E_ApplicationLib/Debug__TI` was rebuilt after applying `-fshort-wchar` through `GEN_OPTS__FLAG`.
+  - The first project validation attempt exposed a TI linker-script syntax error because a bare symbol assignment is not allowed directly inside the `SECTIONS` block.
+  - The linker script was corrected to use a zero-length `.ARM.extab` output section that only defines `__flash_exec_end__`.
+  - The follow-up `TM4C129E_Project/Debug__TI` relink succeeded.
+  - No `#16032-D`, `#10068-D`, or `#10247-D` warnings remain in the final project relink output.
+- Remaining notes:
+  - A full clean project rebuild still reports pre-existing MISRA warnings in other source files; those were not part of this warning-class fix.
+  - The `wchar_t` alignment for `TM4C129E_ApplicationLib/Debug__TI` is currently enforced via the generated `Debug__TI/makefile`, so CCS regeneration of that build directory can overwrite it.

@@ -1,0 +1,13 @@
+[2026-04-05 18:05:14] Implemented the next step of the interrupted Debug warning cleanup.
+- Files edited:
+  - `TM4C129E_Project/tm4c129encpdt.cmd`
+  - `TM4C129E_Project/tm4c129encpdt_WithoutBootloader.cmd`
+  - `TM4C129E_ApplicationLib/Debug__TI/makefile`
+- Fixes applied:
+  - Removed the explicit `.ARM.extab` selector from both project TI linker command files and retained `__flash_exec_end__` immediately after `.ARM.exidx`.
+  - This targets the remaining `#10068-D no matching section` warning caused by an empty `.ARM.extab*` match.
+  - Added `-fshort-wchar` to the active `TM4C129E_ApplicationLib/Debug__TI` generated makefile through `GEN_OPTS__FLAG` so the ApplicationLib Debug library rebuild matches the project Debug build's 16-bit `wchar_t` setting.
+- Scope note:
+  - The ApplicationLib Debug toolchain is TI Clang (`tiarmclang`) while the project Debug build still links with TI CGT; this change aligns the produced library ABI for the current generated Debug build path.
+- Status:
+  - Implementation complete.

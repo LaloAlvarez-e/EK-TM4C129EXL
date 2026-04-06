@@ -1,0 +1,11 @@
+[2026-04-05 18:59:33] Validated SYSCTL raw power-mode register regression target
+- Static validation: `get_errors` reported no IDE errors in the touched SYSCTL register-definition headers, raw register pointer headers, the new `SYSCTL_PowerModeRegisters_Test.cpp`, and the new CMake files.
+- Reconfigured and rebuilt the host-test tree from `TM4C129E_DriverLib_Test/build` with `cmake -S .. -B .` followed by `cmake --build . --config Debug --target SYSCTL_PowerModeRegisters_Test`.
+- Build result: success; the new target compiled and linked to `TM4C129E_DriverLib_Test/build/xDriver_MCU/SYSCTL/Peripheral/Register/xSource/Debug/SYSCTL_PowerModeRegisters_Test.exe`.
+- Initial focused CTest invocation used `ctest --config Debug --output-on-failure -R "SYSCTLPowerModeRegistersTest"`, which this environment rejected because the local `ctest` expects `-C` rather than `--config`.
+- Corrected focused execution command: `ctest -C Debug --output-on-failure -R "SYSCTLPowerModeRegistersTest"` from `TM4C129E_DriverLib_Test/build`.
+- Focused execution result: 3 of 3 tests passed.
+  - `SYSCTLPowerModeRegistersTest.SleepPowerConfigurationUsesDocumentedOffsetShiftAndBitbandAliases`
+  - `SYSCTLPowerModeRegistersTest.DeepSleepPowerConfigurationUsesDocumentedOffsetsAndWritableBitAliases`
+  - `SYSCTLPowerModeRegistersTest.StatusAndResetTypedPointerMacrosUseDocumentedOffsets`
+- Post-validation review confirmed the new target is registered in CTest and that the previously identified SYSCTL raw-surface defects are now guarded by executable regression coverage.

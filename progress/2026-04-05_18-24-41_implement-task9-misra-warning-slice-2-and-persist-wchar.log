@@ -1,0 +1,16 @@
+[2026-04-05 18:24:41] Implemented the second `xTask9_TFT.c` cleanup slice and persisted the TIClang `wchar_t` alignment setting.
+- Files edited:
+  - `TM4C129E_Project/xTask/xSource/xTask9_TFT.c`
+  - `TM4C129E_ApplicationLib/.cproject`
+- Additional implementation details:
+  - Replaced block-scope `#pragma DATA_ALIGN` use with a union-backed framebuffer type that naturally provides 4-byte alignment through a `uint32_t` view while keeping the objects at block scope.
+  - Added flat framebuffer aliases so pointer-based ST7735 and DMA APIs no longer require repeated `&buffer[0][0]` expressions.
+  - Replaced direct button-string indexing with `memcmp(..., "ON", 2UL)` checks to avoid pointer-index expressions in the task loop.
+  - Removed the duplicate file-scope `stDMAChControl` that was still shadowing the function-local static control object.
+  - Split the DMA destination end-address arithmetic into a separate offset variable to eliminate the remaining precedence-heavy expression.
+  - Added the TIClang `Other flags` option with `-fshort-wchar` to `TM4C129E_ApplicationLib/.cproject` so future CCS-generated makefiles preserve the same ABI width that already fixed the active Debug build.
+- Surrounding implementation review after this slice:
+  - The remaining `xTask9_TFT.c` callback warnings are the repo-wide `void* pvArgument` callback signature pattern defined by `MCU_pvfIRQSourceHandler_t`; changing only this file would break handler type compatibility.
+  - The previous temporary `TM4C129E_ApplicationLib/Debug__TI/makefile` fix still matches the new persistent `.cproject` configuration.
+- Status:
+  - Second implementation slice complete.

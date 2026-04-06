@@ -1,0 +1,18 @@
+[2026-04-05 16:11:31] Validated the Task 8 redraw change and the Debug RAM-code linker fix.
+- Static validation:
+  - `xTask8_Debug.c`: no editor errors.
+  - `tm4c129encpdt_WithoutBootloader.cmd`: no editor errors.
+  - `tm4c129encpdt_WithoutBootloader.lds`: no editor errors.
+- Active-build-path validation:
+  - Listed `TM4C129E_Project/Debug__TI` and confirmed the generated `makefile` exists.
+  - Read the generated `makefile` and confirmed it links using `../tm4c129encpdt_WithoutBootloader.cmd`.
+- Full rebuild validation:
+  - Confirmed the CCS bundled `gmake.exe`, `armcl.exe`, and `armlnk.exe` are installed.
+  - Ran a clean rebuild through `TM4C129E_Project/Debug__TI/makefile` using the CCS bundled `gmake.exe`.
+  - The rebuild completed successfully and produced a new `TM4C129E_Project.out`.
+  - The regenerated `TM4C129E_Project.map` shows `SRAM_CODE` length `0x2200`, `.ramcode` used `0x19fc`, and no `FAILED TO ALLOCATE` entry.
+- Remaining warnings:
+  - The TI linker still reports existing `wchar_t` mismatch warnings between `TM4C129E_ApplicationLib.lib` objects and the project objects.
+  - The TI linker still reports existing `#10247-D` section-placement warnings for many subsectioned text and rodata symbols.
+- Risk check:
+  - The linker fix reduces general SRAM in favor of RAM-code space, but the rebuilt map still shows about `0xE930` of unused general SRAM, so the revised split leaves headroom for `.data` and `.bss`.

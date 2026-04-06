@@ -1,0 +1,20 @@
+[2026-04-05 15:51:49] Implemented Task 8 joystick toggle behavior so each joystick select press switches between system-info mode and live-data mode.
+- Files edited:
+  - `TM4C129E_Project/main.c`
+  - `TM4C129E_Project/xTask/xSource/xTask8_Debug.c`
+- Implementation summary:
+  - Replaced `DebugDataSemaphoreHandle` creation in `main.c` from a binary semaphore to a counting semaphore with initial count 0.
+  - Updated `xTask8_Debug` to maintain a local `boLiveDataMode` flag.
+  - Added file-local helpers to redraw the UART debug screen for:
+    - system-info mode
+    - live-data mode
+  - Removed the previous one-time blocking wait and instead process all pending joystick press events each loop iteration by draining the counting semaphore with zero block time.
+  - Each queued joystick press now toggles the mode state.
+  - In system-info mode, Task 8 redraws the system-info screen and does not publish live queue data.
+  - In live-data mode, Task 8 resumes showing button, joystick, and accelerometer data.
+- Surrounding implementation review:
+  - The existing Task 3 joystick press event path remained valid and required no further change.
+  - No changes were needed in `xSemaphores.h/.c` because the shared handle name remains the same; only its creation semantics changed.
+  - The change stays in project task orchestration and does not alter lower MCU or startup layers.
+- Status:
+  - Toggle-mode implementation complete.

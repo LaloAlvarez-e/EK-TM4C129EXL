@@ -1,0 +1,18 @@
+[2026-04-05 18:16:23] Implemented the first `xTask9_TFT.c` MISRA cleanup slice.
+- File edited:
+  - `TM4C129E_Project/xTask/xSource/xTask9_TFT.c`
+- Scope of this slice:
+  - Rule 8.7 one-function file-scope objects.
+  - Rule 17.4 pointer-arithmetic style issues in button checks and DMA end-address setup.
+  - Rule 12.1 precedence-sensitive DMA destination-end expression.
+  - Rule 10.3 integer-to-pointer cast sites in DMA ISR helpers.
+- Changes applied:
+  - Converted the local TFT framebuffers to explicit 128x128 two-dimensional arrays and moved the active write/current buffer selectors into `xTask9_TFT()` as function-local static pointers.
+  - Updated the info-panel helper to draw using two-dimensional indexing instead of flattened offset indexing.
+  - Replaced `*(pcButtonOne + 1UL)` and `*(pcButtonTwo + 1UL)` with indexed access.
+  - Removed `uxTranferSize` from file scope and replaced it with a local transfer-size variable in `TFT__enWriteDMAConstant()`.
+  - Moved `stDMAChControl`, `stDMAChLayer`, and `stDMAChLayerConstant` to function-local static storage because they need static lifetime for ISR/DMA use but only belong to one function each.
+  - Moved `pu16StartXInAddress` and `pu16StartXOutAddress` to local variables in the DMA layer setup functions.
+  - Split DMA register-to-pointer casts through `uintptr_t` temporaries in the ISR helpers and marked the callback arguments intentionally unused.
+- Status:
+  - Implementation complete.

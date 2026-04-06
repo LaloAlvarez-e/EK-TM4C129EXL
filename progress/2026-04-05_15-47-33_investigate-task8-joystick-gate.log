@@ -1,0 +1,19 @@
+[2026-04-05 15:47:33] Investigated the existing joystick/button flow and selected the synchronization design for gating Task 8 live data.
+- Files inspected:
+  - `TM4C129E_Project/xTask/xSource/xTask3_ButtonsLog.c`
+  - `TM4C129E_Project/xTask/xSource/xTask8_Debug.c`
+  - `TM4C129E_Project/xTask/xSource/xSemaphores.c`
+  - `TM4C129E_Project/xTask/xHeader/xSemaphores.h`
+  - `TM4C129E_Project/main.c`
+- Findings:
+  - `xTask3_ButtonsLog` already samples the joystick select press with `EDUMKII_Joystick_vSampleSelect(&enSelect)` and detects the edge `EDUMKII_enJOYSTICK_PRESS == enSelect`.
+  - `xTask8_Debug` already owns the UART debug surface and is the correct task to hold in system-info mode before switching to live queue data.
+  - Shared RTOS handles are centralized in `xSemaphores.h/.c` and created in `main.c`.
+- Design decision:
+  - Use a new binary semaphore, not a mutex, because this requirement is a one-way start event from Task 3 to Task 8 rather than shared-resource ownership.
+  - Add the new semaphore handle to `xSemaphores.h/.c`, create it in `main.c`, signal it from `xTask3_ButtonsLog` on joystick press, and block `xTask8_Debug` on it after printing system information.
+- Surrounding implementation review:
+  - No startup-file or linker-script edits are needed.
+  - No queue-set changes are needed because the new object is only a direct synchronization path between Task 3 and Task 8.
+- Status:
+  - Investigation complete. Implementation next.

@@ -157,6 +157,20 @@ Manual basis: `tm4c`, Chapter 5 System Control, section 5.5 System Control Regis
 - `REQ-SYSCTL-UNIQUEID-002` -> `GettersUseExpectedUniqueIDOffsetsMasksAndShifts` | `tm4c` | The SYSCTL Unique ID getter family shall read the documented `UNIQUEID0` through `UNIQUEID3` raw identifier fields using the corresponding register offsets, masks, and shifts, and return each 32-bit identifier slice unchanged.
 - `REQ-SYSCTL-UNIQUEID-003` -> `GetUniqueID2PropagatesReadError` | `derived` | The SYSCTL Unique ID getter family shall propagate SYSCTL primitive read errors without modifying the caller output value.
 
+Path: `xDriver_MCU/SYSCTL/Peripheral/Register/xSource/SYSCTL_PowerModeRegisters_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control, section 5.5 System Control Register Descriptions, `SLPPWRCFG` pp.308-309, `DSLPPWRCFG` pp.309-311, `SDPMST` pp.319-321, and `RESBEHAVCTL` pp.321-323 for the adjacent typed raw register macro.
+
+- `REQ-SYSCTL-PWRREG-001` -> `SleepPowerConfigurationUsesDocumentedOffsetShiftAndBitbandAliases` | `tm4c` | The raw `SLPPWRCFG` surface shall expose the documented offset, `FLASHPM` mask plus shift, and bit-band alias routing for bits 5:4.
+- `REQ-SYSCTL-PWRREG-002` -> `DeepSleepPowerConfigurationUsesDocumentedOffsetsAndWritableBitAliases` | `tm4c` | The raw `DSLPPWRCFG` surface shall expose the documented `FLASHPM`, `TSPD`, and `LDOSM` field positions and writable bit-band aliases for the programmable deep-sleep bits.
+- `REQ-SYSCTL-PWRREG-003` -> `StatusAndResetTypedPointerMacrosUseDocumentedOffsets` | `tm4c` | The raw `SDPMST` surface shall expose the documented status-bit positions while the adjacent `RESBEHAVCTL` typed pointer macros shall route to the documented offset with writable raw-register access semantics.
+
+Path: `xDriver_MCU/SYSCTL/Peripheral/Register/xSource/SYSCTL_ModulePowerRegisters_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control, section 5.5 System Control Register Descriptions, `USBPDS` p.325, `USBMPC` p.326, `EMACPDS` p.327, `EMACMPC` p.328, `CAN0PDS` p.331, `CAN0MPC` p.332, `CAN1PDS` p.333, and `CAN1MPC` p.334.
+
+- `REQ-SYSCTL-MODPWR-001` -> `UsbModulePowerRegistersUseDocumentedOffsetsValuesAndMutability` | `tm4c` | The raw `USBPDS` and `USBMPC` surfaces shall expose the documented offsets, field encodings, typed raw access mutability, and bit-band alias routing for the USB SRAM power block.
+- `REQ-SYSCTL-MODPWR-002` -> `EmacModulePowerRegistersUseDocumentedOffsetsValuesAndMutability` | `tm4c` | The raw `EMACPDS` and `EMACMPC` surfaces shall expose the documented offsets, field encodings, typed raw access mutability, and bit-band alias routing for the EMAC SRAM power block.
+- `REQ-SYSCTL-MODPWR-003` -> `CanModulePowerRegistersUseDocumentedOffsetsValuesAndMutability` | `tm4c` | The raw `CAN0PDS/CAN0MPC` and `CAN1PDS/CAN1MPC` surfaces shall expose the documented offsets, field encodings, typed raw access mutability, and bit-band alias routing for both CAN SRAM power blocks.
+
 Path: `xApplication_MCU/TIMER/xSource/TIMER_Init_Test.cpp`
 Manual basis: `derived`, repository TIMER initialization policy for application IRQ-vector registration.
 

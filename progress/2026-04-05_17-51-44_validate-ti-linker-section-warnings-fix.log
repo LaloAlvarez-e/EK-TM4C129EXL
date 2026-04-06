@@ -1,0 +1,15 @@
+[2026-04-05 17:51:44] Validating the TI linker subsection warning fix.
+- Validation planned:
+  - Check edited TI linker command files for editor-detected errors.
+  - Clean-rebuild the current `TM4C129E_Project/Debug__TI` configuration using the bundled CCS `gmake.exe`.
+  - Compare the rebuild output for the presence or absence of `#10247-D creating output section ... without a SECTIONS specification` warnings.
+- Status:
+  - Validation complete.
+- Validation results:
+  - `tm4c129encpdt.cmd` and `tm4c129encpdt_WithoutBootloader.cmd` reported no editor errors after the patch.
+  - Clean Debug rebuild succeeded.
+  - The reported `#10247-D creating output section ... without a SECTIONS specification` warnings were eliminated.
+  - The rebuilt map now places subsectioned inputs such as `.text.CDLinkedList__enSetTail`, `.rodata.FONT_u16_5x7`, and `.data.FONT_s5x7` under the explicit `.text`, `.const`, and `.data` output sections.
+- Residual warnings not caused by this fix:
+  - `#16032-D` remains because `TM4C129E_Project` is compiled with `--wchar_t=16` while `TM4C129E_ApplicationLib.lib` was built with `--wchar_t=32`.
+  - One `#10068-D no matching section` remains on `tm4c129encpdt_WithoutBootloader.cmd` for the empty `.ARM.extab` input selector.

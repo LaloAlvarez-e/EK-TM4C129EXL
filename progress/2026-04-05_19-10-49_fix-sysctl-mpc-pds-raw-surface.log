@@ -1,0 +1,13 @@
+[2026-04-05 19:10:49] Implemented the remaining SYSCTL raw MPC/PDS register-surface corrections.
+- Scope followed the API-surface review in `2026-04-05_19-07-55_findings-sysctl-mpc-pds-api-and-raw-surface.log`: keep the existing public SYSCTL driver API unchanged and correct the raw-only `USB/EMAC/CAN` `MPC/PDS` block instead of inventing a new wrapper family.
+- Updated `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral.h`:
+  - fixed the truncated `SYSCTL_EMAC_PDS_R` macro so it resolves to the documented `EMAC_PDS_OFFSET`.
+  - changed `SYSCTL_USB_MPC_R`, `SYSCTL_EMAC_MPC_R`, `SYSCTL_CAN0_MPC_R`, and `SYSCTL_CAN1_MPC_R` from `volatile const UBase_t*` to writable `volatile UBase_t*` to match the manual `RW` register type.
+- Updated `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral_Bitbanding.h`:
+  - changed all `USB/EMAC/CAN0/CAN1` `PDS` bit-band scalar aliases from writable `volatile UBase_t*` to `volatile const UBase_t*` because the manual marks those status registers `RO`.
+  - preserved the `MPC` bit-band aliases as writable because the corresponding memory power-control registers are documented `RW`.
+- Added a new mirrored raw-register regression target `SYSCTL_ModulePowerRegisters_Test` under `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Peripheral/Register/xSource` to cover the implemented `USBPDS/USBMPC`, `EMACPDS/EMACMPC`, `CAN0PDS/CAN0MPC`, and `CAN1PDS/CAN1MPC` surfaces.
+- Updated the SYSCTL gap tracker and requirement traceability so the implemented `USB/EMAC/CAN` `MPC/PDS` block is now recorded as covered and no longer part of the remaining post-audit raw-only backlog.
+- Surrounding review conclusion:
+  - the device-specific TM4C129X register summary includes the implemented `USB/EMAC/CAN` `MPC/PDS` families.
+  - the generic manual text also contains `LCDPDS/LCDMPC`, but those registers are absent from the device-specific register summary and absent from the repo address tables, so they were intentionally not added during this pass.

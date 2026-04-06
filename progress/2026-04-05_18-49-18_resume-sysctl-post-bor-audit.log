@@ -1,0 +1,13 @@
+[2026-04-05 18:49:18] Resumed the SYSCTL chapter audit from the progress tracker and selected the next post-BOR validation slice.
+Request: review the progress tracker, recover where the SYSCTL chapter audit stopped, and continue from the next item after the BOR check.
+Tracker reconstruction:
+- Reviewed BOR closure in progress/2026-04-02_22-51-58_findings-bor-pwrtc-clear-semantics.log.
+- Reviewed later SYSCTL validation status in progress/2026-04-05_15-27-54_validate-sysctl-userreg-bootcfg.log and progress/2026-04-05_15-41-41_validate-sysctl-runtime-diagnostics.log.
+- Reviewed TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md for the current SYSCTL chapter state.
+Recovered status:
+- BOR/PWRTC clear semantics are already closed.
+- SYSCTL later progressed through LDOVoltage/Voltage, interrupt and system-clock work, SystemProperties, NonVolatileMemoryInfo, UserRegisters, BootConfig, and project-level runtime diagnostics.
+- The remaining SYSCTL work is now the post-audit expansion row in the gap tracker, primarily raw-only documented families such as SLPPWRCFG, DSLPPWRCFG, SDPMST, and the xPDS/xMPC power-domain register groups.
+Decision:
+- Continue with the next raw documented SYSCTL family after the BOR-related slice: Sleep Power Configuration (SLPPWRCFG), Deep-Sleep Power Configuration (DSLPPWRCFG), and Sleep/Deep-Sleep Power Mode Status (SDPMST).
+Validation status: reconstruction complete; detailed file/manual comparison for the selected family is the next step.

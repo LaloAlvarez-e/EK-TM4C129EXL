@@ -1,0 +1,16 @@
+[2026-04-05 18:05:14] Resumed the interrupted warning-cleanup work after the TFT overlay issue was resolved.
+- User direction:
+  - Continue with the next tasks that were pending before the TFT bug diversion.
+- Scope resumed:
+  - Remaining Debug build warnings after the earlier subsection-section cleanup.
+- Investigation started:
+  - Re-read `TM4C129E_Project/.cproject` to confirm the project Debug__TI compiler and linker options.
+  - Re-read `TM4C129E_ApplicationLib/.cproject` to understand the library build settings behind the persistent `#16032-D` `wchar_t` mismatch.
+- Key findings so far:
+  - `TM4C129E_Project` Debug__TI still compiles with TI ARM CGT and explicitly uses `--wchar_t=16`.
+  - `TM4C129E_ApplicationLib` project configuration includes multiple toolchains, and the persistent warning indicates the currently linked Debug library was built with `--wchar_t=32`.
+  - One linker warning remains from `tm4c129encpdt_WithoutBootloader.cmd` for an empty `.ARM.extab` selector.
+- Next step:
+  - Inspect the active ApplicationLib Debug build artifacts/makefile and the exact linker-script line, then patch the low-risk warning first and align the project/library `wchar_t` settings if the active Debug library path confirms that is the root cause.
+- Status:
+  - Investigation in progress.

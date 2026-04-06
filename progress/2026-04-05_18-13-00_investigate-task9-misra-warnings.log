@@ -1,0 +1,19 @@
+[2026-04-05 18:13:00] Investigating remaining clean-build MISRA warnings in `TM4C129E_Project/xTask/xSource/xTask9_TFT.c`.
+- User request:
+  - Continue into the remaining clean-build MISRA warnings, starting with `xTask9_TFT.c`.
+  - Explain whether the `wchar_t` fix is necessary and correct it if required.
+- Investigation completed:
+  - Mapped the currently reported warning sites in `xTask9_TFT.c` using numbered source output.
+  - Low-risk warnings identified for the first cleanup slice:
+    - Rule 8.7 file-scope objects that can move to block scope or function-local static storage.
+    - Rule 17.4 pointer arithmetic in button-state checks and DMA end-address setup.
+    - Rule 12.1 precedence-sensitive DMA end-address expression.
+    - Rule 10.3 integer-to-pointer cast sites in the DMA ISR helpers.
+  - `wchar_t` finding:
+    - The warning is not about explicit wide-character usage in user code.
+    - It is an ABI mismatch between `TM4C129E_Project` Debug__TI objects built with 16-bit `wchar_t` and `TM4C129E_ApplicationLib` Debug__TI objects built with a different `wchar_t` width.
+    - The current clean project relink is fixed because the active generated `TM4C129E_ApplicationLib/Debug__TI/makefile` adds `-fshort-wchar`.
+- Next step:
+  - Implement the first low-risk MISRA cleanup slice in `xTask9_TFT.c` and preserve the working TFT/UART behavior.
+- Status:
+  - Investigation complete.

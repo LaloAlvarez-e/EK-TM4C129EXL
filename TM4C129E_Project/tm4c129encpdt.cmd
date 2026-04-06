@@ -41,9 +41,16 @@ SECTIONS
         *(.intvecs)
         __intvec_end__ = .;
     } > 0x00010000
-    .text   :   > FLASH_BANK01
+    .text :
+    {
+        *(.text*)
+    } > FLASH_BANK01
     .switch :   > FLASH_BANK01
-    .const  :   > FLASH_BANK23
+    .const :
+    {
+        *(.const*)
+        *(.rodata*)
+    } > FLASH_BANK23
     .cinit  :   > FLASH_BANK01
     .binit  :   > FLASH_BANK01
     .pinit  :   > FLASH_BANK01
@@ -51,7 +58,6 @@ SECTIONS
     .ARM.exidx : > FLASH_BANK01
     .ARM.extab :
     {
-        *(.ARM.extab*)
         __flash_exec_end__ = .;
     } > FLASH_BANK01
 
@@ -68,13 +74,17 @@ SECTIONS
                 RUN_START(__ramcode_start__),
                 RUN_END(__ramcode_end__)
 
-    .data   : LOAD = FLASH_BANK23,
+     .data :   {
+                     *(.data*)
+                 } LOAD = FLASH_BANK23,
                 RUN = SRAM,
                 LOAD_START(__data_load__),
                 LOAD_END(__data_load_end__),
                 RUN_START(__data_start__),
                 RUN_END(__data_end__)
-    .bss    :  RUN = SRAM,
+     .bss :    {
+                     *(.bss*)
+                 } RUN = SRAM,
                 RUN_START(__bss_start__),
                 RUN_END(__bss_end__)
 
