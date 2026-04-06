@@ -1,0 +1,6 @@
+[2026-04-05 20:44:54] investigate SYSCTL interrupt helper tests
+- Reviewed the remaining SYSCTL interrupt helper candidates and confirmed the last optional direct targets are `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Source.c` and `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQSource.c`.
+- Inspected the existing SYSCTL interrupt test tree and chose mirrored helper subdirectories under `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/` to preserve direct source-to-test traceability.
+- Inspected existing support mocks plus the real `MCU_CheckParams.c` and `MCU_RegisterSourceIRQ.c` implementations and chose to compile the original MCU helpers directly for the registration-helper target instead of creating a new mock seam.
+- Chosen host seam: satisfy `MCU_vIRQSourceHandler_Dummy` locally inside each test translation unit with a non-blocking test definition, reset the shared SYSCTL handler table in the fixture, and keep production DriverLib code unchanged.
+- Surrounding review result before implementation: no other SYSCTL interrupt helper source files remained outside these two direct helper targets.

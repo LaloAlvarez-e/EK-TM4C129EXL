@@ -227,6 +227,17 @@ tm4c129e_driverlib_add_unit_test(
 )
 
 tm4c129e_driverlib_add_unit_test(
+    SYSCTL_ModulePower_Test
+    STATIC_TEST_DISCOVERY
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_ModulePower_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ModulePower.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
     SYSCTL_InternalOsc_Test
     TEST_SOURCES
         ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_InternalOsc_Test.cpp
@@ -280,6 +291,17 @@ tm4c129e_driverlib_add_unit_test(
         ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_LDOVoltage_Test.cpp
     ORIGINAL_SOURCES
         ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
+)
+
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_PowerMode_Test
+    STATIC_TEST_DISCOVERY
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_PowerMode_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PowerMode.c
     MOCK_SOURCES
         ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/SYSCTL_PrimitivesMock.cpp
 )

@@ -1,0 +1,4 @@
+[2026-04-05 19:36:30] request-sysctl-modulepower-api
+- Request: proceed to the next SYSCTL step after the completed SLPPWRCFG/DSLPPWRCFG/SDPMST public wrapper slice.
+- Scope selected: implement the remaining public `USB/EMAC/CAN` `MPC/PDS` wrapper family using the existing SYSCTL driver and host-test standards.
+- Pre-edit safeguard: re-read the current `SYSCTL_PowerMode.h` contents because the file changed after the last request.

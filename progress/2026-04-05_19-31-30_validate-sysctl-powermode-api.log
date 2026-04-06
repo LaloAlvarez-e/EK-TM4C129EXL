@@ -1,0 +1,6 @@
+[2026-04-05 19:31:30] validate-sysctl-powermode-api
+- Validation target: `TM4C129E_DriverLib_Test/build` focused host target `SYSCTL_PowerMode_Test`.
+- `cmake --build . --target SYSCTL_PowerMode_Test`: passed after switching the new target to static discovery; the initial dynamic-discovery attempt compiled successfully but failed during GoogleTest discovery with an unknown execution result from the build-time listing step.
+- `ctest -C Debug -R "^SYSCTL_PowerMode_Test$" --output-on-failure`: returned `No tests were found!!!` in the current build tree, so suite execution was completed by direct binary launch instead of relying on absent CTest registration.
+- Direct execution `...\SYSCTL_PowerMode_Test.exe`: passed `6/6` tests.
+- Validation coverage achieved: individual sleep/deep-sleep field routing, grouped SRAM+Flash sequencing/error propagation, null-pointer rejection, and SDPMST public status getters.

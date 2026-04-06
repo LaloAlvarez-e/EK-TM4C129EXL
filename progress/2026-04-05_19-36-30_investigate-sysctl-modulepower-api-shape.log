@@ -1,0 +1,5 @@
+[2026-04-05 19:36:30] investigate-sysctl-modulepower-api-shape
+- Reviewed current `SYSCTL_PowerMode.h` and confirmed no conflicting user edits for the next slice.
+- Reviewed existing patterns: `SYSCTL_PeripheralPower.c`, `SYSCTL_PeripheralGeneric.h`, the raw `USB/EMAC/CAN` `MPC/PDS` register definitions, the module-power raw regression test, and the manual descriptions for `USBPDS/USBMPC`, `EMACPDS/EMACMPC`, and the CAN module power-domain registers.
+- Design decision: create a dedicated public SYSCTL module-memory driver family that reuses `SYSCTL_nPERIPHERAL` as the public selector, adds module-memory control and status enums, and keeps the `USB/EMAC/CAN0/CAN1` register-offset mapping local to the new driver module instead of widening the existing `SYSCTL_PeripheralGeneric` seam.
+- Behavioral scope: USB supports retention in `PWRCTL/MEMSTAT`, while EMAC/CAN only support OFF and ON; the public setter should reject retention requests for unsupported modules.

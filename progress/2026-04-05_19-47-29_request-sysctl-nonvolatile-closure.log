@@ -1,0 +1,4 @@
+[2026-04-05 19:47:29] Requested SYSCTL non-volatile closure slice
+- User requested both remaining closure steps: decide whether `FMPRE/FMPPE` should become a public SYSCTL API or remain raw-only, and add raw-only host coverage for `USER_REG`, `BOOTCFG`, and `NVMSTAT`.
+- Reloaded the applicable TM4C129E skills and repository instruction files before touching SYSCTL DriverLib or host-test code.
+- Re-read `TM4C129E_DriverLib/xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_ModulePower.h` because the workspace reported external edits near the recently added SYSCTL public surface.

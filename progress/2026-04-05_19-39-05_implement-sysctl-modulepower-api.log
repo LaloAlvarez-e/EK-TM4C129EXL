@@ -1,0 +1,5 @@
+[2026-04-05 19:39:05] implement-sysctl-modulepower-api
+- Added the public `SYSCTL_ModulePower` driver family with selector-based `USB/EMAC/CAN0/CAN1` mapping, module-memory control/status enums, control setter/getter, ON/OFF/retention wrappers, and power-domain plus memory-array state getters.
+- Exported the new header from `SYSCTL_Driver.h` and extended `SYSCTL_Enum.h` with `SYSCTL_nMODULE_MEMORY_POWER` and `SYSCTL_nMODULE_POWER_STATUS`.
+- Added a mirrored host target `SYSCTL_ModulePower_Test` with static test discovery and primitive-seam coverage for control-field routing, selector and null-pointer validation, status-field reads, unsupported retention rejection, and read-error propagation.
+- Updated the SYSCTL gap tracker and requirement traceability artifacts to record the new public wrapper family and retire the `USB/EMAC/CAN` `MPC/PDS` API family from the remaining post-audit expansion list.

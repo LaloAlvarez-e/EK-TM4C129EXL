@@ -1,0 +1,6 @@
+[2026-04-05 19:23:07] investigate-sysctl-powermode-api-shape
+- Skills and instructions reviewed: tm4c129e-patterns, tm4c129e-driverlib-unit-testing, tm4c129e-reference-manual, tm4c129e-driverlib.instructions.md, tm4c129e-driverlib-test.instructions.md, tm4c129e-documentation.instructions.md.
+- Production patterns reviewed: SYSCTL_Driver.h aggregator, SYSCTL_Enum.h enum families, SYSCTL_LDOVoltage.c/.h, SYSCTL_SystemProperties.c/.h, SYSCTL_Voltage.c/.h, SYSCTL primitive seam, and SYSCTL driver test CMake inventory.
+- Manual basis reviewed: SLPPWRCFG pp.308-309, DSLPPWRCFG pp.309-311, and SDPMST pp.319-321 from tm4c129xnczad extracted text.
+- Design decision: add a dedicated SYSCTL_PowerMode driver module with new SRAM and Flash power-mode enums, individual sleep/deep-sleep field wrappers, grouped SRAM+Flash wrappers, deep-sleep TSPD/LDOSM state wrappers, and SDPMST public status getters. This keeps the API aligned with existing per-field SYSCTL wrappers instead of exposing callers to raw register macros.
+- Companion-path review before edit: no existing public driver family already covers these SLPPWRCFG, DSLPPWRCFG, or SDPMST fields; a new driver header/source pair and mirrored host test target are required.

@@ -1,0 +1,6 @@
+[2026-04-05 19:43:42] validate-sysctl-modulepower-api
+- Focused build succeeded: `cmake --build . --target SYSCTL_ModulePower_Test --config Debug` from `TM4C129E_DriverLib_Test/build` completed without compile or link failures.
+- Direct execution succeeded: `build/xDriver_MCU/SYSCTL/Driver/xSource/Debug/SYSCTL_ModulePower_Test.exe --gtest_color=no` passed all 5 tests.
+- CTest discovery check: `ctest -N -C Debug` lists the discovered cases as `SYSCTL_ModulePowerTest.*`; filtering by the target name `SYSCTL_ModulePower_Test` returns no matches because the current build tree exposes the per-case names instead.
+- CTest execution succeeded when using the discovered case-name pattern: `ctest -C Debug -R "SYSCTL_ModulePowerTest\\." --output-on-failure` passed all 5 cases.
+- Post-slice surrounding review: the public `USB/EMAC/CAN` `MPC/PDS` wrapper family is now covered; the remaining SYSCTL follow-on work stays concentrated on the `FMPRE/FMPPE` API boundary decision, optional raw-only closure for `USER_REG`/`BOOTCFG`/`NVMSTAT`, and direct tests for internal helper paths if full chapter closure is required.

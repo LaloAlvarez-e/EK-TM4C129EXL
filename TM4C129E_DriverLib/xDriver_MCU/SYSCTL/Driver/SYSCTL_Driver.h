@@ -36,6 +36,7 @@
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_MainOsc.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_MemoryTiming.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_BootConfig.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_ModulePower.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_NonVolatileMemoryInfo.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_NMICause.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_OutputClock.h>
@@ -45,6 +46,7 @@
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_PeripheralReady.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_PeripheralReset.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_PeripheralRunMode.h>
+#include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_PowerMode.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_PeripheralSleepMode.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_PLLCLock.h>
 #include <xDriver_MCU/SYSCTL/Driver/xHeader/SYSCTL_ResetBehavior.h>

@@ -171,6 +171,13 @@ Manual basis: `tm4c`, Chapter 5 System Control, section 5.5 System Control Regis
 - `REQ-SYSCTL-MODPWR-002` -> `EmacModulePowerRegistersUseDocumentedOffsetsValuesAndMutability` | `tm4c` | The raw `EMACPDS` and `EMACMPC` surfaces shall expose the documented offsets, field encodings, typed raw access mutability, and bit-band alias routing for the EMAC SRAM power block.
 - `REQ-SYSCTL-MODPWR-003` -> `CanModulePowerRegistersUseDocumentedOffsetsValuesAndMutability` | `tm4c` | The raw `CAN0PDS/CAN0MPC` and `CAN1PDS/CAN1MPC` surfaces shall expose the documented offsets, field encodings, typed raw access mutability, and bit-band alias routing for both CAN SRAM power blocks.
 
+Path: `xDriver_MCU/SYSCTL/Peripheral/Register/xSource/SYSCTL_NonVolatileRegisters_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control, section 5.5 System Control Register Descriptions, `NVMSTAT` p.312, plus Chapter 8 Internal Memory, section 8.6 Memory Register Descriptions (System Control Offset), `BOOTCFG` pp.706-709 and `USER_REG0` through `USER_REG3` p.710.
+
+- `REQ-SYSCTL-NVREG-001` -> `NvmStatusRawSurfaceUsesDocumentedOffsetAndReadOnlyAliases` | `tm4c` | The raw `NVMSTAT` surface shall expose the documented offset, `FWB` bit position, read-only typed raw access, and read-only bit-band alias routing for the flash-write-buffer status bit.
+- `REQ-SYSCTL-NVREG-002` -> `BootConfigRawSurfaceUsesDocumentedOffsetsMasksAndBitAliases` | `tm4c` | The raw `BOOTCFG` surface shall expose the documented offset, one-bit and multi-bit field locations plus encodings, writable typed raw access, and bit-band alias routing for the individually addressable control bits.
+- `REQ-SYSCTL-NVREG-003` -> `UserRegistersRawSurfaceUsesDocumentedOffsetsMasksAndBitbandBases` | `tm4c` | The raw `USER_REG0` through `USER_REG3` surface shall expose the documented staged offsets, full-width data mask, writable typed raw access, and bit-band word-alias base routing for the four user-register slots.
+
 Path: `xApplication_MCU/TIMER/xSource/TIMER_Init_Test.cpp`
 Manual basis: `derived`, repository TIMER initialization policy for application IRQ-vector registration.
 
@@ -363,6 +370,20 @@ Manual basis: `tm4c`, System Control Register 4 `RIS`, Register 5 `IMC`, and Reg
 - `REQ-SYSCTL-INTSRC-006` -> `StatusInterruptSourceWrappersReadRISRegister` | `tm4c` | The SYSCTL raw-status helpers shall read the documented `RIS` register family for by-mask and by-number queries.
 - `REQ-SYSCTL-INTSRC-007` -> `StatusMaskedInterruptSourceWrappersReadMISCRegister` | `tm4c` | The SYSCTL masked-status helpers shall read the documented `MISC` register family for by-mask and by-number queries.
 - `REQ-SYSCTL-INTSRC-008` -> `InterruptSourceHelpersPropagateValidationAndPrimitiveErrors` | `derived` | Invalid SYSCTL interrupt selections shall stop at parameter validation and valid helpers shall propagate primitive read and write failures unchanged.
+
+Path: `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned SYSCTL source-handler table used by the chapter interrupt dispatch path.
+
+- `REQ-SYSCTL-INTROUTSRC-001` -> `AllInterruptSourcesDefaultToDummyHandler` | `derived` | The internal SYSCTL source-handler table shall initialize every defined SYSCTL source slot to the shared dummy source handler.
+- `REQ-SYSCTL-INTROUTSRC-002` -> `InterruptSourceHandlerPointerExposesWritableSourceSlot` | `derived` | The internal SYSCTL source-handler pointer helper shall expose writable per-source storage and the getter shall reflect updates to that storage.
+
+Path: `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQSource_Test.cpp`
+Manual basis: `derived`, software-owned SYSCTL source-handler registration helper.
+
+- `REQ-SYSCTL-INTREGSRC-001` -> `RegisterIRQSourceRejectsInvalidModule` | `derived` | The internal SYSCTL source-handler registration helper shall reject module selections outside `SYSCTL_enMODULE_MAX`.
+- `REQ-SYSCTL-INTREGSRC-002` -> `RegisterIRQSourceRejectsInvalidInterruptSource` | `derived` | The internal SYSCTL source-handler registration helper shall reject source selections outside `SYSCTL_enINT_MAX`.
+- `REQ-SYSCTL-INTREGSRC-003` -> `RegisterIRQSourceRejectsNullHandlerPointerWithoutClobberingExistingSlot` | `derived` | The internal SYSCTL source-handler registration helper shall propagate null-handler rejection from the MCU registration primitive without modifying the selected slot.
+- `REQ-SYSCTL-INTREGSRC-004` -> `RegisterIRQSourceStoresEncodedHandlerInSelectedSlotOnly` | `derived` | The internal SYSCTL source-handler registration helper shall write the encoded handler pointer into only the selected source slot.
 
 Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_AlternateClock_Test.cpp`
 Manual basis: `tm4c`, `ALTCLKCFG` p.293.
@@ -635,6 +656,25 @@ Manual basis: `tm4c`, System Control Register 25 through Register 28 on pp.313-3
 - `REQ-SYSCTL-LDO-005` -> `UseLDOCustomVoltageWrappersUseSingleBitMask` | `mixed` | The custom-voltage use setters shall program the documented `LDOSPCTL.VADJEN` and `LDODPCTL.VADJEN` fields as single-bit logical values through the primitive seam.
 - `REQ-SYSCTL-LDO-006` -> `IsLDOCustomVoltageUsedWrappersUseSingleBitMask` | `mixed` | The custom-voltage use getters shall read the documented `LDOSPCTL.VADJEN` and `LDODPCTL.VADJEN` fields as single-bit logical values through the primitive seam.
 - `REQ-SYSCTL-LDO-007` -> `LDOVoltageGettersPropagateReadErrors` | `derived` | The LDO getter family shall propagate primitive read failures without modifying caller output state.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PowerMode_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control Register 22 `SLPPWRCFG` pp.308-309, Register 23 `DSLPPWRCFG` pp.309-311, and Register 29 `SDPMST` pp.319-321.
+
+- `REQ-SYSCTL-PWRMODE-001` -> `SetPowerModeFieldWrappersUseExpectedSleepAndDeepSleepFields` | `tm4c` | The public power-mode setters shall program the documented `SLPPWRCFG.SRAMPM`, `SLPPWRCFG.FLASHPM`, `DSLPPWRCFG.SRAMPM`, `DSLPPWRCFG.FLASHPM`, `DSLPPWRCFG.TSPD`, and `DSLPPWRCFG.LDOSM` fields.
+- `REQ-SYSCTL-PWRMODE-002` -> `PowerModeIndividualGettersRejectNullPointer` | `derived` | The individual power-mode, deep-sleep state, and SDPMST status getters shall reject null output pointers before issuing primitive reads.
+- `REQ-SYSCTL-PWRMODE-003` -> `GetPowerModeFieldWrappersUseExpectedSleepAndDeepSleepFields` | `tm4c` | The public power-mode getters shall read the documented `SLPPWRCFG` and `DSLPPWRCFG` fields and return the decoded mode or logical state values.
+- `REQ-SYSCTL-PWRMODE-004` -> `SleepPowerModeGroupedWrappersSequenceAndPropagateErrors` | `mixed` | The grouped sleep power-mode wrappers shall route SRAM before Flash and shall propagate the first primitive error while preserving any output state that has not yet been updated.
+- `REQ-SYSCTL-PWRMODE-005` -> `DeepSleepPowerModeGroupedWrappersSequenceAndPropagateErrors` | `mixed` | The grouped deep-sleep power-mode wrappers shall route SRAM before Flash and shall propagate the first primitive error while preserving any output state that has not yet been updated.
+- `REQ-SYSCTL-PWRMODE-006` -> `PowerModeStatusGettersUseExpectedStatusBits` | `tm4c` | The SDPMST status getters shall read the documented error, warning, and live-status bits using the corresponding masks and shifts.
+
+Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ModulePower_Test.cpp`
+Manual basis: `tm4c`, Chapter 5 System Control Register 32 `USBPDS` pp.324-325, Register 33 `USBMPC` pp.325-326, Register 34 `EMACPDS` pp.326-327, Register 35 `EMACMPC` pp.327-328, Register 38 `CAN0PDS` pp.330-331, Register 39 `CAN0MPC` pp.331-332, Register 40 `CAN1PDS` pp.332-333, and Register 41 `CAN1MPC` pp.333-334.
+
+- `REQ-SYSCTL-MODPWR-001` -> `SetModuleMemoryPowerControlStateUsesExpectedModuleControlRegisters` | `tm4c` | The public module-memory power-control setter shall program the documented `USBMPC.PWRCTL`, `EMACMPC.PWRCTL`, `CAN0MPC.PWRCTL`, or `CAN1MPC.PWRCTL` field according to the selected module.
+- `REQ-SYSCTL-MODPWR-002` -> `ModuleMemoryControlWrappersUseExpectedValuesAndRejectUnsupportedRetention` | `mixed` | The public ON, OFF, and retention wrappers shall delegate through the documented module-memory control field shape, and retention requests shall be rejected for modules whose manual descriptions only allow OFF and ON.
+- `REQ-SYSCTL-MODPWR-003` -> `ModuleMemoryGettersRejectInvalidSelectorsAndNullPointers` | `derived` | The public module-memory control and status getters shall reject null output pointers and unsupported peripheral selectors before attempting primitive register access.
+- `REQ-SYSCTL-MODPWR-004` -> `GetModuleMemoryPowerControlAndStatesUseExpectedRegisters` | `tm4c` | The public module-memory getters shall read the documented `USBMPC.PWRCTL`, `PDS.PWRSTAT`, and `PDS.MEMSTAT` fields and return the decoded control or status values for the selected module.
+- `REQ-SYSCTL-MODPWR-005` -> `ModuleMemoryReadGettersPropagateErrorsAndPreserveCallerState` | `derived` | The public module-memory getters shall propagate primitive read failures without modifying caller output state.
 
 Path: `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_Voltage_Test.cpp`
 Manual basis: `tm4c`, System Control Register 3 `PTBOCTL` register context pp.272-273, Register 6 `MISC` pp.278-279 for the separate combined BOR interrupt clear path, and Register 8 `PWRTC` p.283 for the per-rail RW1C brown-out cause bits.

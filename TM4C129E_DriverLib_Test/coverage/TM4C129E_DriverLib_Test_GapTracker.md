@@ -50,6 +50,8 @@ Use this tracker to answer three questions quickly:
 | Chapter 3 SysTick | `xApplication_MCU/Core/SYSTICK/xSource/SYSTICK_Calibration.c` | `SYSTICK_Calibration_Test` | `covered` | Host target validates fallback timing, count-based TENMS interpretation, forward and inverse 40000/3999/1000us examples, trust acceptance for exact external-reference deviation, ratio-based timing and microseconds-to-ticks correction from CALIB error in both negative and positive directions, and the init path review found no remaining raw-CALIB replacement logic outside the corrected helpers. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/Intrinsics/Primitives/xSource/SYSCTL_ReadRegister.c` + `xDriver_MCU/SYSCTL/Driver/Intrinsics/Primitives/xSource/SYSCTL_WriteRegister.c` | `SYSCTL_RegisterPrimitives_Test` | `covered` | Current target validates null pointer rejection, module validation error propagation, and SYSCTL base-address addition before MCU register-access calls. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/xSource/SYSCTL_InterruptSource.c` | `SYSCTL_InterruptSource_Test` | `covered` | Current target validates corrected single-bit IMC by-number state access, whole-mask IMC state access, MISC clear routing, RIS and MISC status reads, null-pointer rejection, and validation plus primitive error propagation. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Source.c` | `SYSCTL_InterruptRoutine_Source_Test` | `covered` | Current target validates default dummy-handler storage across all defined SYSCTL interrupt sources and that the pointer helper exposes writable per-source storage without disturbing neighboring slots. The host target uses static source-based GoogleTest registration because direct discovery is unreliable for newly built binaries in the current Windows environment. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQSource.c` | `SYSCTL_InterruptRegisterIRQSource_Test` | `covered` | Current target validates module and source range rejection, null-handler error propagation through the MCU registration primitive, and successful encoded handler installation into only the selected SYSCTL source slot. The host target uses static source-based GoogleTest registration because direct discovery is unreliable for newly built binaries in the current Windows environment. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_AlternateClock.c` | `SYSCTL_AlternateClock_Test` | `covered` | Current target validates ALTCLKCFG field offset, mask, shift, null-pointer rejection, and read-error propagation through the wrapper primitive seam. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_BootConfig.c` | `SYSCTL_BootConfig_Test` | `covered` | Current target validates BOOTCFG one-bit and multi-bit field getters for documented read-only boot-configuration fields, including null-pointer rejection, field offset plus mask plus shift routing, and read-error propagation through the primitive seam. The host target uses static source-based GoogleTest registration because dynamic discovery was previously unreliable in the current environment. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_DeviceID.c` | `SYSCTL_DeviceID_Test` | `covered` | Current target validates null-pointer rejection across the DID getter family, documented DID0 and DID1 register offset plus mask plus shift routing for all public getters, and read-error propagation through the primitive seam. |
@@ -86,12 +88,15 @@ Use this tracker to answer three questions quickly:
 | Application TIMER | `xApplication_MCU/TIMER/Interrupt/xSource/TIMER_InterruptVector.c` | `TIMER_InterruptVector_Test` | `covered` | Current target validates wide-timer to A-vector mapping, selected TIMER vector routing, and propagated NVIC enable/disable error returns through the TIMER interrupt-vector wrapper. |
 | Application ACMP | `xApplication_MCU/ACMP/xSource/ACMP_Init.c` | `ACMP_Init_Test` | `covered` | Current target validates ready-state error propagation, ordered comparator IRQ-handler lookup and registration sequencing, and first-error early exit on comparator IRQ-registration failure. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c` | `SYSCTL_LDOVoltage_Test` | `covered` | Current target validates LDOSPCTL and LDODPCTL VLDO/VADJEN field routing, LDOSPCAL and LDODPCAL default-calibration field reads, null-pointer rejection, corrected single-bit VADJEN mask behavior, and read-error propagation through the primitive seam; the surrounding review also fixed LDO register-family definition inconsistencies. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ModulePower.c` | `SYSCTL_ModulePower_Test` | `covered` | Current target validates public `USBMPC`, `EMACMPC`, `CAN0MPC`, and `CAN1MPC` control-field routing; USB-only retention acceptance; unsupported selector and retention rejection; null-pointer rejection across the public getter family; and `USBMPC`, `EMACPDS`, `CAN0PDS`, and `CAN1PDS` control/state read routing and primitive read-error propagation through the SYSCTL primitive seam. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PowerMode.c` | `SYSCTL_PowerMode_Test` | `covered` | Current target validates public SLPPWRCFG and DSLPPWRCFG SRAM/Flash power-mode field routing, grouped sleep and deep-sleep sequencing with first-error propagation, deep-sleep TSPD and LDOSM state access, null-pointer rejection, and SDPMST error/warning/live-status bit reads through the SYSCTL primitive seam. The host target uses static source-based GoogleTest registration because direct discovery returned an unknown execution result in the current Windows build environment even though direct binary execution succeeds. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_Voltage.c` | `SYSCTL_Voltage_Test` | `covered` | Current target validates PTBOCTL VDD/VDDA brown-out action field programming and decoding, grouped setter/getter sequencing and first-error behavior, PWRTC trip-status reads, PWRTC RW1C brown-out cause clears, null-pointer rejection, and trip-status read-error propagation through the primitive seam. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_SLPPWRCFG.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_DSLPPWRCFG.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_SDPMST.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral.h` | `SYSCTL_PowerModeRegisters_Test` | `covered` | Current target validates the documented `SLPPWRCFG`, `DSLPPWRCFG`, and `SDPMST` raw register offsets, masks, shifts, typed pointer macros, writable deep-sleep bit-band aliases, and the companion `RESBEHAVCTL` typed raw pointer routing in the same SYSCTL register block surface. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_USBPDS.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_USBMPC.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_EMACPDS.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_EMACMPC.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_CAN0PDS.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_CAN0MPC.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_CAN1PDS.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_CAN1MPC.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral_Bitbanding.h` | `SYSCTL_ModulePowerRegisters_Test` | `covered` | Current target validates the documented USB, EMAC, CAN0, and CAN1 module power-domain raw register offsets, field encodings, typed raw pointer mutability, and bit-band alias mutability/routing for the implemented `MPC/PDS` register block. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/App/xSource/SYSCTL_Ready.c` | `SYSCTL_Ready_Test` | `covered` | Current target validates ready-query error propagation, ordered run-mode enable plus reset sequencing, ordered reset plus run-mode disable sequencing, direct reset error propagation, and ready-wrapper delegation through the SYSCTL app-layer seam. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/App/xSource/SYSCTL_DeInitClockGates.c` | `SYSCTL_DeInitClockGates_Test` | `covered` | Current target validates full peripheral inventory iteration order and first-error early exit through the SYSCTL clock-gate deinitialization helper. |
-| Chapter 5 SYSCTL | post-audit API expansion candidates | none | `in-progress` | Fresh SYSCTL re-audit found and fixed the remaining app-layer reset error propagation bug, added first-class tests for the public xDriver app helpers, direct Device ID, Unique ID, reset-vector-pointer, and SYSPROP getter families, and raw register-surface coverage for `SLPPWRCFG`, `DSLPPWRCFG`, `SDPMST`, and the implemented `USB/EMAC/CAN` `MPC/PDS` block. Remaining optional expansion is now mostly raw-only register coverage for `USER_REG`/`BOOTCFG`/`NVMSTAT`, plus direct tests for internal source-handler helper files if full chapter closure is desired. Legacy `DCx` macros remain raw-only repo carryover and should not be promoted as TM4C129 SYSCTL capability registers without new device-specific documentation evidence. |
+| Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_NVMSTAT.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_BOOTCFG.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/RegisterDefines/xHeader/SYSCTL_RegisterDefines_USER_REG.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral.h` + `xDriver_MCU/SYSCTL/Peripheral/Register/xHeader/SYSCTL_RegisterPeripheral_Bitbanding.h` | `SYSCTL_NonVolatileRegisters_Test` | `covered` | Current target validates the documented `NVMSTAT`, `BOOTCFG`, and `USER_REG` raw register offsets, masks, field encodings, typed raw access mutability, and bit-band alias/base routing for the flash-backed SYSCTL register block. |
+| Chapter 5 SYSCTL | post-audit API expansion candidates | none | `covered` | Fresh SYSCTL re-audit and follow-on implementation now cover the public SLPPWRCFG/DSLPPWRCFG/SDPMST wrapper family, the public `USB/EMAC/CAN` `MPC/PDS` wrapper family, the public xDriver app helpers, direct Device ID, Unique ID, reset-vector-pointer, and SYSPROP getter families, plus raw register-surface coverage for `SLPPWRCFG`, `DSLPPWRCFG`, `SDPMST`, the implemented `USB/EMAC/CAN` `MPC/PDS` block, and the flash-backed `NVMSTAT`/`BOOTCFG`/`USER_REG` block. The stricter closure slice now also includes direct host coverage for the internal SYSCTL source-handler getter and registration helpers. `FMPRE/FMPPE` remain intentionally raw-only in SYSCTL because the TM4C129X manual places them in the Chapter 8 internal-memory protection and non-volatile commit flow; if a higher-level policy API is ever needed, the existing FLASH subsystem is the correct home rather than a SYSCTL convenience wrapper. Legacy `DCx` macros remain raw-only repo carryover and should not be promoted as TM4C129 SYSCTL capability registers without new device-specific documentation evidence. |
 | Chapter 7 HIB | production module missing | none | `blocked` | No HIB production implementation exists yet in `TM4C129E_DriverLib`. |
 
 ## Current Test Inventory
@@ -256,6 +261,18 @@ Use this tracker to answer three questions quickly:
 - validates RIS raw-status reads for by-mask and by-number queries
 - validates MISC masked-status reads for by-mask and by-number queries
 - validates parameter-validation and primitive error propagation in the interrupt helper family
+
+### SYSCTL_InterruptRoutine_Source_Test
+
+- validates default dummy-handler storage across every defined SYSCTL interrupt source slot
+- validates that the pointer getter exposes writable source-slot storage and that unrelated slots remain unchanged
+
+### SYSCTL_InterruptRegisterIRQSource_Test
+
+- validates module-range rejection before the SYSCTL handler table is touched
+- validates source-range rejection before the SYSCTL handler table is touched
+- validates null-handler propagation through the MCU registration primitive without clobbering the existing slot
+- validates successful encoded handler installation into only the selected SYSCTL source slot
 
 ### SYSCTL_AlternateClock_Test
 
@@ -472,6 +489,22 @@ Use this tracker to answer three questions quickly:
 - validates corrected single-bit LDOSPCTL/LDODPCTL VADJEN routing in the custom-voltage use setters and getters
 - validates read-error propagation across the LDO getter family while preserving caller state
 
+### SYSCTL_PowerMode_Test
+
+- validates SLPPWRCFG SRAMPM and FLASHPM field programming in the public sleep power-mode setters
+- validates DSLPPWRCFG SRAMPM, FLASHPM, TSPD, and LDOSM field programming in the public deep-sleep setters
+- validates null-pointer rejection across the individual power-mode, state, and status getter family
+- validates grouped sleep and deep-sleep SRAM plus Flash wrappers for sequencing and first-error propagation
+- validates SDPMST error, warning, and live-status bit reads through the public status getters
+
+### SYSCTL_ModulePower_Test
+
+- validates `USBMPC`, `EMACMPC`, `CAN0MPC`, and `CAN1MPC` public control-field routing for OFF, USB retention, and ON requests
+- validates public convenience-wrapper delegation for module-memory ON, OFF, and USB retention control plus unsupported retention rejection on non-USB modules
+- validates null-pointer rejection and unsupported-selector rejection across the public module-memory getter family
+- validates public `USBMPC`, `EMACPDS`, and `CAN1PDS` control and status-field reads with the documented offsets, masks, and shifts
+- validates primitive read-error propagation while preserving caller state across the public module-memory getter family
+
 ### SYSCTL_Voltage_Test
 
 - validates PTBOCTL VDD_UBOR and VDDA_UBOR action field programming and decoding
@@ -492,6 +525,12 @@ Use this tracker to answer three questions quickly:
 - validates the documented `USBPDS` and `USBMPC` raw offsets, field encodings, typed raw access mutability, and bit-band alias routing for the USB memory power block
 - validates the documented `EMACPDS` and `EMACMPC` raw offsets, field encodings, typed raw access mutability, and bit-band alias routing for the EMAC memory power block
 - validates the documented `CAN0PDS`/`CAN0MPC` and `CAN1PDS`/`CAN1MPC` raw offsets, field encodings, typed raw access mutability, and bit-band alias routing for both CAN memory power blocks
+
+### SYSCTL_NonVolatileRegisters_Test
+
+- validates the documented `NVMSTAT` raw offset, `FWB` bit position, read-only typed raw access, and read-only bit-band alias routing for the flash-write-buffer status bit
+- validates the documented `BOOTCFG` raw offset, one-bit and multi-bit field locations plus encodings, writable typed raw access, and bit-band alias routing for the individually addressable boot-configuration control bits
+- validates the documented `USER_REG0` through `USER_REG3` staged raw offsets, full-width data masks, writable typed raw access, and bit-band word-alias base routing for the four flash-backed user registers
 
 ### NVIC closure note
 

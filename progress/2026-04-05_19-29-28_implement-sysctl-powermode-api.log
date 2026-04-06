@@ -1,0 +1,7 @@
+[2026-04-05 19:29:28] implement-sysctl-powermode-api
+- Added new public driver module `SYSCTL_PowerMode` and exported it through `SYSCTL_Driver.h`.
+- Added new public enums in `SYSCTL_Enum.h` for SRAM and Flash power-mode field encodings so callers no longer need raw register constants.
+- Implemented sleep and deep-sleep SRAM/Flash power-mode setters/getters, grouped sleep/deep-sleep wrappers, deep-sleep TSPD/LDOSM state wrappers, and SDPMST public status getters in `SYSCTL_PowerMode.c`.
+- Added mirrored host target `SYSCTL_PowerMode_Test` with manual-backed and derived coverage for field routing, grouped sequencing/error propagation, null-pointer rejection, and SDPMST status-bit decoding.
+- Updated the SYSCTL host-test gap tracker and requirement traceability matrix for the new public driver family.
+- Post-edit companion review: the remaining SYSCTL expansion focus is now the public `USB/EMAC/CAN` `MPC/PDS` wrapper family, the `FMPRE/FMPPE` API boundary decision, and optional raw/internal-helper closure items; no new companion production file was identified for the current `SLPPWRCFG`/`DSLPPWRCFG`/`SDPMST` slice beyond the module and tests added here.

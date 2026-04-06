@@ -1,0 +1,4 @@
+[2026-04-05 19:20:57] request-sysctl-powermode-api
+- Request: follow the SYSCTL next-steps plan and implement the next missing public API slice using the repository standards, skills, and systematic programming style.
+- Scope selected: add a first-class SYSCTL driver wrapper family for SLPPWRCFG, DSLPPWRCFG, and SDPMST before moving to the USB/EMAC/CAN MPC/PDS public APIs.
+- Pre-implementation review target: inspect existing SYSCTL driver naming, enum usage, grouped wrapper patterns, primitive seams, manual-backed field semantics, and current gap/traceability state before editing.

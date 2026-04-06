@@ -1,0 +1,4 @@
+[2026-04-05 20:41:38] request SYSCTL interrupt helper tests
+- User requested continuing with the remaining optional internal SYSCTL source-handler helper tests after the SYSCTL non-volatile raw-surface closure.
+- Intended slice: identify the exact remaining helper production files, choose the narrowest viable host seam, then add focused tests, CMake wiring, coverage updates, and validation.
+- Surrounding implementation review was explicitly required before and after the slice to catch stale seams or missing companion paths.

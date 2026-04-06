@@ -1,0 +1,11 @@
+tm4c129e_driverlib_add_unit_test(
+    SYSCTL_InterruptRegisterIRQSource_Test
+    STATIC_TEST_DISCOVERY
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/SYSCTL_InterruptRegisterIRQSource_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQSource.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Source.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Common/xSource/MCU_CheckParams.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/Common/xSource/MCU_RegisterSourceIRQ.c
+)

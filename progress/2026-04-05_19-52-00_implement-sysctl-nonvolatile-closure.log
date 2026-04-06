@@ -1,0 +1,4 @@
+[2026-04-05 19:52:00] Implemented SYSCTL raw closure for flash-backed non-volatile register surfaces
+- Added `SYSCTL_NonVolatileRegisters_Test` to validate documented `NVMSTAT`, `BOOTCFG`, and `USER_REG` raw offsets, masks, typed raw access mutability, and bit-band alias/base routing.
+- Registered the new host-test target in `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Peripheral/Register/xSource/CMakeLists.txt`.
+- Updated coverage and requirement traceability documents to record the new raw register-surface target and the `FMPRE/FMPPE` raw-only closure decision.

@@ -1,0 +1,6 @@
+[2026-04-05 19:51:10] Investigated FMPRE/FMPPE placement and the remaining SYSCTL raw-coverage gap
+- TM4C129X manual extract section 8.2.3.4 places `FMPPEn` and `FMPREn` in the Chapter 8 Internal Memory protection flow rather than the Chapter 5 SYSCTL runtime-control families.
+- Manual text describes `FMPPEn/FMPREn` as flash protection policy tables that become permanent only after the non-volatile commit flow together with `BOOTCFG` and `USER_REGn`.
+- Repository search confirmed no existing public SYSCTL wrapper family for `FMPRE/FMPPE` and confirmed that a dedicated FLASH subsystem already exists under `TM4C129E_DriverLib/xDriver_MCU/FLASH`.
+- Decision: keep `FMPRE/FMPPE` raw-only within SYSCTL. If a future higher-level policy API is needed, it should be introduced under the FLASH subsystem rather than as a SYSCTL convenience wrapper.
+- Search also confirmed that public driver tests already cover `BOOTCFG`, `USER_REG`, and `NVMSTAT`; the remaining code work was limited to raw register-surface coverage for those three families.

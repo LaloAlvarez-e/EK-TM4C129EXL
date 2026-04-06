@@ -1,0 +1,7 @@
+[2026-04-05 20:50:08] implement SYSCTL interrupt helper tests
+- Added mirrored test subdirectories and CMake wiring for `InterruptRoutine/xSource` and `InterruptRegister/xSource` beneath `TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/`.
+- Added `SYSCTL_InterruptRoutine_Source_Test.cpp` covering default dummy-handler initialization across all defined SYSCTL sources plus writable pointer-slot behavior.
+- Added `SYSCTL_InterruptRegisterIRQSource_Test.cpp` covering invalid module rejection, invalid source rejection, null-handler propagation from the MCU registration primitive, and successful selected-slot handler installation.
+- Registered both new helper targets with `STATIC_TEST_DISCOVERY` so host-test enumeration does not depend on dynamic executable discovery during CMake generation.
+- Updated `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md` and `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md` to mark both helper sources as covered and close the remaining optional SYSCTL chapter-helper gap.
+- Post-implementation surrounding review: no additional SYSCTL interrupt helper production files or missing companion coverage paths surfaced after the mirrored helper tests were wired in.
