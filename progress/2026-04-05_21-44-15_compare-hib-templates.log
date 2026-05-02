@@ -1,0 +1,6 @@
+[2026-04-05 21:44:15] Compared candidate module templates for the planned HIB scaffold.
+- Raw-layer best structural match: EEPROM and SYSEXC for single-instance Peripheral/Register/Struct layout; both use one register-peripheral block source and do not split per module instance.
+- Raw-layer best behavioral supplements: WDT for lock and write-completion helper patterns, because HIB has HIBLOCK and WRC pacing requirements analogous to WDT lock/write-status handling.
+- Application-layer best wrapper match: WDT for full wrapper decomposition (Intrinsics, Interrupt, Config, Init) and EEPROM for single-instance ready/init registration flow.
+- Decision: recommend a hybrid HIB scaffold: single-instance EEPROM/SYSEXC-style peripheral tree plus WDT-style intrinsics and application wrapper layering.
+- Status: no source edits; continue with HIB register-family grouping and implementation order.

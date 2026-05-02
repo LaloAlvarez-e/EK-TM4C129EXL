@@ -1,0 +1,11 @@
+tm4c129e_driverlib_add_unit_test(
+    ACMP_RegisterPrimitives_Test
+    TEST_SOURCES
+        ${CMAKE_CURRENT_LIST_DIR}/ACMP_RegisterPrimitives_Test.cpp
+    ORIGINAL_SOURCES
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/ACMP/Driver/Intrinsics/Primitives/xSource/ACMP_ReadRegister.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/ACMP/Driver/Intrinsics/Primitives/xSource/ACMP_WriteRegister.c
+        ${TM4C129E_DRIVERLIB_ROOT}/xDriver_MCU/ACMP/Peripheral/Register/RegisterPeripheral/xSource/ACMP_RegisterPeripheral.c
+    MOCK_SOURCES
+        ${TM4C129E_DRIVERLIB_TEST_ROOT}/support/src/ACMP_MCURegisterAccessMock.cpp
+)

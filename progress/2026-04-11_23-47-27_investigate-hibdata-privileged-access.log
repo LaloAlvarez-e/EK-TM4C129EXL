@@ -1,0 +1,18 @@
+[2026-04-11 23:47:27] Investigated HIBDATA privileged-access requirement for upper battery-backed words.
+- Request: verify whether the HIB driver needs an application-layer API because TM4C129X HIBDATA upper words are privileged-only.
+- Manual evidence checked: progress/manual_extract_2026-04-05_15-12-30/tm4c129xnczad.txt.
+- Confirmed facts:
+  - HIB privileged-only register note lists the upper eight HIBDATA words at offsets 0x50 to 0x6F.
+  - HIBDATA register description states the upper eight words may only be accessed using processor privileged mode.
+- Current code reviewed:
+  - TM4C129E_DriverLib/xDriver_MCU/HIB/Driver/xSource/HIB_Data.c
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/HIB.h
+  - TM4C129E_DriverLib/xDriver_MCU/Common/xHeader/MCU_ControlReg.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Peripheral/* for active-vector state
+- Decision:
+  - Keep xDriver_MCU/HIB data access raw and register-oriented.
+  - Add a privilege-aware xApplication_MCU/HIB data wrapper for the protected upper HIBDATA region.
+  - Use CONTROL.nPRIV plus SCB ICSR.VECTACTIVE so Handler mode is treated as privileged.
+- Follow-on checked before implementation:
+  - xApplication_MCU/HIB had no existing data helper path.
+  - No permission-specific HIB error enum exists, so the wrapper will reuse HIB_enERROR_VALUE for denied protected-region access.

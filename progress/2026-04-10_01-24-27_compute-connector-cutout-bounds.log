@@ -1,0 +1,6 @@
+[2026-04-10 01:24:27] Computed board-space cutout bounds from rotated connector package footprints.
+- `U14` RJ45 bbox: `(-1.724, 36.805)` to `(14.026, 54.635)` mm.
+- `U7` target USB bbox: `(0.025, 18.825)` to `(5.021, 28.825)` mm.
+- `U22` debug USB bbox: `(119.635, 37.851)` to `(124.46, 47.137)` mm.
+- `U6` external debug header bbox: `(116.988, 13.599)` to `(123.596, 26.533)` mm.
+- These bounds were used to size the tray wall openings with added clearance margin.

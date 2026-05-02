@@ -1,0 +1,6 @@
+[2026-04-05 21:44:02] Researched TM4C129E_DriverLib HIB production-module scaffold and implementation plan.
+- Scope: research only for adding a new HIB module under TM4C129E_DriverLib/xDriver_MCU and TM4C129E_DriverLib/xApplication_MCU.
+- Investigated repo instructions, HIB absence in current production code, existing HIB hooks in SYSCTL/NVIC/SCB/startup files, and Chapter 7 manual extraction under progress/manual_extract_2026-04-05_15-12-30/tm4c129xnczad.txt.
+- Compared WDT, SYSEXC, EEPROM, TIMER, GPIO, and DMA patterns to determine raw-layer template, application-layer template, grouped register-define options, and repeated-register-bank handling for HIBDATA and HIBTPLOG.
+- Key finding: HIB should use a hybrid scaffold centered on WDT and SYSEXC, with DMA-style array handling for HIBDATA[16] and HIBTPLOG[8], and a foundational wait primitive because the manual requires polling HIBCTL.WRC before HIB register access.
+- Validation: no source files were modified; only this progress log was added per repository policy.

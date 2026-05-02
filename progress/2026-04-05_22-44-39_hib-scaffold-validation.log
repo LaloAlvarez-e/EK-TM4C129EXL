@@ -1,0 +1,8 @@
+[2026-04-05 22:44:39] validate HIB scaffold slice
+- Implemented the next HIB production scaffold on top of the existing register/peripheral foundation.
+- Added `xDriver_MCU/HIB/Driver/**` support for primitive register access, write-complete waiting, lock control, interrupt source state/status helpers, IRQ source handler registration, and IRQ source handler storage.
+- Added `xApplication_MCU/HIB/**` support for SYSCTL ready/reset wrappers, HIB init, NVIC interrupt vector state control, SCB IRQ vector registration, IRQ vector handler storage, and the default HIB IRQ dispatch routine that clears each active HIB source before invoking the registered source handler.
+- Integrated HIB into the root umbrellas by enabling the Chapter 7 includes in `xDriver_MCU/xDriver_MCU.h` and `xApplication_MCU/xApplication_MCU.h`.
+- Extended `HIB_Enum.h` with module-compatible priority and write-status enums plus `HIB_enINTMASK_MAX` for the new interrupt/vector APIs.
+- Validation result: `get_errors` reported no diagnostics for `TM4C129E_DriverLib/xDriver_MCU/HIB`, `TM4C129E_DriverLib/xApplication_MCU/HIB`, `TM4C129E_DriverLib/xDriver_MCU/xDriver_MCU.h`, or `TM4C129E_DriverLib/xApplication_MCU/xApplication_MCU.h`.
+- Surrounding follow-on note after the slice: the raw and application scaffolds now exist, but higher-level public HIB feature APIs under driver `xHeader/` and `xSource/` remain a separate future slice if full behavioral coverage beyond intrinsics/init/interrupt plumbing is still desired.

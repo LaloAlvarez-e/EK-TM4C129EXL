@@ -1,0 +1,6 @@
+[2026-04-05 22:25:38] continue HIB driver and application scaffold
+- Continued the HIB production work after the register/peripheral foundation slice; current `xDriver_MCU/HIB` contains only the raw peripheral layer and `xApplication_MCU/HIB` has no files yet.
+- Re-read the TM4C129E repository pattern skill plus the DriverLib instruction file before editing, then compared `SYSEXC` and `WDT` to lock down the exact HIB scaffold shape.
+- Decision for this slice: add HIB driver intrinsics for primitive register access, WRC wait, HIBLOCK control, interrupt source control, IRQ source registration, and IRQ source handler storage; add HIB application wrappers for dependencies, ready/init, IRQ vector control, IRQ vector registration, and the default HIB IRQ vector routine.
+- Surrounding inspection before implementation: existing companion seams already exist for `SYSCTL_enHIB`, `NVIC_enVECTOR_HIB`, and `SCB_enVECISR_HIB`; umbrella headers still need HIB integration after the new files are created.
+- Follow-on risk to verify after the slice: the current `HIB_Enum.h` may need additional generic aliases such as interrupt priority and write-status enums so the new driver/application wrappers can follow the established module patterns cleanly.

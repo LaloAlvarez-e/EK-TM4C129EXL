@@ -29,7 +29,7 @@
 
 DMA_nERROR DMA__enSetReadyOnRunMode(DMA_nMODULE enModuleArg);
 DMA_nERROR DMA__enClearReadyOnRunMode(DMA_nMODULE enModuleArg);
-
+DMA_nERROR DMA__enReset(DMA_nMODULE enModuleArg);
 DMA_nERROR DMA__enIsReady(DMA_nMODULE enModuleArg, DMA_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_DMA_INTRINSICS_XHEADER_DMA_READY_H_ */

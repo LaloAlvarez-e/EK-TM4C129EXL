@@ -1,0 +1,6 @@
+[2026-04-07 01:32:44] Investigated remaining full-width HIB bitbanding field aliases.
+- Request continuation: proceed with the remaining data-style registers after the earlier multi-bit field alias slice.
+- Re-read the current split HIB bitbanding Module0 header before editing.
+- Verified the remaining gap is limited to RTCC.RTCC, RTCM0.RTCM0, RTCLD.RTCLD, the DATAx.RTD bank, and LOCK.HIBLOCK.
+- Register-define check confirmed the live field names are RTCC, RTCM0, RTCLD, RTD, and HIBLOCK.
+- Planned slice: add _0.._31 aliases for those fields in the current Module0 header while preserving the existing split structure and alias naming already established in the previous slice.

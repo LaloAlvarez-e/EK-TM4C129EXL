@@ -1,0 +1,5 @@
+[2026-04-05 21:39:05] Reviewed applicable repo instructions and skills for HIB planning.
+- Sources reviewed: .github/skills/tm4c129e-patterns/SKILL.md, .github/skills/tm4c129e-reference-manual/SKILL.md, .github/instructions/tm4c129e-driverlib.instructions.md, .github/instructions/tm4c129e-firmware.instructions.md, .github/instructions/tm4c129e-documentation.instructions.md.
+- Decision: keep proposed HIB design split across xDriver_MCU raw register/feature files and xApplication_MCU convenience wrappers; use extracted manual text as the hardware source of truth.
+- Limitation: repository memory paths listed in context did not resolve through read_file, so planning will rely on direct repo inspection instead.
+- Status: no source edits; continue with codebase and manual-extract comparison.

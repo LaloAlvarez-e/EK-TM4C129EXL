@@ -34,12 +34,11 @@ static const SYSCTL_nPERIPHERAL SYSCTL_VECTOR_I2C[(UBase_t) I2C_enMODULE_MAX] =
 I2C_nERROR I2C__enSetReadyOnRunMode(I2C_nMODULE enModuleArg)
 {
     I2C_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (I2C_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) I2C_enMODULE_MAX);
     if(I2C_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_I2C[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_I2C[(UBase_t) enModuleArg];
         enErrorReg = (I2C_nERROR) SYSCTL__enSetReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
@@ -48,13 +47,25 @@ I2C_nERROR I2C__enSetReadyOnRunMode(I2C_nMODULE enModuleArg)
 I2C_nERROR I2C__enClearReadyOnRunMode(I2C_nMODULE enModuleArg)
 {
     I2C_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (I2C_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) I2C_enMODULE_MAX);
     if(I2C_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_I2C[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_I2C[(UBase_t) enModuleArg];
         enErrorReg = (I2C_nERROR) SYSCTL__enClearReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
+    }
+    return (enErrorReg);
+}
+
+I2C_nERROR I2C__enReset(I2C_nMODULE enModuleArg)
+{
+    I2C_nERROR enErrorReg;
+
+    enErrorReg = (I2C_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) I2C_enMODULE_MAX);
+    if(I2C_enERROR_OK == enErrorReg)
+    {
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_I2C[(UBase_t) enModuleArg];
+        enErrorReg = (I2C_nERROR) SYSCTL__enSetPeripheralReset(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
 }
@@ -62,7 +73,6 @@ I2C_nERROR I2C__enClearReadyOnRunMode(I2C_nMODULE enModuleArg)
 I2C_nERROR I2C__enIsReady(I2C_nMODULE enModuleArg, I2C_nBOOLEAN* penReadyArg)
 {
     I2C_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = I2C_enERROR_OK;
     if(0UL == (uintptr_t) penReadyArg)
@@ -75,7 +85,7 @@ I2C_nERROR I2C__enIsReady(I2C_nMODULE enModuleArg, I2C_nBOOLEAN* penReadyArg)
     }
     if(I2C_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_I2C[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_I2C[(UBase_t) enModuleArg];
         enErrorReg = (I2C_nERROR) SYSCTL__enIsReady(SYSCTL_enMODULE_0, enPeripheralReg, (SYSCTL_nBOOLEAN*) penReadyArg);
     }
     return (enErrorReg);

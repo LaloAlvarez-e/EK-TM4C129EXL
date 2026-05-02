@@ -1,0 +1,6 @@
+[2026-04-05 20:54:24] investigate next family after SYSCTL
+- Reviewed `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md`; the only explicit uncovered row outside SYSCTL was `Chapter 7 HIB`, but it is correctly marked blocked because no HIB production implementation exists yet.
+- Compared `TM4C129E_DriverLib/xDriver_MCU` against `TM4C129E_DriverLib_Test/xDriver_MCU` and confirmed the driver-side test tree only covered `Core`, `SYSEXC`, and `SYSCTL`; `ACMP` was the smallest viable next family because production driver code exists and the workspace already had application-level ACMP test support.
+- Narrowed the first ACMP driver slice to `xDriver_MCU/ACMP/Driver/Intrinsics/Primitives/xSource/ACMP_ReadRegister.c` and `ACMP_WriteRegister.c`, reusing the established primitive-register test pattern from SYSEXC/SYSCTL.
+- Reviewed `ACMP_InterruptSource.c` and `ACMP_ReferenceEnable.c` to choose concrete post-slice follow-on targets for the gap-tracker footer.
+- Loaded the TM4C129E reference-manual workflow, but kept the new ACMP primitive traceability entries explicitly `derived` because no narrow extracted manual citation was needed for the software-wrapper requirements in this slice.

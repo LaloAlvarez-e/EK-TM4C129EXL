@@ -1,0 +1,14 @@
+[2026-04-12 13:00:10] Investigated moving HIB privileged-execution helper into the SCB xDriver.
+- Request: move HIB__enIsPrivilegedExecution into SCB driver as SCB__enIsPrivilegedExecution.
+- Reviewed files:
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/Exception/xSource/SCB_ISR.c
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/Exception/xHeader/SCB_ISR.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/SCB_Driver.h
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/Data/xSource/HIB_Data.c
+- Findings:
+  - SCB already exposes raw active-vector state through SCB_ISR__enGetVectorActive.
+  - The HIB helper is generic core privilege logic and belongs in SCB xDriver rather than remaining HIB-local.
+- Decision:
+  - Add a new generic SCB driver API in Driver/xHeader and Driver/xSource with SCB__ prefix.
+  - Keep the API module-shaped with SCB_nMODULE input and SCB_nSTATE output.
+  - Remove the local HIB helper and route HIB protected-data access through the SCB driver API.

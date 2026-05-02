@@ -1,0 +1,8 @@
+[2026-04-07 01:08:32] Investigated HIB RegisterPeripheral_Bitbanding split request.
+- Request: move HIB bitbanding register-peripheral definitions from the monolithic xHeader surface into RegisterPeripheral_Bitbanding using ADC as reference.
+- Inspected current HIB files before editing because related RegisterPeripheral files changed since the last turn.
+- Findings: RegisterPeripheral_Bitbanding folder already exists, aggregate file exists but is empty, xHeader folder is empty, xSource folder is empty.
+- Findings: HIB_Register.h still includes xDriver_MCU/HIB/Peripheral/Register/xHeader/HIB_RegisterPeripheral_Bitbanding.h.
+- Findings: the monolithic HIB bitbanding header is the only workspace owner of stale TPLOG0..TPLOG7 naming; no external consumers of those names were found.
+- Findings: current live HIB address and struct surfaces use TPLOGTIME0..3 and TPLOGTRIG0..3 offsets/types.
+- Planned slice: populate RegisterPeripheral_Bitbanding aggregate and Module0 header, switch HIB_Register.h to the folder aggregate, and reduce the old xHeader header to a compatibility wrapper.

@@ -29,7 +29,7 @@
 
 SSI_nERROR SSI__enSetReadyOnRunMode(SSI_nMODULE enModuleArg);
 SSI_nERROR SSI__enClearReadyOnRunMode(SSI_nMODULE enModuleArg);
-
+SSI_nERROR SSI__enReset(SSI_nMODULE enModuleArg);
 SSI_nERROR SSI__enIsReady(SSI_nMODULE enModuleArg, SSI_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_SSI_INTRINSICS_XHEADER_SSI_READY_H_ */

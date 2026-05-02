@@ -1,0 +1,11 @@
+[2026-04-11 23:56:12] Updated HIB protected-data privilege check to use the existing SCB xDriver VECTACTIVE API.
+- Modified file:
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/Data/xSource/HIB_Data.c
+- Change made:
+  - Replaced direct SCB peripheral include and direct SCB->ICSR_Bit.VECTACTIVE access.
+  - Included xDriver_MCU/Core/SCB/SCB.h and now call SCB_ISR__enGetVectorActive(SCB_enMODULE_0, &enVectorActiveReg).
+- Validation:
+  - get_errors reported no errors for TM4C129E_DriverLib/xApplication_MCU/HIB/Data/xSource/HIB_Data.c.
+- Conclusion:
+  - No new SCB VECTACTIVE API was added because the xDriver already provided the required public API.
+  - The HIB wrapper now depends on the SCB driver interface instead of raw SCB register bitfields.

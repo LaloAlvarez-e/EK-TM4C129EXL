@@ -1,0 +1,6 @@
+[2026-04-05 21:29:02] investigate launchpad trace capabilities
+- User asked whether the TM4C129E LaunchPad debugger path provides practical `ITM`, `ETM`, or `TPIU` capability and needed that decision before choosing between the Chapter 3 trace path and other coverage work.
+- Verified from the device manual extract that the TM4C129X MCU includes `ITM`, `ETM`, and `TPIU`, and that `TPIU` can export trace through `SWO`; also verified the JTAG/SWD signal table lists `SWO` on `PC3` shared with `TDO`.
+- Verified from `Documents/launchpad.pdf` OCR that the board debugger is an on-board `ICDI`, not an XDS100; the board guide states `ICDI only supports JTAG debugging at this time`.
+- Verified from the same board guide that the external debugger connector `U6` follows the ARM standard 10-pin JTAG pinout and can use either `JTAG` or `SWD` if supported by the external adapter, but the board guide does not document a dedicated parallel trace connector or any onboard ICDI support for SWO/SWV/ETM trace capture.
+- Decision for path selection: the MCU has trace blocks, but the onboard LaunchPad debugger path documented in the board guide does not provide documented ITM/SWV or ETM/TPIU trace capability; full trace would require a separate trace-capable external probe and board routing not documented as part of the onboard ICDI path.

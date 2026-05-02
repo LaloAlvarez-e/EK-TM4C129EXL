@@ -87,6 +87,7 @@ Use this tracker to answer three questions quickly:
 | Application TIMER | `xApplication_MCU/TIMER/Interrupt/InterruptRegister/xSource/TIMER_InterruptRegisterIRQVector.c` | `TIMER_InterruptRegisterIRQVector_Test` | `covered` | Current target validates module-to-vector mapping, installed-handler storage-pointer delegation, SCB error propagation, and null-handler suppression in the TIMER IRQ-register wrapper. |
 | Application TIMER | `xApplication_MCU/TIMER/Interrupt/xSource/TIMER_InterruptVector.c` | `TIMER_InterruptVector_Test` | `covered` | Current target validates wide-timer to A-vector mapping, selected TIMER vector routing, and propagated NVIC enable/disable error returns through the TIMER interrupt-vector wrapper. |
 | Application ACMP | `xApplication_MCU/ACMP/xSource/ACMP_Init.c` | `ACMP_Init_Test` | `covered` | Current target validates ready-state error propagation, ordered comparator IRQ-handler lookup and registration sequencing, and first-error early exit on comparator IRQ-registration failure. |
+| Peripheral ACMP | `xDriver_MCU/ACMP/Driver/Intrinsics/Primitives/xSource/ACMP_ReadRegister.c` + `xDriver_MCU/ACMP/Driver/Intrinsics/Primitives/xSource/ACMP_WriteRegister.c` | `ACMP_RegisterPrimitives_Test` | `covered` | Current target validates null pointer rejection, module validation error propagation, and ACMP block-base addition before MCU register-access calls. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_LDOVoltage.c` | `SYSCTL_LDOVoltage_Test` | `covered` | Current target validates LDOSPCTL and LDODPCTL VLDO/VADJEN field routing, LDOSPCAL and LDODPCAL default-calibration field reads, null-pointer rejection, corrected single-bit VADJEN mask behavior, and read-error propagation through the primitive seam; the surrounding review also fixed LDO register-family definition inconsistencies. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_ModulePower.c` | `SYSCTL_ModulePower_Test` | `covered` | Current target validates public `USBMPC`, `EMACMPC`, `CAN0MPC`, and `CAN1MPC` control-field routing; USB-only retention acceptance; unsupported selector and retention rejection; null-pointer rejection across the public getter family; and `USBMPC`, `EMACPDS`, `CAN0PDS`, and `CAN1PDS` control/state read routing and primitive read-error propagation through the SYSCTL primitive seam. |
 | Chapter 5 SYSCTL | `xDriver_MCU/SYSCTL/Driver/xSource/SYSCTL_PowerMode.c` | `SYSCTL_PowerMode_Test` | `covered` | Current target validates public SLPPWRCFG and DSLPPWRCFG SRAM/Flash power-mode field routing, grouped sleep and deep-sleep sequencing with first-error propagation, deep-sleep TSPD and LDOSM state access, null-pointer rejection, and SDPMST error/warning/live-status bit reads through the SYSCTL primitive seam. The host target uses static source-based GoogleTest registration because direct discovery returned an unknown execution result in the current Windows build environment even though direct binary execution succeeds. |
@@ -480,6 +481,13 @@ Use this tracker to answer three questions quickly:
 - validates ordered comparator IRQ-handler lookup and registration for comparators 0 through 2
 - validates first-error early exit when comparator IRQ registration fails
 
+### ACMP_RegisterPrimitives_Test
+
+- validates null-pointer rejection in `ACMP__enReadRegister`
+- validates ACMP block-base address addition before `MCU__enReadRegister`
+- validates ACMP block-base address addition before `MCU__enWriteRegister`
+- validates module-validation error propagation in `ACMP__enWriteRegister`
+
 ### SYSCTL_LDOVoltage_Test
 
 - validates LDOSPCTL and LDODPCTL VLDO field programming in the custom sleep and deep-sleep voltage setters
@@ -566,6 +574,7 @@ Use this tracker to answer three questions quickly:
 
 - OpenCppCoverage is installed and the latest report is under `coverage/opencppcoverage/`
 - mock bridge families now exist for SYSEXC, SYSTICK, and multiple NVIC seams
+- mirrored `xDriver_MCU` test coverage now includes the first ACMP primitive register-access seam in addition to Core, SYSEXC, and SYSCTL
 - mirrored `xApplication_MCU` test subtree now covers SysTick calibration plus SYSEXC and the full current SYSCTL init and interrupt wrapper inventory, but broader application-layer wrapper coverage is still missing
 - SYSCTL chapter coverage now includes the primitive register layer plus ALTCLKCFG, DIVSCLK, RSCLKCFG, DSCLKCFG, RESC, and NMIC wrapper coverage
 - SYSCTL chapter coverage now includes the reusable peripheral-generic seam across PP, PR, PC, SR, RCGC, SCGC, and DCGC wrapper families
@@ -573,8 +582,8 @@ Use this tracker to answer three questions quickly:
 
 ## Recommended Next Targets
 
-1. fresh Chapter 5 SYSCTL post-closure audit to replace the aggregate audit row with the next concrete production target
-2. next uncovered Chapter 5 SYSCTL production file selected by that audit
+1. `xDriver_MCU/ACMP/Driver/Intrinsics/Interrupt/xSource/ACMP_InterruptSource.c` now that the ACMP primitive read/write seam is covered and reusable
+2. `xDriver_MCU/ACMP/Driver/Reference/xSource/ACMP_ReferenceEnable.c` as the next narrow ACMP getter/setter wrapper on top of the same primitive seam
 
 ## Update Rule
 

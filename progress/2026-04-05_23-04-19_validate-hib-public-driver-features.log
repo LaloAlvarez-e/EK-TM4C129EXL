@@ -1,0 +1,18 @@
+[2026-04-05 23:04:19] validated HIB public driver feature layer
+- Implemented public driver feature headers and sources for:
+  - RTC state/value/subsecond/trim
+  - RTC load and match
+  - calendar mode/hour mode/current/load/match
+  - DATA[16] indexed and array access
+  - tamper presence/state/wake/memory-clear/per-pin configuration/status/log
+  - wake/control behavior across CTL, IO, PP, and CC
+- Updated the public HIB driver umbrella to expose the new feature layer.
+- Extended HIB helper types with DATA index enumeration plus calendar and tamper-log structs.
+- Validation performed:
+  - Requested editor diagnostics on all new HIB headers and sources.
+  - Requested diagnostics on the updated HIB driver umbrella and xDriver root umbrella.
+  - Result: no reported errors for the new HIB public feature files or the updated umbrellas.
+- Surrounding implementation review after this slice:
+  - Driver-level public HIB access is now present for the requested RTC, calendar, load/match, data, tamper, and wake/control areas.
+  - The next companion paths, if the user wants to keep expanding HIB, are xApplication_MCU convenience wrappers and host-based unit tests for the new driver layer.
+  - No additional raw-register seams were required; the existing intrinsics and peripheral layer remained the source of truth.

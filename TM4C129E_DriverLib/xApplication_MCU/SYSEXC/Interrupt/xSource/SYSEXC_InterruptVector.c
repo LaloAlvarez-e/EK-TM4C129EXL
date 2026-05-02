@@ -30,7 +30,7 @@ static SYSEXC_nERROR SYSEXC__enGetInterruptVector(SYSEXC_nMODULE enModuleArg, NV
 {
     const NVIC_nVECTOR NVIC_VECTOR_SYSEXC[(UBase_t) SYSEXC_enMODULE_MAX]=
     {
-     NVIC_enVECTOR_SYSEXC
+        NVIC_enVECTOR_SYSEXC
     };
     SYSEXC_nERROR enErrorReg;
 
@@ -83,7 +83,15 @@ SYSEXC_nERROR SYSEXC__enGetInterruptVectorState(SYSEXC_nMODULE enModuleArg, SYSE
     SYSEXC_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_SYSEXC;
-    enErrorReg = SYSEXC__enGetInterruptVector(enModuleArg, &enVectorReg);
+    enErrorReg = SYSEXC_enERROR_OK;
+    if(0UL == (uintptr_t) penStateArg)
+    {
+        enErrorReg = SYSEXC_enERROR_POINTER;
+    }
+    if(SYSEXC_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = SYSEXC__enGetInterruptVector(enModuleArg, &enVectorReg);
+    }
     if(SYSEXC_enERROR_OK == enErrorReg)
     {
         enErrorReg = (SYSEXC_nERROR) NVIC__enGetVectorState(NVIC_enMODULE_0, enVectorReg, (NVIC_nSTATE*) penStateArg);
@@ -98,7 +106,15 @@ SYSEXC_nERROR SYSEXC__enGetInterruptVectorStateWithPriority(SYSEXC_nMODULE enMod
     SYSEXC_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_SYSEXC;
-    enErrorReg = SYSEXC__enGetInterruptVector(enModuleArg, &enVectorReg);
+    enErrorReg = SYSEXC_enERROR_OK;
+    if((0UL == (uintptr_t) penStateArg) || (0UL == (uintptr_t) penPriorityArg))
+    {
+        enErrorReg = SYSEXC_enERROR_POINTER;
+    }
+    if(SYSEXC_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = SYSEXC__enGetInterruptVector(enModuleArg, &enVectorReg);
+    }
     if(SYSEXC_enERROR_OK == enErrorReg)
     {
         enErrorReg = (SYSEXC_nERROR) NVIC__enGetVectorPriority(NVIC_enMODULE_0, enVectorReg, (NVIC_nPRIORITY*) penPriorityArg);

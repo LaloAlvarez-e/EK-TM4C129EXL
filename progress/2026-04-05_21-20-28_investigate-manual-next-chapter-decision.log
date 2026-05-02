@@ -1,0 +1,6 @@
+[2026-04-05 21:20:28] investigate manual next chapter decision
+- Re-read the TM4C129E reference-manual and DriverLib host-test instructions before investigating the next chapter candidate.
+- Verified from the current production tree that `TM4C129E_DriverLib/xDriver_MCU/Core` only contains `FPU`, `MPU`, `NVIC`, `SCB`, and `SYSTICK`; there are no `ITM`, `ETM`, or `TPIU` production folders or public headers to test yet.
+- Verified from `TM4C129E_DriverLib/xDriver_MCU/xDriver_MCU.h` that `HIB` remains only a commented umbrella include, and the gap tracker still correctly marks `Chapter 7 HIB` as blocked because no HIB production module exists yet.
+- Cross-check from the extracted manual text confirms the device manual does document both the Chapter 7 Hibernation module and the Chapter 3 trace blocks (`ITM`, `ETM`, `TPIU`), but those manual chapters do not currently map to implemented DriverLib modules in this repo.
+- Decision: neither `Chapter 3 ITM/ETM/TPIU` nor `Chapter 7 HIB` is currently an actionable host-test continuation path without first adding production code; the next actionable uncovered family with production sources remains the already-started ACMP driver path.

@@ -1,0 +1,4 @@
+[2026-04-10 01:48:50] Received request to add positive lid locking and explain/fix the support-like material in the port openings.
+- User asked for either screws or snap features to lock the lid to the tray.
+- User also reported that the lid showed support-like material in the Ethernet, USB, and similar openings.
+- Investigation target: current `ek_tm4c129exl_case_lid_v1.py` geometry.

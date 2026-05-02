@@ -1,0 +1,6 @@
+[2026-04-05 21:45:10] Finalized research plan for a new HIB production module scaffold.
+- Recommended raw-layer template mix: EEPROM/SYSEXC single-instance Peripheral tree plus WDT lock/wait/interrupt intrinsics.
+- Recommended application-layer template mix: WDT full wrapper decomposition plus EEPROM single-instance ready/init flow.
+- Confirmed dependencies already present in repo: SYSCTL HIB power/ready definitions, NVIC/SCB HIB vector definitions, and commented HIB umbrella include placeholders in xDriver_MCU.h and xApplication_MCU.h.
+- Primary HIB-specific implementation constraints: WRC-paced register access, HIBIO/HIBIC immediate-write exceptions, HIBLOCK-protected writes, retained HIBDATA array, tamper/calendar sub-blocks, and privileged-only tamper plus upper-memory accesses.
+- Deliverable prepared for user: explicit scaffold tree, register-family grouping, blockers/pattern forks, and recommended implementation order. No production source files edited.

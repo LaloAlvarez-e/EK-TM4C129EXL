@@ -1,0 +1,15 @@
+[2026-04-11 23:55:34] Investigated SCB VECTACTIVE xDriver API availability.
+- Request: create an API for SCB->ICSR_Bit.VECTACTIVE in SCB xDriver.
+- Reviewed files:
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/Exception/xSource/SCB_ISR.c
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/Exception/xHeader/SCB_ISR.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/Exception/SCB_Exception.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/SCB_Driver.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/SCB.h
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/Data/xSource/HIB_Data.c
+- Result:
+  - The xDriver API already exists as SCB_ISR__enGetVectorActive(SCB_nMODULE enModuleArg, SCB_nVECISR* enVectorArg).
+  - It is already exposed through the public SCB driver include chain.
+- Decision:
+  - Do not add a duplicate SCB API.
+  - Update HIB application code to use the existing SCB xDriver API instead of direct SCB peripheral register access.

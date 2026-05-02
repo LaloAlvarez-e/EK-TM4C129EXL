@@ -1,0 +1,7 @@
+[2026-04-07 01:19:29] Investigated missing multi-bit HIB bitbanding field aliases.
+- Request: update RegisterPeripheral_Bitbanding/xHeader/HIB_RegisterPeripheral_Bitbanding_Module0.h so fields wider than one bit expose per-bit aliases with _0, _1, _2, ... suffixes.
+- Re-read current HIB_RegisterPeripheral_Bitbanding_Module0.h and the compatibility wrapper because both files were edited outside the last turn.
+- Verified the split folder layout is still intact and the active header remains the current split Module0 file.
+- Compared the current module header against HIB_StructRegister_Bitbanding.h and the split register-define headers.
+- Findings: the current file only exposes pointer macros and single-bit aliases; multi-bit composite fields such as CAL0.SEC/MIN/HR, CAL1.DOM/MON/YEAR/DOW, RTCSS.RTCSSC/RTCSSM, RTCT.TRIM, TPCTL.MEMCLR, TPSTAT.STATE, and TPLOGTIME fields are missing their per-bit aliases.
+- Planned slice: add the missing per-bit aliases to the current split Module0 header while preserving existing naming, section order, and wrapper wiring.

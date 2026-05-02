@@ -1,0 +1,13 @@
+[2026-04-05 21:48:24] plan hib production slice
+- Reviewed `WDT`, `SYSEXC`, `EEPROM`, and `ACMP` to determine the closest repo patterns.
+- Decision: implement `HIB` as a single-instance peripheral with a flat register tree like `SYSEXC`, but keep repeated register banks (`HIBDATA[16]`, `HIBTPLOG[8]`) as arrays in the peripheral structs similar to `DMA` array treatment.
+- Planned slice order:
+  1. Add the HIB peripheral foundation under `xDriver_MCU/HIB/Peripheral`: enums, register addresses, register defines, normal structs, bitbanding structs, register-peripheral headers, and base-address helper.
+  2. Add driver intrinsics: register read/write, WRC wait, HIBLOCK lock/unlock, interrupt source control, interrupt routine source table, and IRQ source registration.
+  3. Add initial raw HIB domain APIs for control, RTC, data, calendar, tamper, I/O wake configuration, and property queries.
+  4. Add `xApplication_MCU/HIB` wrappers for dependencies, ready-state control, IRQ vector registration, interrupt routine plumbing, and init.
+  5. Wire the umbrella headers and validate the touched files with the workspace error checker.
+- Surrounding implementation inspection before the slice:
+  - Existing companion paths already present and reusable: `SYSCTL_enHIB`, `NVIC_enVECTOR_HIB`, and the common register-access helpers in `MCU_Common`.
+  - Missing companion paths that must be created in this slice: all `HIB` production folders under `xDriver_MCU` and `xApplication_MCU`.
+  - Follow-on work likely after this slice: dedicated host tests for HIB primitives and higher-level feature wrappers once the production scaffold exists.

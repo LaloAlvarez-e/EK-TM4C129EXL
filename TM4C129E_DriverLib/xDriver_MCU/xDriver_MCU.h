@@ -44,7 +44,7 @@
 
 #include <xDriver_MCU/SYSCTL/SYSCTL.h> /*Chapter 5*/
 #include <xDriver_MCU/SYSEXC/SYSEXC.h> /*Chapter 6*/
-/*#include <xDriver_MCU/HIB/HIB.h>       Chapter 7*/
+#include <xDriver_MCU/HIB/HIB.h>       /*Chapter 7*/
 #include <xDriver_MCU/FLASH/FLASH.h>   /*Chapter 8.4*/
 #include <xDriver_MCU/EEPROM/EEPROM.h> /*Chapter 8.5*/
 #include <xDriver_MCU/DMA/DMA.h>       /*Chapter 9*/

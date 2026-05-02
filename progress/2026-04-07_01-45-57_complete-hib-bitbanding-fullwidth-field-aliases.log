@@ -1,0 +1,6 @@
+[2026-04-07 01:46:00] Completed HIB full-width bitbanding field aliases.
+- Added _0.._31 aliases for RTCC.RTCC, RTCM0.RTCM0, RTCLD.RTCLD, and LOCK.HIBLOCK in the split HIB bitbanding Module0 header.
+- Added _0.._31 aliases for DATA0 through DATA15 using the live DATA field name RTD in the split HIB bitbanding Module0 header.
+- Preserved the existing split RegisterPeripheral_Bitbanding structure and kept the earlier composite-field alias work intact.
+- Validation: editor diagnostics reported no errors in HIB_RegisterPeripheral_Bitbanding_Module0.h after the changes.
+- Spot checks confirmed representative endpoint aliases including HIB0_BITBANDING_RTCC_RTCC_31, HIB0_BITBANDING_RTCM0_RTCM0_31, HIB0_BITBANDING_RTCLD_RTCLD_31, HIB0_BITBANDING_LOCK_HIBLOCK_31, HIB0_BITBANDING_DATA0_RTD_31, and HIB0_BITBANDING_DATA15_RTD_31.

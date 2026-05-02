@@ -29,6 +29,7 @@
 
 GPIO_nERROR GPIO__enSetReadyOnRunMode(GPIO_nPORT enPortArg);
 GPIO_nERROR GPIO__enClearReadyOnRunMode(GPIO_nPORT enPortArg);
+GPIO_nERROR GPIO__enReset(GPIO_nPORT enPortArg);
 GPIO_nERROR GPIO__enIsReady(GPIO_nPORT enPortArg, GPIO_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_GPIO_INTRINSICS_XHEADER_GPIO_READY_H_ */

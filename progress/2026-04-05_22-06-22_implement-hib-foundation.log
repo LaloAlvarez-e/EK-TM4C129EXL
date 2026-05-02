@@ -1,0 +1,7 @@
+[2026-04-05 22:06:22] implement HIB foundation
+- Continued the previously planned HIB production work from a clean workspace state; verified that no `TM4C129E_DriverLib/**/HIB/**` or `TM4C129E_ApplicationLib/**/HIB/**` files existed yet.
+- Re-read the TM4C129E repo patterns, DriverLib instructions, and reference-manual workflow before editing.
+- Compared `SYSEXC` and `EEPROM` as the closest single-instance peripheral patterns for HIB and confirmed that `EEPROM` is the best overall structure for the peripheral and application split.
+- Confirmed the existing integration seams for HIB already exist in `SYSCTL` and startup/vector tables, including `SYSCTL_enHIB`, `SYSCTL_PPHIB/PRHIB/...`, and the Hibernate IRQ slot in the startup table.
+- Extracted the Hibernation chapter register inventory from the manual extract and prepared to add the first production slice: full peripheral foundation under `xDriver_MCU/HIB` with enums, register addresses, register defines, normal structs, bitbanding structs, and register/peripheral overlays.
+- Before and after implementing this slice, inspect for missing companion paths, stale seams, and higher-layer files still required before the HIB module can be considered wired.

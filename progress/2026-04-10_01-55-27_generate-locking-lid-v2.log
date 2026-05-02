@@ -1,0 +1,5 @@
+[2026-04-10 01:55:27] Generated the locking closed lid revision.
+- Added `Documents/3d_models/ek_tm4c129exl_case/ek_tm4c129exl_case_lid_v2.py`.
+- Generated `Documents/3d_models/ek_tm4c129exl_case/ek_tm4c129exl_case_lid_v2.stl`.
+- Generation summary: 7640 triangles, bounding box `137.06 x 68.48 x 28.0 mm`.
+- Functional changes: full-height side cutouts for Ethernet/USB/debug openings, plus three screw sleeves and clearance holes aligned to the board mounting holes so the lid can be bolted to the tray through the PCB.

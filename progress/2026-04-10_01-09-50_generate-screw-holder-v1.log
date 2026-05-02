@@ -1,0 +1,6 @@
+[2026-04-10 01:09:50] Generated the first screw-ready EK-TM4C129EXL holder variant.
+- Added `Documents/3d_models/ek_tm4c129exl_holder/ek_tm4c129exl_holder_m3_v1.py`.
+- Updated `Documents/3d_models/ek_tm4c129exl_holder/README.md` to document the M3 choice, inferred hole centers, and regeneration command.
+- Generated `Documents/3d_models/ek_tm4c129exl_holder/ek_tm4c129exl_holder_m3_v1.stl`.
+- Generation summary: 1924 triangles, bounding box `141.06 x 72.48 x 9.6 mm`, nominal screw size `M3`.
+- Companion-path check: preserved the original cradle artifact and added the M3 version as a separate first-version output instead of overwriting the existing model.

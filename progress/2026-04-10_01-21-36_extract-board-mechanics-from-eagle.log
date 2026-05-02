@@ -1,0 +1,5 @@
+[2026-04-10 01:21:36] Extracted exact board mechanics from the EAGLE board file.
+- File analyzed: `Documents/schematics/CCLP Design Package/EK-TM4C129EXL REV A.brd`.
+- Manual/CAD fact: board outline is rectangle `124.46 mm x 55.88 mm` on layer 20.
+- CAD fact: no `<hole>` tags in plain board geometry; mounting holes are defined as placed `holes:3,2` elements.
+- CAD fact: exact mounting holes found as `H4 (21.59, 16.51)`, `H1 (95.25, 21.59)`, and `H6 (82.55, 52.07)` mm.

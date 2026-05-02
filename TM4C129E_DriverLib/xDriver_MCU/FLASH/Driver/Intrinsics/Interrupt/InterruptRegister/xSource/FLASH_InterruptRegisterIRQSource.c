@@ -25,11 +25,12 @@
 
 #include <xDriver_MCU/Common/MCU_Common.h>
 #include <xDriver_MCU/FLASH/Driver/Intrinsics/Interrupt/InterruptRoutine/xHeader/FLASH_InterruptRoutine_Source.h>
-#include <xDriver_MCU/FLASH/Peripheral/FLASH_Peripheral.h>
 
 FLASH_nERROR FLASH__enRegisterIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enIntSourceArg, FLASH_pvfIRQSourceHandler_t pfIrqSourceHandler)
 {
     FLASH_nERROR enErrorReg;
+    FLASH_pvfIRQSourceHandler_t* pfIrqSourceHandlerReg;
+
     enErrorReg = (FLASH_nERROR) MCU__enCheckParams_RAM((UBase_t) enModuleArg, (UBase_t) FLASH_enMODULE_MAX);
     if(FLASH_enERROR_OK == enErrorReg)
     {
@@ -37,8 +38,12 @@ FLASH_nERROR FLASH__enRegisterIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_
     }
     if(FLASH_enERROR_OK == enErrorReg)
     {
-        FLASH_pvfIRQSourceHandler_t* pvfIrqHandler = FLASH__pvfGetIRQSourceHandlerPointer(enModuleArg, enIntSourceArg);
-        enErrorReg = (FLASH_nERROR) MCU__enRegisterIRQSourceHandler_RAM(pfIrqSourceHandler, pvfIrqHandler, 0UL, 1UL);
+        enErrorReg = (0UL == (uintptr_t) pfIrqSourceHandler) ? FLASH_enERROR_POINTER : FLASH_enERROR_OK;
+    }
+    if(FLASH_enERROR_OK == enErrorReg)
+    {
+        pfIrqSourceHandlerReg = FLASH__pvfGetIRQSourceHandlerPointer(enModuleArg, enIntSourceArg);
+        enErrorReg = (FLASH_nERROR) MCU__enRegisterIRQSourceHandler_RAM(pfIrqSourceHandler, pfIrqSourceHandlerReg, 0UL, 1UL);
     }
     return (enErrorReg);
 }

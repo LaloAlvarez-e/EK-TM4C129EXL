@@ -30,6 +30,7 @@
 
 #include <xDriver_MCU/Core/SCB/Driver/xHeader/SCB_SoftwareInterruptTrigger.h>
 #include <xDriver_MCU/Core/SCB/Driver/xHeader/SCB_PriorityGroup.h>
+#include <xDriver_MCU/Core/SCB/Driver/xHeader/SCB_PrivilegedExecution.h>
 #include <xDriver_MCU/Core/SCB/Driver/xHeader/SCB_SleepMode.h>
 #include <xDriver_MCU/Core/SCB/Driver/xHeader/SCB_StackAligment.h>
 #include <xDriver_MCU/Core/SCB/Driver/xHeader/SCB_SysReset.h>

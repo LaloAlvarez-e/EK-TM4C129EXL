@@ -25,21 +25,22 @@
 
 static FLASH_pvfIRQSourceHandler_t FLASH_vIRQSourceHandler[(UBase_t) FLASH_enMODULE_MAX][(UBase_t) FLASH_enINT_MAX] =
 {
- {
-    &MCU_vIRQSourceHandler_Dummy,
-    &MCU_vIRQSourceHandler_Dummy,
-    &MCU_vIRQSourceHandler_Dummy,
-    &MCU_vIRQSourceHandler_Dummy,
-    &MCU_vIRQSourceHandler_Dummy,
-    &MCU_vIRQSourceHandler_Dummy,
-    &MCU_vIRQSourceHandler_Dummy,
-    &MCU_vIRQSourceHandler_Dummy
- }
+    {
+        &MCU_vIRQSourceHandler_Dummy,
+        &MCU_vIRQSourceHandler_Dummy,
+        &MCU_vIRQSourceHandler_Dummy,
+        &MCU_vIRQSourceHandler_Dummy,
+        &MCU_vIRQSourceHandler_Dummy,
+        &MCU_vIRQSourceHandler_Dummy,
+        &MCU_vIRQSourceHandler_Dummy,
+        &MCU_vIRQSourceHandler_Dummy
+    }
 };
 
 FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enIntSourceArg)
 {
     FLASH_pvfIRQSourceHandler_t pvfFunctionReg;
+
     pvfFunctionReg = FLASH_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
     return (pvfFunctionReg);
 }
@@ -47,6 +48,7 @@ FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModule
 FLASH_pvfIRQSourceHandler_t* FLASH__pvfGetIRQSourceHandlerPointer(FLASH_nMODULE enModuleArg, FLASH_nINT enIntSourceArg)
 {
     FLASH_pvfIRQSourceHandler_t* pvfFunctionReg;
+    
     pvfFunctionReg = &FLASH_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
     return (pvfFunctionReg);
 }

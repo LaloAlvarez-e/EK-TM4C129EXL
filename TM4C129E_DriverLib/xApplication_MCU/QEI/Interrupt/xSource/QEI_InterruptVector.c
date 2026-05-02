@@ -22,6 +22,7 @@
  * 24 ago. 2021     InDeviceMex    1.0         initial Version@endverbatim
  */
 #include <xApplication_MCU/QEI/Interrupt/xHeader/QEI_InterruptVector.h>
+
 #include <xApplication_MCU/QEI/Intrinsics/xHeader/QEI_Dependencies.h>
 
 static QEI_nERROR QEI__enGetInterruptVector(QEI_nMODULE enModuleArg, NVIC_nVECTOR* enVectorArg);
@@ -83,7 +84,15 @@ QEI_nERROR QEI__enGetInterruptVectorState(QEI_nMODULE enModuleArg, QEI_nSTATE* p
     QEI_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_QEI0;
-    enErrorReg = QEI__enGetInterruptVector(enModuleArg, &enVectorReg);
+    enErrorReg = QEI_enERROR_OK;
+    if(0UL == (uintptr_t) penStateArg)
+    {
+        enErrorReg = QEI_enERROR_POINTER;
+    }
+    if(QEI_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = QEI__enGetInterruptVector(enModuleArg, &enVectorReg);
+    }
     if(QEI_enERROR_OK == enErrorReg)
     {
         enErrorReg = (QEI_nERROR) NVIC__enGetVectorState(NVIC_enMODULE_0, enVectorReg, (NVIC_nSTATE*) penStateArg);
@@ -98,7 +107,15 @@ QEI_nERROR QEI__enGetInterruptVectorStateWithPriority(QEI_nMODULE enModuleArg, Q
     QEI_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_QEI0;
-    enErrorReg = QEI__enGetInterruptVector(enModuleArg, &enVectorReg);
+    enErrorReg = QEI_enERROR_OK;
+    if((0UL == (uintptr_t) penStateArg) || (0UL == (uintptr_t) penPriorityArg))
+    {
+        enErrorReg = QEI_enERROR_POINTER;
+    }
+    if(QEI_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = QEI__enGetInterruptVector(enModuleArg, &enVectorReg);
+    }
     if(QEI_enERROR_OK == enErrorReg)
     {
         enErrorReg = (QEI_nERROR) NVIC__enGetVectorPriority(NVIC_enMODULE_0, enVectorReg, (NVIC_nPRIORITY*) penPriorityArg);

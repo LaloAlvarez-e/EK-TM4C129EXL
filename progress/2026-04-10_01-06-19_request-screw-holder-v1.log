@@ -1,0 +1,5 @@
+[2026-04-10 01:06:19] Received follow-up request to choose a standard screw size and create the first screw-ready holder version.
+- Source basis remains `Documents/launchpad.pdf`, Figure A-1.
+- Manual fact: Figure A-1 shows a `0.125 in` mounting-hole callout.
+- Inference: `0.125 in` is effectively M3 clearance, so M3 is the chosen standard fastener size for the first screw-ready version.
+- Implementation plan: keep the existing cradle, add a separate `m3_v1` variant with inferred hole centers and oversized clearance slots to absorb drawing uncertainty.

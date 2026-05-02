@@ -1,0 +1,3 @@
+[2026-04-05 21:20:28] request manual next chapter decision
+- User clarified that Chapter 5 SYSCTL and Chapter 6 SYSEXC are closed and asked whether the next chapter should be Chapter 3 trace-related Cortex-M4 blocks (`ITM`, `ETM`, `TPIU`) or Chapter 7 `HIB`.
+- Goal: decide the next actionable coverage path using the manual chapter framing while respecting the current production implementation boundaries in `TM4C129E_DriverLib`.

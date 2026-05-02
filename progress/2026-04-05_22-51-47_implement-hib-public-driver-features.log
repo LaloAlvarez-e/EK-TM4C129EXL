@@ -1,0 +1,12 @@
+[2026-04-05 22:51:47] implementing HIB public driver feature layer
+- Request focus: continue the HIB work into higher-level public driver APIs under xDriver_MCU/HIB/Driver/xHeader and xSource.
+- Investigation completed before edits:
+  - Reloaded TM4C129E patterns and DriverLib instructions.
+  - Re-read live HIB intrinsics, peripheral umbrellas, register defines, and register macro surfaces after the user reported additional HIB file changes.
+  - Compared single-instance public driver templates from EEPROM, FLASH, WDT, QEI, TIMER, SCB, and SYSCTL.
+- Surrounding implementation findings before this slice:
+  - Raw HIB register/peripheral coverage is already present and should remain the source of truth.
+  - HIB driver intrinsics already provide the required read/write/wait/lock seams.
+  - The next missing companion paths are public feature pairs for RTC, RTC load/match, calendar mode/value/load/match, DATA[16], tamper configuration/status/log, and wake/control behavior.
+  - Calendar and tamper writes need to preserve lock handling instead of exposing the unlock sequence to callers.
+  - Wake/control APIs should bind to the existing CTL, IO, PP, and CC register surfaces rather than adding new raw seams.

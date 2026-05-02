@@ -1,0 +1,5 @@
+[2026-04-10 01:33:23] Extracted board header footprints for tray bottom openings.
+- Located X1, X6, X7, X8, X9, and X11 as through-hole header elements from the board file.
+- Computed board-space bounding boxes for each header package placement.
+- Included the external debug header region as an additional bottom opening candidate because it is also a board header footprint.
+- Result: tray revision can now open the base under the real header regions instead of leaving a solid floor beneath them.

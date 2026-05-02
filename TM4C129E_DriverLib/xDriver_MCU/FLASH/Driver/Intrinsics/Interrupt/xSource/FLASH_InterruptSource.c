@@ -27,7 +27,9 @@
 #include <xDriver_MCU/FLASH/Peripheral/FLASH_Peripheral.h>
 #include <xDriver_MCU/FLASH/Driver/Intrinsics/Primitives/FLASH_Primitives.h>
 
-FLASH_nERROR FLASH__enGetInterruptSourceShift(FLASH_nMODULE enModuleArg, FLASH_nINT enInterruptArg, UBase_t* puxShiftArg)
+static FLASH_nERROR FLASH__enGetInterruptSourceShift(FLASH_nMODULE enModuleArg, FLASH_nINT enInterruptArg, UBase_t* puxShiftArg);
+
+static FLASH_nERROR FLASH__enGetInterruptSourceShift(FLASH_nMODULE enModuleArg, FLASH_nINT enInterruptArg, UBase_t* puxShiftArg)
 {
     FLASH_nERROR enErrorReg;
     enErrorReg = (0UL == (uintptr_t) puxShiftArg) ? FLASH_enERROR_POINTER : FLASH_enERROR_OK;

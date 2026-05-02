@@ -1,0 +1,7 @@
+[2026-04-07 22:54:45] Investigating HIB read/write synchronization requirements.
+- Request: verify whether HIB_ReadRegister.c must wait until writes can complete and whether HIB reads/writes are limited by the 32 kHz hibernation clock domain.
+- Re-read the current live HIB read primitive and write primitive before making any conclusion.
+- Confirmed current HIB_ReadRegisterTimeout() calls HIB__enWaitWrite() before MCU__enReadRegister().
+- Confirmed current HIB_WriteRegisterTimeout() also calls HIB__enWaitWrite() before MCU__enWriteRegister().
+- Located the wait-status register definitions in the HIB peripheral layer: HIB_CTL.WRC and HIB_IO.IOWRC.
+- Next step: extract the relevant hibernation chapter text from the TM4C129X reference manual and cross-check whether the hardware requires the read-side wait or only synchronizes write completion.

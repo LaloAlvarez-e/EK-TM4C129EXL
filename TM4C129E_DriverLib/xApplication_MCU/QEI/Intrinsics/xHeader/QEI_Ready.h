@@ -29,7 +29,7 @@
 
 QEI_nERROR QEI__enSetReadyOnRunMode(QEI_nMODULE enModuleArg);
 QEI_nERROR QEI__enClearReadyOnRunMode(QEI_nMODULE enModuleArg);
-
+QEI_nERROR QEI__enReset(QEI_nMODULE enModuleArg);
 QEI_nERROR QEI__enIsReady(QEI_nMODULE enModuleArg, QEI_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_QEI_INTRINSICS_XHEADER_QEI_READY_H_ */

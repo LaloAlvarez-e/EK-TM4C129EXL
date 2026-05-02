@@ -56,6 +56,7 @@ GPIO_nERROR GPIO__enSetInterruptVectorState(GPIO_nPORT enPortArg, GPIO_nSTATE en
     {
         enErrorReg = (GPIO_nERROR) NVIC__enSetVectorState(NVIC_enMODULE_0, enVectorReg, (NVIC_nSTATE) enStateArg);
     }
+    
     return (enErrorReg);
 }
 

@@ -1,0 +1,5 @@
+[2026-04-10 01:00:05] Encountered and resolved the Python runtime path blocker during STL generation.
+- Attempted to run the generator with `C:\Python314\python.exe` from the configured environment.
+- Result: process exited with `-1073741515`, indicating the direct executable path was not usable in the current shell.
+- Resolution: switched to the `py` launcher, which successfully executed Python 3.14.3 in this workspace.
+- Impact: updated the holder README to use the working `py` regeneration command.

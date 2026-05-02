@@ -22,6 +22,7 @@
  * 11 ago. 2021     InDeviceMex    1.0         initial Version@endverbatim
  */
 #include <xApplication_MCU/SSI/Interrupt/xHeader/SSI_InterruptVector.h>
+
 #include <xApplication_MCU/SSI/Intrinsics/xHeader/SSI_Dependencies.h>
 
 static SSI_nERROR SSI__enGetInterruptVector(SSI_nMODULE enModuleArg, NVIC_nVECTOR* enVectorArg);
@@ -38,7 +39,6 @@ static SSI_nERROR SSI__enGetInterruptVector(SSI_nMODULE enModuleArg, NVIC_nVECTO
     if(SSI_enERROR_OK == enErrorReg)
     {
         *enVectorArg = NVIC_VECTOR_SSI[(UBase_t) enModuleArg];
-
     }
     return (enErrorReg);
 }
@@ -83,7 +83,15 @@ SSI_nERROR SSI__enGetInterruptVectorState(SSI_nMODULE enModuleArg, SSI_nSTATE* p
     SSI_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_SSI0;
-    enErrorReg = SSI__enGetInterruptVector(enModuleArg, &enVectorReg);
+    enErrorReg = SSI_enERROR_OK;
+    if(0UL == (uintptr_t) penStateArg)
+    {
+        enErrorReg = SSI_enERROR_POINTER;
+    }
+    if(SSI_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = SSI__enGetInterruptVector(enModuleArg, &enVectorReg);
+    }
     if(SSI_enERROR_OK == enErrorReg)
     {
         enErrorReg = (SSI_nERROR) NVIC__enGetVectorState(NVIC_enMODULE_0, enVectorReg, (NVIC_nSTATE*) penStateArg);
@@ -98,7 +106,15 @@ SSI_nERROR SSI__enGetInterruptVectorStateWithPriority(SSI_nMODULE enModuleArg, S
     SSI_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_SSI0;
-    enErrorReg = SSI__enGetInterruptVector(enModuleArg, &enVectorReg);
+    enErrorReg = SSI_enERROR_OK;
+    if((0UL == (uintptr_t) penStateArg) || (0UL == (uintptr_t) penPriorityArg))
+    {
+        enErrorReg = SSI_enERROR_POINTER;
+    }
+    if(SSI_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = SSI__enGetInterruptVector(enModuleArg, &enVectorReg);
+    }
     if(SSI_enERROR_OK == enErrorReg)
     {
         enErrorReg = (SSI_nERROR) NVIC__enGetVectorPriority(NVIC_enMODULE_0, enVectorReg, (NVIC_nPRIORITY*) penPriorityArg);

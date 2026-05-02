@@ -1,0 +1,5 @@
+[2026-04-10 02:24:19] Validated the tray revision with external mounting supports.
+- Static validation: no editor-detected errors in `ek_tm4c129exl_case_tray_v4.py`.
+- Artifact sanity check: confirmed STL header begins with `solid ek_tm4c129exl_case_tray_v4`.
+- Compatibility note: tray V4 is intended to pair with lid V3, which already keeps the 40-pin header-row areas and LED row exposed.
+- Remaining limitation: the external mounting holes are box-modeled clearances rather than circular CAD-perfect holes, so a follow-up aesthetic refinement may still be useful after a print-fit check.

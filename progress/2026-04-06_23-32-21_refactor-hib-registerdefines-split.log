@@ -1,0 +1,13 @@
+[2026-04-06 23:32:21] refactoring HIB register define layout to per-register files
+- Request: replicate the ADC per-register RegisterDefines/xHeader structure for all HIB registers and remove inline HIB register definitions from the monolithic HIB_RegisterDefines.h file.
+- Investigation performed:
+  - Reviewed ADC_RegisterDefines_ACTSS.h and ADC_RegisterDefines.h to confirm the expected one-file-per-register pattern plus aggregate include file.
+  - Checked the live HIB register tree and found RegisterDefines/HIB_RegisterDefines.h already exists but is empty.
+  - Checked RegisterDefines/xHeader and found only HIB_RegisterDefines_RTCC.h currently exists.
+  - Confirmed the live HIB monolithic definitions still reside in Peripheral/Register/xHeader/HIB_RegisterDefines.h.
+  - Confirmed current HIB include points are HIB_Register.h, HIB_RegisterPeripheral.h, and HIB_RegisterPeripheral_Bitbanding.h.
+- Implementation intent:
+  - Populate RegisterDefines/xHeader with one HIB_RegisterDefines_<REGISTER>.h file for every HIB register family already represented in the monolithic file.
+  - Populate RegisterDefines/HIB_RegisterDefines.h as the aggregate include file.
+  - Remove inline definitions from xHeader/HIB_RegisterDefines.h and keep it as a compatibility include wrapper.
+  - Repoint HIB register include sites to the RegisterDefines aggregate path for parity with ADC.

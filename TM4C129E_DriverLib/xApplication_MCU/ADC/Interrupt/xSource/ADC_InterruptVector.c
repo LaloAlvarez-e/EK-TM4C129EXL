@@ -89,7 +89,15 @@ ADC_nERROR ADC__enGetInterruptVectorState(ADC_nMODULE enModuleArg, ADC_nSEQUENCE
     ADC_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_ADC0SEQ0;
-    enErrorReg = ADC__enGetInterruptVector(enModuleArg, enSequencerArg, &enVectorReg);
+    enErrorReg = ADC_enERROR_OK;
+    if(0UL == (uintptr_t) penStateArg)
+    {
+        enErrorReg = ADC_enERROR_POINTER;
+    }
+    if(ADC_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = ADC__enGetInterruptVector(enModuleArg, enSequencerArg, &enVectorReg);
+    }
     if(ADC_enERROR_OK == enErrorReg)
     {
         enErrorReg = (ADC_nERROR) NVIC__enGetVectorState(NVIC_enMODULE_0, enVectorReg, (NVIC_nSTATE*) penStateArg);
@@ -104,7 +112,15 @@ ADC_nERROR ADC__enGetInterruptVectorStateWithPriority(ADC_nMODULE enModuleArg, A
     ADC_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_ADC0SEQ0;
-    enErrorReg = ADC__enGetInterruptVector(enModuleArg, enSequencerArg, &enVectorReg);
+    enErrorReg = ADC_enERROR_OK;
+    if((0UL == (uintptr_t) penStateArg) || (0UL == (uintptr_t) penPriorityArg))
+    {
+        enErrorReg = ADC_enERROR_POINTER;
+    }
+    if(ADC_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = ADC__enGetInterruptVector(enModuleArg, enSequencerArg, &enVectorReg);
+    }
     if(ADC_enERROR_OK == enErrorReg)
     {
         enErrorReg = (ADC_nERROR) NVIC__enGetVectorPriority(NVIC_enMODULE_0, enVectorReg, (NVIC_nPRIORITY*) penPriorityArg);

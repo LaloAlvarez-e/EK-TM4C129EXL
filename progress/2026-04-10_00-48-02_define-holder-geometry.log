@@ -1,0 +1,6 @@
+[2026-04-10 00:48:02] Defined the holder geometry from documented dimensions and recorded design limits.
+- Manual fact from Figure A-1: overall board size is 4.9 in x 2.2 in.
+- Manual fact: the appendix figure provides component-location context around the board outline.
+- Limitation: the current rendered figure does not support treating all mounting-hole coordinates as certain enough for a screw-down fixture without additional mechanical data.
+- Decision: generate an outline-based bench cradle with raised support pads, low corner guides, and a relieved base instead of hole-driven screw mounts.
+- Companion-path check: no existing STL, SCAD, STEP, OBJ, or 3MF assets were found in the repository, so a new mechanical-artifact folder is required.

@@ -29,7 +29,7 @@
 
 ADC_nERROR ADC__enSetReadyOnRunMode(ADC_nMODULE enModuleArg);
 ADC_nERROR ADC__enClearReadyOnRunMode(ADC_nMODULE enModuleArg);
-
+ADC_nERROR ADC__enReset(ADC_nMODULE enModuleArg);
 ADC_nERROR ADC__enIsReady(ADC_nMODULE enModuleArg, ADC_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_ADC_INTRINSICS_XHEADER_ADC_READY_H_ */

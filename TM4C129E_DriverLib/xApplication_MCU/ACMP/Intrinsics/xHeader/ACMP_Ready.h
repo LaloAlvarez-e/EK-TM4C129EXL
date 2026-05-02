@@ -29,6 +29,7 @@
 
 ACMP_nERROR ACMP__enSetReadyOnRunMode(ACMP_nMODULE enModuleArg);
 ACMP_nERROR ACMP__enClearReadyOnRunMode(ACMP_nMODULE enModuleArg);
+ACMP_nERROR ACMP__enReset(ACMP_nMODULE enModuleArg);
 ACMP_nERROR ACMP__enIsReady(ACMP_nMODULE enModuleArg, ACMP_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_ACMP_INTRINSICS_XHEADER_ACMP_READY_H_ */

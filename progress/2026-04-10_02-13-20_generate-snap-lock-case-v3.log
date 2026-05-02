@@ -1,0 +1,6 @@
+[2026-04-10 02:13:20] Generated the snap-lock enclosure revision with exposed header rows and LED window.
+- Added `Documents/3d_models/ek_tm4c129exl_case/ek_tm4c129exl_case_tray_v3.py`.
+- Added `Documents/3d_models/ek_tm4c129exl_case/ek_tm4c129exl_case_lid_v3.py`.
+- Generated `ek_tm4c129exl_case_tray_v3.stl` with 10700 triangles and `131.26 x 62.68 x 18.0 mm` bounds.
+- Generated `ek_tm4c129exl_case_lid_v3.stl` with 6280 triangles and `137.06 x 68.48 x 28.0 mm` bounds.
+- Functional changes: snap-catch windows in tray walls, snap tabs in the lid, roof openings over X6/X7/X8/X9 header-row areas, and a dedicated roof window over the D1-D4 LED row.

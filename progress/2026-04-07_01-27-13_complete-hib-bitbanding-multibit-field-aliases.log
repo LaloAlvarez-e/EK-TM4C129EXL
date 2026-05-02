@@ -1,0 +1,6 @@
+[2026-04-07 01:27:16] Completed HIB multi-bit bitbanding field alias update.
+- Updated RegisterPeripheral_Bitbanding/xHeader/HIB_RegisterPeripheral_Bitbanding_Module0.h to add per-bit aliases for composite multi-bit fields using the current split register-define bit constants.
+- Added missing aliases for CTL.VBATSEL, RTCT.TRIM, RTCSS.RTCSSC, RTCSS.RTCSSM, CAL0.SEC/MIN/HR, CAL1.DOM/MON/YEAR/DOW, CALLD0.SEC/MIN/HR, CALLD1.DOM/MON/YEAR/DOW, CALM0.SEC/MIN/HR, CALM1.DOM, TPCTL.MEMCLR, TPSTAT.STATE, and TPLOGTIME0..3.SEC/MIN/HR/DOM/MON/YEAR.
+- Kept existing single-bit aliases and wrapper wiring intact.
+- Validation: no editor errors in RegisterPeripheral_Bitbanding/xHeader/HIB_RegisterPeripheral_Bitbanding_Module0.h or xHeader/HIB_RegisterPeripheral_Bitbanding.h.
+- Spot checks confirmed the requested naming pattern now exists, including HIB0_BITBANDING_CAL0_HR_0.

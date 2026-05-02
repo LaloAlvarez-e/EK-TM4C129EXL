@@ -33,12 +33,11 @@ static const SYSCTL_nPERIPHERAL SYSCTL_VECTOR_PWM[(UBase_t) PWM_enMODULE_MAX] =
 PWM_nERROR PWM__enSetReadyOnRunMode(PWM_nMODULE enModuleArg)
 {
     PWM_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (PWM_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) PWM_enMODULE_MAX);
     if(PWM_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_PWM[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_PWM[(UBase_t) enModuleArg];
         enErrorReg = (PWM_nERROR) SYSCTL__enSetReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
@@ -47,13 +46,25 @@ PWM_nERROR PWM__enSetReadyOnRunMode(PWM_nMODULE enModuleArg)
 PWM_nERROR PWM__enClearReadyOnRunMode(PWM_nMODULE enModuleArg)
 {
     PWM_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (PWM_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) PWM_enMODULE_MAX);
     if(PWM_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_PWM[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_PWM[(UBase_t) enModuleArg];
         enErrorReg = (PWM_nERROR) SYSCTL__enClearReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
+    }
+    return (enErrorReg);
+}
+
+PWM_nERROR PWM__enReset(PWM_nMODULE enModuleArg)
+{
+    PWM_nERROR enErrorReg;
+
+    enErrorReg = (PWM_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) PWM_enMODULE_MAX);
+    if(PWM_enERROR_OK == enErrorReg)
+    {
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_PWM[(UBase_t) enModuleArg];
+        enErrorReg = (PWM_nERROR) SYSCTL__enSetPeripheralReset(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
 }
@@ -61,7 +72,6 @@ PWM_nERROR PWM__enClearReadyOnRunMode(PWM_nMODULE enModuleArg)
 PWM_nERROR PWM__enIsReady(PWM_nMODULE enModuleArg, PWM_nBOOLEAN* penReadyArg)
 {
     PWM_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = PWM_enERROR_OK;
     if(0UL == (uintptr_t) penReadyArg)
@@ -74,7 +84,7 @@ PWM_nERROR PWM__enIsReady(PWM_nMODULE enModuleArg, PWM_nBOOLEAN* penReadyArg)
     }
     if(PWM_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_PWM[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_PWM[(UBase_t) enModuleArg];
         enErrorReg = (PWM_nERROR) SYSCTL__enIsReady(SYSCTL_enMODULE_0, enPeripheralReg, (SYSCTL_nBOOLEAN*) penReadyArg);
     }
     return (enErrorReg);

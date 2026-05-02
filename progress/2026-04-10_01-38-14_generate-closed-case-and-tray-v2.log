@@ -1,0 +1,6 @@
+[2026-04-10 01:38:14] Generated the closed-lid case set and revised tray.
+- Added `Documents/3d_models/ek_tm4c129exl_case/ek_tm4c129exl_case_tray_v2.py` with bottom openings under the extracted board header footprints.
+- Added `Documents/3d_models/ek_tm4c129exl_case/ek_tm4c129exl_case_lid_v1.py` with a conservative closed lid, side port cutouts, and top switch access openings.
+- Updated `Documents/3d_models/ek_tm4c129exl_case/README.md` to document the new tray and lid artifacts.
+- Generated `ek_tm4c129exl_case_tray_v2.stl` with 8656 triangles and `131.26 x 62.68 x 18.0 mm` bounds.
+- Generated `ek_tm4c129exl_case_lid_v1.stl` with 2496 triangles and `137.06 x 68.48 x 28.0 mm` bounds.

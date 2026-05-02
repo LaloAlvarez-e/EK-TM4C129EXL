@@ -1,0 +1,12 @@
+[2026-04-06 23:57:55] continue HIB register define split
+- Request focus: continue the pending HIB per-register register-define headers after user review.
+- Live state reviewed before edits:
+  - Existing split headers currently stop at RTCC, RTCM0, RTCLD, CTL, IM, RIS, MIS, IC, RTCT, RTCSS, IO, DATA, CALCTL, and CAL0.
+  - The aggregate file under RegisterDefines is still empty.
+  - The legacy xHeader/HIB_RegisterDefines.h still contains the inline register definitions.
+  - HIB_Register.h, HIB_RegisterPeripheral.h, and HIB_RegisterPeripheral_Bitbanding.h still include the legacy root define file.
+- Planned continuation:
+  - Add pending per-register headers for CAL1, CALLD0, CALLD1, CALM0, CALM1, LOCK, TPCTL, TPSTAT, TPIO, TPLOGTIME, TPLOGTRIG, PP, and CC.
+  - Populate the RegisterDefines aggregate include.
+  - Convert the legacy root define file into a wrapper-only include with no inline register definitions.
+  - Repoint the HIB register include chain to the RegisterDefines aggregate.

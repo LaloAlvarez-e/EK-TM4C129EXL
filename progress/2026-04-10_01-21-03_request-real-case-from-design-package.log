@@ -1,0 +1,4 @@
+[2026-04-10 01:21:03] Received request to replace the placeholder holder concept with a real case using the CCLP design package.
+- User feedback: the imported STL reads as a placeholder rather than a case.
+- Requested source set: `Documents/schematics/CCLP Design Package`.
+- Implementation intent: derive the enclosure from the actual board design files instead of only the board-guide PDF.

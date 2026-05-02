@@ -1,0 +1,7 @@
+[2026-04-05 21:05:57] implement ACMP register primitives tests
+- Added the first driver-side ACMP mirrored test subtree under `TM4C129E_DriverLib_Test/xDriver_MCU/ACMP/Driver/Intrinsics/Primitives/xSource/` and wired it into `TM4C129E_DriverLib_Test/xDriver_MCU/CMakeLists.txt`.
+- Added `ACMP_RegisterPrimitives_Test.cpp` compiling the original `ACMP_ReadRegister.c`, `ACMP_WriteRegister.c`, and `ACMP_RegisterPeripheral.c` production sources directly.
+- Added a family-local MCU register-access mock seam in `support/include/tm4c129e_test/ACMP_MCURegisterAccessMock.h` and `support/src/ACMP_MCURegisterAccessMock.cpp` to intercept `MCU__enCheckParams`, `MCU__enReadRegister`, and `MCU__enWriteRegister` for the ACMP primitive target.
+- Updated `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_GapTracker.md` with the new covered ACMP primitive row, inventory section, framework note, and refreshed `Recommended Next Targets` footer pointing at `ACMP_InterruptSource.c` and `ACMP_ReferenceEnable.c`.
+- Updated `TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md` with `REQ-ACMP-PRIM-001` through `REQ-ACMP-PRIM-004`.
+- Post-implementation surrounding review: no smaller uncovered non-SYSCTL driver slice was found than ACMP primitives, and the refreshed tracker footer now points at the next concrete ACMP sources instead of the stale SYSCTL audit placeholder.

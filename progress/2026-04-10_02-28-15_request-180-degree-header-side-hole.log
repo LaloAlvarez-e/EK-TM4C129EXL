@@ -1,0 +1,4 @@
+[2026-04-10 02:28:15] Received request to add side clearance for the 180-degree header pins at the red-marked position.
+- Reviewed the user screenshots and compared them against the current lid-v3 geometry.
+- Determined that lid v3 exposes the header rows upward through the roof but still leaves the long side wall closed where right-angle pins need to exit.
+- Planned change: create a new lid revision that preserves the snap tabs and roof windows while adding long side wall cutouts aligned to the header-row regions.

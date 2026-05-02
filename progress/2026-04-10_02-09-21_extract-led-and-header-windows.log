@@ -1,0 +1,4 @@
+[2026-04-10 02:09:21] Extracted LED and BoosterPack header-row bounds for the snap-lock lid revision.
+- Computed board-space bounds for `D1` through `D4` to create a visible LED window in the lid.
+- Reused exact board-space bounds for `X6`, `X7`, `X8`, and `X9` so the 40-pin header-row areas can be left exposed in the lid roof.
+- Result: the next lid revision can keep both the header rows and the four user LEDs uncovered.

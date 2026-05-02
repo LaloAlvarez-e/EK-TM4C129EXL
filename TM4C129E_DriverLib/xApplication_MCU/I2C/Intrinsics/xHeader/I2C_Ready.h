@@ -29,7 +29,7 @@
 
 I2C_nERROR I2C__enSetReadyOnRunMode(I2C_nMODULE enModuleArg);
 I2C_nERROR I2C__enClearReadyOnRunMode(I2C_nMODULE enModuleArg);
-
+I2C_nERROR I2C__enReset(I2C_nMODULE enModuleArg);
 I2C_nERROR I2C__enIsReady(I2C_nMODULE enModuleArg, I2C_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_I2C_INTRINSICS_XHEADER_I2C_READY_H_ */

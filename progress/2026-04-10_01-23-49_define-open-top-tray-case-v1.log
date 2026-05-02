@@ -1,0 +1,5 @@
+[2026-04-10 01:23:49] Defined the first enclosure strategy from the extracted design data.
+- Decision: create an open-top tray case rather than a closed-lid shell.
+- Reason: the board file provides exact 2D mechanical data, but not enough height data to guarantee a printable closed cover around the RJ45, headers, and USB connectors.
+- V1 case features: perimeter walls, three exact M3-mounted standoffs, and edge cutouts for the left and right edge connectors.
+- Companion-path check: preserve the prior holder artifacts and create a new case artifact set under a separate `ek_tm4c129exl_case` folder.

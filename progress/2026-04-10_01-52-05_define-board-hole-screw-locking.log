@@ -1,0 +1,4 @@
+[2026-04-10 01:52:05] Defined the locking-lid revision strategy.
+- Decision: use the existing three PCB mounting holes as the lid-to-board-to-tray locking path rather than adding external tabs.
+- Reason: the tray already aligns to the real board holes and includes M3-compatible through geometry, so the lid can be locked with a cleaner and more accurate stack-up.
+- Additional fix: extend the lid side cutouts from the bottom edge up to the roof underside to remove the lip and upper wall material that appeared as support in the previous lid revision.

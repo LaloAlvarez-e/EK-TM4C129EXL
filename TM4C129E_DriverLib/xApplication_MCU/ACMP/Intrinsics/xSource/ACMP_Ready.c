@@ -33,12 +33,11 @@ static const SYSCTL_nPERIPHERAL SYSCTL_VECTOR_ACMP[(UBase_t) ACMP_enMODULE_MAX] 
 ACMP_nERROR ACMP__enSetReadyOnRunMode(ACMP_nMODULE enModuleArg)
 {
     ACMP_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (ACMP_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) ACMP_enMODULE_MAX);
     if(ACMP_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_ACMP[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_ACMP[(UBase_t) enModuleArg];
         enErrorReg = (ACMP_nERROR) SYSCTL__enSetReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
@@ -47,13 +46,25 @@ ACMP_nERROR ACMP__enSetReadyOnRunMode(ACMP_nMODULE enModuleArg)
 ACMP_nERROR ACMP__enClearReadyOnRunMode(ACMP_nMODULE enModuleArg)
 {
     ACMP_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (ACMP_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) ACMP_enMODULE_MAX);
     if(ACMP_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_ACMP[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_ACMP[(UBase_t) enModuleArg];
         enErrorReg = (ACMP_nERROR) SYSCTL__enClearReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
+    }
+    return (enErrorReg);
+}
+
+ACMP_nERROR ACMP__enReset(ACMP_nMODULE enModuleArg)
+{
+    ACMP_nERROR enErrorReg;
+
+    enErrorReg = (ACMP_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) ACMP_enMODULE_MAX);
+    if(ACMP_enERROR_OK == enErrorReg)
+    {
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_ACMP[(UBase_t) enModuleArg];
+        enErrorReg = (ACMP_nERROR) SYSCTL__enSetPeripheralReset(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
 }
@@ -61,7 +72,6 @@ ACMP_nERROR ACMP__enClearReadyOnRunMode(ACMP_nMODULE enModuleArg)
 ACMP_nERROR ACMP__enIsReady(ACMP_nMODULE enModuleArg, ACMP_nBOOLEAN* penReadyArg)
 {
     ACMP_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = ACMP_enERROR_OK;
     if(0UL == (uintptr_t) penReadyArg)
@@ -74,7 +84,7 @@ ACMP_nERROR ACMP__enIsReady(ACMP_nMODULE enModuleArg, ACMP_nBOOLEAN* penReadyArg
     }
     if(ACMP_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_ACMP[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_ACMP[(UBase_t) enModuleArg];
         enErrorReg = (ACMP_nERROR) SYSCTL__enIsReady(SYSCTL_enMODULE_0, enPeripheralReg, (SYSCTL_nBOOLEAN*) penReadyArg);
     }
     return (enErrorReg);

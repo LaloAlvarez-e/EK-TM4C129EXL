@@ -26,7 +26,6 @@
 #define XDRIVER_MCU_ADC_PERIPHERAL_STRUCT_XHEADER_ADC_STRUCTPERIPHERAL_BITBANDING_H_
 
 #include <xDriver_MCU/ADC/Peripheral/Struct/xHeader/ADC_StructRegister_Bitbanding.h>
-#include <xDriver_MCU/ADC/Peripheral/xHeader/ADC_Enum.h>
 
 typedef volatile struct
 {

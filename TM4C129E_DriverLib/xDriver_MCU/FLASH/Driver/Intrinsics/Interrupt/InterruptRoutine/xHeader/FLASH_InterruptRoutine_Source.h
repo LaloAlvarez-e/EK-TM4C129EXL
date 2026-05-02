@@ -36,7 +36,7 @@ FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModule
                                                           FLASH_nINT enIntSourceArg);
 FLASH_pvfIRQSourceHandler_t* FLASH__pvfGetIRQSourceHandlerPointer(FLASH_nMODULE enModuleArg,
                                                                   FLASH_nINT enIntSourceArg);
-#elif defined (__GNUC__ )
+#else
 
 FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModuleArg,
                                                           FLASH_nINT enIntSourceArg) __attribute__((section(".ramcode")));

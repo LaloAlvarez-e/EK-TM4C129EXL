@@ -1,0 +1,9 @@
+[2026-04-07 23:01:33] Concluded HIB read/write synchronization requirements from manual and code cross-check.
+- Manual basis from extracted TM4C129X reference manual Chapter 7 Hibernation Module, Register Access Timing.
+- Verified manual statement: the Hibernation module is on an independent clock domain and software must insert a timing gap between back-to-back writes and between a write followed by a read.
+- Verified manual statement: software may poll HIBCTL.WRC=1 prior to accessing hibernation registers; WRC clears on a write and sets once the write completes.
+- Verified manual statement: back-to-back reads from Hibernation module registers have no timing restrictions and reads are performed at the full peripheral clock rate.
+- Verified manual statement in HIBCTL register description: while WRC is 0, attempted writes are not accepted; this register may still be read so software can poll WRC.
+- Code cross-check: HIB_ReadRegisterTimeout() currently always waits on HIB__enWaitWrite() before reading, which is conservative and safe for any read that may follow a prior write, but stricter than the hardware minimum for read-after-read traffic.
+- Code cross-check: HIB_WriteRegisterTimeout() waiting on HIB__enWaitWrite() matches the documented requirement for writes.
+- No code changes were made in this verification step.

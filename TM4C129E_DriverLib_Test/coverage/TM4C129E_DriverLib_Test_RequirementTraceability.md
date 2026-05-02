@@ -206,6 +206,14 @@ Manual basis: `derived`, repository ACMP initialization policy for application I
 - `REQ-ACMP-INIT-002` -> `InitRegistersAllComparatorsInOrder` | `derived` | The ACMP initialization path shall obtain and register the application IRQ vector handler for comparators 0 through 2 in order after ready-state setup succeeds.
 - `REQ-ACMP-INIT-003` -> `InitStopsWhenComparatorRegistrationFails` | `derived` | The ACMP initialization path shall stop and propagate the first comparator IRQ-registration failure without attempting later comparator registrations.
 
+Path: `xDriver_MCU/ACMP/Driver/Intrinsics/Primitives/xSource/ACMP_RegisterPrimitives_Test.cpp`
+Manual basis: `derived`, repository ACMP primitive register-wrapper policy around the documented ACMP block base.
+
+- `REQ-ACMP-PRIM-001` -> `ReadRegisterRejectsNullPointer` | `derived` | The ACMP read primitive shall reject a null register descriptor.
+- `REQ-ACMP-PRIM-002` -> `ReadRegisterAddsBlockBaseBeforeMCUAccess` | `derived` | The ACMP read primitive shall validate the module and add the ACMP block base address before MCU register access.
+- `REQ-ACMP-PRIM-003` -> `WriteRegisterAddsBlockBaseBeforeMCUAccess` | `derived` | The ACMP write primitive shall validate the module and add the ACMP block base address before MCU register access.
+- `REQ-ACMP-PRIM-004` -> `WriteRegisterPropagatesModuleValidationError` | `derived` | The ACMP write primitive shall propagate module-validation failures without attempting a register write.
+
 Path: `xApplication_MCU/SYSEXC/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Vector_Test.cpp`
 Manual basis: `both`, `tm4c` Chapter 6 `SYSEXCMIS` p.561 and `SYSEXCIC` p.563, plus `cortex` SCB `ICSR` context in section 4.3.3, pp.4-13 to 4-15.
 

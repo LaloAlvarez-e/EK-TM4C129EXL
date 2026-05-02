@@ -1,0 +1,4 @@
+[2026-04-10 01:22:56] Extracted package footprints needed for enclosure wall cutouts.
+- Read EAGLE package definitions for `RJ45_TE_CON_NOMAG_NOLED`, `CON_USB_MICRO_AB_HIROSE_ZX62D-AB-5P8`, `CON_USB_MICRO_B_FCI_10118194`, and `CON_2X5_50MIL`.
+- These packages provide reliable 2D footprint extents for edge cutout placement.
+- Limitation: package footprints do not provide trustworthy component heights for a closed lid.

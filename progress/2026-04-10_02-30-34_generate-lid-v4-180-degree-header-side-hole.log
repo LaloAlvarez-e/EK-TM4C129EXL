@@ -1,0 +1,5 @@
+[2026-04-10 02:30:34] Generated the lid revision with side clearance for right-angle 180-degree header pins.
+- Added `Documents/3d_models/ek_tm4c129exl_case/ek_tm4c129exl_case_lid_v4.py`.
+- Generated `Documents/3d_models/ek_tm4c129exl_case/ek_tm4c129exl_case_lid_v4.stl`.
+- Generation summary: 6224 triangles, bounding box `137.06 x 68.48 x 28.0 mm`.
+- Functional changes: retained the lid-v3 snap-lock tabs, retained the roof windows over the header areas and LED row, and added long side-wall openings aligned to the header-row regions so bent pins can exit through the side.

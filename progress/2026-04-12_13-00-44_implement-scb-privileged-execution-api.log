@@ -1,0 +1,18 @@
+[2026-04-12 13:00:44] Implemented SCB privileged-execution driver API and removed the HIB-local helper.
+- Added:
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/xHeader/SCB_PrivilegedExecution.h
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/xSource/SCB_PrivilegedExecution.c
+- Updated:
+  - TM4C129E_DriverLib/xDriver_MCU/Core/SCB/Driver/SCB_Driver.h
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/Data/xSource/HIB_Data.c
+- Final API:
+  - SCB_nERROR SCB__enIsPrivilegedExecution(SCB_nMODULE enModuleArg, SCB_nSTATE* penStateArg)
+- Behavior:
+  - Handler mode reports privileged.
+  - Thread mode reports privileged or unprivileged from CONTROL.nPRIV.
+  - HIB protected-data access now depends on SCB__enIsPrivilegedExecution instead of a private HIB helper.
+- Validation:
+  - No file errors found in the new SCB header/source, updated SCB_Driver.h, or updated HIB_Data.c.
+- Companion-path review:
+  - No extra HIB public header change was required because HIB already includes SCB.h.
+  - No build was run in this slice; validation was limited to file-level problem checks.

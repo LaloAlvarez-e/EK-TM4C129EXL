@@ -29,6 +29,7 @@
 
 UART_nERROR UART__enSetReadyOnRunMode(UART_nMODULE enModuleArg);
 UART_nERROR UART__enClearReadyOnRunMode(UART_nMODULE enModuleArg);
+UART_nERROR UART__enReset(UART_nMODULE enModuleArg);
 UART_nERROR UART__enIsReady(UART_nMODULE enModuleArg, UART_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_UART_INTRINSICS_XHEADER_UART_READY_H_ */

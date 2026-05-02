@@ -33,12 +33,11 @@ static const SYSCTL_nPERIPHERAL SYSCTL_VECTOR_SSI[(UBase_t) SSI_enMODULE_MAX] =
 SSI_nERROR SSI__enSetReadyOnRunMode(SSI_nMODULE enModuleArg)
 {
     SSI_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (SSI_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) SSI_enMODULE_MAX);
     if(SSI_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_SSI[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_SSI[(UBase_t) enModuleArg];
         enErrorReg = (SSI_nERROR) SYSCTL__enSetReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
@@ -47,13 +46,25 @@ SSI_nERROR SSI__enSetReadyOnRunMode(SSI_nMODULE enModuleArg)
 SSI_nERROR SSI__enClearReadyOnRunMode(SSI_nMODULE enModuleArg)
 {
     SSI_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (SSI_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) SSI_enMODULE_MAX);
     if(SSI_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_SSI[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_SSI[(UBase_t) enModuleArg];
         enErrorReg = (SSI_nERROR) SYSCTL__enClearReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
+    }
+    return (enErrorReg);
+}
+
+SSI_nERROR SSI__enReset(SSI_nMODULE enModuleArg)
+{
+    SSI_nERROR enErrorReg;
+
+    enErrorReg = (SSI_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) SSI_enMODULE_MAX);
+    if(SSI_enERROR_OK == enErrorReg)
+    {
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_SSI[(UBase_t) enModuleArg];
+        enErrorReg = (SSI_nERROR) SYSCTL__enSetPeripheralReset(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
 }
@@ -61,7 +72,6 @@ SSI_nERROR SSI__enClearReadyOnRunMode(SSI_nMODULE enModuleArg)
 SSI_nERROR SSI__enIsReady(SSI_nMODULE enModuleArg, SSI_nBOOLEAN* penReadyArg)
 {
     SSI_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = SSI_enERROR_OK;
     if(0UL == (uintptr_t) penReadyArg)
@@ -74,7 +84,7 @@ SSI_nERROR SSI__enIsReady(SSI_nMODULE enModuleArg, SSI_nBOOLEAN* penReadyArg)
     }
     if(SSI_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_SSI[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_SSI[(UBase_t) enModuleArg];
         enErrorReg = (SSI_nERROR) SYSCTL__enIsReady(SYSCTL_enMODULE_0, enPeripheralReg, (SYSCTL_nBOOLEAN*) penReadyArg);
     }
     return (enErrorReg);

@@ -1,0 +1,18 @@
+[2026-04-11 23:49:46] Implemented xApplication_MCU HIB protected-data access API for privileged-only HIBDATA words.
+- Added files:
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/Data/HIB_Data.h
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/Data/xHeader/HIB_Data.h
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/Data/xSource/HIB_Data.c
+- Updated file:
+  - TM4C129E_DriverLib/xApplication_MCU/HIB/HIB.h
+- Implemented behavior:
+  - New application helpers target the protected upper HIBDATA words only.
+  - Access check treats Handler mode as privileged by reading SCB ICSR.VECTACTIVE.
+  - Thread mode access additionally checks CONTROL.nPRIV through MCU__enGetThreadLevel().
+  - Protected-region range validation accepts HIBDATA indices 8..15 and array spans contained in that range.
+  - Denied protected-region access reuses HIB_enERROR_VALUE because HIB has no permission-specific error code.
+- Validation:
+  - get_errors reported no errors for the edited xApplication_MCU/HIB files.
+- Follow-on review:
+  - Raw xDriver_MCU/HIB data access remains intentionally unchanged and still exposes direct register access.
+  - If desired later, host tests can be added for protected-range validation and Handler-vs-Thread mode behavior.

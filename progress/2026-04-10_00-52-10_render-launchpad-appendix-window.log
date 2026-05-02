@@ -1,0 +1,6 @@
+[2026-04-10 00:52:10] render launchpad appendix window
+- Rendered Documents/launchpad.pdf pages 26 through 36 to PNG using Ghostscript at 220 DPI.
+- Output folder: progress/manual_extract_2026-04-10_00-49-36_launchpad.
+- Purpose: visually inspect the appendix mechanical drawing and associated dimension callouts.
+- Validation: Ghostscript completed without page-render failures.
+- Next step: identify the exact page containing Figure A-1 and read the dimension annotations.

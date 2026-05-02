@@ -1,0 +1,5 @@
+[2026-04-10 00:53:40] inspect launchpad figure
+- Identified the relevant page as rendered file progress/manual_extract_2026-04-10_00-49-36_launchpad/pdfpage_01.png.
+- Confirmed this page is Appendix A, page 26, and contains Figure A-1 titled "Crypto Connected LaunchPad Dimensions and Component Locations".
+- Preliminary direct reads from the figure show an overall width callout of 4.9 and an overall height callout of 2.2, but mounting-hole details still require a tighter crop before they can be treated as certain.
+- Next step: crop and enlarge the drawing region around the board outline and hole callouts.

@@ -33,12 +33,11 @@ static const SYSCTL_nPERIPHERAL SYSCTL_VECTOR_DMA[(UBase_t) DMA_enMODULE_MAX] =
 DMA_nERROR DMA__enSetReadyOnRunMode(DMA_nMODULE enModuleArg)
 {
     DMA_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (DMA_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) DMA_enMODULE_MAX);
     if(DMA_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_DMA[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_DMA[(UBase_t) enModuleArg];
         enErrorReg = (DMA_nERROR) SYSCTL__enSetReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
@@ -47,13 +46,24 @@ DMA_nERROR DMA__enSetReadyOnRunMode(DMA_nMODULE enModuleArg)
 DMA_nERROR DMA__enClearReadyOnRunMode(DMA_nMODULE enModuleArg)
 {
     DMA_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
+    enErrorReg = (DMA_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) DMA_enMODULE_MAX);
+    if(DMA_enERROR_OK == enErrorReg)
+    {
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_DMA[(UBase_t) enModuleArg];
+        enErrorReg = (DMA_nERROR) SYSCTL__enClearReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
+    }
+    return (enErrorReg);
+}
+
+DMA_nERROR DMA__enReset(DMA_nMODULE enModuleArg)
+{
+    DMA_nERROR enErrorReg;
 
     enErrorReg = (DMA_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) DMA_enMODULE_MAX);
     if(DMA_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_DMA[(UBase_t) enModuleArg];
-        enErrorReg = (DMA_nERROR) SYSCTL__enClearReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_DMA[(UBase_t) enModuleArg];
+        enErrorReg = (DMA_nERROR) SYSCTL__enSetPeripheralReset(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
 }
@@ -61,7 +71,6 @@ DMA_nERROR DMA__enClearReadyOnRunMode(DMA_nMODULE enModuleArg)
 DMA_nERROR DMA__enIsReady(DMA_nMODULE enModuleArg, DMA_nBOOLEAN* penReadyArg)
 {
     DMA_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = DMA_enERROR_OK;
     if(0UL == (uintptr_t) penReadyArg)
@@ -74,7 +83,7 @@ DMA_nERROR DMA__enIsReady(DMA_nMODULE enModuleArg, DMA_nBOOLEAN* penReadyArg)
     }
     if(DMA_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_DMA[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_DMA[(UBase_t) enModuleArg];
         enErrorReg = (DMA_nERROR) SYSCTL__enIsReady(SYSCTL_enMODULE_0, enPeripheralReg, (SYSCTL_nBOOLEAN*) penReadyArg);
     }
     return (enErrorReg);

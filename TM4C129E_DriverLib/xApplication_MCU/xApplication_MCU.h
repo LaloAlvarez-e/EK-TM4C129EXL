@@ -29,7 +29,7 @@
 
 #include <xApplication_MCU/SYSCTL/SYSCTL.h> /*Chapter 5*/
 #include <xApplication_MCU/SYSEXC/SYSEXC.h> /*Chapter 6*/
-/*#include <xApplication_MCU/HIB/HIB.h>       Chapter 7*/
+#include <xApplication_MCU/HIB/HIB.h>       /*Chapter 7*/
 #include <xApplication_MCU/FLASH/FLASH.h>   /*Chapter 8.4*/
 #include <xApplication_MCU/EEPROM/EEPROM.h> /*Chapter 8.5*/
 #include <xApplication_MCU/DMA/DMA.h>       /*Chapter 9*/

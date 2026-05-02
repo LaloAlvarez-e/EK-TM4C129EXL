@@ -1,0 +1,4 @@
+[2026-04-10 01:35:21] Extracted switch positions for closed-lid access openings.
+- Computed board-space bounds for `USR_SW1`, `USR_SW2`, `RESET`, and `WAKE` from the EAGLE package placements.
+- These bounds are used to cut top access openings in the lid roof so the switches remain usable after enclosure assembly.
+- Decision: omit LED windows in this revision because the user requested a closed lid and bottom header openings, and switch access is the higher-priority functional cutout.

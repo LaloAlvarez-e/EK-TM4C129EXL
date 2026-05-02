@@ -29,6 +29,7 @@
 
 PWM_nERROR PWM__enSetReadyOnRunMode(PWM_nMODULE enModuleArg);
 PWM_nERROR PWM__enClearReadyOnRunMode(PWM_nMODULE enModuleArg);
+PWM_nERROR PWM__enReset(PWM_nMODULE enModuleArg);
 PWM_nERROR PWM__enIsReady(PWM_nMODULE enModuleArg, PWM_nBOOLEAN* penReadyArg);
 
 #endif /* XAPPLICATION_MCU_PWM_INTRINSICS_XHEADER_PWM_READY_H_ */

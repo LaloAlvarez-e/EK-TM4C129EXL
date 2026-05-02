@@ -1,0 +1,5 @@
+[2026-04-05 21:48:24] request create hib production code
+- User requested a full HIB production module in `TM4C129E_DriverLib` and `xApplication_MCU`, following the repository naming and folder conventions, without omitting any HIB register, enum, normal struct, or bitbanding definition.
+- Confirmed the repo already contains the SYSCTL peripheral gate, NVIC vector ID, and commented umbrella-header placeholders for `HIB`, but no existing production HIB module implementation.
+- Confirmed from the TM4C129X manual extract that the Hibernation chapter exposes 33 documented registers plus repeated `HIBDATA[16]` and `HIBTPLOG[8]` banks that must be reflected in the register address, struct, and bitbanding layers.
+- Blockers at request intake: none for the production scaffold itself; field-level extraction is available from the existing manual extract and prior OCR notes.

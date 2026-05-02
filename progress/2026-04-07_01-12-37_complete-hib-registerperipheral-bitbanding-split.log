@@ -1,0 +1,8 @@
+[2026-04-07 01:12:40] Completed HIB RegisterPeripheral_Bitbanding split.
+- Implemented RegisterPeripheral_Bitbanding/HIB_RegisterPeripheral_Bitbanding.h as the aggregate include surface.
+- Implemented RegisterPeripheral_Bitbanding/xHeader/HIB_RegisterPeripheral_Bitbanding_Module0.h with the HIB0 bitbanding register-peripheral macros.
+- Switched HIB_Register.h to include the folder aggregate instead of the monolithic xHeader header.
+- Replaced the old xHeader/HIB_RegisterPeripheral_Bitbanding.h implementation with a wrapper-only compatibility include.
+- Used the current HIB TPLOGTIME0..3 and TPLOGTRIG0..3 offset/type naming in the new folder header instead of carrying forward stale TPLOG0..7 names.
+- Validation: no editor errors in HIB_Register.h, RegisterPeripheral_Bitbanding/HIB_RegisterPeripheral_Bitbanding.h, RegisterPeripheral_Bitbanding/xHeader/HIB_RegisterPeripheral_Bitbanding_Module0.h, or xHeader/HIB_RegisterPeripheral_Bitbanding.h.
+- Companion-path inspection: the only remaining stale TPLOG offset naming under xDriver_MCU/HIB is in Driver/xSource/HIB_Tamper.c, which still computes offsets from HIB_TPLOG0_OFFSET and HIB_TPLOG1_OFFSET. That file was not changed in this slice because the requested work was limited to the RegisterPeripheral_Bitbanding move and it currently reports no editor diagnostics.

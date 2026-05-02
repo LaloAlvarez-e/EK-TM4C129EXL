@@ -85,7 +85,15 @@ I2C_nERROR I2C__enGetInterruptVectorState(I2C_nMODULE enModuleArg, I2C_nSTATE* p
     I2C_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_I2C0;
-    enErrorReg = I2C__enGetInterruptVector(enModuleArg, &enVectorReg);
+    enErrorReg = I2C_enERROR_OK;
+    if(0UL == (uintptr_t) penStateArg)
+    {
+        enErrorReg = I2C_enERROR_POINTER;
+    }
+    if(I2C_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = I2C__enGetInterruptVector(enModuleArg, &enVectorReg);
+    }
     if(I2C_enERROR_OK == enErrorReg)
     {
         enErrorReg = (I2C_nERROR) NVIC__enGetVectorState(NVIC_enMODULE_0, enVectorReg, (NVIC_nSTATE*) penStateArg);
@@ -100,7 +108,15 @@ I2C_nERROR I2C__enGetInterruptVectorStateWithPriority(I2C_nMODULE enModuleArg, I
     I2C_nERROR enErrorReg;
 
     enVectorReg = NVIC_enVECTOR_I2C0;
-    enErrorReg = I2C__enGetInterruptVector(enModuleArg, &enVectorReg);
+    enErrorReg = I2C_enERROR_OK;
+    if((0UL == (uintptr_t) penStateArg) || (0UL == (uintptr_t) penPriorityArg))
+    {
+        enErrorReg = I2C_enERROR_POINTER;
+    }
+    if(I2C_enERROR_OK == enErrorReg)
+    {
+        enErrorReg = I2C__enGetInterruptVector(enModuleArg, &enVectorReg);
+    }
     if(I2C_enERROR_OK == enErrorReg)
     {
         enErrorReg = (I2C_nERROR) NVIC__enGetVectorPriority(NVIC_enMODULE_0, enVectorReg, (NVIC_nPRIORITY*) penPriorityArg);

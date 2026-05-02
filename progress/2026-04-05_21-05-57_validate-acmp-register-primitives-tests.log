@@ -1,0 +1,5 @@
+[2026-04-05 21:05:57] validate ACMP register primitives tests
+- Reconfigured `TM4C129E_DriverLib_Test` and built `ACMP_RegisterPrimitives_Test` successfully in `Debug`.
+- Executed `build/xDriver_MCU/ACMP/Driver/Intrinsics/Primitives/xSource/Debug/ACMP_RegisterPrimitives_Test.exe`; 4 of 4 tests passed.
+- Validated behaviors: null-pointer rejection in `ACMP__enReadRegister`, ACMP base-address addition before both MCU read and write calls, and module-validation error propagation in `ACMP__enWriteRegister`.
+- Final surrounding review result: ACMP is now the active post-SYSCTL family with a reusable primitive seam in place, and the next smallest ACMP follow-on targets are `ACMP_InterruptSource.c` and `ACMP_ReferenceEnable.c`.

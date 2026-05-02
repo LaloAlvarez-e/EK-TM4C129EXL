@@ -33,12 +33,11 @@ static const SYSCTL_nPERIPHERAL SYSCTL_VECTOR_ADC[(UBase_t) ADC_enMODULE_MAX] =
 ADC_nERROR ADC__enSetReadyOnRunMode(ADC_nMODULE enModuleArg)
 {
     ADC_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (ADC_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) ADC_enMODULE_MAX);
     if(ADC_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_ADC[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_ADC[(UBase_t) enModuleArg];
         enErrorReg = (ADC_nERROR) SYSCTL__enSetReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
@@ -47,13 +46,25 @@ ADC_nERROR ADC__enSetReadyOnRunMode(ADC_nMODULE enModuleArg)
 ADC_nERROR ADC__enClearReadyOnRunMode(ADC_nMODULE enModuleArg)
 {
     ADC_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (ADC_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) ADC_enMODULE_MAX);
     if(ADC_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_ADC[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_ADC[(UBase_t) enModuleArg];
         enErrorReg = (ADC_nERROR) SYSCTL__enClearReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
+    }
+    return (enErrorReg);
+}
+
+ADC_nERROR ADC__enReset(ADC_nMODULE enModuleArg)
+{
+    ADC_nERROR enErrorReg;
+
+    enErrorReg = (ADC_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) ADC_enMODULE_MAX);
+    if(ADC_enERROR_OK == enErrorReg)
+    {
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_ADC[(UBase_t) enModuleArg];
+        enErrorReg = (ADC_nERROR) SYSCTL__enSetPeripheralReset(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
 }
@@ -61,7 +72,6 @@ ADC_nERROR ADC__enClearReadyOnRunMode(ADC_nMODULE enModuleArg)
 ADC_nERROR ADC__enIsReady(ADC_nMODULE enModuleArg, ADC_nBOOLEAN* penReadyArg)
 {
     ADC_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = ADC_enERROR_OK;
     if(0UL == (uintptr_t) penReadyArg)
@@ -74,7 +84,7 @@ ADC_nERROR ADC__enIsReady(ADC_nMODULE enModuleArg, ADC_nBOOLEAN* penReadyArg)
     }
     if(ADC_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_ADC[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_ADC[(UBase_t) enModuleArg];
         enErrorReg = (ADC_nERROR) SYSCTL__enIsReady(SYSCTL_enMODULE_0, enPeripheralReg, (SYSCTL_nBOOLEAN*) penReadyArg);
     }
     return (enErrorReg);

@@ -34,12 +34,11 @@ static const SYSCTL_nPERIPHERAL SYSCTL_VECTOR_TIMER[(UBase_t) TIMER_enMODULE_NUM
 TIMER_nERROR TIMER__enSetReadyOnRunMode(TIMER_nMODULE_NUM enModuleArg)
 {
     TIMER_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (TIMER_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) TIMER_enMODULE_NUM_MAX);
     if(TIMER_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_TIMER[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_TIMER[(UBase_t) enModuleArg];
         enErrorReg = (TIMER_nERROR) SYSCTL__enSetReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
@@ -48,13 +47,25 @@ TIMER_nERROR TIMER__enSetReadyOnRunMode(TIMER_nMODULE_NUM enModuleArg)
 TIMER_nERROR TIMER__enClearReadyOnRunMode(TIMER_nMODULE_NUM enModuleArg)
 {
     TIMER_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = (TIMER_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) TIMER_enMODULE_NUM_MAX);
     if(TIMER_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_TIMER[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_TIMER[(UBase_t) enModuleArg];
         enErrorReg = (TIMER_nERROR) SYSCTL__enClearReadyOnRunMode(SYSCTL_enMODULE_0, enPeripheralReg);
+    }
+    return (enErrorReg);
+}
+
+TIMER_nERROR TIMER__enReset(TIMER_nMODULE enModuleArg)
+{
+    TIMER_nERROR enErrorReg;
+
+    enErrorReg = (TIMER_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) TIMER_enMODULE_NUM_MAX);
+    if(TIMER_enERROR_OK == enErrorReg)
+    {
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_TIMER[(UBase_t) enModuleArg];
+        enErrorReg = (TIMER_nERROR) SYSCTL__enSetPeripheralReset(SYSCTL_enMODULE_0, enPeripheralReg);
     }
     return (enErrorReg);
 }
@@ -62,7 +73,6 @@ TIMER_nERROR TIMER__enClearReadyOnRunMode(TIMER_nMODULE_NUM enModuleArg)
 TIMER_nERROR TIMER__enIsReady(TIMER_nMODULE_NUM enModuleArg, TIMER_nBOOLEAN* penReadyArg)
 {
     TIMER_nERROR enErrorReg;
-    SYSCTL_nPERIPHERAL enPeripheralReg;
 
     enErrorReg = TIMER_enERROR_OK;
     if(0UL == (uintptr_t) penReadyArg)
@@ -75,7 +85,7 @@ TIMER_nERROR TIMER__enIsReady(TIMER_nMODULE_NUM enModuleArg, TIMER_nBOOLEAN* pen
     }
     if(TIMER_enERROR_OK == enErrorReg)
     {
-        enPeripheralReg = SYSCTL_VECTOR_TIMER[(UBase_t) enModuleArg];
+        SYSCTL_nPERIPHERAL enPeripheralReg = SYSCTL_VECTOR_TIMER[(UBase_t) enModuleArg];
         enErrorReg = (TIMER_nERROR) SYSCTL__enIsReady(SYSCTL_enMODULE_0, enPeripheralReg, (SYSCTL_nBOOLEAN*) penReadyArg);
     }
     return (enErrorReg);

@@ -1,0 +1,6 @@
+[2026-04-10 00:50:45] prepare launchpad figure extract
+- Located Documents/launchpad.pdf and confirmed it contains 36 PDF pages.
+- No reusable extracted text for the launchpad board guide was found in progress artifacts.
+- Planned narrow extraction window around the appendix instead of full-document OCR to reduce noise.
+- Files reviewed: Documents/launchpad.pdf, progress/README.txt, prior launchpad-related logs.
+- Next step: rasterize a page window near the appendix and inspect the figure directly.

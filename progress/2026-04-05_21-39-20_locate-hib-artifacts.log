@@ -1,0 +1,5 @@
+[2026-04-05 21:39:20] Located HIB placeholders, register extract, and initial template candidates.
+- Confirmed placeholders: TM4C129E_DriverLib/xDriver_MCU/xDriver_MCU.h and TM4C129E_DriverLib/xApplication_MCU/xApplication_MCU.h both contain commented HIB umbrella includes.
+- Confirmed manual source: progress/manual_extract_2026-04-05_15-12-30/tm4c129xnczad.txt contains Chapter 7 HIB register list, timing notes, wake/hibernate sequences, and special-access notes.
+- Initial template candidates from repo search: xDriver_MCU/WDT, xApplication_MCU/WDT, xDriver_MCU/SYSEXC, and SYSCTL power/clock gating references for HIB readiness hooks.
+- Status: continue by reading template module trees and HIB-related SYSCTL hooks.

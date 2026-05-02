@@ -1,0 +1,6 @@
+[2026-04-05 21:44:40] Identified HIB-specific constraints and pattern forks affecting implementation planning.
+- HIB uses an independent clock domain: most writes require WRC pacing, but HIBIO and HIBIC bits RSTWK/PADIOWK/WC are immediate system-clock-domain exceptions.
+- HIBLOCK protects HIBRTCLD, HIBCALLD0, HIBCALLD1, and tamper registers; a dedicated lock helper is a foundational dependency.
+- HIB includes retained array storage (HIBDATA[16]) plus tamper logs (HIBTPLOG[8]) and privileged-only access for tamper registers and upper HIBDATA words.
+- Existing repo allows more than one valid pattern: monolithic register-define headers for compact single-instance peripherals (EEPROM/SYSEXC) versus grouped register-family subheaders for very large peripherals (TIMER/SYSCTL); primitive naming also varies between ReadReg/WriteReg and ReadRegister/WriteRegister.
+- Existing readiness and NVIC seams are not blockers: SYSCTL already exposes PCHIB/PRHIB/RCGCHIB family definitions and Core/NVIC already names the HIB interrupt vector.

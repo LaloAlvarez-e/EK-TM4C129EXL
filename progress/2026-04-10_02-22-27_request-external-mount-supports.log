@@ -1,0 +1,4 @@
+[2026-04-10 02:22:27] Received request to add the marked external supports and screw-mount features while keeping the header openings.
+- User-provided screenshots indicate external support/mount areas to add to the enclosure.
+- Existing lid V3 already exposes the 40-pin header-row areas and LED row.
+- Implementation focus: add external screw-mount supports to the tray without breaking the snap-lock geometry.

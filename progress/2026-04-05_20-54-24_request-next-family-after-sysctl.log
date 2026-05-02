@@ -1,0 +1,4 @@
+[2026-04-05 20:54:24] request next family after SYSCTL
+- User requested moving out of SYSCTL and picking the next uncovered chapter or peripheral family.
+- Immediate goal: identify the next actionable non-SYSCTL coverage slice, avoid blocked placeholders such as HIB-without-production, and continue directly into implementation once a narrow target was selected.
+- Expected deliverables: selected family, mirrored host-test target, coverage/traceability updates, validation, and refreshed gap-tracker next-target guidance.
