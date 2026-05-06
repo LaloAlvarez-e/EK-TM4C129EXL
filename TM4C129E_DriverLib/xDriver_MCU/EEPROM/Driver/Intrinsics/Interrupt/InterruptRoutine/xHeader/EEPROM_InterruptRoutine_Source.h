@@ -28,8 +28,8 @@
 #include <xDriver_MCU/EEPROM/Peripheral/xHeader/EEPROM_Enum.h>
 
 EEPROM_pvfIRQSourceHandler_t EEPROM__pvfGetIRQSourceHandler(EEPROM_nMODULE enModuleArg,
-                                                            EEPROM_nINT enIntSourceArg);
+                                                            EEPROM_nINT enInterruptSourceArg);
 EEPROM_pvfIRQSourceHandler_t* EEPROM__pvfGetIRQSourceHandlerPointer(EEPROM_nMODULE enModuleArg,
-                                                                    EEPROM_nINT enIntSourceArg);
+                                                                    EEPROM_nINT enInterruptSourceArg);
 
 #endif /* XDRIVER_MCU_EEPROM_DRIVER_INTRINSICS_INTERRUPT_INTERRUPTROUTINE_XHEADER_EEPROM_INTERRUPTROUTINE_SOURCE_H_ */

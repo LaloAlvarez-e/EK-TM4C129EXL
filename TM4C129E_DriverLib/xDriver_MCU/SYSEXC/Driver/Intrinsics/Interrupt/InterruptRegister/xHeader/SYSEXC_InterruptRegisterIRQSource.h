@@ -27,6 +27,6 @@
 
 #include <xDriver_MCU/SYSEXC/Peripheral/xHeader/SYSEXC_Enum.h>
 
-SYSEXC_nERROR SYSEXC__enRegisterIRQSourceHandler(SYSEXC_nMODULE enModuleArg, SYSEXC_nINT enIntSourceArg, SYSEXC_pvfIRQSourceHandler_t pfIrqSourceHandler);
+SYSEXC_nERROR SYSEXC__enRegisterIRQSourceHandler(SYSEXC_nMODULE enModuleArg, SYSEXC_nINT enInterruptSourceArg, SYSEXC_pvfIRQSourceHandler_t pfIrqSourceHandler);
 
 #endif /* XDRIVER_MCU_SYSEXC_DRIVER_INTRINSICS_INTERRUPT_INTERRUPTREGISTER_XHEADER_SYSEXC_INTERRUPTREGISTERIRQSOURCE_H_ */

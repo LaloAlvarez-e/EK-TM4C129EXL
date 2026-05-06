@@ -118,16 +118,26 @@ static I2C_pvfIRQSourceHandler_t I2C_Master_vIRQSourceHandler[(UBase_t) I2C_enMO
 };
 
 
-I2C_pvfIRQSourceHandler_t I2C_Master__pvfGetIRQSourceHandler(I2C_nMODULE enModuleArg, I2C_nMASTER_INT enIntSourceArg)
+I2C_pvfIRQSourceHandler_t I2C_Master__pvfGetIRQSourceHandler(I2C_nMODULE enModuleArg, I2C_nMASTER_INT enInterruptSourceArg)
 {
     I2C_pvfIRQSourceHandler_t pvfFunctionReg;
-    pvfFunctionReg = I2C_Master_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (I2C_pvfIRQSourceHandler_t) 0;
+    if((I2C_enMODULE_MAX > enModuleArg) && (I2C_enMASTER_INT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = I2C_Master_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 
-I2C_pvfIRQSourceHandler_t* I2C_Master__pvfGetIRQSourceHandlerPointer(I2C_nMODULE enModuleArg, I2C_nMASTER_INT enIntSourceArg)
+I2C_pvfIRQSourceHandler_t* I2C_Master__pvfGetIRQSourceHandlerPointer(I2C_nMODULE enModuleArg, I2C_nMASTER_INT enInterruptSourceArg)
 {
     I2C_pvfIRQSourceHandler_t* pvfFunctionReg;
-    pvfFunctionReg = &I2C_Master_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (I2C_pvfIRQSourceHandler_t*) 0;
+    if((I2C_enMODULE_MAX > enModuleArg) && (I2C_enMASTER_INT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = &I2C_Master_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }

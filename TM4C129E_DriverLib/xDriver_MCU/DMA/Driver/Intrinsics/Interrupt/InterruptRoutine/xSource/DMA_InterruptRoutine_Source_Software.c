@@ -60,7 +60,12 @@ DMA_pvfIRQSourceHandler_t DMA__pvfGetIRQSourceHandler_Error(DMA_nMODULE enModule
                                                             DMA_nINT_ERROR enInterruptSourceArg)
 {
     DMA_pvfIRQSourceHandler_t pvfFunctionReg;
-    pvfFunctionReg = DMA_vIRQSourceHandler_Error[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+
+    pvfFunctionReg = (DMA_pvfIRQSourceHandler_t) 0;
+    if((DMA_enMODULE_MAX > enModuleArg) && (DMA_enINT_ERROR_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = DMA_vIRQSourceHandler_Error[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 
@@ -69,7 +74,12 @@ DMA_pvfIRQSourceHandler_t* DMA__pvfGetIRQSourceHandlerPointer_Error(DMA_nMODULE 
                                                                     DMA_nINT_ERROR enInterruptSourceArg)
 {
     DMA_pvfIRQSourceHandler_t* pvfFunctionReg;
-    pvfFunctionReg = &DMA_vIRQSourceHandler_Error[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+
+    pvfFunctionReg = (DMA_pvfIRQSourceHandler_t*) 0;
+    if((DMA_enMODULE_MAX > enModuleArg) && (DMA_enINT_ERROR_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = &DMA_vIRQSourceHandler_Error[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 
@@ -78,7 +88,12 @@ DMA_pvfIRQSourceHandler_t DMA_CH__pvfGetIRQSourceHandler_Software(DMA_nMODULE en
                                                                   DMA_nCH enChannelArg)
 {
     DMA_pvfIRQSourceHandler_t pvfFunctionReg;
-    pvfFunctionReg = DMA_CH_vIRQSourceHandler_Software[(UBase_t) enModuleArg][(UBase_t) enChannelArg];
+
+    pvfFunctionReg = (DMA_pvfIRQSourceHandler_t) 0;
+    if((DMA_enMODULE_MAX > enModuleArg) && ((DMA_enCH_MAX + 1UL) > enChannelArg))
+    {
+        pvfFunctionReg = DMA_CH_vIRQSourceHandler_Software[(UBase_t) enModuleArg][(UBase_t) enChannelArg];
+    }
     return (pvfFunctionReg);
 }
 
@@ -87,6 +102,11 @@ DMA_pvfIRQSourceHandler_t* DMA_CH__pvfGetIRQSourceHandlerPointer_Software(DMA_nM
                                                                  DMA_nCH enChannelArg)
 {
     DMA_pvfIRQSourceHandler_t* pvfFunctionReg;
-    pvfFunctionReg = &DMA_CH_vIRQSourceHandler_Software[(UBase_t) enModuleArg][(UBase_t) enChannelArg];
+
+    pvfFunctionReg = (DMA_pvfIRQSourceHandler_t*) 0;
+    if((DMA_enMODULE_MAX > enModuleArg) && ((DMA_enCH_MAX + 1UL) > enChannelArg))
+    {
+        pvfFunctionReg = &DMA_CH_vIRQSourceHandler_Software[(UBase_t) enModuleArg][(UBase_t) enChannelArg];
+    }
     return (pvfFunctionReg);
 }

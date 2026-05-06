@@ -1,0 +1,5 @@
+[2026-05-05 23:33:33] Added SYSCTL host tests for invalid interrupt source getter selections.
+- Extended TM4C129E_DriverLib_Test/xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/SYSCTL_InterruptRoutine_Source_Test.cpp.
+- Added negative-path coverage for SYSCTL__pvfGetIRQSourceHandler and SYSCTL__pvfGetIRQSourceHandlerPointer when module or interrupt source selectors are outside the public maxima.
+- Updated TM4C129E_DriverLib_Test/coverage/TM4C129E_DriverLib_Test_RequirementTraceability.md with derived requirements REQ-SYSCTL-INTROUTSRC-003 and REQ-SYSCTL-INTROUTSRC-004.
+- Companion-path review after the edit found no additional routine-source suites to update and no CMake wiring changes were required because the existing SYSCTL target already includes this test file.

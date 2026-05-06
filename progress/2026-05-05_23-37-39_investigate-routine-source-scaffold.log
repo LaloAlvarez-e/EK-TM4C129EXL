@@ -1,0 +1,7 @@
+[2026-05-05 23:37:39] Investigated how to scaffold routine-source host suites for the staged callback-guard changes.
+- Confirmed TM4C129E_DriverLib_Test currently wires only SYSCTL for InterruptRoutine host tests.
+- Reviewed the existing SYSCTL routine-source suite and its CMake chain as the local template anchor.
+- Reviewed staged production routine-source files for ACMP, ADC, DMA, EEPROM, GPIO, HIB, I2C master/slave, PWM, and WDT to identify grouped getter families and mixed default handler tables.
+- Found existing module-level CMake chains for ACMP and SYSEXC that can be extended in place.
+- Found no existing test-tree wiring for ADC, DMA, EEPROM, FLASH, GPIO, HIB, I2C, PWM, QEI, SSI, UART, or WDT routine-source suites, so those modules will need new mirrored xSource test directories plus CMake registration.
+- Mixed default handler slots must be preserved in fixtures for ADC, I2C master, and WDT because those source tables include MCU_vIRQSourceHandler_DummyNonBlocking entries.

@@ -27,7 +27,7 @@
 #include <xDriver_MCU/UART/Driver/Intrinsics/Interrupt/InterruptRoutine/xHeader/UART_InterruptRoutine_Source.h>
 #include <xDriver_MCU/UART/Peripheral/UART_Peripheral.h>
 
-UART_nERROR UART__enRegisterIRQSourceHandler(UART_nMODULE enModuleArg, UART_nINT enIntSourceArg, UART_pvfIRQSourceHandler_t pfIrqSourceHandler)
+UART_nERROR UART__enRegisterIRQSourceHandler(UART_nMODULE enModuleArg, UART_nINT enInterruptSourceArg, UART_pvfIRQSourceHandler_t pfIrqSourceHandler)
 {
     UART_pvfIRQSourceHandler_t* pvfIrqHandler;
     UART_nERROR enErrorReg;
@@ -35,11 +35,11 @@ UART_nERROR UART__enRegisterIRQSourceHandler(UART_nMODULE enModuleArg, UART_nINT
     enErrorReg = (UART_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) UART_enMODULE_MAX);
     if(UART_enERROR_OK == enErrorReg)
     {
-        enErrorReg = (UART_nERROR) MCU__enCheckParams((UBase_t) enIntSourceArg, (UBase_t) UART_enINT_MAX);
+        enErrorReg = (UART_nERROR) MCU__enCheckParams((UBase_t) enInterruptSourceArg, (UBase_t) UART_enINT_MAX);
     }
     if(UART_enERROR_OK == enErrorReg)
     {
-        pvfIrqHandler = UART__pvfGetIRQSourceHandlerPointer(enModuleArg, enIntSourceArg);
+        pvfIrqHandler = UART__pvfGetIRQSourceHandlerPointer(enModuleArg, enInterruptSourceArg);
         enErrorReg = (UART_nERROR) MCU__enRegisterIRQSourceHandler(pfIrqSourceHandler, pvfIrqHandler, 0UL, 1UL);
     }
 

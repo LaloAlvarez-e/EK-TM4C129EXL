@@ -51,17 +51,27 @@ static SSI_pvfIRQSourceHandler_t SSI_vIRQSourceHandler[(UBase_t) SSI_enMODULE_MA
     },
 };
 
-SSI_pvfIRQSourceHandler_t SSI__pvfGetIRQSourceHandler(SSI_nMODULE enModuleArg, SSI_nINT enIntSourceArg)
+SSI_pvfIRQSourceHandler_t SSI__pvfGetIRQSourceHandler(SSI_nMODULE enModuleArg, SSI_nINT enInterruptSourceArg)
 {
     SSI_pvfIRQSourceHandler_t pvfFunctionReg;
-    pvfFunctionReg = SSI_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (SSI_pvfIRQSourceHandler_t) 0;
+    if((SSI_enMODULE_MAX > enModuleArg) && (SSI_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = SSI_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 
-SSI_pvfIRQSourceHandler_t* SSI__pvfGetIRQSourceHandlerPointer(SSI_nMODULE enModuleArg, SSI_nINT enIntSourceArg)
+SSI_pvfIRQSourceHandler_t* SSI__pvfGetIRQSourceHandlerPointer(SSI_nMODULE enModuleArg, SSI_nINT enInterruptSourceArg)
 {
     SSI_pvfIRQSourceHandler_t* pvfFunctionReg;
-    pvfFunctionReg = &SSI_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (SSI_pvfIRQSourceHandler_t*) 0;
+    if((SSI_enMODULE_MAX > enModuleArg) && (SSI_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = &SSI_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 

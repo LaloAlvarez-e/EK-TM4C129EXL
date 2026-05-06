@@ -1,0 +1,6 @@
+[2026-05-05 23:55:45] Added the composite routine-source host suites for the remaining staged callback-guard changes.
+- Added mirrored routine-source host suites and xSource CMake registration for ADC, DMA software/error, GPIO, and PWM.
+- Grouped each production source file into one routine-source suite that covers default handler exposure, invalid getter selections, invalid pointer selections, and writable slot exposure across all guarded family tables in that file.
+- Preserved source-specific default handler behavior where required, including ADC sequencer slots that initialize to MCU_vIRQSourceHandler_DummyNonBlocking on the final sequencer of module 1.
+- Rebuilt ADC_InterruptRoutine_Source_Test, DMA_InterruptRoutine_Source_Software_Test, GPIO_InterruptRoutine_Source_Test, and PWM_InterruptRoutine_Source_Test successfully in Debug.
+- Executed the focused composite CTest batch successfully: 16 tests ran and 16 tests passed.

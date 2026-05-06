@@ -311,9 +311,23 @@ typedef volatile struct
 
 typedef volatile struct
 {
-    HIB_BITBANDING_TPLOGTIME_t TPLOGTIME;
-    HIB_BITBANDING_TPLOGTRIG_t TPLOGTRIG;
+    union
+    {
+        volatile const UBase_t TIME[32];
+        HIB_BITBANDING_TPLOGTIME_t TIME_Bit;
+    };
+    union
+    {
+        volatile const UBase_t TRIG[32];
+        HIB_BITBANDING_TPLOGTRIG_t TRIG_Bit;
+    };
 }HIB_BITBANDING_TPLOG_t;
+
+
+typedef volatile struct
+{
+    HIB_BITBANDING_TPLOG_t LOG[4];
+}HIB_BITBANDING_TPLOG_ARRAY_t;
 
 
 typedef volatile struct

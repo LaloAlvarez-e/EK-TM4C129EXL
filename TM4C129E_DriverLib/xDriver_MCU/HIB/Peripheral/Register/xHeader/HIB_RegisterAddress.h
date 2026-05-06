@@ -78,12 +78,17 @@
 #define HIB_TPSTAT_OFFSET    ((UBase_t) 0x0404UL)
 #define HIB_TPIO_OFFSET    ((UBase_t) 0x0410UL)
 
+#define HIB_TPLOG_OFFSET    ((UBase_t) 0x04E0UL)
+#define HIB_TPLOG0_OFFSET    ((UBase_t) 0x04E0UL)
 #define HIB_TPLOGTIME0_OFFSET    ((UBase_t) 0x04E0UL)
 #define HIB_TPLOGTRIG0_OFFSET    ((UBase_t) 0x04E4UL)
+#define HIB_TPLOG1_OFFSET    ((UBase_t) 0x04E8UL)
 #define HIB_TPLOGTIME1_OFFSET    ((UBase_t) 0x04E8UL)
 #define HIB_TPLOGTRIG1_OFFSET    ((UBase_t) 0x04ECUL)
+#define HIB_TPLOG2_OFFSET    ((UBase_t) 0x04F0UL)
 #define HIB_TPLOGTIME2_OFFSET    ((UBase_t) 0x04F0UL)
 #define HIB_TPLOGTRIG2_OFFSET    ((UBase_t) 0x04F4UL)
+#define HIB_TPLOG3_OFFSET    ((UBase_t) 0x04F8UL)
 #define HIB_TPLOGTIME3_OFFSET    ((UBase_t) 0x04F8UL)
 #define HIB_TPLOGTRIG3_OFFSET    ((UBase_t) 0x04FCUL)
 

@@ -34,7 +34,7 @@ ADC_nERROR ADC_SW__enRegisterIRQSourceHandler(ADC_pvfIRQSourceHandler_t pfIrqSou
 ADC_nERROR ADC_Sequencer__enRegisterIRQSourceHandler(ADC_pvfIRQSourceHandler_t pfIrqSourceHandler,
                                                      ADC_nMODULE enModuleArg,
                                                      ADC_nSEQUENCER enSequencerArg,
-                                                     ADC_nINT_TYPE enIntSourceArg);
+                                                     ADC_nINT_TYPE enInterruptSourceArg);
 ADC_nERROR ADC_Comparator__enRegisterIRQSourceHandler(ADC_pvfIRQSourceHandler_t pfIrqSourceHandler,
                                                       ADC_nMODULE enModuleArg,
                                                       ADC_nSEQUENCER enSequencerArg,

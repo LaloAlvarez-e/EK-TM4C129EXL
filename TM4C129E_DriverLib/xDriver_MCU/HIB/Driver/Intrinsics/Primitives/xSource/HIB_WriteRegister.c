@@ -57,3 +57,4 @@ HIB_nERROR HIB__enWriteRegister(HIB_nMODULE enModuleArg, HIB_Register_t* pstRegi
     enErrorReg = HIB__enWriteRegisterTimeout(enModuleArg, pstRegisterDataArg, 0UL);
     return (enErrorReg);
 }
+

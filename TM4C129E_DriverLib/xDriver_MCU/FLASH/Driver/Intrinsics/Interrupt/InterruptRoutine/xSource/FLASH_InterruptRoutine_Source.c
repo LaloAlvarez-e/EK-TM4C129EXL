@@ -37,18 +37,26 @@ static FLASH_pvfIRQSourceHandler_t FLASH_vIRQSourceHandler[(UBase_t) FLASH_enMOD
     }
 };
 
-FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enIntSourceArg)
+FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enInterruptSourceArg)
 {
     FLASH_pvfIRQSourceHandler_t pvfFunctionReg;
 
-    pvfFunctionReg = FLASH_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+    pvfFunctionReg = (FLASH_pvfIRQSourceHandler_t) 0;
+    if((FLASH_enMODULE_MAX > enModuleArg) && (FLASH_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = FLASH_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 
-FLASH_pvfIRQSourceHandler_t* FLASH__pvfGetIRQSourceHandlerPointer(FLASH_nMODULE enModuleArg, FLASH_nINT enIntSourceArg)
+FLASH_pvfIRQSourceHandler_t* FLASH__pvfGetIRQSourceHandlerPointer(FLASH_nMODULE enModuleArg, FLASH_nINT enInterruptSourceArg)
 {
     FLASH_pvfIRQSourceHandler_t* pvfFunctionReg;
-    
-    pvfFunctionReg = &FLASH_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (FLASH_pvfIRQSourceHandler_t*) 0;
+    if((FLASH_enMODULE_MAX > enModuleArg) && (FLASH_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = &FLASH_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }

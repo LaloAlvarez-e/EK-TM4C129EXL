@@ -27,7 +27,7 @@
 
 #include <xDriver_MCU/SYSEXC/Peripheral/xHeader/SYSEXC_Enum.h>
 
-SYSEXC_pvfIRQSourceHandler_t SYSEXC__pvfGetIRQSourceHandler(SYSEXC_nMODULE enModuleArg, SYSEXC_nINT enIntSourceArg);
-SYSEXC_pvfIRQSourceHandler_t* SYSEXC__pvfGetIRQSourceHandlerPointer(SYSEXC_nMODULE enModuleArg, SYSEXC_nINT enIntSourceArg);
+SYSEXC_pvfIRQSourceHandler_t SYSEXC__pvfGetIRQSourceHandler(SYSEXC_nMODULE enModuleArg, SYSEXC_nINT enInterruptSourceArg);
+SYSEXC_pvfIRQSourceHandler_t* SYSEXC__pvfGetIRQSourceHandlerPointer(SYSEXC_nMODULE enModuleArg, SYSEXC_nINT enInterruptSourceArg);
 
 #endif /* XDRIVER_MCU_SYSEXC_DRIVER_INTRINSICS_INTERRUPT_INTERRUPTROUTINE_XHEADER_SYSEXC_INTERRUPTROUTINE_SOURCE_H_ */

@@ -75,16 +75,26 @@ static UART_pvfIRQSourceHandler_t UART_vIRQSourceHandler[(UBase_t) UART_enMODULE
     },
 };
 
-UART_pvfIRQSourceHandler_t UART__pvfGetIRQSourceHandler(UART_nMODULE enModuleArg, UART_nINT enIntSourceArg)
+UART_pvfIRQSourceHandler_t UART__pvfGetIRQSourceHandler(UART_nMODULE enModuleArg, UART_nINT enInterruptSourceArg)
 {
     UART_pvfIRQSourceHandler_t pvfFunctionReg;
-    pvfFunctionReg = UART_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (UART_pvfIRQSourceHandler_t) 0;
+    if((UART_enMODULE_MAX > enModuleArg) && (UART_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = UART_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 
-UART_pvfIRQSourceHandler_t* UART__pvfGetIRQSourceHandlerPointer(UART_nMODULE enModuleArg, UART_nINT enIntSourceArg)
+UART_pvfIRQSourceHandler_t* UART__pvfGetIRQSourceHandlerPointer(UART_nMODULE enModuleArg, UART_nINT enInterruptSourceArg)
 {
     UART_pvfIRQSourceHandler_t* pvfFunctionReg;
-    pvfFunctionReg = &UART_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (UART_pvfIRQSourceHandler_t*) 0;
+    if((UART_enMODULE_MAX > enModuleArg) && (UART_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = &UART_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }

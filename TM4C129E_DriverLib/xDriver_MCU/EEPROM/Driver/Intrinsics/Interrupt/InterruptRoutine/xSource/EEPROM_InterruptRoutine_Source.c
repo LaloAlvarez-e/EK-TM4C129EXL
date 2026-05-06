@@ -36,18 +36,28 @@ static EEPROM_pvfIRQSourceHandler_t EEPROM_vIRQSourceHandler[(UBase_t)EEPROM_enM
 };
 
 EEPROM_pvfIRQSourceHandler_t EEPROM__pvfGetIRQSourceHandler(EEPROM_nMODULE enModuleArg,
-                                                            EEPROM_nINT enIntSourceArg)
+                                                            EEPROM_nINT enInterruptSourceArg)
 {
     EEPROM_pvfIRQSourceHandler_t pvfFunctionReg;
-    pvfFunctionReg = EEPROM_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (EEPROM_pvfIRQSourceHandler_t) 0;
+    if((EEPROM_enMODULE_MAX > enModuleArg) && (EEPROM_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = EEPROM_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 
 
 EEPROM_pvfIRQSourceHandler_t* EEPROM__pvfGetIRQSourceHandlerPointer(EEPROM_nMODULE enModuleArg,
-                                                                    EEPROM_nINT enIntSourceArg)
+                                                                    EEPROM_nINT enInterruptSourceArg)
 {
     EEPROM_pvfIRQSourceHandler_t* pvfFunctionReg;
-    pvfFunctionReg = &EEPROM_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (EEPROM_pvfIRQSourceHandler_t*) 0;
+    if((EEPROM_enMODULE_MAX > enModuleArg) && (EEPROM_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = &EEPROM_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }

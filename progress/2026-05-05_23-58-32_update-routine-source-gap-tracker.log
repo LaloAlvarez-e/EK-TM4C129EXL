@@ -1,0 +1,5 @@
+[2026-05-05 23:58:32] Updated the DriverLib test gap tracker after the routine-source scaffold expansion.
+- Added covered-source summary rows for the ACMP, ADC, DMA, EEPROM, FLASH, GPIO, HIB, I2C master, I2C slave, PWM, QEI, SSI, SYSEXC, UART, and WDT routine-source host targets.
+- Refreshed the SYSCTL routine-source gap-tracker notes to include the invalid getter and pointer rejection coverage added in the staged callback-guard review slice.
+- Removed the stale blocked HIB note because the production HIB routine-source implementation and matching host suite now exist in the workspace.
+- Added a consolidated inventory subsection that documents the shared default-handler, invalid-selection, and writable-slot coverage pattern across the mirrored routine-source suites.

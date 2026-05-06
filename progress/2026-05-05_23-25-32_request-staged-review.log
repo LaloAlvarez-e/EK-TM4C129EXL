@@ -1,0 +1,3 @@
+[2026-05-05 23:25:32] Request staged review for callback-guard changes
+User requested a review of the staged changes, describing the intent as adding sanity checks on parameters before retrieving callback pointers.
+Review scope set to the staged diff in d:\git\EK-TM4C129EXL, with emphasis on behavioral regressions, missing validation, and any unrelated staged churn.

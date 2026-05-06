@@ -27,17 +27,17 @@
 #include <xDriver_MCU/WDT/Driver/Intrinsics/Interrupt/InterruptRoutine/xHeader/WDT_InterruptRoutine_Source.h>
 #include <xDriver_MCU/WDT/Peripheral/WDT_Peripheral.h>
 
-WDT_nERROR WDT__enRegisterIRQSourceHandler(WDT_nMODULE enModuleArg, WDT_nINT enIntSourceArg, WDT_pvfIRQSourceHandler_t pfIrqSourceHandler)
+WDT_nERROR WDT__enRegisterIRQSourceHandler(WDT_nMODULE enModuleArg, WDT_nINT enInterruptSourceArg, WDT_pvfIRQSourceHandler_t pfIrqSourceHandler)
 {
     WDT_nERROR enErrorReg;
     enErrorReg = (WDT_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) WDT_enMODULE_MAX);
     if(WDT_enERROR_OK == enErrorReg)
     {
-        enErrorReg = (WDT_nERROR) MCU__enCheckParams((UBase_t) enIntSourceArg, (UBase_t) WDT_enINT_MAX);
+        enErrorReg = (WDT_nERROR) MCU__enCheckParams((UBase_t) enInterruptSourceArg, (UBase_t) WDT_enINT_MAX);
     }
     if(WDT_enERROR_OK == enErrorReg)
     {
-        WDT_pvfIRQSourceHandler_t* pvfIrqHandler = WDT__pvfGetIRQSourceHandlerPointer(enModuleArg, enIntSourceArg);
+        WDT_pvfIRQSourceHandler_t* pvfIrqHandler = WDT__pvfGetIRQSourceHandlerPointer(enModuleArg, enInterruptSourceArg);
         enErrorReg = (WDT_nERROR) MCU__enRegisterIRQSourceHandler(pfIrqSourceHandler, pvfIrqHandler, 0UL, 1UL);
     }
     return (enErrorReg);

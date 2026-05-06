@@ -27,17 +27,17 @@
 #include <xDriver_MCU/SYSEXC/Driver/Intrinsics/Interrupt/InterruptRoutine/xHeader/SYSEXC_InterruptRoutine_Source.h>
 #include <xDriver_MCU/SYSEXC/Peripheral/SYSEXC_Peripheral.h>
 
-SYSEXC_nERROR SYSEXC__enRegisterIRQSourceHandler(SYSEXC_nMODULE enModuleArg, SYSEXC_nINT enIntSourceArg, SYSEXC_pvfIRQSourceHandler_t pfIrqSourceHandler)
+SYSEXC_nERROR SYSEXC__enRegisterIRQSourceHandler(SYSEXC_nMODULE enModuleArg, SYSEXC_nINT enInterruptSourceArg, SYSEXC_pvfIRQSourceHandler_t pfIrqSourceHandler)
 {
     SYSEXC_nERROR enErrorReg;
     enErrorReg = (SYSEXC_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) SYSEXC_enMODULE_MAX);
     if(SYSEXC_enERROR_OK == enErrorReg)
     {
-        enErrorReg = (SYSEXC_nERROR) MCU__enCheckParams((UBase_t) enIntSourceArg, (UBase_t) SYSEXC_enINT_MAX);
+        enErrorReg = (SYSEXC_nERROR) MCU__enCheckParams((UBase_t) enInterruptSourceArg, (UBase_t) SYSEXC_enINT_MAX);
     }
     if(SYSEXC_enERROR_OK == enErrorReg)
     {
-        SYSEXC_pvfIRQSourceHandler_t* pvfIrqHandler = SYSEXC__pvfGetIRQSourceHandlerPointer(enModuleArg, enIntSourceArg);
+        SYSEXC_pvfIRQSourceHandler_t* pvfIrqHandler = SYSEXC__pvfGetIRQSourceHandlerPointer(enModuleArg, enInterruptSourceArg);
         enErrorReg = (SYSEXC_nERROR) MCU__enRegisterIRQSourceHandler(pfIrqSourceHandler, pvfIrqHandler, 0UL, 1UL);
     }
 

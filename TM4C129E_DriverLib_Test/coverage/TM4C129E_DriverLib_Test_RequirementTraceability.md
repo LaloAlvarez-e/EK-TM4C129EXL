@@ -384,6 +384,8 @@ Manual basis: `derived`, software-owned SYSCTL source-handler table used by the 
 
 - `REQ-SYSCTL-INTROUTSRC-001` -> `AllInterruptSourcesDefaultToDummyHandler` | `derived` | The internal SYSCTL source-handler table shall initialize every defined SYSCTL source slot to the shared dummy source handler.
 - `REQ-SYSCTL-INTROUTSRC-002` -> `InterruptSourceHandlerPointerExposesWritableSourceSlot` | `derived` | The internal SYSCTL source-handler pointer helper shall expose writable per-source storage and the getter shall reflect updates to that storage.
+- `REQ-SYSCTL-INTROUTSRC-003` -> `InterruptSourceGetterRejectsInvalidSelections` | `derived` | The internal SYSCTL source-handler getter shall return a null handler for module or source selections outside `SYSCTL_enMODULE_MAX` and `SYSCTL_enINT_MAX`.
+- `REQ-SYSCTL-INTROUTSRC-004` -> `InterruptSourceHandlerPointerRejectsInvalidSelections` | `derived` | The internal SYSCTL source-handler pointer helper shall return a null storage pointer for module or source selections outside `SYSCTL_enMODULE_MAX` and `SYSCTL_enINT_MAX`.
 
 Path: `xDriver_MCU/SYSCTL/Driver/Intrinsics/Interrupt/InterruptRegister/xSource/SYSCTL_InterruptRegisterIRQSource_Test.cpp`
 Manual basis: `derived`, software-owned SYSCTL source-handler registration helper.
@@ -695,6 +697,126 @@ Manual basis: `tm4c`, System Control Register 3 `PTBOCTL` register context pp.27
 - `REQ-SYSCTL-VOLT-006` -> `BrownOutTripStatusGettersUsePWRTCFields` | `tm4c` | The brown-out trip-status getters shall read the documented `PWRTC.VDD_UBOR` and `PWRTC.VDDA_UBOR` cause bits.
 - `REQ-SYSCTL-VOLT-007` -> `ClearBrownOutStatusWrappersUsePWRTCRW1CValues` | `tm4c` | The brown-out cause clear helpers shall write the documented `PWRTC` RW1C bits for VDD, VDDA, or both causes.
 - `REQ-SYSCTL-VOLT-008` -> `BrownOutTripStatusGettersPropagateReadErrors` | `derived` | The brown-out trip-status getters shall propagate primitive read failures without modifying caller output state.
+
+Path: `xDriver_MCU/ACMP/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/ACMP_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned ACMP SW and comparator source-handler tables used by the interrupt dispatch path.
+
+- `REQ-ACMP-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The ACMP SW and comparator source-handler getters shall expose the expected default handler for every valid module and comparator slot.
+- `REQ-ACMP-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The ACMP SW and comparator source-handler getters shall return a null handler when the caller selects a module or comparator outside `ACMP_enMODULE_MAX` and `ACMP_enCOMP_MAX`.
+- `REQ-ACMP-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The ACMP SW and comparator source-handler pointer helpers shall return a null storage pointer when the caller selects a module or comparator outside `ACMP_enMODULE_MAX` and `ACMP_enCOMP_MAX`.
+- `REQ-ACMP-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The ACMP SW and comparator source-handler pointer helpers shall expose writable storage and the paired getters shall reflect updates written through those pointers.
+
+Path: `xDriver_MCU/ADC/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/ADC_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned ADC SW, sequencer, and comparator source-handler tables used by the interrupt dispatch path.
+
+- `REQ-ADC-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The ADC SW, sequencer, and comparator source-handler getters shall expose the expected default handler for every valid module, sequencer, interrupt-type, and comparator slot.
+- `REQ-ADC-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The ADC SW, sequencer, and comparator source-handler getters shall return a null handler when the caller selects a module, sequencer, interrupt type, or comparator outside the documented public maxima.
+- `REQ-ADC-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The ADC SW, sequencer, and comparator source-handler pointer helpers shall return a null storage pointer when the caller selects a module, sequencer, interrupt type, or comparator outside the documented public maxima.
+- `REQ-ADC-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The ADC SW, sequencer, and comparator source-handler pointer helpers shall expose writable storage and the paired getters shall reflect updates written through those pointers.
+
+Path: `xDriver_MCU/DMA/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/DMA_InterruptRoutine_Source_Software_Test.cpp`
+Manual basis: `derived`, software-owned DMA error and software source-handler tables used by the interrupt dispatch path.
+
+- `REQ-DMA-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The DMA error and software source-handler getters shall expose the expected default handler for every valid module, error source, and software-channel slot.
+- `REQ-DMA-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The DMA error and software source-handler getters shall return a null handler when the caller selects a module, error source, or software channel outside the documented public maxima.
+- `REQ-DMA-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The DMA error and software source-handler pointer helpers shall return a null storage pointer when the caller selects a module, error source, or software channel outside the documented public maxima.
+- `REQ-DMA-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The DMA error and software source-handler pointer helpers shall expose writable storage and the paired getters shall reflect updates written through those pointers.
+
+Path: `xDriver_MCU/EEPROM/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/EEPROM_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned EEPROM source-handler table used by the interrupt dispatch path.
+
+- `REQ-EEPROM-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The EEPROM source-handler getter shall expose the expected default handler for every valid module and interrupt slot.
+- `REQ-EEPROM-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The EEPROM source-handler getter shall return a null handler when the caller selects a module or interrupt source outside `EEPROM_enMODULE_MAX` and `EEPROM_enINT_MAX`.
+- `REQ-EEPROM-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The EEPROM source-handler pointer helper shall return a null storage pointer when the caller selects a module or interrupt source outside `EEPROM_enMODULE_MAX` and `EEPROM_enINT_MAX`.
+- `REQ-EEPROM-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The EEPROM source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/FLASH/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/FLASH_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned FLASH source-handler table used by the interrupt dispatch path.
+
+- `REQ-FLASH-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The FLASH source-handler getter shall expose the expected default handler for every valid module and interrupt slot.
+- `REQ-FLASH-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The FLASH source-handler getter shall return a null handler when the caller selects a module or interrupt source outside `FLASH_enMODULE_MAX` and `FLASH_enINT_MAX`.
+- `REQ-FLASH-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The FLASH source-handler pointer helper shall return a null storage pointer when the caller selects a module or interrupt source outside `FLASH_enMODULE_MAX` and `FLASH_enINT_MAX`.
+- `REQ-FLASH-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The FLASH source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/GPIO/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/GPIO_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned GPIO general, DMA, SW, and PQ source-handler tables used by the interrupt dispatch path.
+
+- `REQ-GPIO-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The GPIO general, DMA, SW, and PQ source-handler getters shall expose the expected default handler for every valid port and pin combination supported by each family.
+- `REQ-GPIO-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The GPIO general, DMA, SW, and PQ source-handler getters shall return a null handler when the caller selects a port or pin outside the valid family-specific bounds.
+- `REQ-GPIO-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The GPIO general, DMA, SW, and PQ source-handler pointer helpers shall return a null storage pointer when the caller selects a port or pin outside the valid family-specific bounds.
+- `REQ-GPIO-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The GPIO general, DMA, SW, and PQ source-handler pointer helpers shall expose writable storage and the paired getters shall reflect updates written through those pointers.
+
+Path: `xDriver_MCU/HIB/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/HIB_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned HIB source-handler table used by the interrupt dispatch path.
+
+- `REQ-HIB-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The HIB source-handler getter shall expose the expected default handler for every valid module and interrupt slot.
+- `REQ-HIB-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The HIB source-handler getter shall return a null handler when the caller selects a module or interrupt source outside `HIB_enMODULE_MAX` and `HIB_enINT_MAX`.
+- `REQ-HIB-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The HIB source-handler pointer helper shall return a null storage pointer when the caller selects a module or interrupt source outside `HIB_enMODULE_MAX` and `HIB_enINT_MAX`.
+- `REQ-HIB-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The HIB source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/I2C/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/I2C_Master_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned I2C master source-handler table used by the interrupt dispatch path.
+
+- `REQ-I2CMASTER-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The I2C master source-handler getter shall expose the expected default handler for every valid module and master interrupt slot.
+- `REQ-I2CMASTER-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The I2C master source-handler getter shall return a null handler when the caller selects a module or master interrupt source outside `I2C_enMODULE_MAX` and `I2C_enMASTER_INT_MAX`.
+- `REQ-I2CMASTER-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The I2C master source-handler pointer helper shall return a null storage pointer when the caller selects a module or master interrupt source outside `I2C_enMODULE_MAX` and `I2C_enMASTER_INT_MAX`.
+- `REQ-I2CMASTER-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The I2C master source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/I2C/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/I2C_Slave_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned I2C slave source-handler table used by the interrupt dispatch path.
+
+- `REQ-I2CSLAVE-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The I2C slave source-handler getter shall expose the expected default handler for every valid module and slave interrupt slot.
+- `REQ-I2CSLAVE-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The I2C slave source-handler getter shall return a null handler when the caller selects a module or slave interrupt source outside `I2C_enMODULE_MAX` and `I2C_enSLAVE_INT_MAX`.
+- `REQ-I2CSLAVE-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The I2C slave source-handler pointer helper shall return a null storage pointer when the caller selects a module or slave interrupt source outside `I2C_enMODULE_MAX` and `I2C_enSLAVE_INT_MAX`.
+- `REQ-I2CSLAVE-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The I2C slave source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/PWM/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/PWM_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned PWM generator, fault SW, fault input, and fault digital-comparator source-handler tables used by the interrupt dispatch path.
+
+- `REQ-PWM-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The PWM generator, fault SW, fault input, and fault digital-comparator source-handler getters shall expose the expected default handler for every valid module, generator, event, input, and digital-comparator slot.
+- `REQ-PWM-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The PWM generator, fault SW, fault input, and fault digital-comparator source-handler getters shall return a null handler when the caller selects a module, generator, event, input, or digital-comparator slot outside the documented public maxima.
+- `REQ-PWM-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The PWM generator, fault SW, fault input, and fault digital-comparator source-handler pointer helpers shall return a null storage pointer when the caller selects a module, generator, event, input, or digital-comparator slot outside the documented public maxima.
+- `REQ-PWM-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The PWM generator, fault SW, fault input, and fault digital-comparator source-handler pointer helpers shall expose writable storage and the paired getters shall reflect updates written through those pointers.
+
+Path: `xDriver_MCU/QEI/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/QEI_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned QEI source-handler table used by the interrupt dispatch path.
+
+- `REQ-QEI-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The QEI source-handler getter shall expose the expected default handler for every valid module and interrupt slot.
+- `REQ-QEI-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The QEI source-handler getter shall return a null handler when the caller selects a module or interrupt source outside `QEI_enMODULE_MAX` and `QEI_enINT_MAX`.
+- `REQ-QEI-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The QEI source-handler pointer helper shall return a null storage pointer when the caller selects a module or interrupt source outside `QEI_enMODULE_MAX` and `QEI_enINT_MAX`.
+- `REQ-QEI-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The QEI source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/SSI/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/SSI_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned SSI source-handler table used by the interrupt dispatch path.
+
+- `REQ-SSI-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The SSI source-handler getter shall expose the expected default handler for every valid module and interrupt slot.
+- `REQ-SSI-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The SSI source-handler getter shall return a null handler when the caller selects a module or interrupt source outside `SSI_enMODULE_MAX` and `SSI_enINT_MAX`.
+- `REQ-SSI-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The SSI source-handler pointer helper shall return a null storage pointer when the caller selects a module or interrupt source outside `SSI_enMODULE_MAX` and `SSI_enINT_MAX`.
+- `REQ-SSI-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The SSI source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/SYSEXC/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/SYSEXC_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned SYSEXC source-handler table used by the interrupt dispatch path.
+
+- `REQ-SYSEXC-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The SYSEXC source-handler getter shall expose the expected default handler for every valid module and interrupt slot.
+- `REQ-SYSEXC-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The SYSEXC source-handler getter shall return a null handler when the caller selects a module or interrupt source outside `SYSEXC_enMODULE_MAX` and `SYSEXC_enINT_MAX`.
+- `REQ-SYSEXC-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The SYSEXC source-handler pointer helper shall return a null storage pointer when the caller selects a module or interrupt source outside `SYSEXC_enMODULE_MAX` and `SYSEXC_enINT_MAX`.
+- `REQ-SYSEXC-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The SYSEXC source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/UART/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/UART_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned UART source-handler table used by the interrupt dispatch path.
+
+- `REQ-UART-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The UART source-handler getter shall expose the expected default handler for every valid module and interrupt slot.
+- `REQ-UART-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The UART source-handler getter shall return a null handler when the caller selects a module or interrupt source outside `UART_enMODULE_MAX` and `UART_enINT_MAX`.
+- `REQ-UART-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The UART source-handler pointer helper shall return a null storage pointer when the caller selects a module or interrupt source outside `UART_enMODULE_MAX` and `UART_enINT_MAX`.
+- `REQ-UART-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The UART source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
+
+Path: `xDriver_MCU/WDT/Driver/Intrinsics/Interrupt/InterruptRoutine/xSource/WDT_InterruptRoutine_Source_Test.cpp`
+Manual basis: `derived`, software-owned WDT source-handler table used by the interrupt dispatch path.
+
+- `REQ-WDT-INTROUTSRC-001` -> `InterruptSourceHandlersExposeExpectedDefaultHandlers` | `derived` | The WDT source-handler getter shall expose the expected default handler for every valid module and interrupt slot.
+- `REQ-WDT-INTROUTSRC-002` -> `InterruptSourceGettersRejectInvalidSelections` | `derived` | The WDT source-handler getter shall return a null handler when the caller selects a module or interrupt source outside `WDT_enMODULE_MAX` and `WDT_enINT_MAX`.
+- `REQ-WDT-INTROUTSRC-003` -> `InterruptSourceHandlerPointersRejectInvalidSelections` | `derived` | The WDT source-handler pointer helper shall return a null storage pointer when the caller selects a module or interrupt source outside `WDT_enMODULE_MAX` and `WDT_enINT_MAX`.
+- `REQ-WDT-INTROUTSRC-004` -> `InterruptSourceHandlerPointersExposeWritableSlots` | `derived` | The WDT source-handler pointer helper shall expose writable storage and the getter shall reflect updates written through that pointer.
 
 ## Update Rule
 

@@ -96,6 +96,52 @@ TEST_F(SYSCTL_InterruptRoutineSourceTest, AllInterruptSourcesDefaultToDummyHandl
 }
 
 /**
+ * @brief Validate invalid SYSCTL getter selections return a null handler.
+ * @summary Confirms that `SYSCTL__pvfGetIRQSourceHandler` rejects module and
+ *          interrupt-source selectors outside the documented public maxima and
+ *          reports those invalid selections through a null handler result.
+ * @param[in] None.
+ * @param[out] None.
+ * @return None.
+ * @dependencies
+ * @verbatim
+ * - Original source under test: SYSCTL_InterruptRoutine_Source.c
+ * - Local non-blocking dummy symbol for MCU_vIRQSourceHandler_Dummy@endverbatim
+ */
+TEST_F(SYSCTL_InterruptRoutineSourceTest, InterruptSourceGetterRejectsInvalidSelections)
+{
+    EXPECT_EQ(nullptr,
+              SYSCTL__pvfGetIRQSourceHandler((SYSCTL_nMODULE) SYSCTL_enMODULE_MAX,
+                                            SYSCTL_enINT_PLL_LOCK));
+    EXPECT_EQ(nullptr,
+              SYSCTL__pvfGetIRQSourceHandler(SYSCTL_enMODULE_0,
+                                            (SYSCTL_nINT) SYSCTL_enINT_MAX));
+}
+
+/**
+ * @brief Validate invalid SYSCTL pointer-helper selections return a null slot.
+ * @summary Confirms that `SYSCTL__pvfGetIRQSourceHandlerPointer` rejects module
+ *          and interrupt-source selectors outside the documented public maxima
+ *          and reports those invalid selections through a null storage pointer.
+ * @param[in] None.
+ * @param[out] None.
+ * @return None.
+ * @dependencies
+ * @verbatim
+ * - Original source under test: SYSCTL_InterruptRoutine_Source.c
+ * - Local non-blocking dummy symbol for MCU_vIRQSourceHandler_Dummy@endverbatim
+ */
+TEST_F(SYSCTL_InterruptRoutineSourceTest, InterruptSourceHandlerPointerRejectsInvalidSelections)
+{
+    EXPECT_EQ(nullptr,
+              SYSCTL__pvfGetIRQSourceHandlerPointer((SYSCTL_nMODULE) SYSCTL_enMODULE_MAX,
+                                                   SYSCTL_enINT_PLL_LOCK));
+    EXPECT_EQ(nullptr,
+              SYSCTL__pvfGetIRQSourceHandlerPointer(SYSCTL_enMODULE_0,
+                                                   (SYSCTL_nINT) SYSCTL_enINT_MAX));
+}
+
+/**
  * @brief Validate writable access to one SYSCTL source-handler slot.
  * @summary Confirms that `SYSCTL__pvfGetIRQSourceHandlerPointer` exposes the
  *          backing storage for a selected SYSCTL source, that writing through

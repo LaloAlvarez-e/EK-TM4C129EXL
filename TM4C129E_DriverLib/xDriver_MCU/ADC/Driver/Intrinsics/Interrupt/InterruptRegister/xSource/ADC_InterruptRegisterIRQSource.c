@@ -49,7 +49,7 @@ ADC_nERROR ADC_SW__enRegisterIRQSourceHandler(ADC_pvfIRQSourceHandler_t pfIrqSou
 ADC_nERROR ADC_Sequencer__enRegisterIRQSourceHandler(ADC_pvfIRQSourceHandler_t pfIrqSourceHandler,
                                                      ADC_nMODULE enModuleArg,
                                                      ADC_nSEQUENCER enSequencerArg,
-                                                     ADC_nINT_TYPE enIntSourceArg)
+                                                     ADC_nINT_TYPE enInterruptSourceArg)
 {
     ADC_nERROR enErrorReg;
     enErrorReg = (ADC_nERROR) MCU__enCheckParams((UBase_t) enModuleArg, (UBase_t) ADC_enMODULE_MAX);
@@ -59,11 +59,11 @@ ADC_nERROR ADC_Sequencer__enRegisterIRQSourceHandler(ADC_pvfIRQSourceHandler_t p
     }
     if(ADC_enERROR_OK == enErrorReg)
     {
-        enErrorReg = (ADC_nERROR) MCU__enCheckParams((UBase_t) enIntSourceArg, (UBase_t) ADC_enINT_TYPE_MAX);
+        enErrorReg = (ADC_nERROR) MCU__enCheckParams((UBase_t) enInterruptSourceArg, (UBase_t) ADC_enINT_TYPE_MAX);
     }
     if(ADC_enERROR_OK == enErrorReg)
     {
-        ADC_pvfIRQSourceHandler_t* pvfIrqHandler = ADC_Sequencer__pvfGetIRQSourceHandlerPointer(enModuleArg, enSequencerArg, enIntSourceArg);
+        ADC_pvfIRQSourceHandler_t* pvfIrqHandler = ADC_Sequencer__pvfGetIRQSourceHandlerPointer(enModuleArg, enSequencerArg, enInterruptSourceArg);
         enErrorReg = (ADC_nERROR) MCU__enRegisterIRQSourceHandler(pfIrqSourceHandler, pvfIrqHandler, 0UL, 1UL);
     }
 

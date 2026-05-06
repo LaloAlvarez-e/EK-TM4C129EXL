@@ -1,0 +1,5 @@
+[2026-05-05 23:49:27] Resolved a FLASH host-test compilation blocker discovered while building the simple routine-source suites.
+- Symptom: FLASH_InterruptRoutine_Source_Test failed under the MSVC host build because FLASH_InterruptRoutine_Source.h exposed GNU __attribute__((section(".ramcode"))) declarations through the non-TI fallback branch.
+- Root cause: the header had no plain-declaration fallback for the host compiler, so the host toolchain parsed GNU-only syntax.
+- Fix: updated FLASH_InterruptRoutine_Source.h and FLASH_InterruptRegisterIRQSource.h to keep the GNU attribute path only when __GNUC__ is defined without _MSC_VER, and added plain declarations for other host compilers.
+- Scope check: runtime behavior on TI/GNU embedded targets is preserved because the TI and GNU declaration branches remain unchanged.

@@ -26,7 +26,7 @@
 
 #include <xDriver_MCU/SYSCTL/Peripheral/xHeader/SYSCTL_Enum.h>
 
-SYSCTL_pvfIRQSourceHandler_t SYSCTL__pvfGetIRQSourceHandler(SYSCTL_nMODULE enModuleArg, SYSCTL_nINT enIntSourceArg);
-SYSCTL_pvfIRQSourceHandler_t* SYSCTL__pvfGetIRQSourceHandlerPointer(SYSCTL_nMODULE enModuleArg, SYSCTL_nINT enIntSourceArg);
+SYSCTL_pvfIRQSourceHandler_t SYSCTL__pvfGetIRQSourceHandler(SYSCTL_nMODULE enModuleArg, SYSCTL_nINT enInterruptSourceArg);
+SYSCTL_pvfIRQSourceHandler_t* SYSCTL__pvfGetIRQSourceHandlerPointer(SYSCTL_nMODULE enModuleArg, SYSCTL_nINT enInterruptSourceArg);
 
 #endif /* XDRIVER_MCU_SYSCTL_DRIVER_INTRINSICS_INTERRUPT_INTERRUPTROUTINE_XHEADER_SYSCTL_INTERRUPTROUTINE_SOURCE_H_ */

@@ -27,7 +27,7 @@
 
 #include <xDriver_MCU/I2C/Peripheral/xHeader/I2C_Enum.h>
 
-I2C_pvfIRQSourceHandler_t I2C_Master__pvfGetIRQSourceHandler(I2C_nMODULE enModuleArg, I2C_nMASTER_INT enIntSourceArg);
-I2C_pvfIRQSourceHandler_t* I2C_Master__pvfGetIRQSourceHandlerPointer(I2C_nMODULE enModuleArg, I2C_nMASTER_INT enIntSourceArg);
+I2C_pvfIRQSourceHandler_t I2C_Master__pvfGetIRQSourceHandler(I2C_nMODULE enModuleArg, I2C_nMASTER_INT enInterruptSourceArg);
+I2C_pvfIRQSourceHandler_t* I2C_Master__pvfGetIRQSourceHandlerPointer(I2C_nMODULE enModuleArg, I2C_nMASTER_INT enInterruptSourceArg);
 
 #endif /* XDRIVER_MCU_I2C_DRIVER_INTRINSICS_INTERRUPT_INTERRUPTROUTINE_XHEADER_I2C_MASTER_INTERRUPTROUTINE_SOURCE_H_ */

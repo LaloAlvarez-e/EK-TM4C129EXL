@@ -33,17 +33,27 @@ static WDT_pvfIRQSourceHandler_t WDT_vIRQSourceHandler[(UBase_t) WDT_enMODULE_MA
     },
 };
 
-WDT_pvfIRQSourceHandler_t WDT__pvfGetIRQSourceHandler(WDT_nMODULE enModuleArg, WDT_nINT enIntSourceArg)
+WDT_pvfIRQSourceHandler_t WDT__pvfGetIRQSourceHandler(WDT_nMODULE enModuleArg, WDT_nINT enInterruptSourceArg)
 {
     WDT_pvfIRQSourceHandler_t pvfFunctionReg;
-    pvfFunctionReg = WDT_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (WDT_pvfIRQSourceHandler_t) 0;
+    if((WDT_enMODULE_MAX > enModuleArg) && (WDT_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = WDT_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 
-WDT_pvfIRQSourceHandler_t* WDT__pvfGetIRQSourceHandlerPointer(WDT_nMODULE enModuleArg, WDT_nINT enIntSourceArg)
+WDT_pvfIRQSourceHandler_t* WDT__pvfGetIRQSourceHandlerPointer(WDT_nMODULE enModuleArg, WDT_nINT enInterruptSourceArg)
 {
     WDT_pvfIRQSourceHandler_t* pvfFunctionReg;
-    pvfFunctionReg = &WDT_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enIntSourceArg];
+
+    pvfFunctionReg = (WDT_pvfIRQSourceHandler_t*) 0;
+    if((WDT_enMODULE_MAX > enModuleArg) && (WDT_enINT_MAX > enInterruptSourceArg))
+    {
+        pvfFunctionReg = &WDT_vIRQSourceHandler[(UBase_t) enModuleArg][(UBase_t) enInterruptSourceArg];
+    }
     return (pvfFunctionReg);
 }
 

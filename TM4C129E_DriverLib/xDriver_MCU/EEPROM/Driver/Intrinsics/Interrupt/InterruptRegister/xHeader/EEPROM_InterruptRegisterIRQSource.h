@@ -29,6 +29,6 @@
 
 EEPROM_nERROR EEPROM__enRegisterIRQSourceHandler(EEPROM_pvfIRQSourceHandler_t pfIrqSourceHandler,
                                                  EEPROM_nMODULE enModuleArg,
-                                                 EEPROM_nINT enIntSourceArg);
+                                                 EEPROM_nINT enInterruptSourceArg);
 
 #endif /* XDRIVER_MCU_EEPROM_DRIVER_INTRINSICS_INTERRUPT_INTERRUPTREGISTER_XHEADER_EEPROM_INTERRUPTREGISTERIRQSOURCE_H_ */

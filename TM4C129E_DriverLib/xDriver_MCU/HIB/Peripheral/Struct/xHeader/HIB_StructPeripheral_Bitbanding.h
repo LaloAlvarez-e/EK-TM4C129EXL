@@ -154,46 +154,7 @@ typedef volatile struct
         HIB_BITBANDING_TPIO_t TPIO_Bit;
     };
     const UBase_t reserved8[51UL * 32UL];
-    union
-    {
-        volatile const UBase_t TPLOGTIME0[32UL];
-        HIB_BITBANDING_TPLOGTIME_t TPLOGTIME0_Bit;
-    };
-    union
-    {
-        volatile const UBase_t TPLOGTRIG0[32UL];
-        HIB_BITBANDING_TPLOGTRIG_t TPLOGTRIG0_Bit;
-    };
-    union
-    {
-        volatile const UBase_t TPLOGTIME1[32UL];
-        HIB_BITBANDING_TPLOGTIME_t TPLOGTIME1_Bit;
-    };
-    union
-    {
-        volatile const UBase_t TPLOGTRIG1[32UL];
-        HIB_BITBANDING_TPLOGTRIG_t TPLOGTRIG1_Bit;
-    };
-    union
-    {
-        volatile const UBase_t TPLOGTIME2[32UL];
-        HIB_BITBANDING_TPLOGTIME_t TPLOGTIME2_Bit;
-    };
-    union
-    {
-        volatile const UBase_t TPLOGTRIG2[32UL];
-        HIB_BITBANDING_TPLOGTRIG_t TPLOGTRIG2_Bit;
-    };
-    union
-    {
-        volatile const UBase_t TPLOGTIME3[32UL];
-        HIB_BITBANDING_TPLOGTIME_t TPLOGTIME3_Bit;
-    };
-    union
-    {
-        volatile const UBase_t TPLOGTRIG3[32UL];
-        HIB_BITBANDING_TPLOGTRIG_t TPLOGTRIG3_Bit;
-    };
+    HIB_BITBANDING_TPLOG_t TPLOG[4];
     const UBase_t reserved9[688UL * 32UL];
     union
     {

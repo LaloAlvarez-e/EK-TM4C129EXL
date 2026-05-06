@@ -33,15 +33,21 @@
 #pragma  CODE_SECTION(FLASH__pvfGetIRQSourceHandlerPointer, ".ramcode")
 
 FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModuleArg,
-                                                          FLASH_nINT enIntSourceArg);
+                                                          FLASH_nINT enInterruptSourceArg);
 FLASH_pvfIRQSourceHandler_t* FLASH__pvfGetIRQSourceHandlerPointer(FLASH_nMODULE enModuleArg,
-                                                                  FLASH_nINT enIntSourceArg);
+                                                                  FLASH_nINT enInterruptSourceArg);
+#elif defined (__GNUC__ ) && !defined(_MSC_VER)
+
+FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModuleArg,
+                                                          FLASH_nINT enInterruptSourceArg) __attribute__((section(".ramcode")));
+FLASH_pvfIRQSourceHandler_t* FLASH__pvfGetIRQSourceHandlerPointer(FLASH_nMODULE enModuleArg,
+                                                                  FLASH_nINT enInterruptSourceArg) __attribute__((section(".ramcode")));
 #else
 
 FLASH_pvfIRQSourceHandler_t FLASH__pvfGetIRQSourceHandler(FLASH_nMODULE enModuleArg,
-                                                          FLASH_nINT enIntSourceArg) __attribute__((section(".ramcode")));
+                                                          FLASH_nINT enInterruptSourceArg);
 FLASH_pvfIRQSourceHandler_t* FLASH__pvfGetIRQSourceHandlerPointer(FLASH_nMODULE enModuleArg,
-                                                                  FLASH_nINT enIntSourceArg) __attribute__((section(".ramcode")));
+                                                                  FLASH_nINT enInterruptSourceArg);
 #endif
 
 

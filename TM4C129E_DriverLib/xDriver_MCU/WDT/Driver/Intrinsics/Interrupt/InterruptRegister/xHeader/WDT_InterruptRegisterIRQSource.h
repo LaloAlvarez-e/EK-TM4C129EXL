@@ -27,6 +27,6 @@
 
 #include <xDriver_MCU/WDT/Peripheral/xHeader/WDT_Enum.h>
 
-WDT_nERROR WDT__enRegisterIRQSourceHandler(WDT_nMODULE enModuleArg, WDT_nINT enIntSourceArg, WDT_pvfIRQSourceHandler_t pfIrqSourceHandler);
+WDT_nERROR WDT__enRegisterIRQSourceHandler(WDT_nMODULE enModuleArg, WDT_nINT enInterruptSourceArg, WDT_pvfIRQSourceHandler_t pfIrqSourceHandler);
 
 #endif /* XDRIVER_MCU_DRIVER_HEADER_WDT_WDT_DRIVER_WDT_INTRINSICS_WDT_INTERRUPT_WDT_INTERRUPTREGISTER_WDT_INTERRUPTREGISTERISR_H_ */

@@ -310,6 +310,11 @@ typedef volatile struct
 
 typedef volatile struct
 {
+    HIB_TPLOG_t LOG[4];
+}HIB_TPLOG_ARRAY_t;
+
+typedef volatile struct
+{
     volatile const UBase_t WAKENC :1;
     volatile const UBase_t TAMPER :1;
     const UBase_t reserved :30;

@@ -206,18 +206,27 @@
 /******************************************************************************************
 ************************************ 24 TPLOG ********************************************
 ******************************************************************************************/
+#define HIB0_TPLOG    ((HIB_TPLOG_ARRAY_t*) (HIB0_BASE + HIB_TPLOG_OFFSET))
+
+#define HIB0_TPLOG0        ((HIB_TPLOG_t*) (HIB0_BASE + HIB_TPLOG0_OFFSET))
 #define HIB0_TPLOGTIME0    ((HIB_TPLOGTIME_t*) (HIB0_BASE + HIB_TPLOGTIME0_OFFSET))
-#define HIB0_TPLOGTIME0_R    (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTIME0_OFFSET)))
+#define HIB0_TPLOGTIME0_R  (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTIME0_OFFSET)))
 #define HIB0_TPLOGTRIG0    ((HIB_TPLOGTRIG_t*) (HIB0_BASE + HIB_TPLOGTRIG0_OFFSET))
-#define HIB0_TPLOGTRIG0_R    (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTRIG0_OFFSET)))
+#define HIB0_TPLOGTRIG0_R  (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTRIG0_OFFSET)))
+
+#define HIB0_TPLOG1        ((HIB_TPLOG_t*) (HIB0_BASE + HIB_TPLOG1_OFFSET))
 #define HIB0_TPLOGTIME1    ((HIB_TPLOGTIME_t*) (HIB0_BASE + HIB_TPLOGTIME1_OFFSET))
-#define HIB0_TPLOGTIME1_R    (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTIME1_OFFSET)))
+#define HIB0_TPLOGTIME1_R  (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTIME1_OFFSET)))
 #define HIB0_TPLOGTRIG1    ((HIB_TPLOGTRIG_t*) (HIB0_BASE + HIB_TPLOGTRIG1_OFFSET))
-#define HIB0_TPLOGTRIG1_R    (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTRIG1_OFFSET)))
+#define HIB0_TPLOGTRIG1_R  (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTRIG1_OFFSET)))
+
+#define HIB0_TPLOG2        ((HIB_TPLOG_t*) (HIB0_BASE + HIB_TPLOG2_OFFSET))
 #define HIB0_TPLOGTIME2    ((HIB_TPLOGTIME_t*) (HIB0_BASE + HIB_TPLOGTIME2_OFFSET))
-#define HIB0_TPLOGTIME2_R    (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTIME2_OFFSET)))
+#define HIB0_TPLOGTIME2_R  (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTIME2_OFFSET)))
 #define HIB0_TPLOGTRIG2    ((HIB_TPLOGTRIG_t*) (HIB0_BASE + HIB_TPLOGTRIG2_OFFSET))
-#define HIB0_TPLOGTRIG2_R    (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTRIG2_OFFSET)))
+#define HIB0_TPLOGTRIG2_R  (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTRIG2_OFFSET)))
+
+#define HIB0_TPLOG3        ((HIB_TPLOG_t*) (HIB0_BASE + HIB_TPLOG3_OFFSET))
 #define HIB0_TPLOGTIME3    ((HIB_TPLOGTIME_t*) (HIB0_BASE + HIB_TPLOGTIME3_OFFSET))
 #define HIB0_TPLOGTIME3_R    (*((volatile const UBase_t*) (HIB0_BASE + HIB_TPLOGTIME3_OFFSET)))
 #define HIB0_TPLOGTRIG3    ((HIB_TPLOGTRIG_t*) (HIB0_BASE + HIB_TPLOGTRIG3_OFFSET))

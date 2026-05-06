@@ -117,13 +117,11 @@ void HardFault__vIRQVectorHandlerReport(uintptr_t uptrModuleArg, void* pvArgumen
 void HardFault__vIRQVectorHandlerCustom(uintptr_t uptrModuleArg, void* pvArgument)
 {
     SCB_t* pstSCBReg;
-    UBase_t* puxContext;
     UBase_t uxHardFault;
     SCB_pvfIRQSourceHandler_t pvfCallback;
     UBase_t uxFaultType;
 
     pstSCBReg = (SCB_t*) uptrModuleArg;
-    puxContext = (UBase_t*) pvArgument;
 
     uxFaultType = pstSCBReg->HFSR;
 

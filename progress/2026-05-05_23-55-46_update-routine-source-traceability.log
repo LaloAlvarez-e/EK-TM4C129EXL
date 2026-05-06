@@ -1,0 +1,4 @@
+[2026-05-05 23:55:46] Updated host-test requirement traceability for the new routine-source suites.
+- Added new traceability sections for ACMP, ADC, DMA, EEPROM, FLASH, GPIO, HIB, I2C master, I2C slave, PWM, QEI, SSI, SYSEXC routine-source, UART, and WDT routine-source host tests.
+- Linked each new TEST case to derived software requirements because the callback-table behaviors are software-owned policies rather than direct manual register behaviors.
+- Preserved the existing SYSCTL routine-source and SYSCTL register traceability sections.

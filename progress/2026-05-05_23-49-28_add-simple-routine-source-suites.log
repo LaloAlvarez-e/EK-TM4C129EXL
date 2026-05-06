@@ -1,0 +1,7 @@
+[2026-05-05 23:49:28] Added the simple routine-source host suites and validated them as a batch.
+- Added mirrored routine-source host suites and xSource CMake registration for EEPROM, FLASH, HIB, I2C master, I2C slave, QEI, SSI, SYSEXC, UART, and WDT.
+- Updated xDriver_MCU/CMakeLists and the existing SYSEXC interrupt CMake chain so the new suites are discovered by the TM4C129E_DriverLib_Test project.
+- Preserved mixed default handler tables in fixtures for I2C master and WDT by restoring MCU_vIRQSourceHandler_DummyNonBlocking on the final valid interrupt slot during reset.
+- Rebuilt the ten new routine-source targets in Debug successfully after the FLASH host-compatibility fix.
+- Executed the focused CTest batch for those suites successfully: 40 tests ran and 40 tests passed.
+- Follow-on work remains for the composite staged sources: ADC, DMA, GPIO, and PWM.

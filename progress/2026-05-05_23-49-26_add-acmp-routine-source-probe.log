@@ -1,0 +1,5 @@
+[2026-05-05 23:49:26] Added and validated the ACMP routine-source host-test probe.
+- Extended the existing ACMP CMake chain to include Driver/Intrinsics/Interrupt/InterruptRoutine/xSource.
+- Added ACMP_InterruptRoutine_Source_Test.cpp with grouped coverage for default handlers, invalid getter selections, invalid pointer selections, and writable slot exposure across the SW and comparator handler tables.
+- Rebuilt ACMP_InterruptRoutine_Source_Test (Debug) from the generated TM4C129E_DriverLib_Test build tree.
+- Executed ACMP_InterruptRoutine_Source_Test.exe successfully: 4 tests ran and 4 tests passed.

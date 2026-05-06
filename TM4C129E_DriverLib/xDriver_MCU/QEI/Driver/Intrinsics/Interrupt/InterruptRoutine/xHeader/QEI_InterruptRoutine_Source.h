@@ -27,7 +27,7 @@
 
 #include <xDriver_MCU/QEI/Peripheral/xHeader/QEI_Enum.h>
 
-QEI_pvfIRQSourceHandler_t QEI__pvfGetIRQSourceHandler(QEI_nMODULE enModuleArg, QEI_nINT enIntSourceArg);
-QEI_pvfIRQSourceHandler_t* QEI__pvfGetIRQSourceHandlerPointer(QEI_nMODULE enModuleArg, QEI_nINT enIntSourceArg);
+QEI_pvfIRQSourceHandler_t QEI__pvfGetIRQSourceHandler(QEI_nMODULE enModuleArg, QEI_nINT enInterruptSourceArg);
+QEI_pvfIRQSourceHandler_t* QEI__pvfGetIRQSourceHandlerPointer(QEI_nMODULE enModuleArg, QEI_nINT enInterruptSourceArg);
 
 #endif /* XDRIVER_MCU_QEI_DRIVER_INTRINSICS_INTERRUPT_INTERRUPTROUTINE_XHEADER_QEI_INTERRUPTROUTINE_SOURCE_H_ */

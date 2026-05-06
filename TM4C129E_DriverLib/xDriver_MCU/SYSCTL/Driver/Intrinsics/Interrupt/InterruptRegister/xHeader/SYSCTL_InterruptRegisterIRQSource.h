@@ -26,6 +26,6 @@
 
 #include <xDriver_MCU/SYSCTL/Peripheral/xHeader/SYSCTL_Enum.h>
 
-SYSCTL_nERROR SYSCTL__enRegisterIRQSourceHandler(SYSCTL_nMODULE enModuleArg, SYSCTL_nINT enIntSourceArg, SYSCTL_pvfIRQSourceHandler_t pfIrqSourceHandler);
+SYSCTL_nERROR SYSCTL__enRegisterIRQSourceHandler(SYSCTL_nMODULE enModuleArg, SYSCTL_nINT enInterruptSourceArg, SYSCTL_pvfIRQSourceHandler_t pfIrqSourceHandler);
 
 #endif /* XDRIVER_MCU_SYSCTL_DRIVER_INTRINSICS_INTERRUPT_INTERRUPTREGISTER_XHEADER_SYSCTL_INTERRUPTREGISTERIRQSOURCE_H_ */

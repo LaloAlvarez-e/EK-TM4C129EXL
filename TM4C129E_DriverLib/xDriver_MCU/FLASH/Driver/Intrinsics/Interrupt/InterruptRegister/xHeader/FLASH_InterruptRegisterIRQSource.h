@@ -30,10 +30,13 @@
 
 #pragma  CODE_SECTION(FLASH__enRegisterIRQSourceHandler, ".ramcode")
 
-FLASH_nERROR FLASH__enRegisterIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enIntSourceArg, FLASH_pvfIRQSourceHandler_t pfIrqSourceHandler);
-#elif defined (__GNUC__ )
+FLASH_nERROR FLASH__enRegisterIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enInterruptSourceArg, FLASH_pvfIRQSourceHandler_t pfIrqSourceHandler);
+#elif defined (__GNUC__ ) && !defined(_MSC_VER)
 
-FLASH_nERROR FLASH__enRegisterIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enIntSourceArg, FLASH_pvfIRQSourceHandler_t pfIrqSourceHandler) __attribute__((section(".ramcode")));
+FLASH_nERROR FLASH__enRegisterIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enInterruptSourceArg, FLASH_pvfIRQSourceHandler_t pfIrqSourceHandler) __attribute__((section(".ramcode")));
+#else
+
+FLASH_nERROR FLASH__enRegisterIRQSourceHandler(FLASH_nMODULE enModuleArg, FLASH_nINT enInterruptSourceArg, FLASH_pvfIRQSourceHandler_t pfIrqSourceHandler);
 #endif
 
 
