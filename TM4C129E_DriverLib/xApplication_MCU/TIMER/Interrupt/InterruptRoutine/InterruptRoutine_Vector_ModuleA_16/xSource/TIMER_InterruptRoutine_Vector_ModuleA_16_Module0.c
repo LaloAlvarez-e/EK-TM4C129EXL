@@ -34,10 +34,8 @@ void GPTM0A__vIRQVectorHandler(void)
     uxReady = SYSCTL_PRTIMER_R;
     if(SYSCTL_PRTIMER_R_TIMER0_NOREADY == (SYSCTL_PRTIMER_R_TIMER0_MASK & uxReady))
     {
-        pvfCallback = TIMER__pvfGetIRQSourceHandler(TIMER_enSUBMODULE_A,
-                                                    TIMER_enMODULE_NUM_0,
-                                                    TIMER_enINTERRUPT_SW);
-        pvfCallback();
+        pvfCallback = TIMER__pvfGetIRQSourceHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_0, TIMER_enINTERRUPT_SW);
+        pvfCallback(GPTM0_BASE, TIMER_enINTERRUPT_SW);
     }
     else
     {
@@ -45,9 +43,7 @@ void GPTM0A__vIRQVectorHandler(void)
 
         if(0UL == ((UBase_t) TIMER_enINT_TA_ALL & uxReg))
         {
-            pvfCallback = TIMER__pvfGetIRQSourceHandler(TIMER_enSUBMODULE_A,
-                                                        TIMER_enMODULE_NUM_0,
-                                                        TIMER_enINTERRUPT_SW);
+            pvfCallback = TIMER__pvfGetIRQSourceHandler(TIMER_enSUBMODULE_A, TIMER_enMODULE_NUM_0, TIMER_enINTERRUPT_SW);
             pvfCallback();
         }
         else
